@@ -1,0 +1,129 @@
+site_name: Обчислювальні процеси та штучний інтелект
+site_description: Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"
+
+theme:
+  name: material
+  language: uk
+  
+  # Правильне підключення іконки логотипу
+  icon:
+    logo: material/chip
+    favicon: material/chip
+
+  palette:
+    # Світла тема
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Переключити на темну тему
+
+    # Темна тема (Slate)
+    - scheme: slate
+      primary: blue        # Яскравіший синій для кращого контрасту
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Переключити на світлу тему
+
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.tracking
+    - header.autohide
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+font:
+  text: Roboto
+  code: JetBrains Mono
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  # Підтримка Mermaid діаграм
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.fence_mathjax_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  # Формули LaTeX
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - attr_list
+
+hooks:
+  - hooks/gfm_fixer.py
+
+# Підключення MathJax для рендерингу формул
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: 'Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>'
+
+nav:
+  - Робоча навчальна програма: index.md
+  
+  - Лекції:
+      - "Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму": lk/lk1.md
+      - "Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ": lk/lk2.md
+      - "Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI": lk/lk3.md
+      - "Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах": lk/lk4.md
+      - "Тема 5. Моделювання обчислювальних процесів у часі та просторі станів": lk/lk5.md
+      - "Тема 6. Машинне навчання: концепції, оптимізація та регуляризація": lk/lk6.md
+      - "Тема 7. Ансамблеві методи машинного навчання": lk/lk7.md
+      - "Тема 8. Глибокі нейронні мережі та математика ШІ навчання": lk/lk8.md
+      - "Тема 9. Згорткові нейронні мережі у завданнях перцепції": lk/lk9.md
+      - "Тема 10. Рекурентні мережі та архітектура Transformer": lk/lk10.md
+      - "Тема 11. Навчання з підкріпленням та автономні агенти": lk/lk11.md
+
+  - Лабораторні роботи:
+      - "ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA": lb/lb1.md
+      - "ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI": lb/lb2.md
+      - "ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів": lb/lb3.md
+      - "ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів": lb/lb4.md
+      - "ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів": lb/lb5.md
+      - "ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium": lb/lb6.md
+
+
+
+  - Практичні заняття:
+      - "ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса": pz/pz1.md
+      - "ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch": pz/pz2.md
+      - "ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів": pz/pz3.md
+      - "ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску": pz/pz4.md
+      - "ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних": pz/pz5.md
+      - "ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій": pz/pz6.md
+      - "ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention": pz/pz7.md
+      - "ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень": pz/pz8.md
+
+
+  - Самостійна робота: sr/index.md
+  - Розрахунково-графічна робота: rg/index.md
+  - Перелік тестових та практичних завдань для самопідготовки: sr/quest.md
