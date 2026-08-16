@@ -72,14 +72,14 @@ $$T_{\text{comm}}(m) = L + 2 \cdot o + (m - 1) \cdot g$$
 
    Час виконання фази Scatter-Reduce за моделлю Хокні становить:
 
-   $$T_{\text{scatter-reduce}} = (P - 1) \cdot \left(\alpha + \beta \cdot \frac{M}{P}\right)$$
+$$T_{\text{scatter-reduce}} = (P - 1) \cdot \left(\alpha + \beta \cdot \frac{M}{P}\right)$$
 
 2. **Фаза Allgather (Загальний збір):**
    Після закінчення першої фази кожен вузол містить повністю підсумований підсумковий блок градієнтів розміром $\frac{M}{P}$. Для розповсюдження цих підсумкових блоків на всі інші вузли виконується ще $(P - 1)$ кроків передачі по кільцю без виконання математичних операцій.
 
    Час виконання фази Allgather становить:
 
-   $$T_{\text{allgather}} = (P - 1) \cdot \left(\alpha + \beta \cdot \frac{M}{P}\right)$$
+$$T_{\text{allgather}} = (P - 1) \cdot \left(\alpha + \beta \cdot \frac{M}{P}\right)$$
 
 Сумарний час виконання операції **Ring-Allreduce** дорівнює сумі часу двох фаз:
 
