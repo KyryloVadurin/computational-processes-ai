@@ -1,0 +1,1999 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk4/">
+      
+      
+        <link rel="next" href="../lk6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 5. Моделювання обчислювальних процесів у часі та просторі станів - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Основний зміст та теоретичний базис">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «операції-операнди»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «процеси-канали»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Оцінка комунікаційної трудомісткості та баланс обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Бар'єрна синхронізація
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Теорема Брента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична модель оцінки комунікаційної трудомісткості
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичні моделі алгоритмів бар'єрної синхронізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Основний зміст та теоретичний базис">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «операції-операнди»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «процеси-канали»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Оцінка комунікаційної трудомісткості та баланс обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Бар'єрна синхронізація
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Теорема Брента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична модель оцінки комунікаційної трудомісткості
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичні моделі алгоритмів бар'єрної синхронізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="5-">Тема 5. Моделювання обчислювальних процесів у часі та просторі станів. Графові моделі «операції-операнди», «процеси-канали», оцінка комунікаційної трудомісткості та бар'єрна синхронізація</h1>
+<h2 id="1">1. Основний зміст та теоретичний базис</h2>
+<p>Ефективне проєктування, аналіз та оптимізація високопродуктивних паралельних і розподілених систем вимагають суворого математичного формалізму для опису обчислювальних процесів. Здобувачі вищої освіти в межах даного освітнього компонента засвоюють фундаментальні концепції моделювання обчислень, які дають змогу абстрагуватися від конкретної апаратної реалізації та оцінити граничні можливості розпаралелювання алгоритмів. </p>
+<p>Моделювання паралельного обчислювального процесу здійснюється у двох часово-просторових вимірах: у <strong>просторі станів (State Space)</strong> та в <strong>часовому конвеєрі (Execution Timeline)</strong>. Простір станів обчислювальної системи репрезентує множину всіх можливих конфігурацій, яких може набувати система в процесі виконання паралельної програми. Стан системи описується вектором <span class="arithmatex">\(S = (s_1, s_2, \dots, s_n)\)</span>, де кожен компонент <span class="arithmatex">\(s_i\)</span> відповідає поточному стану <span class="arithmatex">\(i\)</span>-го автономного процесу, значенням його програмного лічильника та вмісту локальної пам'яті. Перехід системи з одного стану в інший відбувається під впливом подій — виконання дискретних операцій, відправлення чи отримання мережевих повідомлень, загарбання або звільнення системних ресурсів.</p>
+<p>Формалізація простору станів є критично важливою для виявлення та запобігання аномаліям асинхронного паралельного виконання. До основними небезпечних станів належать:</p>
+<ul>
+<li>
+<p><strong>Стан перегонів (Race Condition)</strong> — ситуація, за якої підсумковий результат обчислень залежить від невизначеного порядку виконання некоординованих операцій читання та запису у спільну пам'ять різними процесами.</p>
+</li>
+<li>
+<p><strong>Безвихідний стан (Deadlock)</strong> — тупикова конфігурація простору станів, за якої кожен із циклювальних процесів заблокований у чеканні ресурсу або повідомлення, що утримується іншим заблокованим процесом.</p>
+</li>
+<li>
+<p><strong>Стан голодування (Starvation / Livelock)</strong> — динамічна аномалія, при якій процеси безперервно змінюють свої внутрішні стани, проте не здійснюють жодного прогресу у виконанні корисної обчислювальної роботи.</p>
+</li>
+</ul>
+<p>Для формального опису інформаційної структури та логіки паралельних алгоритмів у теорії обчислювальних систем застосовують два базові рівні графового моделювання: дрібноструктурну модель <strong>«операції-операнди»</strong> та великоструктурну модель <strong>«процеси-канали»</strong>.</p>
+<h3 id="-">Модель «операції-операнди»</h3>
+<p>Модель «операції-операнди» репрезентує обчислювальний процес у вигляді орієнтованого ациклічного графа <span class="arithmatex">\(G = (V, E)\)</span>. </p>
+<p>Вершини графа <span class="arithmatex">\(V = \{v_1, v_2, \dots, v_n\}\)</span> відповідають фундаментальним скалярним чи тензорним операціям (наприклад, додавання, множення матриць, обчислення функції активації). Орієнтовані дуги <span class="arithmatex">\(E = \{(v_i, v_j)\}\)</span> відображають інформаційні залежності за даними між операціями. Наявність дуги <span class="arithmatex">\((v_i, v_j)\)</span> означає, що результат виконання операції <span class="arithmatex">\(v_i\)</span> є вхідним операндом для операції <span class="arithmatex">\(v_j\)</span>, що задає суворий частковий порядок виконання: операція <span class="arithmatex">\(v_j\)</span> не може розпочатися раніше, ніж завершиться операція <span class="arithmatex">\(v_i\)</span>.</p>
+<p>Модель «операції-операнди» володіє властивістю суворого детермінізму за даними (<strong>Dataflow Determinism</strong>): підсумковий результат обчислень є абсолютно незалежним від того, у якій саме послідовності та на яких фізичних ядрах виконуються інформаційно незалежні вершини графа. Головними аналітичними параметрами DAG-моделі є:</p>
+<ul>
+<li>
+<p><strong>Загальний обсяг робіт (Total Work) <span class="arithmatex">\(T_1\)</span></strong> — сумарний час або кількість операцій, необхідних для послідовного виконання всіх вершин графа на одному процесорі.</p>
+</li>
+<li>
+<p><strong>Критичний шлях (Critical Path) <span class="arithmatex">\(T_\infty\)</span></strong> — найдовший за часом орієнтований шлях від вхідної до вихідної вершини графа, який визначає мінімально можливий час виконання алгоритму навіть за наявності нескінченної кількості процесорних ядер.</p>
+</li>
+<li>
+<p><strong>Максимально досяжний паралелізм</strong> — відношення загального обсягу робіт до довжини критичного шляху (<span class="arithmatex">\(S_\infty = T_1 / T_\infty\)</span>).</p>
+</li>
+</ul>
+<h3 id="-_1">Модель «процеси-канали»</h3>
+<p>Якщо модель «операції-операнди» відображає дрібноструктурний паралелізм на рівні окремих математичних операторів, то модель «процеси-канали» (заснована на мережах процесів Кана та формалізмі послідовних процесів, що взаємодіють, Hoare's CSP) використовується для моделювання великоструктурного паралелізму.</p>
+<p>У цій моделі вершини графа <span class="arithmatex">\(P = \{p_1, p_2, \dots, p_k\}\)</span> репрезентують автономні послідовні процеси (задачі, потоки), кожен з яких має власний стан і виконує власну програму. Орієнтовані дуги <span class="arithmatex">\(C = \{c_1, c_2, \dots, c_m\}\)</span> відповідають логічним комунікаційним каналам, через які процеси обмінюються повідомленнями. Канали моделюються як черги першим прийшов — першим пішов (<strong>FIFO</strong>) необмеженої або скінченної ємності. </p>
+<p>Запис у канал є неблокуючою операцією (якщо ємність не обмежена), тоді як читання з порожнього каналу є блокуючою операцією: процес-одержувач призупиняє своє виконання до моменту надходження даних від процесу-відправника. Модель «процеси-канали» лежить в основі проєктування розподілених пайплайнів, архітектур на основі акторів та міжпроцесорного обміну через специфікацію MPI.</p>
+<h3 id="_1">Оцінка комунікаційної трудомісткості та баланс обчислень</h3>
+<p>Практична реалізація графа «процеси-канали» на фізичному кластері вимагає вирішення задачі відображення (<strong>Mapping</strong>) логічних процесів на фізичні процесорні ядра. При цьому виникає фундаментальний компроміс між зернистістю паралелізму (<strong>Granularity</strong>) та комунікаційними накладними витратами.</p>
+<p>Зернистість обчислень визначається відношенням часу виконання локальних обчислень усередині процесу до часу, витраченого на міжпроцесорну комунікацію. Для кількісної оцінки використовується <strong>відношення комунікацій затримок до обчислень (Communication-to-Computation Ratio, CCR)</strong>. Якщо <span class="arithmatex">\(CCR \gg 1\)</span>, обчислювальний процес є дрібноструктурним та обмежується пропускною здатністю мережі (<strong>Network-Bound</strong>); якщо <span class="arithmatex">\(CCR \ll 1\)</span>, процес є великоструктурним та обмежується потужністю обчислювальних ядер (<strong>Compute-Bound</strong>).</p>
+<h3 id="_2">Бар'єрна синхронізація</h3>
+<p>У багатьох паралельних ітераційних алгоритмах (наприклад, у чисельних методах сіток, математичній фізиці, алгоритмах розрахунку градієнтного спуску) виникає потреба фазового узгодження процесів. Для цього застосовується <strong>бар'єрна синхронізація</strong>.</p>
+<p>Бар'єр — це точка в паралельній програмі, досягши якої кожен процес призупиняє своє подальше виконання доти, доки абсолютно всі інші процеси, що входять до даної групи комунікатора, не досягнуть цієї самої точки. Лише після зафіксованого прибуття останнього процесу бар'єр «відкривається», і всі процеси одночасно відновлюють виконання наступної ітерації.</p>
+<p>Головною системною проблемою бар'єрної синхронізації у великомасштабних кластерах є <strong>ефект найповільнішого процесу (Straggler Effect)</strong>. Якщо хоча б один із <span class="arithmatex">\(P\)</span> процесів виконується повільніше через флуктуації мережевої латентності, апаратні помилки або дисбаланс обчислювального навантаження, усі інші <span class="arithmatex">\(P-1\)</span> процесів змушені марно простоювати на бар'єрі, що призводить до падіння підсумкового коефіцієнта ефективності <span class="arithmatex">\(E_p\)</span>.</p>
+<hr />
+<h2 id="2">2. Математичний апарат, моделі та аналітичні залежності</h2>
+<h3 id="_3">Теорема Брента</h3>
+<p>Теорема Брента дає аналітичну оцінку часу виконання паралельного алгоритму, заданого графом «операції-операнди» (DAG), на системі з <span class="arithmatex">\(p\)</span> фізичних процесорів за умови ідеального розкладу без урахування комунікаційних витрат.</p>
+<p>Нехай <span class="arithmatex">\(T_1 = W = |V|\)</span> — загальна кількість операцій у графі (сумарна робота), а <span class="arithmatex">\(T_\infty = L\)</span> — довжина критичного шляху графа (висота паралельної форми). Тоді час виконання <span class="arithmatex">\(T_p\)</span> на <span class="arithmatex">\(p\)</span> процесорах задовольняє нерівності:</p>
+<div class="arithmatex">\[\frac{T_1}{p} \le T_p \le \frac{T_1 - T_\infty}{p} + T_\infty\]</div>
+<p>де <span class="arithmatex">\(T_p\)</span> — час виконання паралельного графа на <span class="arithmatex">\(p\)</span> процесорах (секунди, <span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(T_1\)</span> — сумарний обсяг робіт графа (<span class="arithmatex">\(FLOP\)</span> або <span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(T_\infty\)</span> — довжина критичного шляху графа (<span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(p\)</span> — кількість доступних фізичних процесорів.</p>
+<p>З теореми Брента випливає, що для досягнення прискорення, близького до максимального (<span class="arithmatex">\(S_p \approx p\)</span>), необхідно, щоб обсяг робіт суттєво перевищував довжину критичного шляху: <span class="arithmatex">\(T_1 \gg p \cdot T_\infty\)</span>.</p>
+<h3 id="_4">Математична модель оцінки комунікаційної трудомісткості</h3>
+<p>Нехай паралельний процес виконує <span class="arithmatex">\(W_{\text{local}}\)</span> локальних математичних операцій між комунікаційними фазами та здійснює <span class="arithmatex">\(K\)</span> комунікаційних обмінів повідомленнями із середнім розміром <span class="arithmatex">\(m\)</span> байтів.</p>
+<p>Загальний час виконання паралельного процесу <span class="arithmatex">\(T_p(n, p)\)</span> з урахуванням обчислень, комунікації за моделлю Хокні та бар'єрної синхронізації описується виразом:</p>
+<div class="arithmatex">\[T_p(n, p) = W_{\text{local}} \cdot \tau_{\text{op}} + \sum_{k=1}^{K} \left( \alpha + \beta \cdot m_k \right) + T_{\text{barrier}}(p)\]</div>
+<p>де <span class="arithmatex">\(T_p(n, p)\)</span> — загальний час виконання ітерації паралельного процесу (<span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(W_{\text{local}}\)</span> — кількість локальних операцій процесу, <span class="arithmatex">\(\tau_{\text{op}}\)</span> — середня тривалість виконання однієї базової операції (<span class="arithmatex">\(c / FLOP\)</span>), <span class="arithmatex">\(K\)</span> — кількість викликів комунікаційних операцій за ітерацію, <span class="arithmatex">\(\alpha\)</span> — латентність мережевого з'єднання (<span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(\beta\)</span> — питомий час передачі одного байта (<span class="arithmatex">\(c / \text{Byte}\)</span>), <span class="arithmatex">\(m_k\)</span> — розмір <span class="arithmatex">\(k\)</span>-го повідомлення у байтах, <span class="arithmatex">\(T_{\text{barrier}}(p)\)</span> — часові накладні витрати на виконання бар'єрної синхронізації між <span class="arithmatex">\(p\)</span> процесами (<span class="arithmatex">\(c\)</span>).</p>
+<p>Відношення комунікаційної трудомісткості до обчислювальної <span class="arithmatex">\(CCR\)</span> математично виражається як:</p>
+<div class="arithmatex">\[CCR = \frac{T_{\text{comm}}}{T_{\text{comp}}} = \frac{\sum_{k=1}^{K} \left( \alpha + \beta \cdot m_k \right)}{W_{\text{local}} \cdot \tau_{\text{op}}}\]</div>
+<p>Якщо <span class="arithmatex">\(CCR &gt; 1\)</span>, системний інженер має виконати агрегацію (укрупнення) процесів для зменшення кількості дрібних мережевих повідомлень <span class="arithmatex">\(K\)</span>.</p>
+<h3 id="_5">Математичні моделі алгоритмів бар'єрної синхронізації</h3>
+<ol>
+<li><strong>Централізований бар'єр із лічильником (Centralized Counter Barrier):</strong>
+   Усі <span class="arithmatex">\(p\)</span> процесів атомарно інкрементують єдиний спільний лічильник у системній пам'яті. Часова складність такого бар'єра через колізії звернення до пам'яті або мережевого адаптера становить:</li>
+</ol>
+<div class="arithmatex">\[T_{\text{central\_barrier}}(p) = \mathcal{O}(p \cdot \alpha)\]</div>
+<ol>
+<li><strong>Деревоподібний / Диссемінаційний бар'єр (Tree / Dissemination Barrier):</strong>
+   Процеси організуються у логічну бінарну або диссемінаційну структуру, де синхронізаційні сигнали передаються пошарово. Часова складність зменшується до логарифмічної:</li>
+</ol>
+<div class="arithmatex">\[T_{\text{tree\_barrier}}(p) = 2 \cdot \lceil \log_2 p \rceil \cdot \left( \alpha + \beta \cdot m_{\text{sync}} \right)\]</div>
+<p>де <span class="arithmatex">\(p\)</span> — кількість процесів у комунікаторі, <span class="arithmatex">\(\alpha\)</span> — латентність мережі, <span class="arithmatex">\(m_{\text{sync}}\)</span> — мінімальний розмір управляючого прапорця синхронізації (зазвичай <span class="arithmatex">\(4\)</span> або <span class="arithmatex">\(8\)</span> байтів).</p>
+<hr />
+<h2 id="3">3. Систематизація даних та порівняльний аналіз</h2>
+<p>Для глибокої систематизації відмінностей між двома фундаментальними рівнями графового моделювання обчислювальних процесів нижче наведено порівняльну таблицю.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр порівняння</th>
+<th style="text-align: left;">Модель «Операції-Операнди» (DAG)</th>
+<th style="text-align: left;">Модель «Процеси-Канали» (KPN / CSP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Рівень абстракції та зернистість (Granularity)</strong></td>
+<td style="text-align: left;">Дрібноструктурний паралелізм (мікрорівень окремих операторів та інструкцій)</td>
+<td style="text-align: left;">Великоструктурний паралелізм (макрорівень автономних задач, потоків або сервісів)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Елементи графа: Вершини</strong></td>
+<td style="text-align: left;">Фундаментальні математичні/скалярні/тензорні операції (<span class="arithmatex">\(v_i \in V\)</span>)</td>
+<td style="text-align: left;">Незалежні послідовні процеси або обчислювальні вузли (<span class="arithmatex">\(p_i \in P\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Елементи графа: Дуги</strong></td>
+<td style="text-align: left;">Інформаційні залежності за даними (операнди)</td>
+<td style="text-align: left;">Логічні комунікаційні канали зв'язку / FIFO-буфери (<span class="arithmatex">\(c_i \in C\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Часовий характер зв'язків</strong></td>
+<td style="text-align: left;">Суворий ациклічний частковий порядок (DAG, без циклів у часі)</td>
+<td style="text-align: left;">Можливість наявності зворотних зв'язків, циклів та довготривалих потоків даних</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Детермінізм виконання</strong></td>
+<td style="text-align: left;">Абсолютний детермінізм за даними (Dataflow Determinism)</td>
+<td style="text-align: left;">Залежить від типу каналів; детермінований у KPN, потенційно недетермінований при конкуренції</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Основна мета використання</strong></td>
+<td style="text-align: left;">Аналіз граничного паралелізму, довжини критичного шляху (<span class="arithmatex">\(T_\infty\)</span>) та векторизації</td>
+<td style="text-align: left;">Планування навантаження (Mapping), оптимізація комунікацій <span class="arithmatex">\(CCR\)</span> та розробка MPI-коду</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Інструментарій у програмуванні</strong></td>
+<td style="text-align: left;">Обчислювальні графи PyTorch / TensorFlow, компілятори XLA / Triton</td>
+<td style="text-align: left;">Специфікація MPI (<code>mpi4py</code>), актори (Ray, Erlang), канальна комунікація Go</td>
+</tr>
+</tbody>
+</table>
+<p>Системний аналіз табличних даних свідчить про те, що обидві моделі не виключають, а ієрархічно доповнюють одна одну. Під час розробки високопродуктивних інтелектуальних систем інженер на верхньому рівні застосовує модель <strong>«процеси-канали»</strong> для розподілу масштабної задачі між вузлами кластера, мінімізуючи відношення комунікацій до обчислень <span class="arithmatex">\(CCR\)</span>. </p>
+<p>Водночас усередині кожного окремого процесу на обчислювальному вузлі компілятор створює граф <strong>«операції-операнди» (DAG)</strong>, оптимізуючи критичний шлях <span class="arithmatex">\(T_\infty\)</span>, виконуючи зрощення (<strong>Fusion</strong>) операцій та векторизацію обчислень на тензорних ядрах прискорювача.</p>
+<hr />
+<h2 id="4">4. Візуалізація процесів та структурних зв'язків</h2>
+<p>Нижче наведено деталізовану графічну діаграму, яка ілюструє трансформацію дрібноструктурного графа «операції-операнди» у великоструктурну модель «процеси-канали», а також показує часову діаграму виконання процесів із виникненням ефекту найповільнішого процесу (Straggler Effect) під час бар'єрної синхронізації.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph DAG_Model ["Рівень 1: Граф&lt;br/&gt;Операції-Операнди DAG"]
+        v1[Op 1: Load Batch] --&gt; v2[Op 2: MatMul Layer 1]
+        v1 --&gt; v3[Op 3: MatMul Layer 1]
+        v2 --&gt; v4[Op 4: Activation]
+        v3 --&gt; v5[Op 5: Activation]
+        v4 &amp; v5 --&gt; v6[Op 6: Loss Reduction]
+    end
+
+    subgraph Process_Channel_Model ["Рівень 2: Модель&lt;br/&gt;Процеси-Канали"]
+        P0[Process Rank 0] &lt;--&gt;|"Channel C_01:&lt;br/&gt;MPI_Isend / Irecv"| P1[Process Rank 1]
+        P1 &lt;--&gt;|"Channel C_12:&lt;br/&gt;MPI_Isend / Irecv"| P2[Process Rank 2]
+        P2 &lt;--&gt;|"Channel C_20:&lt;br/&gt;MPI_Isend / Irecv"| P0
+    end
+
+    subgraph Timeline_Barrier_Sync ["Рівень 3: Часова&lt;br/&gt;діаграма Бар'єрної&lt;br/&gt;Синхронізації"]
+        direction LR
+        T_P0["Process 0: Compute&lt;br/&gt;Phase"] --&gt;|Reaches Barrier| B_Wait0[Blocked Wait]
+        T_P1["Process 1: Compute&lt;br/&gt;Phase - FAST"] --&gt;|Reaches Barrier Early| B_Wait1[Long Idle Wait]
+        T_P2["Process 2: Compute&lt;br/&gt;Phase - STRAGGLER"] --&gt;|Slow Execution| B_Reach2[Reaches Barrier LAST]
+
+        B_Wait0 &amp; B_Wait1 &amp; B_Reach2 --&gt;|Barrier Release Signal| Next_Iter[Next Iteration Phase]
+    end
+
+    DAG_Model --&gt;|Aggregation &amp; Mapping| Process_Channel_Model
+    Process_Channel_Model --&gt;|Execution in Time| Timeline_Barrier_Sync</code></pre>
+<p><em>Рисунок 1 — Трансформація графа «операції-операнди» у модель «процеси-канали» з часовою діаграмою бар'єрної синхронізації</em></p>
+<p>Діаграма демонструє трирівневу концепцію моделювання обчислювальних процесів. На першому рівні (DAG_Model) описується дрібноструктурний граф «операції-операнди», де вершини <span class="arithmatex">\(v_1 \dots v_6\)</span> відображають абсолютну залежність за даними між окремими математичними операторами. </p>
+<p>На другому рівні (Process_Channel_Model) відбуваються агрегація та відображення вершин DAG на автономні процеси <span class="arithmatex">\(P_0, P_1, P_2\)</span>, які взаємодіють через логічні комунікаційні канали <span class="arithmatex">\(C_{ij}\)</span> за допомогою неблокуючих операцій обміну. </p>
+<p>На третьому рівні (Timeline_Barrier_Sync) показано розгортку обчислювального процесу в часі. Процес <span class="arithmatex">\(P_1\)</span> виконує свою локальну фазу швидко та входить у стан блокованого очікування (Idle Wait). Процес <span class="arithmatex">\(P_2\)</span> є найповільнішим процесом (<strong>Straggler</strong>). Усі інші процеси змушені марно простоювати на бар'єрі в очікуванні завершення обчислень процесом <span class="arithmatex">\(P_2\)</span>. Лише після прибуття <span class="arithmatex">\(P_2\)</span> бар'єр генерує глобальний сигнал звільнення (Barrier Release Signal), і всі процеси одночасно переходять до наступної ітерації.</p>
+<hr />
+<h2 id="5">5. Питання для самоперевірки та аналітичного осмислення</h2>
+<ol>
+<li>
+<p>Які основні відмінності між простором станів (State Space) та часовою діаграмою виконання (Execution Timeline) паралельного процесу? Поясніть причини виникнення ситуації безвиході (Deadlock) у просторі станів на рівні взаємодії логічних каналів.</p>
+</li>
+<li>
+<p>Сформулюйте теорему Брента. Якщо граф «операції-операнди» має загальний обсяг робіт <span class="arithmatex">\(T_1 = 1000\)</span> операцій та довжину критичного шляху <span class="arithmatex">\(T_\infty = 50\)</span> операцій, обчисліть теоретичний мінімальний час виконання цієї задачі на паралельній системі з <span class="arithmatex">\(p = 10\)</span> процесорів та оцініть коефіцієнт прискорення <span class="arithmatex">\(S_p\)</span>.</p>
+</li>
+<li>
+<p>У чому полягає фундаментальна відмінність між модельним формалізмом «операції-операнди» (DAG) та моделлю «процеси-канали» (KPN/CSP)? Чому модель «операції-операнди» є строго детермінованою за даними?</p>
+</li>
+<li>
+<p>Дайте визначення показника комунікаційної трудомісткості <span class="arithmatex">\(CCR\)</span>. Якщо в результаті профілювання паралельної програми виявилося, що <span class="arithmatex">\(CCR = 4{,}5\)</span>, які архітектурні та програмні рішення повинен прийняти системний інженер для покращення масштабованості системи?</p>
+</li>
+<li>
+<p>Опишіть механізм виникнення «ефекту найповільнішого процесу» (Straggler Effect) під час бар'єрної синхронізації у розподілених кластерах. Чому часова складність деревного бар'єра <span class="arithmatex">\(\mathcal{O}(\log_2 p)\)</span> є більш переважною порівняно з централізованим бар'єром <span class="arithmatex">\(\mathcal{O}(p)\)</span> у масивно-паралельних системах?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2522 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../pz5/">
+      
+      
+        <link rel="next" href="../pz7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#no-6-pooling-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lk/lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-output-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Розрахунок просторових розмірностей карт ознак (Output Shape)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-parameter-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Обчислення обсягу параметрів (Parameter Volume)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Математика рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-output-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Розрахунок просторових розмірностей карт ознак (Output Shape)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-parameter-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Обчислення обсягу параметрів (Parameter Volume)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Математика рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="no-6-pooling-">Практичне заняття № 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій</h1>
+<h2 id="_1">Мета роботи та стек технологій</h2>
+<p><strong>Мета.</strong> Засвоєння математичного апарату просторової обробки даних у згорткових нейронних мережах (з англ. <em>Convolutional Neural Networks — CNN</em>); розрахунок просторових розмірностей карт ознак (з англ. <em>Feature Maps</em>) з урахуванням параметрів кроку згортки (з англ. <em>Stride</em>), доповнення (з англ. <em>Padding</em>) та розширення ядра (з англ. <em>Dilation</em>); аналітичне обчислення обсягу вагових коефіцієнтів і розміру рецептивного поля (з англ. <em>Receptive Field</em>); розробка програмного аналізатора архітектур CNN на мові Python та його верифікація за допомогою фреймворку <code>PyTorch</code>.</p>
+<p><strong>Стек технологій та інструменти:</strong></p>
+<ul>
+<li>
+<p><strong>Мова програмування / Середовище:</strong> Python 3.11+ / Jupyter Notebook або VS Code.</p>
+</li>
+<li>
+<p><strong>Платформа / Бібліотеки:</strong> <code>NumPy</code> (версії 1.24+ — векторизоване моделювання геометричних параметрів), <code>PyTorch</code> (версії 2.0+ — побудова модельних каскадів <code>torch.nn.Conv2d</code>, <code>torch.nn.MaxPool2d</code> та верифікація розмірностей тензорів), <code>Matplotlib</code> (версії 3.7+ — візуалізація динаміки зростання рецептивного поля).</p>
+</li>
+<li>
+<p><strong>Інструменти розробки:</strong> Термінал (Bash/PowerShell), менеджер пакетів <code>pip</code>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="1">1. Теоретичні відомості</h2>
+<p>Згорткові нейронні мережі становлять спеціалізований клас архітектур глибокого навчання, призначений для інваріантної обробки просторово-впорядкованих даних (зображень, часових рядів, спектрограм). На відміну від повнозв'язаних шарів, згортковий шар характеризується локальністю зв'язків (з англ. <em>Local Receptive Fields</em>) та спільним використанням вагових коефіцієнтів (з англ. <em>Shared Weights</em>), що суттєво зменшує кількість параметрів моделі.</p>
+<h3 id="1-output-shape">1. Розрахунок просторових розмірностей карт ознак (Output Shape)</h3>
+<p>Нехай на вхід двовимірного згорткового шару (з англ. <em>Conv2D</em>) подається тензор розмірністю <span class="arithmatex">\((C_{\text{in}}, H_{\text{in}}, W_{\text{in}})\)</span>, де <span class="arithmatex">\(C_{\text{in}}\)</span> — кількість вхідних каналів, <span class="arithmatex">\(H_{\text{in}}\)</span> та <span class="arithmatex">\(W_{\text{in}}\)</span> — висота та ширина карти ознак. Операція згортки визначається параметрами:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(K_H, K_W\)</span> — розміри ядра згортки (з англ. <em>Kernel Size</em>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(S_H, S_W\)</span> — крок згортки (з англ. <em>Stride</em>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P_H, P_W\)</span> — величина доповнення нулями по краях (з англ. <em>Padding</em>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(D_H, D_W\)</span> — коефіцієнт розширення ядра (з англ. <em>Dilation Rate</em>).</p>
+</li>
+</ul>
+<p>Ефективний розмір ядра згортки <span class="arithmatex">\(K_{\text{eff}}\)</span> з урахуванням розширення <span class="arithmatex">\(D\)</span> обчислюється за формулою:</p>
+<div class="arithmatex">\[K_{\text{eff}} = K + (K - 1) \cdot (D - 1) = D \cdot (K - 1) + 1\]</div>
+<p>Просторові розмірності вихідної карти ознак <span class="arithmatex">\(H_{\text{out}}\)</span> та <span class="arithmatex">\(W_{\text{out}}\)</span> визначаються за формулами:</p>
+<div class="arithmatex">\[H_{\text{out}} = \left\lfloor \frac{H_{\text{in}} + 2 \cdot P_H - D_H \cdot (K_H - 1) - 1}{S_H} \right\rfloor + 1\]</div>
+<div class="arithmatex">\[W_{\text{out}} = \left\lfloor \frac{W_{\text{in}} + 2 \cdot P_W - D_W \cdot (K_W - 1) - 1}{S_W} \right\rfloor + 1\]</div>
+<p>де <span class="arithmatex">\(\lfloor \cdot \rfloor\)</span> — операція взяття цілої частини (з англ. <em>Floor</em>).</p>
+<p><pre class="mermaid"><code>graph LR
+    subgraph Вхідна карта ознак [Hin x Win]
+        P[Padding P] --&gt; I[Початкові дані]
+        I --&gt; P
+    end
+    subgraph Операція згортки Conv2D
+        K["Ядро K_eff = D*(K-1)+1"] --&gt;|Крок Stride S| S["Зсув ядра"]
+    end
+    subgraph Вихідна карта ознак [Hout x Wout]
+        O["Розмір: (Hin + 2P - K_eff)/S + 1"]
+    end
+    I --&gt; K
+    S --&gt; O</code></pre>
+<em>Рисунок 1 — Геометрична схема формування вихідної карти ознак при згортці з параметрами Padding, Stride та Dilation</em></p>
+<h3 id="2-parameter-volume">2. Обчислення обсягу параметрів (Parameter Volume)</h3>
+<p>Загальна кількість навчувальних вагових коефіцієнтів <span class="arithmatex">\(N_{\text{params}}\)</span> у згортковому шарі, який генерує <span class="arithmatex">\(C_{\text{out}}\)</span> вихідних карт ознак і містить зсув (з англ. <em>Bias</em>), обчислюється як:</p>
+<div class="arithmatex">\[N_{\text{params}} = C_{\text{out}} \cdot \left( C_{\text{in}} \cdot K_H \cdot K_W + b \right)\]</div>
+<p>де <span class="arithmatex">\(b = 1\)</span>, якщо параметр <code>bias=True</code>, і <span class="arithmatex">\(b = 0\)</span>, якщо <code>bias=False</code>.</p>
+<p>Для розділюваної по глибині згортки (з англ. <em>Depthwise Separable Convolution</em>), що застосовується у мобільних мережах MobileNet, кількість параметрів значно менша:</p>
+<div class="arithmatex">\[N_{\text{separable}} = \underbrace{C_{\text{in}} \cdot K_H \cdot K_W}_{\text{Depthwise Conv}} + \underbrace{C_{\text{in}} \cdot C_{\text{out}} \cdot 1 \cdot 1}_{\text{Pointwise Conv}}\]</div>
+<p>Операції пулінгу (з англ. <em>Max / Average Pooling</em>) не мають навчувальних вагових коефіцієнтів (<span class="arithmatex">\(N_{\text{params}} = 0\)</span>), а їхні вихідні розмірності розраховуються за аналогічними просторовими формулами при <span class="arithmatex">\(D = 1\)</span>.</p>
+<h3 id="3-receptive-field">3. Математика рецептивного поля (Receptive Field)</h3>
+<p>Рецептивне поле <span class="arithmatex">\(RF_l\)</span> шару <span class="arithmatex">\(l\)</span> визначає розмір області у початковому вхідному зображенні, яка впливає на формування одного нейрона вихідної карти ознак цього шару. Розрахунок виконується ітераційно від першого шару до останнього:</p>
+<div class="arithmatex">\[RF_l = RF_{l-1} + (K_{\text{eff}, l} - 1) \cdot J_{l-1}\]</div>
+<div class="arithmatex">\[J_l = J_{l-1} \cdot S_l\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(RF_0 = 1\)</span> — початкове рецептивне поле (один піксель вхідного зображення).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(J_l\)</span> — кумулятивний крок мережі (з англ. <em>Cumulative Stride / Jump</em>) після шару <span class="arithmatex">\(l\)</span>, причому <span class="arithmatex">\(J_0 = 1\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(K_{\text{eff}, l}\)</span> — ефективний розмір ядра на шарі <span class="arithmatex">\(l\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(S_l\)</span> — крок (stride) на шарі <span class="arithmatex">\(l\)</span>.</p>
+</li>
+</ul>
+<p><pre class="mermaid"><code>graph TD
+    Input["Вхідне зображення (RF_0 = 1, J_0 = 1)"] --&gt; Conv1["Conv1 (K=3, S=1) -&gt;RF_1 = 3, J_1 = 1"]
+    Conv1 --&gt; Pool1["MaxPool1 (K=2, S=2) -&gt;RF_2 = 4, J_2 = 2"]
+    Pool1 --&gt; Conv2["Conv2 (K=3, S=1) -&gt;RF_3 = 8, J_3 = 2"]
+    Conv2 --&gt; Conv3["Dilated Conv3 (K=3, D=2, S=1) -&gt;RF_4 = 16, J_4 = 2"]</code></pre>
+<em>Рисунок 2 — Схема послідовного розширення рецептивного поля (Receptive Field) крізь каскад згорткових та пулінгових шарів</em></p>
+<hr />
+<h2 id="2-0">2. Підготовка середовища та розгортання проєкту (Крок 0)</h2>
+<p>Налаштуйте віртуальне Python-середовище та встановіть необхідні бібліотеки.</p>
+<h3 id="21-cli">2.1. Команди для терміналу (CLI)</h3>
+<p>Створення та активація віртуального середовища:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv_cnn
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>venv_cnn/bin/activate<span class="w">  </span><span class="c1"># Для Linux/macOS</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># або: .\venv_cnn\Scripts\Activate.ps1  # Для Windows</span>
+</span></code></pre></div></p>
+<p>Встановлення необхідних пакетів:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>torch<span class="w"> </span>matplotlib
+</span></code></pre></div></p>
+<h3 id="22">2.2. Структура каталогів проєкту</h3>
+<p>Створіть наступну структуру файлів та папок у робочій директорії:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cnn_geometry_project/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── main.py
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── requirements.txt
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>└── results/
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    └── receptive_field_growth.png
+</span></code></pre></div>
+<p>Вміст файлу <code>requirements.txt</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>numpy&gt;=1.24.0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>torch&gt;=2.0.0
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>matplotlib&gt;=3.7.0
+</span></code></pre></div></p>
+<hr />
+<h2 id="3">3. Порядок виконання роботи</h2>
+<h3 id="31">3.1. Індивідуальні завдання</h3>
+<p>Кожен здобувач виконує математичний розрахунок геометрії CNN, кількості параметрів та рецептивного поля згідно з обраним варіантом із Таблиці 3.1. Необхідно реалізувати аналітичний розрахунковий модуль на мові Python, побудувати відповідну модель у <code>PyTorch</code>, перевірити точність обчислених розмірностей за допомогою контрольного проходу тензора (з англ. <em>Dummy Forward Pass</em>) та побудувати графік зростання рецептивного поля за шарами мережі.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Варіант</th>
+<th style="text-align: center;">Вхідний тензор (<span class="arithmatex">\(C_{\text{in}}, H_{\text{in}}, W_{\text{in}}\)</span>)</th>
+<th style="text-align: left;">Специфікація Каскаду Шарів (Тип, <span class="arithmatex">\(C_{\text{out}}, K, S, P, D\)</span>)</th>
+<th style="text-align: left;">Цільовий розрахунок</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 228 \times 228\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=2, D=2)<br><strong>L4:</strong> Conv2D(256, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 128 \times 128\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=5, S=2, P=2, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=1, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 512 \times 512\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=7, S=2, P=3, D=1)<br><strong>L2:</strong> MaxPool2D(K=3, S=2)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=1, D=1)<br><strong>L4:</strong> Conv2D(256, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 112 \times 112\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=2, P=1, D=1)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=2, D=2)<br><strong>L4:</strong> MaxPool2D(K=2, S=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 256 \times 256\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(16, K=5, S=1, P=0, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(32, K=3, S=1, P=1, D=3)<br><strong>L4:</strong> Conv2D(64, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 150 \times 150\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(48, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(96, K=3, S=2, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(192, K=3, S=1, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 300 \times 300\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=2, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=1, P=1, D=2)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 64 \times 64\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=2, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 224 \times 224\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=5, S=2, P=2, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=1, D=1)<br><strong>L4:</strong> Conv2D(256, K=3, S=1, P=2, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 180 \times 180\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> MaxPool2D(K=3, S=3)<br><strong>L3:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L4:</strong> Conv2D(128, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 512 \times 512\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=7, S=2, P=3, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=2, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=1, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 96 \times 96\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(16, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(32, K=3, S=2, P=1, D=1)<br><strong>L3:</strong> Conv2D(64, K=3, S=1, P=1, D=2)<br><strong>L4:</strong> MaxPool2D(K=2, S=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 400 \times 400\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=3, S=2, P=1, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(128, K=5, S=1, P=2, D=1)<br><strong>L4:</strong> Conv2D(256, K=3, S=1, P=1, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 200 \times 200\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=2, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 320 \times 320\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=5, S=2, P=2, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 160 \times 160\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=3, D=3)<br><strong>L4:</strong> Conv2D(256, K=3, S=1, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>17</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 100 \times 100\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(16, K=3, S=1, P=0, D=1)<br><strong>L2:</strong> Conv2D(32, K=3, S=1, P=0, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(64, K=3, S=1, P=1, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 240 \times 240\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=2, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=3, S=1, P=1, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=2, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>19</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(3 \times 280 \times 280\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(64, K=7, S=2, P=3, D=1)<br><strong>L2:</strong> MaxPool2D(K=2, S=2)<br><strong>L3:</strong> Conv2D(128, K=3, S=1, P=1, D=1)<br><strong>L4:</strong> Conv2D(256, K=3, S=2, P=1, D=1)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(1 \times 360 \times 360\)</span></td>
+<td style="text-align: left;"><strong>L1:</strong> Conv2D(32, K=3, S=1, P=1, D=1)<br><strong>L2:</strong> Conv2D(64, K=5, S=2, P=2, D=1)<br><strong>L3:</strong> MaxPool2D(K=2, S=2)<br><strong>L4:</strong> Conv2D(128, K=3, S=1, P=1, D=2)</td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>, <span class="arithmatex">\(N_{\text{params}}\)</span>, <span class="arithmatex">\(RF_4\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2. Покроковий алгоритм та розв'язок еталонного прикладу</h3>
+<p>Розглянемо детальний математичний розрахунок для <strong>Варіанта №1</strong>:</p>
+<ul>
+<li>
+<p><strong>Вхідний тензор.</strong> <span class="arithmatex">\(C_0 = 3, H_0 = 228, W_0 = 228\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 1 (Conv2D).</strong> <span class="arithmatex">\(C_1 = 64, K_1 = 3, S_1 = 1, P_1 = 1, D_1 = 1, \text{bias}=True\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 2 (MaxPool2D).</strong> <span class="arithmatex">\(K_2 = 2, S_2 = 2, P_2 = 0, D_2 = 1\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 3 (Conv2D).</strong> <span class="arithmatex">\(C_2 = 128, K_3 = 3, S_3 = 1, P_3 = 2, D_3 = 2, \text{bias}=True\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 4 (Conv2D).</strong> <span class="arithmatex">\(C_3 = 256, K_4 = 3, S_4 = 2, P_4 = 1, D_4 = 1, \text{bias}=True\)</span>.</p>
+</li>
+</ul>
+<p><strong>Крок 1. Розрахунок геометрії та параметрів по шарах:</strong></p>
+<ul>
+<li>
+<p><strong>Шар 1 (Conv2D):</strong></p>
+</li>
+<li>
+<p><span class="arithmatex">\(K_{\text{eff}, 1} = 1 \cdot (3 - 1) + 1 = 3\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(H_1 = \lfloor \frac{228 + 2 \cdot 1 - 3}{1} \rfloor + 1 = 228\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{params}, 1} = 64 \cdot (3 \cdot 3 \cdot 3 + 1) = 64 \cdot 28 = 1,792\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(J_1 = J_0 \cdot S_1 = 1 \cdot 1 = 1\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(RF_1 = RF_0 + (K_{\text{eff}, 1} - 1) \cdot J_0 = 1 + (3 - 1) \cdot 1 = 3\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 2 (MaxPool2D):</strong></p>
+</li>
+<li>
+<p><span class="arithmatex">\(K_{\text{eff}, 2} = 2\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(H_2 = \lfloor \frac{228 + 2 \cdot 0 - 2}{2} \rfloor + 1 = 114\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{params}, 2} = 0\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(J_2 = J_1 \cdot S_2 = 1 \cdot 2 = 2\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(RF_2 = RF_1 + (K_{\text{eff}, 2} - 1) \cdot J_1 = 3 + (2 - 1) \cdot 1 = 4\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 3 (Dilated Conv2D):</strong></p>
+</li>
+<li>
+<p><span class="arithmatex">\(K_{\text{eff}, 3} = D_3 \cdot (K_3 - 1) + 1 = 2 \cdot (3 - 1) + 1 = 5\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(H_3 = \lfloor \frac{114 + 2 \cdot 2 - 5}{1} \rfloor + 1 = 113\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{params}, 3} = 128 \cdot (64 \cdot 3 \cdot 3 + 1) = 128 \cdot 577 = 73,856\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(J_3 = J_2 \cdot S_3 = 2 \cdot 1 = 2\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(RF_3 = RF_2 + (K_{\text{eff}, 3} - 1) \cdot J_2 = 4 + (5 - 1) \cdot 2 = 12\)</span>.</p>
+</li>
+<li>
+<p><strong>Шар 4 (Conv2D):</strong></p>
+</li>
+<li>
+<p><span class="arithmatex">\(K_{\text{eff}, 4} = 3\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(H_4 = \lfloor \frac{113 + 2 \cdot 1 - 3}{2} \rfloor + 1 = \lfloor \frac{112}{2} \rfloor + 1 = 57\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{params}, 4} = 256 \cdot (128 \cdot 3 \cdot 3 + 1) = 256 \cdot 1153 = 295,168\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(J_4 = J_3 \cdot S_4 = 2 \cdot 2 = 4\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(RF_4 = RF_3 + (K_{\text{eff}, 4} - 1) \cdot J_3 = 12 + (3 - 1) \cdot 2 = 20\)</span>.</p>
+</li>
+</ul>
+<p><strong>Підсумок аналітичного розрахунку:</strong></p>
+<ul>
+<li>
+<p>Вихідний розмір тензора: <span class="arithmatex">\(256 \times 57 \times 57\)</span>.</p>
+</li>
+<li>
+<p>Загальна кількість параметрів: <span class="arithmatex">\(1,792 + 0 + 73,856 + 295,168 = 370,816\)</span>.</p>
+</li>
+<li>
+<p>Підсумкове рецептивне поле <span class="arithmatex">\(RF_4 = 20 \times 20\)</span>.</p>
+</li>
+</ul>
+<p>Нижче наведено 100% повний та робочий Python-скрипт <code>main.py</code> без жодних пропущених елементів.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">LayerSpec</span><span class="p">:</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="sd">    Контейнер специфікації шару CNN.</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">layer_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>                 <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">layer_type</span> <span class="o">=</span> <span class="n">layer_type</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">out_channels</span> <span class="o">=</span> <span class="n">out_channels</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="n">kernel_size</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">=</span> <span class="n">dilation</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">class</span><span class="w"> </span><span class="nc">CNNArchitectureAnalyzer</span><span class="p">:</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="sd">    Аналізатор геометрії, параметрів та рецептивного поля CNN.</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">in_h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">in_w</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span> <span class="o">=</span> <span class="n">in_channels</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">in_h</span> <span class="o">=</span> <span class="n">in_h</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">in_w</span> <span class="o">=</span> <span class="n">in_w</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">specs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">LayerSpec</span><span class="p">):</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>        <span class="n">curr_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>        <span class="n">curr_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_h</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>        <span class="n">curr_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_w</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>        <span class="n">curr_rf</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>        <span class="n">curr_jump</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>        <span class="n">total_params</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>        <span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">specs</span><span class="p">:</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>            <span class="n">k_eff</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">dilation</span> <span class="o">*</span> <span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>            <span class="n">h_out</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">curr_h</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spec</span><span class="o">.</span><span class="n">padding</span> <span class="o">-</span> <span class="n">k_eff</span><span class="p">)</span> <span class="o">/</span> <span class="n">spec</span><span class="o">.</span><span class="n">stride</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>            <span class="n">w_out</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">curr_w</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spec</span><span class="o">.</span><span class="n">padding</span> <span class="o">-</span> <span class="n">k_eff</span><span class="p">)</span> <span class="o">/</span> <span class="n">spec</span><span class="o">.</span><span class="n">stride</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>            <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">layer_type</span> <span class="o">==</span> <span class="s1">&#39;conv2d&#39;</span><span class="p">:</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>                <span class="n">c_out</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">out_channels</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>                <span class="n">bias_count</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">bias</span> <span class="k">else</span> <span class="mi">0</span>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>                <span class="n">params</span> <span class="o">=</span> <span class="n">c_out</span> <span class="o">*</span> <span class="p">(</span><span class="n">curr_c</span> <span class="o">*</span> <span class="n">spec</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">*</span> <span class="n">spec</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">+</span> <span class="n">bias_count</span><span class="p">)</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-4-56"><a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>                <span class="n">c_out</span> <span class="o">=</span> <span class="n">curr_c</span>
+</span><span id="__span-4-57"><a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>                <span class="n">params</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-4-58"><a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>
+</span><span id="__span-4-59"><a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>            <span class="n">total_params</span> <span class="o">+=</span> <span class="n">params</span>
+</span><span id="__span-4-60"><a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a>            <span class="n">curr_rf</span> <span class="o">=</span> <span class="n">curr_rf</span> <span class="o">+</span> <span class="p">(</span><span class="n">k_eff</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">curr_jump</span>
+</span><span id="__span-4-61"><a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>            <span class="n">curr_jump</span> <span class="o">=</span> <span class="n">curr_jump</span> <span class="o">*</span> <span class="n">spec</span><span class="o">.</span><span class="n">stride</span>
+</span><span id="__span-4-62"><a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a>
+</span><span id="__span-4-63"><a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>            <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-4-64"><a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a>                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">spec</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+</span><span id="__span-4-65"><a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a>                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">spec</span><span class="o">.</span><span class="n">layer_type</span><span class="p">,</span>
+</span><span id="__span-4-66"><a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a>                <span class="s1">&#39;in_shape&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">curr_c</span><span class="p">,</span> <span class="n">curr_h</span><span class="p">,</span> <span class="n">curr_w</span><span class="p">),</span>
+</span><span id="__span-4-67"><a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a>                <span class="s1">&#39;out_shape&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">c_out</span><span class="p">,</span> <span class="n">h_out</span><span class="p">,</span> <span class="n">w_out</span><span class="p">),</span>
+</span><span id="__span-4-68"><a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a>                <span class="s1">&#39;k_eff&#39;</span><span class="p">:</span> <span class="n">k_eff</span><span class="p">,</span>
+</span><span id="__span-4-69"><a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a>                <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span>
+</span><span id="__span-4-70"><a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a>                <span class="s1">&#39;jump&#39;</span><span class="p">:</span> <span class="n">curr_jump</span><span class="p">,</span>
+</span><span id="__span-4-71"><a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a>                <span class="s1">&#39;rf&#39;</span><span class="p">:</span> <span class="n">curr_rf</span>
+</span><span id="__span-4-72"><a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a>            <span class="p">}</span>
+</span><span id="__span-4-73"><a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a>            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span><span id="__span-4-74"><a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a>
+</span><span id="__span-4-75"><a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a>            <span class="n">curr_c</span> <span class="o">=</span> <span class="n">c_out</span>
+</span><span id="__span-4-76"><a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a>            <span class="n">curr_h</span> <span class="o">=</span> <span class="n">h_out</span>
+</span><span id="__span-4-77"><a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>            <span class="n">curr_w</span> <span class="o">=</span> <span class="n">w_out</span>
+</span><span id="__span-4-78"><a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a>
+</span><span id="__span-4-79"><a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a>        <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">total_params</span>
+</span><span id="__span-4-80"><a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a>
+</span><span id="__span-4-81"><a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_pytorch_model</span><span class="p">(</span><span class="n">analyzer</span><span class="p">:</span> <span class="n">CNNArchitectureAnalyzer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">:</span>
+</span><span id="__span-4-82"><a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-4-83"><a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a><span class="sd">    Створення еквівалентної PyTorch моделі.</span>
+</span><span id="__span-4-84"><a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-4-85"><a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a>    <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-4-86"><a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a>    <span class="n">curr_c</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">in_channels</span>
+</span><span id="__span-4-87"><a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a>
+</span><span id="__span-4-88"><a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a>    <span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">specs</span><span class="p">:</span>
+</span><span id="__span-4-89"><a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a>        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">layer_type</span> <span class="o">==</span> <span class="s1">&#39;conv2d&#39;</span><span class="p">:</span>
+</span><span id="__span-4-90"><a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a>            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span>
+</span><span id="__span-4-91"><a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a>                <span class="n">in_channels</span><span class="o">=</span><span class="n">curr_c</span><span class="p">,</span>
+</span><span id="__span-4-92"><a id="__codelineno-4-92" name="__codelineno-4-92" href="#__codelineno-4-92"></a>                <span class="n">out_channels</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">out_channels</span><span class="p">,</span>
+</span><span id="__span-4-93"><a id="__codelineno-4-93" name="__codelineno-4-93" href="#__codelineno-4-93"></a>                <span class="n">kernel_size</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+</span><span id="__span-4-94"><a id="__codelineno-4-94" name="__codelineno-4-94" href="#__codelineno-4-94"></a>                <span class="n">stride</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+</span><span id="__span-4-95"><a id="__codelineno-4-95" name="__codelineno-4-95" href="#__codelineno-4-95"></a>                <span class="n">padding</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+</span><span id="__span-4-96"><a id="__codelineno-4-96" name="__codelineno-4-96" href="#__codelineno-4-96"></a>                <span class="n">dilation</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+</span><span id="__span-4-97"><a id="__codelineno-4-97" name="__codelineno-4-97" href="#__codelineno-4-97"></a>                <span class="n">bias</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">bias</span>
+</span><span id="__span-4-98"><a id="__codelineno-4-98" name="__codelineno-4-98" href="#__codelineno-4-98"></a>            <span class="p">))</span>
+</span><span id="__span-4-99"><a id="__codelineno-4-99" name="__codelineno-4-99" href="#__codelineno-4-99"></a>            <span class="n">curr_c</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">out_channels</span>
+</span><span id="__span-4-100"><a id="__codelineno-4-100" name="__codelineno-4-100" href="#__codelineno-4-100"></a>        <span class="k">elif</span> <span class="n">spec</span><span class="o">.</span><span class="n">layer_type</span> <span class="o">==</span> <span class="s1">&#39;maxpool2d&#39;</span><span class="p">:</span>
+</span><span id="__span-4-101"><a id="__codelineno-4-101" name="__codelineno-4-101" href="#__codelineno-4-101"></a>            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span>
+</span><span id="__span-4-102"><a id="__codelineno-4-102" name="__codelineno-4-102" href="#__codelineno-4-102"></a>                <span class="n">kernel_size</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+</span><span id="__span-4-103"><a id="__codelineno-4-103" name="__codelineno-4-103" href="#__codelineno-4-103"></a>                <span class="n">stride</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+</span><span id="__span-4-104"><a id="__codelineno-4-104" name="__codelineno-4-104" href="#__codelineno-4-104"></a>                <span class="n">padding</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+</span><span id="__span-4-105"><a id="__codelineno-4-105" name="__codelineno-4-105" href="#__codelineno-4-105"></a>                <span class="n">dilation</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">dilation</span>
+</span><span id="__span-4-106"><a id="__codelineno-4-106" name="__codelineno-4-106" href="#__codelineno-4-106"></a>            <span class="p">))</span>
+</span><span id="__span-4-107"><a id="__codelineno-4-107" name="__codelineno-4-107" href="#__codelineno-4-107"></a>    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+</span><span id="__span-4-108"><a id="__codelineno-4-108" name="__codelineno-4-108" href="#__codelineno-4-108"></a>
+</span><span id="__span-4-109"><a id="__codelineno-4-109" name="__codelineno-4-109" href="#__codelineno-4-109"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-4-110"><a id="__codelineno-4-110" name="__codelineno-4-110" href="#__codelineno-4-110"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</span><span id="__span-4-111"><a id="__codelineno-4-111" name="__codelineno-4-111" href="#__codelineno-4-111"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ПРАКТИЧНЕ ЗАНЯТТЯ №6. МАТЕМАТИЧНИЙ РОЗРАХУНОК ГЕОМЕТРІЇ СNN ТА RECEPTIVE FIELD&quot;</span><span class="p">)</span>
+</span><span id="__span-4-112"><a id="__codelineno-4-112" name="__codelineno-4-112" href="#__codelineno-4-112"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+</span><span id="__span-4-113"><a id="__codelineno-4-113" name="__codelineno-4-113" href="#__codelineno-4-113"></a>
+</span><span id="__span-4-114"><a id="__codelineno-4-114" name="__codelineno-4-114" href="#__codelineno-4-114"></a>    <span class="c1"># Параметри Варіанта №1</span>
+</span><span id="__span-4-115"><a id="__codelineno-4-115" name="__codelineno-4-115" href="#__codelineno-4-115"></a>    <span class="n">in_c</span><span class="p">,</span> <span class="n">in_h</span><span class="p">,</span> <span class="n">in_w</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="mi">228</span>
+</span><span id="__span-4-116"><a id="__codelineno-4-116" name="__codelineno-4-116" href="#__codelineno-4-116"></a>    <span class="n">analyzer</span> <span class="o">=</span> <span class="n">CNNArchitectureAnalyzer</span><span class="p">(</span><span class="n">in_c</span><span class="p">,</span> <span class="n">in_h</span><span class="p">,</span> <span class="n">in_w</span><span class="p">)</span>
+</span><span id="__span-4-117"><a id="__codelineno-4-117" name="__codelineno-4-117" href="#__codelineno-4-117"></a>
+</span><span id="__span-4-118"><a id="__codelineno-4-118" name="__codelineno-4-118" href="#__codelineno-4-118"></a>    <span class="n">analyzer</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">LayerSpec</span><span class="p">(</span><span class="s2">&quot;Layer1_Conv2D&quot;</span><span class="p">,</span> <span class="s2">&quot;conv2d&quot;</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-4-119"><a id="__codelineno-4-119" name="__codelineno-4-119" href="#__codelineno-4-119"></a>    <span class="n">analyzer</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">LayerSpec</span><span class="p">(</span><span class="s2">&quot;Layer2_MaxPool&quot;</span><span class="p">,</span> <span class="s2">&quot;maxpool2d&quot;</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-4-120"><a id="__codelineno-4-120" name="__codelineno-4-120" href="#__codelineno-4-120"></a>    <span class="n">analyzer</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">LayerSpec</span><span class="p">(</span><span class="s2">&quot;Layer3_DilatedConv&quot;</span><span class="p">,</span> <span class="s2">&quot;conv2d&quot;</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span><span id="__span-4-121"><a id="__codelineno-4-121" name="__codelineno-4-121" href="#__codelineno-4-121"></a>    <span class="n">analyzer</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">LayerSpec</span><span class="p">(</span><span class="s2">&quot;Layer4_Conv2D&quot;</span><span class="p">,</span> <span class="s2">&quot;conv2d&quot;</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dilation</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-4-122"><a id="__codelineno-4-122" name="__codelineno-4-122" href="#__codelineno-4-122"></a>
+</span><span id="__span-4-123"><a id="__codelineno-4-123" name="__codelineno-4-123" href="#__codelineno-4-123"></a>    <span class="c1"># 1. Аналітичний розрахунок</span>
+</span><span id="__span-4-124"><a id="__codelineno-4-124" name="__codelineno-4-124" href="#__codelineno-4-124"></a>    <span class="n">results</span><span class="p">,</span> <span class="n">total_params</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+</span><span id="__span-4-125"><a id="__codelineno-4-125" name="__codelineno-4-125" href="#__codelineno-4-125"></a>
+</span><span id="__span-4-126"><a id="__codelineno-4-126" name="__codelineno-4-126" href="#__codelineno-4-126"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Вхідний тензор: (</span><span class="si">{</span><span class="n">in_c</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">in_h</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">in_w</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-127"><a id="__codelineno-4-127" name="__codelineno-4-127" href="#__codelineno-4-127"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">85</span><span class="p">)</span>
+</span><span id="__span-4-128"><a id="__codelineno-4-128" name="__codelineno-4-128" href="#__codelineno-4-128"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Шар&#39;</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;Вхідний Shape&#39;</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;Вихідний Shape&#39;</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;Params&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;RF&#39;</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;Jump&#39;</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-129"><a id="__codelineno-4-129" name="__codelineno-4-129" href="#__codelineno-4-129"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">85</span><span class="p">)</span>
+</span><span id="__span-4-130"><a id="__codelineno-4-130" name="__codelineno-4-130" href="#__codelineno-4-130"></a>    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-4-131"><a id="__codelineno-4-131" name="__codelineno-4-131" href="#__codelineno-4-131"></a>        <span class="n">in_s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;in_shape&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;in_shape&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;in_shape&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-4-132"><a id="__codelineno-4-132" name="__codelineno-4-132" href="#__codelineno-4-132"></a>        <span class="n">out_s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-4-133"><a id="__codelineno-4-133" name="__codelineno-4-133" href="#__codelineno-4-133"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">in_s</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">out_s</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;10,</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;rf&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;jump&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-134"><a id="__codelineno-4-134" name="__codelineno-4-134" href="#__codelineno-4-134"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">85</span><span class="p">)</span>
+</span><span id="__span-4-135"><a id="__codelineno-4-135" name="__codelineno-4-135" href="#__codelineno-4-135"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Загальна кількість навчувальних параметрів: </span><span class="si">{</span><span class="n">total_params</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-136"><a id="__codelineno-4-136" name="__codelineno-4-136" href="#__codelineno-4-136"></a>
+</span><span id="__span-4-137"><a id="__codelineno-4-137" name="__codelineno-4-137" href="#__codelineno-4-137"></a>    <span class="c1"># 2. Верифікація через PyTorch Forward Pass</span>
+</span><span id="__span-4-138"><a id="__codelineno-4-138" name="__codelineno-4-138" href="#__codelineno-4-138"></a>    <span class="n">torch_model</span> <span class="o">=</span> <span class="n">build_pytorch_model</span><span class="p">(</span><span class="n">analyzer</span><span class="p">)</span>
+</span><span id="__span-4-139"><a id="__codelineno-4-139" name="__codelineno-4-139" href="#__codelineno-4-139"></a>    <span class="n">dummy_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">in_c</span><span class="p">,</span> <span class="n">in_h</span><span class="p">,</span> <span class="n">in_w</span><span class="p">)</span>
+</span><span id="__span-4-140"><a id="__codelineno-4-140" name="__codelineno-4-140" href="#__codelineno-4-140"></a>
+</span><span id="__span-4-141"><a id="__codelineno-4-141" name="__codelineno-4-141" href="#__codelineno-4-141"></a>    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+</span><span id="__span-4-142"><a id="__codelineno-4-142" name="__codelineno-4-142" href="#__codelineno-4-142"></a>        <span class="n">dummy_output</span> <span class="o">=</span> <span class="n">torch_model</span><span class="p">(</span><span class="n">dummy_input</span><span class="p">)</span>
+</span><span id="__span-4-143"><a id="__codelineno-4-143" name="__codelineno-4-143" href="#__codelineno-4-143"></a>
+</span><span id="__span-4-144"><a id="__codelineno-4-144" name="__codelineno-4-144" href="#__codelineno-4-144"></a>    <span class="n">expected_out_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;out_shape&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+</span><span id="__span-4-145"><a id="__codelineno-4-145" name="__codelineno-4-145" href="#__codelineno-4-145"></a>    <span class="n">torch_out_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dummy_output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span><span id="__span-4-146"><a id="__codelineno-4-146" name="__codelineno-4-146" href="#__codelineno-4-146"></a>
+</span><span id="__span-4-147"><a id="__codelineno-4-147" name="__codelineno-4-147" href="#__codelineno-4-147"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ВЕРИФІКАЦІЯ РОЗМІРНОСТЕЙ З PYTORCH:&quot;</span><span class="p">)</span>
+</span><span id="__span-4-148"><a id="__codelineno-4-148" name="__codelineno-4-148" href="#__codelineno-4-148"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Аналітичний вихідний Shape: </span><span class="si">{</span><span class="n">expected_out_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-149"><a id="__codelineno-4-149" name="__codelineno-4-149" href="#__codelineno-4-149"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - PyTorch Forward Output:     </span><span class="si">{</span><span class="n">torch_out_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-150"><a id="__codelineno-4-150" name="__codelineno-4-150" href="#__codelineno-4-150"></a>
+</span><span id="__span-4-151"><a id="__codelineno-4-151" name="__codelineno-4-151" href="#__codelineno-4-151"></a>    <span class="k">assert</span> <span class="n">expected_out_shape</span> <span class="o">==</span> <span class="n">torch_out_shape</span><span class="p">,</span> <span class="s2">&quot;ПОМИЛКА: Розмірності не збігаються!&quot;</span>
+</span><span id="__span-4-152"><a id="__codelineno-4-152" name="__codelineno-4-152" href="#__codelineno-4-152"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --&gt; РЕЗУЛЬТАТ: Аналітичний розрахунок геометрії 100% ТОЧНИЙ!&quot;</span><span class="p">)</span>
+</span><span id="__span-4-153"><a id="__codelineno-4-153" name="__codelineno-4-153" href="#__codelineno-4-153"></a>
+</span><span id="__span-4-154"><a id="__codelineno-4-154" name="__codelineno-4-154" href="#__codelineno-4-154"></a>    <span class="c1"># 3. Побудова графіка зростання Рецептивного Поля (RF)</span>
+</span><span id="__span-4-155"><a id="__codelineno-4-155" name="__codelineno-4-155" href="#__codelineno-4-155"></a>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-156"><a id="__codelineno-4-156" name="__codelineno-4-156" href="#__codelineno-4-156"></a>    <span class="n">layer_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Input&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+</span><span id="__span-4-157"><a id="__codelineno-4-157" name="__codelineno-4-157" href="#__codelineno-4-157"></a>    <span class="n">rf_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;rf&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+</span><span id="__span-4-158"><a id="__codelineno-4-158" name="__codelineno-4-158" href="#__codelineno-4-158"></a>
+</span><span id="__span-4-159"><a id="__codelineno-4-159" name="__codelineno-4-159" href="#__codelineno-4-159"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-4-160"><a id="__codelineno-4-160" name="__codelineno-4-160" href="#__codelineno-4-160"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">layer_names</span><span class="p">,</span> <span class="n">rf_values</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="__span-4-161"><a id="__codelineno-4-161" name="__codelineno-4-161" href="#__codelineno-4-161"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">txt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rf_values</span><span class="p">):</span>
+</span><span id="__span-4-162"><a id="__codelineno-4-162" name="__codelineno-4-162" href="#__codelineno-4-162"></a>        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">txt</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">txt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">layer_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">rf_values</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</span><span id="__span-4-163"><a id="__codelineno-4-163" name="__codelineno-4-163" href="#__codelineno-4-163"></a>
+</span><span id="__span-4-164"><a id="__codelineno-4-164" name="__codelineno-4-164" href="#__codelineno-4-164"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Динаміка зростання рецептивного поля (Receptive Field) за шарами CNN&#39;</span><span class="p">)</span>
+</span><span id="__span-4-165"><a id="__codelineno-4-165" name="__codelineno-4-165" href="#__codelineno-4-165"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Шар нейронної мережі&#39;</span><span class="p">)</span>
+</span><span id="__span-4-166"><a id="__codelineno-4-166" name="__codelineno-4-166" href="#__codelineno-4-166"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Розмір Рецептивного Поля (пікселі)&#39;</span><span class="p">)</span>
+</span><span id="__span-4-167"><a id="__codelineno-4-167" name="__codelineno-4-167" href="#__codelineno-4-167"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</span><span id="__span-4-168"><a id="__codelineno-4-168" name="__codelineno-4-168" href="#__codelineno-4-168"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="__span-4-169"><a id="__codelineno-4-169" name="__codelineno-4-169" href="#__codelineno-4-169"></a>
+</span><span id="__span-4-170"><a id="__codelineno-4-170" name="__codelineno-4-170" href="#__codelineno-4-170"></a>    <span class="n">plot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="s2">&quot;receptive_field_growth.png&quot;</span><span class="p">)</span>
+</span><span id="__span-4-171"><a id="__codelineno-4-171" name="__codelineno-4-171" href="#__codelineno-4-171"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</span><span id="__span-4-172"><a id="__codelineno-4-172" name="__codelineno-4-172" href="#__codelineno-4-172"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[INFO] Графік зростання рецептивного поля збережено у: </span><span class="si">{</span><span class="n">plot_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-173"><a id="__codelineno-4-173" name="__codelineno-4-173" href="#__codelineno-4-173"></a>
+</span><span id="__span-4-174"><a id="__codelineno-4-174" name="__codelineno-4-174" href="#__codelineno-4-174"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-4-175"><a id="__codelineno-4-175" name="__codelineno-4-175" href="#__codelineno-4-175"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="33">3.3. Графічна візуалізація обчислювального процесу</h3>
+<p>Наведено графічну діаграму обчислювального графа розрахунку геометрії та передачі тензора крізь шари CNN.</p>
+<p><pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant I as Вхідний тензор [3x228x228]
+    participant L1 as Layer 1: Conv2D (K=3, S=1, P=1)
+    participant L2 as Layer 2: MaxPool2D (K=2, S=2)
+    participant L3 as Layer 3: DilatedConv (K=3, D=2, P=2)
+    participant L4 as Layer 4: Conv2D (K=3, S=2, P=1)
+
+    I-&gt;&gt;L1: Tensor [3x228x228] -&gt; RF1 = 3, Params = 1,792
+    L1-&gt;&gt;L2: Feature Map [64x228x228] -&gt; RF2 = 4, Params = 0
+    L2-&gt;&gt;L3: Feature Map [64x114x114] -&gt; RF3 = 12, Params = 73,856
+    L3-&gt;&gt;L4: Feature Map [128x113x113] -&gt; RF4 = 20, Params = 295,168
+    L4--&gt;&gt;I: Вихідний тензор [256x57x57], Total Params = 370,816</code></pre>
+<em>Рисунок 3 — Діаграма послідовності просторової трансформації тензора та акумуляції рецептивного поля</em></p>
+<h3 id="34">3.4. Запуск, тестування та перевірка результатів</h3>
+<p>Для запуску програмного коду виконайте у терміналі команду:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>main.py
+</span></code></pre></div></p>
+<p><strong>Еталонне виведення програми в консоль для перевірки:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>================================================================================
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ПРАКТИЧНЕ ЗАНЯТТЯ №6. МАТЕМАТИЧНИЙ РОЗРАХУНОК ГЕОМЕТРІЇ СNN ТА RECEPTIVE FIELD
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>================================================================================
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Вхідний тензор: (3, 228, 228)
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>-------------------------------------------------------------------------------------
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Шар                | Вхідний Shape   | Вихідний Shape  | Params     | RF     | Jump  
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>-------------------------------------------------------------------------------------
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>Layer1_Conv2D      | 3x228x228       | 64x228x228      | 1,792      | 3      | 1     
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Layer2_MaxPool     | 64x228x228      | 64x114x114      | 0          | 4      | 2     
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Layer3_DilatedConv | 64x114x114      | 128x113x113     | 73,856     | 12     | 2     
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>Layer4_Conv2D      | 128x113x113     | 256x57x57       | 295,168    | 20     | 4     
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>-------------------------------------------------------------------------------------
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Загальна кількість навчувальних параметрів: 370,816
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>ВЕРИФІКАЦІЯ РОЗМІРНОСТЕЙ З PYTORCH:
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>  - Аналітичний вихідний Shape: (1, 256, 57, 57)
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>  - PyTorch Forward Output:     (1, 256, 57, 57)
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>  --&gt; РЕЗУЛЬТАТ: Аналітичний розрахунок геометрії 100% ТОЧНИЙ!
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>[INFO] Графік зростання рецептивного поля збережено у: results/receptive_field_growth.png
+</span></code></pre></div>
+<hr />
+<h2 id="4">4. Вимоги до змісту звіту</h2>
+<p>Звіт про виконання практичного заняття повинен містити наступні обов'язкові розділи:</p>
+<ol>
+<li>
+<p><strong>Титульна сторінка.</strong> Назва вищого навчального закладу, факультету, кафедри, дисципліни, номер практичної роботи, тема, ПІБ здобувача, група та номер варіанта.</p>
+</li>
+<li>
+<p><strong>Мета та постановка задачі.</strong> Вихідна конфігурація вхідного тензора та специфікація каскаду шарів згідно з Обраним варіантом із Таблиці 3.1.</p>
+</li>
+<li>
+<p><strong>Аналітичний розрахунок.</strong> Покрокові математичні розрахунки вихідних розмірностей карт ознак (<span class="arithmatex">\(H_{\text{out}}, W_{\text{out}}\)</span>), ефективних розмірів ядер (<span class="arithmatex">\(K_{\text{eff}}\)</span>), обсягу параметрів (<span class="arithmatex">\(N_{\text{params}}\)</span>), кумулятивних кроків (<span class="arithmatex">\(J_l\)</span>) та рецептивного поля (<span class="arithmatex">\(RF_l\)</span>) для кожного шару у форматі LaTeX.</p>
+</li>
+<li>
+<p><strong>Програмна реалізація.</strong> Повний вихідний код розробленого аналізатора <code>main.py</code> із коментарями.</p>
+</li>
+<li>
+<p><strong>Результати тестування.</strong> Скріншот виведення підсумкової таблиці в консоль, підтвердження збігу розмірностей із <code>PyTorch</code> та збережений графік зростання рецептивного поля <code>results/receptive_field_growth.png</code>.</p>
+</li>
+<li>
+<p><strong>Аналітичний висновок.</strong> Аналіз впливу параметрів Stride, Dilation та Pooling на швидкість зменшення просторових розмірностей і зростання рецептивного поля. Обґрунтування застосування розширеної згортки (з англ. <em>Dilated Convolution</em>) для збільшення RF без втрати роздільної здатності.</p>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. Контрольні запитання для захисту роботи</h2>
+<ol>
+<li>
+<p>Як обчислюється вихідний розмір карти ознак у двовимірному згортковому шарі при використанні ненульових параметрів Padding, Stride та Dilation?</p>
+</li>
+<li>
+<p>Поясніть фізичний зміст розширеної згортки (з англ. <em>Dilated / Atrous Convolution</em>). Чим вона відрізняється від звичайної згортки з більшим ядром?</p>
+</li>
+<li>
+<p>Як обчислити загальну кількість навчувальних параметрів у шарі Conv2D з параметром <code>bias=True</code> та без нього?</p>
+</li>
+<li>
+<p>Що таке рецептивне поле (з англ. <em>Receptive Field</em>), і за допомогою яких математичних формул виконується його ітераційний розрахунок крізь каскад шарів?</p>
+</li>
+<li>
+<p>У чому полягає математична та обчислювальна перевага розділюваної по глибині згортки (з англ. <em>Depthwise Separable Convolution</em>) порівняно зі стандартною 2D згорткою?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2164 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk8/">
+      
+      
+        <link rel="next" href="../lk10/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 9. Згорткові нейронні мережі у завданнях перцепції - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#9-cnn-pooling-cnn" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 9. Згорткові нейронні мережі у завданнях перцепції
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Основний зміст та теоретичний базис">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична сутність та гіперпараметри згортки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шари субдискретизації (Pooling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концепція рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Еволюція глибинних згорткових архітектур: ResNet та MobileNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Еволюція глибинних згорткових архітектур: ResNet та MobileNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-resnet-residual-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Архітектура ResNet (Residual Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Архітектура MobileNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-2d-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Повна математична формула дискретної 2D-згортки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Загальні формули розрахунку просторових розмірів вихідних карт ознак
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Рекурентний розрахунок просторового рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-resnet-residual-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Математичний апарат залишкового блоку ResNet (Residual Block)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-depthwise-separable-convolution-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Аналіз обчислювальної складності Depthwise Separable Convolution у MobileNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Основний зміст та теоретичний базис">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична сутність та гіперпараметри згортки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Шари субдискретизації (Pooling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концепція рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Еволюція глибинних згорткових архітектур: ResNet та MobileNet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Еволюція глибинних згорткових архітектур: ResNet та MobileNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-resnet-residual-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Архітектура ResNet (Residual Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Архітектура MobileNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-2d-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Повна математична формула дискретної 2D-згортки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Загальні формули розрахунку просторових розмірів вихідних карт ознак
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-receptive-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Рекурентний розрахунок просторового рецептивного поля (Receptive Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-resnet-residual-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Математичний апарат залишкового блоку ResNet (Residual Block)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-depthwise-separable-convolution-mobilenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Аналіз обчислювальної складності Depthwise Separable Convolution у MobileNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="9-cnn-pooling-cnn">Тема 9. Згорткові нейронні мережі (CNN) у завданнях перцепції. Математика згортки, Pooling, рецептивні поля, архітектури CNN для комп'ютерного зору та сигналів</h1>
+<h2 id="1">1. Основний зміст та теоретичний базис</h2>
+<p>Задачі комп'ютерного сприйняття (<strong>Perception Tasks</strong>) охоплюють широкий спектр інженерних проблем, пов'язаних з автоматичним аналізом, фільтрацією, класифікацією та інтерпретацією багатовимірних сигналів, що надходять від первинних сенсорів. До таких сигналів належать одновимірні часові послідовності та біосигнали (ЕКГ, ЕЕГ, акустичні та радіолокаційні коливання), двовимірні просторові структури (цифрові зображення, спектрограми, карти глибини) та тривимірні об'єкти (відеопотоки, точкові хмари LiDAR).</p>
+<p>Застосування класичних повнозв'язних багатошарових персептронів (<strong>MLP</strong>) для обробки просторово-часових сіткових даних є неефективним через наступні фундаментальні причини:</p>
+<ul>
+<li>
+<p><strong>Комбінаторний вибух кількості параметрів</strong> — для цифрового зображення помірної роздільної здатності <span class="arithmatex">\(1024 \times 1024\)</span> пікселів із трьома колірними каналами вхідний вектор містить <span class="arithmatex">\(3 145 728\)</span> елементів. Повнозв'язний шар навіть з <span class="arithmatex">\(1000\)</span> нейронами вимагатиме понад <span class="arithmatex">\(3\)</span> мільярди вагових коефіцієнтів, що унеможливлює розміщення моделі у пам'яті VRAM та гарантовано призводить до критичного перенавчання.</p>
+</li>
+<li>
+<p><strong>Ігнорування просторової топології</strong> — вирівнювання багатовимірної матриці у плаский <span class="arithmatex">\(1D\)</span>-вектор руйнує локальні просторові та часові кореляції між суміжними елементами.</p>
+</li>
+<li>
+<p><strong>Відсутність еквіваріантності до зсуву</strong> — повнозв'язній мережі необхідно окремо вивчати розпізнавання одного й того самого патерну у кожній можливій позиції координатної сітки.</p>
+</li>
+</ul>
+<p><strong>Згорткові нейронні мережі (Convolutional Neural Networks, CNN)</strong> розв'язують ці проблеми завдяки введенню двох ключових індуктивних упереджень (<strong>Inductive Biases</strong>):</p>
+<ol>
+<li>
+<p><strong>Локальність зв'язків (Local Receptive Fields).</strong> кожен нейрон згорткового шару з'єднаний не з усіма елементами вхідного тензора, а лише з локальною прямокутною областю (вікном згортки).</p>
+</li>
+<li>
+<p><strong>Сумісне використання ваг (Weight Sharing).</strong> один і той самий масив вагових коефіцієнтів (ядро згортки, або фільтр) послідовно застосовується до всіх просторових позицій вхідного тензора. Це забезпечує математичну властивість <strong>еквіваріантності до зсуву (Translation Equivariance).</strong> якщо вхідний сигнал зміщується у просторі, то відповідна карта ознак (<strong>Feature Map</strong>) зміщується аналогічним чином.</p>
+</li>
+</ol>
+<h3 id="_1">Математична сутність та гіперпараметри згортки</h3>
+<p>Операція двовимірної згортки у глибокому навчанні (яка формально з точки зору математичного аналізу є дискретною взаємною кореляцією) полягає у послідовному скалярному множенні вагового ядра на локальні ділянки вхідного тензора з подальшим підсумовуванням та додаванням вектора зсуву (<strong>Bias</strong>).</p>
+<p>Основними гіперпараметрами, що визначають геометричну трансформацію тензора при проходженні через згортковий шар, є:</p>
+<ul>
+<li>
+<p><strong>Розмір ядра (Kernel Size, <span class="arithmatex">\(K\)</span>)</strong> — просторові габарити фільтра <span class="arithmatex">\(K_H \times K_W\)</span>.</p>
+</li>
+<li>
+<p><strong>Крок згортки (Stride, <span class="arithmatex">\(S\)</span>)</strong> — величина дискретного зміщення ядра вздовж просторових осей за один крок (<span class="arithmatex">\(S_H, S_W\)</span>). Крок <span class="arithmatex">\(S &gt; 1\)</span> зменшує просторову роздільну здатність карти ознак.</p>
+</li>
+<li>
+<p><strong>Доповнення (Padding, <span class="arithmatex">\(P\)</span>)</strong> — додавання фіктивних елементів (найчастіше нулів) по краях вхідного тензора для збереження просторових розмірів або контролю крайових ефектів.</p>
+</li>
+<li>
+<p><strong>Розширення (Dilation, <span class="arithmatex">\(D\)</span>)</strong> — відстань між елементами ядра при накладанні на вхідний тензор. Розширена згортка (<strong>Dilated / Atrous Convolution</strong>) дає змогу експоненційно збільшувати зональне охоплення без нарощування кількості параметрів.</p>
+</li>
+<li>
+<p><strong>Кількість каналів (Channels)</strong> — вхідні канали <span class="arithmatex">\(C_{in}\)</span> та вихідні канали <span class="arithmatex">\(C_{out}\)</span>. Кожен вихідний канал формується власним <span class="arithmatex">\(3D\)</span>-ядром розмірністю <span class="arithmatex">\(C_{in} \times K_H \times K_W\)</span>.</p>
+</li>
+</ul>
+<h3 id="pooling">Шари субдискретизації (Pooling)</h3>
+<p>Шар <strong>Pooling</strong> виконує нелінійне зменшення просторової роздільної здатності карт ознак. Він працює незалежно для кожного каналу, переміщуючи вікно розміром <span class="arithmatex">\(K_p \times K_p\)</span> із кроком <span class="arithmatex">\(S_p\)</span>.</p>
+<ul>
+<li>
+<p><strong>Max Pooling</strong> — обирає максимальне значення у локальному вікні, забезпечуючи інваріантність до малих просторових деформацій та виділяючи найбільш виражені ознаки.</p>
+</li>
+<li>
+<p><strong>Average Pooling</strong> — обчислює середнє арифметичне елементів вікна, забезпечуючи згладжування карт ознак.</p>
+</li>
+<li>
+<p><strong>Global Average Pooling (GAP)</strong> — усереднює всю просторову карту ознак розміром <span class="arithmatex">\(H \times W\)</span> до єдиного скаляра для кожного каналу. GAP зазвичай встановлюється перед фінальним класифікатором, повністю замінюючи громіздкі повнозв'язні шари та суттєво зменшуючи ризик перенавчання.</p>
+</li>
+</ul>
+<h3 id="receptive-field">Концепція рецептивного поля (Receptive Field)</h3>
+<p><strong>Рецептивне поле (Receptive Field, RF)</strong> нейрона у глибокому шарі CNN визначається як область вихідного вхідного сигналу (зображення/аудіограми), значення з якої безпосередньо впливають на активацію даного нейрона. </p>
+<p>У початкових шарах мережі нейрони мають мале рецептивне поле і реагують на низкорівневі примітиви (градієнти, краї, текстури, високі частоти). У міру заглиблення та проходження через послідовність згорткових шарів і шарів Pooling, рецептивне поле нейронів монотонно зростає. Це дає змогу нейронам глибоких шарів інтегрувати контекстну інформацію з великих областей та формувати високорівневі семантичні поняття (деталі об'єктів, цілісні форми, патологічні ритми сигналів).</p>
+<h3 id="resnet-mobilenet">Еволюція глибинних згорткових архітектур: ResNet та MobileNet</h3>
+<p>Зі збільшенням кількості шарів у класичних прямих згорткових мережах дослідники зіштовхнулися з ефектом <strong>деградації навчання (Degradation Problem)</strong>: починаючи з певної глибини (наприклад, понад 20 шарів), точність мережі на навчальній та валідаційній вибірках починає насичуватися, а потім стрімко падає. Це пов'язано не лише з перенавчанням, а й із складністю оптимізації через накопичення помилок та загасання градієнтів при зворотному поширенні.</p>
+<h4 id="1-resnet-residual-networks">1. Архітектура ResNet (Residual Networks)</h4>
+<p>Каймін Хе та співавтори (2015 р.) розв'язали проблему деградації шляхом зміни концепції навчання. Замість прямих відображень <span class="arithmatex">\(H(x)\)</span>, які шар повинен підганяти під цільову функцію, <strong>залишкові блоки (Residual Blocks)</strong> навчаються залишковій функції <span class="arithmatex">\(\mathcal{F}(x) = H(x) - x\)</span>. </p>
+<p>Апаратно це реалізується за допомогою <strong>наскрізних структурних зв'язків (Skip Connections / Identity Shortcuts)</strong>, які передають вхідний тензор <span class="arithmatex">\(x\)</span> в обхід одного або кількох згорткових шарів і додають його до виходу <span class="arithmatex">\(\mathcal{F}(x)\)</span>. Якщо оптимальне відображення є близьким до тотожного, ваговим коефіцієнтам шару <span class="arithmatex">\(\mathcal{F}(x)\)</span> набагато простіше обнулитися, ніж оптимізувати пряме відображення у класичному шарі. Це дозволило успішно навчати ультраглибокі мережі глибиною <span class="arithmatex">\(50\)</span>, <span class="arithmatex">\(101\)</span> та <span class="arithmatex">\(152\)</span> шари (ResNet-50, ResNet-101).</p>
+<h4 id="2-mobilenet">2. Архітектура MobileNet</h4>
+<p>Для розгортання моделей комп'ютерного зору та перцепції на мобільних, вбудованих граничних (<strong>Edge</strong>) пристроях із обмеженими ресурсами CPU/GPU (наприклад, автопілоти, мікроконтролери, медичні портативні аналізатори) було розроблено сімейство <strong>MobileNet</strong> (Howard et al., Google).</p>
+<p>Основою MobileNet є replacement класичної <span class="arithmatex">\(3D\)</span>-згортки на <strong>Depthwise Separable Convolution (Глибинно-роздільну згортку)</strong>, яка розпадається на два окремих етапи:</p>
+<ol>
+<li>
+<p><strong>Depthwise Convolution</strong> — для кожного вхідного каналу окремо застосовується свій просторовий <span class="arithmatex">\(2D\)</span>-фільтр <span class="arithmatex">\(K_H \times K_W\)</span>. Взаємодія між каналами відсутня.</p>
+</li>
+<li>
+<p><strong>Pointwise Convolution</strong> — застосовується класична згортка <span class="arithmatex">\(1 \times 1\)</span> по всіх каналах для обчислення лінійних комбінацій та формування необхідної кількості вихідних каналів <span class="arithmatex">\(C_{out}\)</span>.</p>
+</li>
+</ol>
+<p>У версії <strong>MobileNetV2</strong> було впроваджено <strong>перевернуті залишкові блоки (Inverted Residuals)</strong> та <strong>лінійні вузькі місця (Linear Bottlenecks)</strong>. На відміну від ResNet, де Skip Connections з'єднують шари з великою кількістю каналів, у MobileNetV2 короткі зв'язки з'єднують саме вузькі шари (<strong>Bottlenecks</strong>), а розширення кількості каналів відбувається всередині блоку. Лінійні активації на вузьких шарах запобігають незворотній втраті інформації при проходженні через нелінійність ReLU.</p>
+<hr />
+<h2 id="2">2. Математичний апарат, моделі та аналітичні залежності</h2>
+<h3 id="1-2d-">1. Повна математична формула дискретної 2D-згортки</h3>
+<p>Нехай на вхід згорткового шару подається тензор <span class="arithmatex">\(X \in \mathbb{R}^{C_{in} \times H_{in} \times W_{in}}\)</span>. Набір навчальних ядер описується тензором ваг <span class="arithmatex">\(W \in \mathbb{R}^{C_{out} \times C_{in} \times K_H \times K_W}\)</span>, а вектор зсуву — <span class="arithmatex">\(b \in \mathbb{R}^{C_{out}}\)</span>.</p>
+<p>Значення карти ознак на виході <span class="arithmatex">\(Y \in \mathbb{R}^{C_{out} \times H_{out} \times W_{out}}\)</span> для <span class="arithmatex">\(c_{out}\)</span>-го каналу в просторовій позиції <span class="arithmatex">\((i, j)\)</span> обчислюється за формулою:</p>
+<div class="arithmatex">\[Y_{c_{out}}(i, j) = b_{c_{out}} + \sum_{c_{in}=1}^{C_{in}} \sum_{m=1}^{K_H} \sum_{n=1}^{K_W} X_{c_{in}}\Big(i \cdot S_H + (m - 1) \cdot D_H - P_H, \; j \cdot S_W + (n - 1) \cdot D_W - P_W\Big) \cdot W_{c_{out}, c_{in}}(m, n)\]</div>
+<p>де <span class="arithmatex">\(Y_{c_{out}}(i, j)\)</span> — значення вихідного тензора у каналі <span class="arithmatex">\(c_{out}\)</span> та позиції <span class="arithmatex">\((i, j)\)</span>, <span class="arithmatex">\(b_{c_{out}}\)</span> — скалярний зсув <span class="arithmatex">\(c_{out}\)</span>-го каналу, <span class="arithmatex">\(C_{in}\)</span> — кількість вхідних каналів, <span class="arithmatex">\(K_H, K_W\)</span> — просторові розміри ядра, <span class="arithmatex">\(S_H, S_W\)</span> — кроки згортки (strides), <span class="arithmatex">\(P_H, P_W\)</span> — величини доповнення (padding), <span class="arithmatex">\(D_H, D_W\)</span> — коефіцієнти розширення (dilation).</p>
+<h3 id="2_1">2. Загальні формули розрахунку просторових розмірів вихідних карт ознак</h3>
+<p>Просторові габарити вихідного тензора <span class="arithmatex">\(H_{out}\)</span> та <span class="arithmatex">\(W_{out}\)</span> після застосування згортки або Pooling описуються точними аналітичними формулами з округленням до меншого цілого (<strong>Floor</strong>):</p>
+<div class="arithmatex">\[H_{out} = \left\lfloor \frac{H_{in} + 2 \cdot P_H - D_H \cdot (K_H - 1) - 1}{S_H} \right\rfloor + 1\]</div>
+<div class="arithmatex">\[W_{out} = \left\lfloor \frac{W_{in} + 2 \cdot P_W - D_W \cdot (K_W - 1) - 1}{S_W} \right\rfloor + 1\]</div>
+<p>де <span class="arithmatex">\(H_{in}, W_{in}\)</span> — просторова висота та ширина вхідного тензора, <span class="arithmatex">\(P_H, P_W\)</span> — розмір заповнення по висоті та ширині, <span class="arithmatex">\(K_H, K_W\)</span> — просторовий розмір ядра, <span class="arithmatex">\(D_H, D_W\)</span> — коефіцієнт dilation, <span class="arithmatex">\(S_H, S_W\)</span> — крок stride.</p>
+<h3 id="3-receptive-field">3. Рекурентний розрахунок просторового рецептивного поля (Receptive Field)</h3>
+<p>Розмір рецептивного поля <span class="arithmatex">\(RF_l\)</span> на вхідному зображенні для нейрона, розташованого на шарі <span class="arithmatex">\(l\)</span>, розраховується за рекурентною формулою через характеристики усіх попередніх шарів:</p>
+<div class="arithmatex">\[RF_0 = 1\]</div>
+<div class="arithmatex">\[RF_l = RF_{l-1} + (K_l - 1) \cdot J_{l-1}, \quad \text{де } J_{l-1} = \prod_{m=1}^{l-1} S_m\]</div>
+<p>де <span class="arithmatex">\(RF_l\)</span> — розмір рецептивного поля на шарі <span class="arithmatex">\(l\)</span> (в пікселях вхідного зображення), <span class="arithmatex">\(RF_{l-1}\)</span> — рецептивне поле на попередньому шарі <span class="arithmatex">\(l-1\)</span>, <span class="arithmatex">\(K_l\)</span> — розмір ядра на поточному шарі <span class="arithmatex">\(l\)</span>, <span class="arithmatex">\(S_m\)</span> — крок (stride) шару <span class="arithmatex">\(m\)</span>, <span class="arithmatex">\(J_{l-1}\)</span> — кумулятивний крок мережі (<strong>Cumulative Stride / Jump</strong>) до шару <span class="arithmatex">\(l\)</span>.</p>
+<h3 id="4-resnet-residual-block">4. Математичний апарат залишкового блоку ResNet (Residual Block)</h3>
+<p>Для шару <span class="arithmatex">\(l\)</span> з вхідним тензором <span class="arithmatex">\(x_l\)</span> математичне перетворення у залишковій структурі описується системою рівнянь:</p>
+<div class="arithmatex">\[y_l = h(x_l) + \mathcal{F}(x_l, \mathcal{W}_l)\]</div>
+<div class="arithmatex">\[x_{l+1} = f(y_l)\]</div>
+<p>де <span class="arithmatex">\(x_l\)</span> — вхідний тензор <span class="arithmatex">\(l\)</span>-го блоку, <span class="arithmatex">\(\mathcal{F}\)</span> — залишкова функція (послідовність згорткових шарів, BatchNorm та ReLU), <span class="arithmatex">\(\mathcal{W}_l\)</span> — вектор ваг згорткових шарів блоку, <span class="arithmatex">\(h(x_l)\)</span> — функція проекції (зазвичай <span class="arithmatex">\(h(x_l) = x_l\)</span> для Identity Shortcut, або згортка <span class="arithmatex">\(1 \times 1\)</span> зі Stride <span class="arithmatex">\(= 2\)</span>, якщо змінюється кількість каналів або просторовий розмір), <span class="arithmatex">\(f\)</span> — нелінійна функція активації (ReLU).</p>
+<p>Якщо <span class="arithmatex">\(h(x_l) = x_l\)</span> та <span class="arithmatex">\(f = \text{Identity}\)</span>, то для будь-якого глибокого шару <span class="arithmatex">\(L\)</span> відносно раннього шару <span class="arithmatex">\(l\)</span> виконується пряма сума:</p>
+<div class="arithmatex">\[x_L = x_l + \sum_{i=l}^{L-1} \mathcal{F}(x_i, \mathcal{W}_i)\]</div>
+<p>Завдяки цій властивості градієнт функції втрат <span class="arithmatex">\(\mathcal{E}\)</span> за входом <span class="arithmatex">\(x_l\)</span> за ланцюговим правилом описується як:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{E}}{\partial x_l} = \frac{\partial \mathcal{E}}{\partial x_L} \cdot \frac{\partial x_L}{\partial x_l} = \frac{\partial \mathcal{E}}{\partial x_L} \left( \mathbf{I} + \frac{\partial}{\partial x_l} \sum_{i=l}^{L-1} \mathcal{F}(x_i, \mathcal{W}_i) \right)\]</div>
+<p>Наявність одиничної матриці <span class="arithmatex">\(\mathbf{I}\)</span> гарантує, що градієнт <span class="arithmatex">\(\frac{\partial \mathcal{E}}{\partial x_L}\)</span> може безперешкодно поширюватися безпосередньо до ранніх шарів <span class="arithmatex">\(x_l\)</span>, повністю нівелюючи проблему загасання градієнтів (<strong>Vanishing Gradient Problem</strong>).</p>
+<h3 id="5-depthwise-separable-convolution-mobilenet">5. Аналіз обчислювальної складності Depthwise Separable Convolution у MobileNet</h3>
+<p>Порівняємо кількість мультиплікативних операцій (<strong>FLOPs</strong>) для стандартної згортки та глибинно-роздільної згортки.</p>
+<p>Нехай карта ознак має вихідний просторовий розмір <span class="arithmatex">\(H_{out} \times W_{out}\)</span>, кількість вхідних каналів <span class="arithmatex">\(C_{in}\)</span>, вихідних каналів <span class="arithmatex">\(C_{out}\)</span>, а ядро — <span class="arithmatex">\(K \times K\)</span>.</p>
+<ol>
+<li><strong>Обчислювальна складність стандартної згортки:</strong></li>
+</ol>
+<div class="arithmatex">\[\text{FLOPs}_{\text{standard}} = H_{out} \cdot W_{out} \cdot K \cdot K \cdot C_{in} \cdot C_{out}\]</div>
+<ol>
+<li>
+<p><strong>Обчислювальна складність Depthwise Separable згортки.</strong></p>
+</li>
+<li>
+<p>Складність Depthwise етапу: <span class="arithmatex">\(H_{out} \cdot W_{out} \cdot K \cdot K \cdot C_{in}\)</span></p>
+</li>
+<li>
+<p>Складність Pointwise етапу (<span class="arithmatex">\(1 \times 1\)</span> Conv): <span class="arithmatex">\(H_{out} \cdot W_{out} \cdot 1 \cdot 1 \cdot C_{in} \cdot C_{out}\)</span></p>
+</li>
+</ol>
+<div class="arithmatex">\[\text{FLOPs}_{\text{dw\_sep}} = H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})\]</div>
+<ol>
+<li><strong>Коефіцієнт виграшу в обчислюваній складності та параметрах:</strong></li>
+</ol>
+<div class="arithmatex">\[\text{Ratio} = \frac{\text{FLOPs}_{\text{dw\_sep}}}{\text{FLOPs}_{\text{standard}}} = \frac{H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})}{H_{out} \cdot W_{out} \cdot K^2 \cdot C_{in} \cdot C_{out}} = \frac{1}{C_{out}} + \frac{1}{K^2}\]</div>
+<p>При використанні ядра <span class="arithmatex">\(K = 3\)</span> (<span class="arithmatex">\(K^2 = 9\)</span>) та великої кількості каналів <span class="arithmatex">\(C_{out} \gg 9\)</span> виграш в обчисленнях та кількості вагових параметрів становить приблизно <span class="arithmatex">\(8\)</span>--<span class="arithmatex">\(9\)</span> разів при мінімальній втраті точності розпізнавання.</p>
+<hr />
+<h2 id="3">3. Систематизація даних та порівняльний аналіз</h2>
+<p>Нижче наведено порівняльний аналіз згорткових блоків, шарів апроксимації та фундаментальних архітектур, що використовуються у сучасних системах комп'ютерного зору та обробки сигналів.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Блок / Операція</th>
+<th style="text-align: left;">Розмірність ваг (Параметри)</th>
+<th style="text-align: left;">Обчислювальна складність (FLOPs)</th>
+<th style="text-align: left;">Еквіваріантність / Особливості</th>
+<th style="text-align: left;">Основна сфера застосування</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Стандартна згортка Conv2D</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(C_{out} \times C_{in} \times K_H \times K_W\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(H \cdot W \cdot K^2 \cdot C_{in} \cdot C_{out})\)</span></td>
+<td style="text-align: left;">Еквіваріантність до зсуву; зафіксоване локальне рецептивне поле</td>
+<td style="text-align: left;">Універсальний витяг локальних просторових ознак у базових CNN</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розширена згортка (Dilated Conv)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(C_{out} \times C_{in} \times K_H \times K_W\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(H \cdot W \cdot K^2 \cdot C_{in} \cdot C_{out})\)</span></td>
+<td style="text-align: left;">Експоненційне розширення рецептивного поля без втрати роздільності</td>
+<td style="text-align: left;">Семантична сегментація (DeepLab), обробка аудіосигналів (WaveNet)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Max Pooling 2D</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(0\)</span> (безпараметричний)</td>
+<td style="text-align: left;"><span class="arithmatex">\(O(H \cdot W \cdot K_p^2 \cdot C)\)</span></td>
+<td style="text-align: left;">Інваріантність до малих зсувів та поворотів; відбір пікових активацій</td>
+<td style="text-align: left;">Зменшення просторових розмірів карт ознак (Downsampling)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Global Average Pooling (GAP)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(0\)</span> (безпараметричний)</td>
+<td style="text-align: left;"><span class="arithmatex">\(O(H \cdot W \cdot C)\)</span></td>
+<td style="text-align: left;">Повна інваріантність до просторового розміру входу</td>
+<td style="text-align: left;">Заміна Dense-шарів перед класифікатором (ResNet, Inverted Bottlenecks)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Basic Residual Block (ResNet-18/34)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \times (C \times C \times K^2)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(2 \cdot H \cdot W \cdot K^2 \cdot C^2)\)</span></td>
+<td style="text-align: left;">Аддитивна передача градієнтів без загасання; градієнтний потік <span class="arithmatex">\(\mathbf{I}\)</span></td>
+<td style="text-align: left;">Глибоке ієрархічне вилучення ознак у класифікації та детекції</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inverted Residual Block (MobileNetV2)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(C_{in}^2 \cdot t + C_{in} \cdot K^2 \cdot t + C_{in} \cdot t \cdot C_{out}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(H \cdot W \cdot C_{in} \cdot t \cdot (K^2 + C_{out}))\)</span></td>
+<td style="text-align: left;">Короткі зв'язки між вузькими шарами; лінійні Bottlenecks</td>
+<td style="text-align: left;">Вбудовані системи, EDGE-пристрої, мобільний комп'ютерний зір</td>
+</tr>
+</tbody>
+</table>
+<p>Порівняльний аналіз свідчить про глибоку структурну еволюцію. Класична згортка Conv2D володіє квадратичною залежністю обчислювальної складності від кількості каналів <span class="arithmatex">\(O(C^2)\)</span>. Використання шарів <strong>Global Average Pooling</strong> замість повнозв'язних шарів дало змогу виключити до <span class="arithmatex">\(80\%\)</span> параметрів у класифікаційних головах мереж, одночасно дозволяючи мережам приймати на вхід зображення довільної просторової роздільної здатності. </p>
+<p>Впровадження <strong>Residual Connections</strong> розв'язало математичний бар'єр глибини, забезпечивши пряме проходження градієнтного сигналу. У той самий час, <strong>Inverted Residual Blocks</strong> у MobileNetV2 переосмислили залишкові зв'язки: шляхом розширення каналів всередині блоку (коефіцієнт експансії <span class="arithmatex">\(t\)</span>) та стиснення на виходах із лінійною активацією вдалося досягти високої виразності ознакових карт при радикальному зменшенні операцій FLOPs.</p>
+<hr />
+<h2 id="4">4. Візуалізація процесів та структурних зв'язків</h2>
+<p>Для ілюстрації проходження багатовимірного сигналу через конвеєр згорткової перцепції, зростання рецептивного поля та порівняння залишкових блоків ResNet і MobileNetV2 нижче наведено комплексне графічне креслення.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Perception_Pipeline ["1. Конвеєр Перцепції&lt;br/&gt;та Зростання&lt;br/&gt;Рецептивного Поля"]
+        A["Вхідний сигнал /&lt;br/&gt;Зображення: C_in x H x&lt;br/&gt;W"] --&gt; B["Conv2D + BatchNorm +&lt;br/&gt;ReLU: K=3, S=1"]
+        B --&gt;|RF = 3x3| C["Max Pooling 2D: K=2,&lt;br/&gt;S=2"]
+        C --&gt;|"RF = 5x5, Downsampling&lt;br/&gt;2x"| D["Залишкові блоки ResNet&lt;br/&gt;/ MobileNetV2"]
+        D --&gt;|"RF зростає до розміру&lt;br/&gt;всього входу"| E["Global Average Pooling&lt;br/&gt;GAP"]
+        E --&gt;|Тензор 1x1xC_out| F["Softmax / Linear&lt;br/&gt;Classifier"]
+    end
+
+    subgraph ResNet_Block ["2. Класичний&lt;br/&gt;Залишковий Блок ResNet"]
+        X1[Вхід x_l] --&gt; C1[Conv 3x3 -&gt; BN -&gt; ReLU]
+        C1 --&gt; C2[Conv 3x3 -&gt; BN]
+        X1 --&gt;|"Identity Shortcut: +&lt;br/&gt;x_l"| SUM1((+))
+        C2 --&gt; SUM1
+        SUM1 --&gt; R1["ReLU Activation -&gt;&lt;br/&gt;x_l+1"]
+    end
+
+    subgraph MobileNetV2_Block ["3. Inverted Residual&lt;br/&gt;Block MobileNetV2"]
+        X2["Вхід x_l: Вузький&lt;br/&gt;Bottleneck"] --&gt; PC1["Pointwise Conv 1x1:&lt;br/&gt;Expansion t"]
+        PC1 --&gt;|BN + ReLU6| DC1["Depthwise Conv 3x3:&lt;br/&gt;Spatial"]
+        DC1 --&gt;|BN + ReLU6| PC2["Pointwise Conv 1x1:&lt;br/&gt;Projection"]
+        PC2 --&gt;|BN: Linear Activation| SUM2((+))
+        X2 --&gt;|Linear Shortcut: + x_l| SUM2
+        SUM2 --&gt; Y2[Вихід x_l+1]
+    end</code></pre>
+<p><em>Рисунок 1 — Структурно-логічна схема згорткового конвеєра перцепції, розгортання рецептивного поля та блоків ResNet і MobileNetV2</em></p>
+<p>Діаграма демонструє цілісний шлях обробки інформації у згорткових мережах. У першому блоці (<code>Perception_Pipeline</code>) показано, як початковий вектор перцепції опрацьовується первинними згортковими шарами (<code>B</code>) та шарами Max Pooling (<code>C</code>). При цьому просторова роздільність карти ознак зменшується, а розмір рецептивного поля (<span class="arithmatex">\(RF\)</span>) монотонно розширюється від локального плями <span class="arithmatex">\(3 \times 3\)</span> до глобального охоплення всього зображення на рівні Global Average Pooling (<code>E</code>).</p>
+<p>У другому та третьому блоках деталізовано мікроархітектуру залишкових модулів. Блок ResNet (<code>ResNet_Block</code>) приймає тензор <span class="arithmatex">\(x_l\)</span>, пропускає його через два згорткових шари <span class="arithmatex">\(3 \times 3\)</span> і додає вхідний сигнал <span class="arithmatex">\(x_l\)</span> через <strong>Identity Shortcut</strong> безпосередньо перед фінальною активацією ReLU. </p>
+<p>Блок MobileNetV2 (<code>MobileNetV2_Block</code>) реалізує принципово іншу концепцію: вхідний вузький тензор спочатку розширюється за кількістю каналів у <span class="arithmatex">\(t\)</span> разів за допомогою Pointwise згортки 1x1 (<code>PC1</code>), потім піддається просторовій фільтрації окремо по каналах через Depthwise згортку 3x3 (<code>DC1</code>), після чого стискається назад у вузький вектор Pointwise проекцією (<code>PC2</code>). Прямий зв'язок додається між вузькими векторами, а останній шар блоку не містить нелінійності (<strong>Linear Bottleneck</strong>), що запобігає руйнуванню негативних значень активацій при високому ступені стиснення.</p>
+<hr />
+<h2 id="5">5. Питання для самоперевірки та аналітичного осмислення</h2>
+<ol>
+<li>
+<p>Математично обчисліть просторовий розмір вихідної карти ознак <span class="arithmatex">\(H_{out} \times W_{out}\)</span> та підрахуйте сумарну кількість навчальних вагових параметрів для згорткового шару з наступними гіперпараметрами: вхідний тензор <span class="arithmatex">\(3 \times 224 \times 224\)</span>, кількість вихідних каналів <span class="arithmatex">\(C_{out} = 64\)</span>, ядро <span class="arithmatex">\(K = 7 \times 7\)</span>, крок <span class="arithmatex">\(S = 2\)</span>, доповнення <span class="arithmatex">\(P = 3\)</span>, розширення <span class="arithmatex">\(D = 1\)</span>. Чи є шар зсуву (Bias) включеним у розрахунок?</p>
+</li>
+<li>
+<p>Поясніть рекурентний механізм обчислення рецептивного поля (<span class="arithmatex">\(RF\)</span>). Як зміниться рецептивне поле нейрона після послідовного проходження трьох згорткових шарів із ядрами <span class="arithmatex">\(K=3 \times 3\)</span> та Stride <span class="arithmatex">\(S=1\)</span> порівняно з одним згортковим шаром із ядром <span class="arithmatex">\(K=7 \times 7\)</span>? У чому полягає обчислювальна перевага заміна одного великого ядра серією малих ядер?</p>
+</li>
+<li>
+<p>Доведіть за допомогою математичного аналізу градієнтного потоку, яким чином Identity Skip Connections у залишках блоках ResNet (<span class="arithmatex">\(x_{l+1} = x_l + \mathcal{F}(x_l)\)</span>) запобігають ефекту загасання градієнтів (<span class="arithmatex">\(\frac{\partial \mathcal{E}}{\partial x_l}\)</span>) при зворотному поширенні помилки крізь сотні шарів.</p>
+</li>
+<li>
+<p>Проведіть порівняльний розрахунок кількості операцій FLOPs для обробки тензора <span class="arithmatex">\(64 \times 56 \times 56\)</span> (де <span class="arithmatex">\(C_{in}=64, H=56, W=56\)</span>) до <span class="arithmatex">\(128\)</span> вихідних каналів (<span class="arithmatex">\(C_{out}=128\)</span>) за допомогою: а) Стандартної згортки <span class="arithmatex">\(3 \times 3\)</span>; б) Глибинно-роздільної згортки (Depthwise Separable Conv <span class="arithmatex">\(3 \times 3\)</span>). Обчисліть точний коефіцієнт прискорення.</p>
+</li>
+<li>
+<p>Чому в інвертованих залишкових блоках (Inverted Residuals) архітектури MobileNetV2 на фінальному згортковому шарі <span class="arithmatex">\(1 \times 1\)</span> використовується саме лінійна активація (Linear Bottleneck) замість стандартної нелінійності ReLU або ReLU6? Які геометричні та інформаційні спотворення виникають при застосуванні ReLU до тензорів малої розмірності каналів?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2849 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+      
+        <link rel="next" href="lk/lk1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Робоча навчальна програма
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="lk/lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Опис освітнього компонента
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Мета та завдання освітнього компонента
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Компетентності та програмні результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Програма навчальної дисципліни
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Програма навчальної дисципліни">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Змістовий модуль 1. Паралельні та розподілені обчислювальні процеси в AI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Змістовий модуль 2. Методи штучного інтелекту, машинного та глибокого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Структура освітнього компонента
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Структура освітнього компонента">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Теми лабораторних робіт
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Теми практичних занять
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Самостійна робота
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Методи навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Методи контролю
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Розподіл балів, які отримують здобувачі за темами
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Розподіл балів, які отримують здобувачі за видами занять
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Критерії оцінювання за видом контролю «Розрахунково-графічна робота»
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-ects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Шкала оцінювання: національна та ECTS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Рекомендована література та інформаційні ресурси
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lk/lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Опис освітнього компонента
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Мета та завдання освітнього компонента
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Компетентності та програмні результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Програма навчальної дисципліни
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Програма навчальної дисципліни">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Змістовий модуль 1. Паралельні та розподілені обчислювальні процеси в AI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Змістовий модуль 2. Методи штучного інтелекту, машинного та глибокого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Структура освітнього компонента
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Структура освітнього компонента">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Теми лабораторних робіт
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Теми практичних занять
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Самостійна робота
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Методи навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Методи контролю
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Розподіл балів, які отримують здобувачі за темами
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Розподіл балів, які отримують здобувачі за видами занять
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Критерії оцінювання за видом контролю «Розрахунково-графічна робота»
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-ects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Шкала оцінювання: національна та ECTS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Рекомендована література та інформаційні ресурси
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">РОБОЧА ПРОГРАМА ОСВІТНЬОГО КОМПОНЕНТА<br>«Обчислювальні процеси та штучний інтелект»</h1>
+<h2 id="1">1. Опис освітнього компонента</h2>
+<p>Освітній компонент «Обчислювальні процеси та штучний інтелект» є фундаментальним профільним компонентом освітньо-професійної програми підготовки здобувачів першого (бакалаврського) рівня вищої освіти за спеціальністю F7 «Комп'ютерна інженерія». Дисципліна призначена для формування поглиблених системних знань та практичних інженерних навичок у галузі проєктування, оптимізації та математичного моделювання високопродуктивних паралельних і розподілених обчислювальних процесів, а також засобів апаратного прискорення та паралелізації алгоритмів штучного інтелекту, машинного та глибокого навчання. </p>
+<p>Курс охоплює важливі аспекти сучасної комп'ютерної інженерії: від архітектурних засад векторно-конвеєрних обчислень, SIMD-векторизації, CUDA-програмування графічних прискорювачів та MPI-кластерної взаємодії до створення складних нейромережевих моделей (CNN, LSTM, Transformers) і систем автономного керування на основі глибокого навчання з підкріпленням.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Найменування показників</th>
+<th style="text-align: left;">Галузь знань, спеціальність, освітній рівень</th>
+<th style="text-align: left;">Характеристика навчальної дисципліни</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Кількість кредитів ECTS:</strong> 5</td>
+<td style="text-align: left;"><strong>Галузь знань:</strong> F «Інформаційні технології»</td>
+<td style="text-align: left;"><strong>Вид дисципліни:</strong> Обов'язкова</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кількість модулів:</strong> 1<br><strong>Змістових модулів:</strong> 2<br><strong>Індивідуальне завдання:</strong> РГР (30 год)<br><strong>Загальний обсяг годин:</strong> 150</td>
+<td style="text-align: left;"><strong>Спеціальність:</strong> F7 «Комп'ютерна інженерія»<br><strong>Освітня програма:</strong> Комп'ютерна інженерія<br></td>
+<td style="text-align: left;"><strong>Рік підготовки:</strong> 2-й<br><strong>Семестр:</strong> 3-й</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Тижневих годин:</strong> аудиторних — 3,1; самостійної роботи — 6,25</td>
+<td style="text-align: left;"><strong>Освітній рівень:</strong> Перший (бакалаврський)</td>
+<td style="text-align: left;"><strong>Лекції:</strong> 22 год.<br><strong>Практичні:</strong> 16 год.<br><strong>Лабораторні:</strong> 12 год.<br><strong>Самостійна робота:</strong> 100 год.<br><strong>Індивідуальне завдання:</strong> РГР, 30 год.<br><strong>Вид підсумкового контролю:</strong> Іспит</td>
+</tr>
+</tbody>
+</table>
+<p><em>Співвідношення кількості годин аудиторних занять до самостійної та індивідуальної роботи становить 1 : 2 (50 год аудиторних / 100 год СР).</em></p>
+<hr />
+<h2 id="2">2. Мета та завдання освітнього компонента</h2>
+<p><strong>Метою викладання освітнього компонента</strong> є формування у майбутніх інженерів з комп'ютерних систем та мереж комплексу фахових компетентностей щодо теоретичних основ, математичних моделей, архітектурних рішень та практичних методів організації високопродуктивних обчислювальних процесів, а також проєктування, програмно-апаратної реалізації, оптимізації та розгортання масштабованих систем штучного інтелекту, глибокого навчання та автономного керування.</p>
+<p><strong>Основними завданнями освітнього компонента є:</strong></p>
+<ul>
+<li>
+<p>засвоєння теоретичних засад класифікації паралельних обчислювальних систем, аналізу топології мереж та оцінювання граничної ефективності паралелізму за законами Амдала, Густафсона-Барсіса та показником ізоефективності;</p>
+</li>
+<li>
+<p>опанування методів апаратного прискорення обчислень на рівнях векторних інструкцій, багатопотоковості та функціональних тензорних блоків;</p>
+</li>
+<li>
+<p>вивчення принципів побудови розподілених обчислювальних процесів у кластерних системах з використанням інтерфейсу передачі повідомлень MPI та моделей конвеєризації обчислень;</p>
+</li>
+<li>
+<p>засвоєння математичного апарату теорії оптимізації, формалізації функцій втрат, методів стохастичного градієнтного спуску та ансамблевого машинного навчання;</p>
+</li>
+<li>
+<p>набуття практичних навичок проєктування, тренування, гіперпараметричної оптимізації та оцінювання якості глибоких нейронних мереж;</p>
+</li>
+<li>
+<p>вивчення принципів формалізації Марковських процесів прийняття рішень, виведення рівнянь Белмана та практичної реалізації алгоритмів глибокого навчання з підкріпленням у фізичних симуляторах;</p>
+</li>
+<li>
+<p>формування навичок контейнеризації та профілювання затримки обчислювальних процесорів ШІ на гетерогенних апаратних платформах.</p>
+</li>
+</ul>
+<hr />
+<p><strong>У результаті вивчення освітнього компонента здобувач вищої освіти повинен:</strong></p>
+<p><strong>Знати:</strong></p>
+<ul>
+<li>
+<p>фундаментальні закони масштабованості паралельних обчислювальних систем (<span class="arithmatex">\(S_p\)</span>, <span class="arithmatex">\(E_p\)</span>, ізоефективність) та концепції класифікації Флінна;</p>
+</li>
+<li>
+<p>апаратну організацію Streaming Multiprocessors у графічних прискорювачах NVIDIA, ієрархію пам'яті CUDA (Global, Shared, Registers) та особливості векторизованої тензорної алгебри;</p>
+</li>
+<li>
+<p>математичні засади та специфікацію інтерфейсу передачі повідомлень MPI (точечні та колективні комунікаційні операції, топології зв'язку);</p>
+</li>
+<li>
+<p>формалізацію задач машинного навчання, математичний зміст функцій втрат (<span class="arithmatex">\(L_{MSE}\)</span>, <span class="arithmatex">\(L_{CE}\)</span>), засади стохастичної оптимізації та регуляризації (<span class="arithmatex">\(L_1\)</span>, <span class="arithmatex">\(L_2\)</span>, Dropout);</p>
+</li>
+<li>
+<p>математичні засади алгоритму зворотного поширення помилки, операцій згортки, пулінгу та розрахунку рецептивних полів;</p>
+</li>
+<li>
+<p>вентильні механізми рекурентних блоків та математичний апарат скалярного механізму уваги;</p>
+</li>
+<li>
+<p>математичну формулювання Марковських процесів прийняття рішень, рівняння Белмана та принцип роботи Deep Q-Networks.</p>
+</li>
+</ul>
+<p><strong>Уміти:</strong></p>
+<ul>
+<li>
+<p>розраховувати теоретичне та емпіричне прискорення, ефективність та накладні витрати комунікацій у паралельних та розподілених обчислювальних системах;</p>
+</li>
+<li>
+<p>розробляти векторизовані високопродуктивні модулі обробки тензорних даних мовою Python з використанням PyTorch та CUDA-прискорення;</p>
+</li>
+<li>
+<p>проєктувати розподілені обчислювальні пайплайни для обробки масивів даних у середовищі mpi4py з мінімізацією комунікаційних затримок;</p>
+</li>
+<li>
+<p>здійснювати попередню обробку, нормалізацію та Feature Engineering для структурованих даних, будувати та оптимізувати ансамблеві моделі;</p>
+</li>
+<li>
+<p>проєктувати, конструювати та тренувати глибокі згорткові та рекурентні нейронні мережі в фреймворку PyTorch для завдань комп'ютерного зору та часових рядів;</p>
+</li>
+<li>
+<p>синтезувати інтелектуальних автономних агентів на основі Deep Q-Network для керування динамічними об'єктами у фізичних симуляторах;</p>
+</li>
+<li>
+<p>пакувати обчислювальні сервіси ШІ в ізольовані Docker-контейнери та проводити профілювання затримки інференсу.</p>
+</li>
+</ul>
+<hr />
+<h2 id="3">3. Компетентності та програмні результати навчання</h2>
+<p>Вивчення освітнього компонента дає можливість здобути компетентності та набути відповідні результати навчання, потрібні для подальшої професійної діяльності:</p>
+<p><strong>Загальні компетентності (ЗК):</strong></p>
+<ul>
+<li>
+<p><strong>ЗК 1.</strong> Здатність до абстрактного мислення, аналізу та синтезу</p>
+</li>
+<li>
+<p><strong>ЗК 2.</strong> Здатність вчитися і оволодівати сучасними знаннями</p>
+</li>
+<li>
+<p><strong>ЗК 3.</strong> Здатність застосовувати знання у практичних ситуаціях</p>
+</li>
+<li>
+<p><strong>ЗК 7.</strong> Вміння виявляти, ставити та вирішувати проблеми</p>
+</li>
+</ul>
+<p><strong>Фахові компетентності (ФК):</strong></p>
+<ul>
+<li>
+<p><strong>ФК 13.</strong> Здатність вирішувати проблеми у галузі комп’ютерних та інформаційних технологій, визначати обмеження цих технологій</p>
+</li>
+<li>
+<p><strong>ФК 15.</strong> Здатність аргументувати вибір методів розв’язування спеціалізованих задач, критично оцінювати отримані результати, обґрунтовувати та захищати прийняті рішення</p>
+</li>
+</ul>
+<p><strong>Програмні результати навчання (ПРН):</strong></p>
+<ul>
+<li>
+<p><strong>ПРН 3.</strong> Знати новітні технології в галузі комп’ютерної інженерії</p>
+</li>
+<li>
+<p><strong>ПРН 7.</strong> Вміти розв’язувати задачі аналізу та синтезу засобів, характерних для спеціальності</p>
+</li>
+<li>
+<p><strong>ПРН 8.</strong> Вміти системно мислити та застосовувати творчі здібності до формування нових ідей</p>
+</li>
+<li>
+<p><strong>ПРН 16.</strong> Вміти оцінювати отримані результати та аргументовано захищати прийняті рішення</p>
+</li>
+<li>
+<p><strong>ПРН 17.</strong> Спілкуватись усно та письмово з професійних питань українською мовою та однією з іноземних мов (англійською, німецькою, італійською, французькою, іспанською)</p>
+</li>
+<li>
+<p><strong>ПРН 19.</strong> Здатність адаптуватись до нових ситуацій, обґрунтовувати, приймати та реалізовувати у межах компетенції рішення</p>
+</li>
+</ul>
+<hr />
+<h2 id="4">4. Програма навчальної дисципліни</h2>
+<h3 id="1-ai">Змістовий модуль 1. Паралельні та розподілені обчислювальні процеси в AI</h3>
+<p>Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму. Класифікація Флінна. Закони Амдала, Густафсона-Барсіса, показник ізоефективності.</p>
+<p>Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ. Векторна обробка, архітектура GPU, тензорні ядра, векторизована тензорна алгебра на PyTorch.</p>
+<p>Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI. Модель передачі повідомлень, точкові та колективні комунікаційні операції, топології зв'язку AI-кластерів.</p>
+<p>Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах. Конвеєризація обчислень, ETL-процеси для AI, Distributed Data Parallel підходи.</p>
+<p>Тема 5. Моделювання обчислювальних процесів у часі та просторі станів. Графові моделі «операції-операнди», «процеси-канали», оцінка комунікаційної трудомісткості та бар'єрна синхронізація.</p>
+<hr />
+<h3 id="2_1">Змістовий модуль 2. Методи штучного інтелекту, машинного та глибокого навчання</h3>
+<p>Тема 6. Машинне навчання: концепції, оптимізація та регуляризація. Постановка задач Supervised/Unsupervised/RL. Функції втрат, Градієнтний спуск, L1/L2 регуляризація.</p>
+<p>Тема 7. Ансамблеві методи машинного навчання. Принципи Bagging та Boosting. Алгоритми Random Forest, Gradient Boosting, XGBoost та LightGBM для інженерних даних.</p>
+<p>Тема 8. Глибокі нейронні мережі та математика ШІ навчання. Математична модель штучного нейрона, градієнтний спуск та алгоритм зворотного поширення помилки, вибух та загасання градієнтів.</p>
+<p>Тема 9. Згорткові нейронні мережі у завданнях перцепції. Математика згортки, Pooling, рецептивні поля, архітектури CNN для комп'ютерного зору та сигналів.</p>
+<p>Тема 10. Рекурентні мережі та архітектура Transformer. Динаміка послідовностей, комірки LSTM/GRU, механізм уваги та трансформери у завданнях часових рядів.</p>
+<p>Тема 11. Навчання з підкріпленням та автономні агенти. Марковські процеси прийняття рішень, рівняння Белмана, алгоритми Q-learning та Deep Q-Network у фізичному середовищі MuJoCo.</p>
+<hr />
+<h2 id="5">5. Структура освітнього компонента</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Назва змістових модулів і тем</th>
+<th style="text-align: center;">Усього годин</th>
+<th style="text-align: center;">Лекції</th>
+<th style="text-align: center;">Практичні</th>
+<th style="text-align: center;">Лабораторні</th>
+<th style="text-align: center;">Самостійна робота</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Змістовий модуль 1. Паралельні та розподілені обчислювальні процеси в AI</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму.</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ.</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI.</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах.</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 5. Моделювання обчислювальних процесів у часі та просторі станів.</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Усього за змістовим модулем 1</strong></td>
+<td style="text-align: center;"><strong>50</strong></td>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;"><strong>30</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Змістовий модуль 2. Методи штучного інтелекту, машинного та глибокого навчання</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 6. Машинне навчання: концепції, оптимізація та регуляризація.</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 7. Ансамблеві методи машинного навчання. Принципи Bagging та Boosting.</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 8. Глибокі нейронні мережі та математика Навчання.</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 9. Згорткові нейронні мережі у завданнях перцепції.</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 10. Рекурентні мережі та архітектура Transformer.</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тема 11. Навчання з підкріпленням та автономні агенти.</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Усього за змістовим модулем 2</strong></td>
+<td style="text-align: center;"><strong>70</strong></td>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"><strong>40</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Виконання Розрахунково-графічної роботи (РГР)</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>УСЬОГО ГОДИН</strong></td>
+<td style="text-align: center;"><strong>150</strong></td>
+<td style="text-align: center;"><strong>22</strong></td>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: center;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="6">6. Теми лабораторних робіт</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">№ з/п</th>
+<th style="text-align: left;">Назва теми лабораторної роботи</th>
+<th style="text-align: center;">Кількість годин</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Розробка розподіленої системи обробки даних на основі інтерфейсу MPI.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Побудова та оптимізація моделей класичного машинного навчання й ансамблів.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"><strong>Усього годин</strong></td>
+<td style="text-align: center;"><strong>12</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. Теми практичних занять</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">№ з/п</th>
+<th style="text-align: left;">Назва теми практичного заняття</th>
+<th style="text-align: center;">Кількість годин</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Проєктування комунікаційних схем MPI для розподілених AI-вузлів.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Обчислення та аналіз ансамблевих моделей на структурованих наборах даних.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень.</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"><strong>Усього годин</strong></td>
+<td style="text-align: center;"><strong>16</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8">8. Самостійна робота</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">№ з/п</th>
+<th style="text-align: left;">Назва теми для самостійного опрацювання та короткий зміст робіт</th>
+<th style="text-align: center;">Кількість годин СР</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>Тема 1. Архітектури високопродуктивних обчислень та аналіз паралелізму.</strong> Вивчення топологічних характеристик обчислювальних мереж, розрахунок ширини бісекції гіперкубів та аналіз моделей сумісності пам'яті.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення.</strong> Опрацювання принципів роботи Streaming Multiprocessors у GPU NVIDIA, оптимізація доступу до Shared Memory та аналіз Tensor Cores у форматах FP16/INT8.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI в AI-кластерах.</strong> Вивчення однобічних комунікацій (RMA) та паралельного введення-виведення за специфікацією MPI-2/MPI-3.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах.</strong> Дослідження механізмів Distributed Data Parallel та Fully Sharded Data Parallel у PyTorch для великомасштабного навчання моделей.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>Тема 5. Моделювання обчислювальних процесів у часі та просторі станів.</strong> Побудова графів «операції-операнди», розрахунок коефіцієнтів декомпозиції та аналіз моделей динамічного балансування навантаження.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>Тема 6. Машинне навчання: концепції, функції втрат та оптимізація.</strong> Опрацювання алгоритмів адаптивного кроку навчання, дослідження <span class="arithmatex">\(L_1/L_2\)</span> регуляризації та ландшафтів функцій втрат.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>Тема 7. Ансамблеві методи машинного навчання.</strong> Порівняльний математичний аналіз механізмів побудови дерев у XGBoost, LightGBM та CatBoost.</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>Тема 8. Глибокі нейронні мережі та зворотне поширення помилки.</strong> Теоретичний аналіз проблеми загасання градієнтів, математичне обґрунтування ініціалізацій He/Kaiming та BatchNorm.</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>Тема 9. Згорткові нейронні мережі у комп'ютерному зорі та сигнальній обробці.</strong> Дослідження компактних архітектур комп'ютерного зору на основі Depthwise Separable Convolutions.</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>Тема 10. Рекурентні мережі та Transformers для послідовностей.</strong> Математичний розрахунок Multi-Head Attention, позиційного кодування та архітектур Vision Transformer.</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;"><strong>Тема 11. Навчання з підкріпленням та автономні агенти у фізичних симуляторах.</strong> Вивчення алгоритмів Actor-Critic та аналіз методів забезпечення стабільності нейромережевого RL у безперервному просторі дій.</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;"><strong>Виконання Розрахунково-графічної роботи (РГР).</strong> Скрізна розробка високопродуктивного розподіленого інтелектуального агента керування/прогнозування, проведення контейнеризації у Docker, вимірювання прискорення, складання розрахунково-графічного звіту та підготовка презентації.</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"><strong>Усього годин</strong></td>
+<td style="text-align: center;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9">9. Методи навчання</h2>
+<p>Під час викладання освітнього комопнента застосовуються словесні (лекції, бесіди, пояснення, розповіді), наочні (ілюстрації та демонстрації) та практичні методи (практичні й лабораторні заняття, виконання індивідуальних завдань), що за особливостями навчально-пізнавальної діяльності здобувачів вищої освіти базуються на пояснювально-інформативному (інформаційно-рецептивному), репродуктивному, частково-пошуковому та дослідницькому методах навчання, а також застосовується метод проблемного виконання.</p>
+<p><strong>Організація навчальних занять:</strong></p>
+<ul>
+<li>
+<p>На <strong>лекційних заняттях</strong> викладач викладає навчальний матеріал із демонстрацією конспекту, після чого в кінці кожної лекції проводиться експрес-тестування здобувачів за розглянутою темою.</p>
+</li>
+<li>
+<p>На <strong>лабораторних та практичних заняттях</strong> викладач коротко роз'яснює завдання та хід його виконання, після чого здобувачі самостійно виконують свої індивідуальні варіанти завдань із подальшим представленням та захистом отриманих результатів.</p>
+</li>
+<li>
+<p><strong>Індивідуальне завдання</strong> у  форматі <strong>розрахунково-графічної роботи</strong> виконується здобувачами повністю самостійно, а оцінювання здійснюється за пояснювальною запискою та публічну презентацію презентації до неї.</p>
+</li>
+</ul>
+<hr />
+<h2 id="10">10. Методи контролю</h2>
+<p>Методи контролю включають облік відвідування, опитування, перевірку та захист лабораторних і практичних робіт, комплекти тестових завдань для поточного, модульного та підсумкового контролю (вид контролю — «іспит»).</p>
+<p><strong>Форми та види контролю:</strong></p>
+<ul>
+<li>
+<p>Поточний та модульний контроль:</p>
+</li>
+<li>
+<p>облік відвідування занять та опитування;</p>
+</li>
+<li>
+<p>тести за результатами вивчення кожної теми;</p>
+</li>
+<li>
+<p>оцінювання виконання та представлення результатів індивідуальних завдань на лабораторних і практичних заняттях;</p>
+</li>
+<li>
+<p>контрольні тести за підсумками вивчення кожного змістового модуля.</p>
+</li>
+<li>
+<p>Оцінювання індивідуального завдання (РГР) проводиться за результатами самостійної роботи над запискою, представлення та захист презентації до роботи.</p>
+</li>
+<li>
+<p>Підсумковий семестровий контроль семестровий іспит, який складається з двох частин: тестового завдання та виконання практичного завдання.</p>
+</li>
+</ul>
+<hr />
+<h2 id="11">11. Розподіл балів, які отримують здобувачі за темами</h2>
+<p>Навчальні досягнення здобувачів оцінюються за накопичувальною 100-бальною шкалою.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Вид занять / Контрольні заходи</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Змістовий модуль 1</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Змістовий модуль 2</th>
+<th style="text-align: center;">Підсумковий контроль (Іспит)</th>
+<th style="text-align: center;">Сума балів</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><strong>Т1</strong></td>
+<td style="text-align: center;"><strong>Т2</strong></td>
+<td style="text-align: center;"><strong>Т3</strong></td>
+<td style="text-align: center;"><strong>Т4</strong></td>
+<td style="text-align: center;"><strong>Т5</strong></td>
+<td style="text-align: center;"><strong>Т6</strong></td>
+<td style="text-align: center;"><strong>Т7</strong></td>
+<td style="text-align: center;"><strong>Т8</strong></td>
+<td style="text-align: center;"><strong>Т9</strong></td>
+<td style="text-align: center;"><strong>Т10</strong></td>
+<td style="text-align: center;"><strong>Т11</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Активність на лекціях та тематичне тестування</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>11</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Виконання та захист практичних робіт</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>16</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Виконання та захист лабораторних робіт</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>24</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Тести за змістовими модулями</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>14</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Виконання розрахунково-графічної роботи</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>15</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Підсумковий контроль (Іспит)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;"><strong>20</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Усього</strong></td>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong>29</strong></td>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: center;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Т1 – Т11 — теми змістових модулів.</em></p>
+<hr />
+<h2 id="12">12. Розподіл балів, які отримують здобувачі за видами занять</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Вид роботи, пояснення</th>
+<th style="text-align: center;">Максимальні бали</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Опрацювання теоретичного матеріалу за тематикою лекцій.</strong><br>Усього 7 тем.<br>Ваше завдання — опрацювати лекційний матеріал, пройти експрес-тестування в кінці лекції або активно підтримувати дискусійні теми: за 1 тему <strong>1 бали</strong> (<span class="arithmatex">\(11 \cdot 1 = 11\)</span>).</td>
+<td style="text-align: center;"><strong>11</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Виконання завдань із лабораторних робіт.</strong><br>Усього виконується 7 лабораторних робіт.<br>Здобувачі виконують індивідуальні варіанти завдань.<br>Завдання — виконати завдання, оформити звіт із лабораторної роботи та захистити отримані результати: за 1 захищену роботу <strong>4 бали</strong> (<span class="arithmatex">\(6 \cdot 4 = 24\)</span>).</td>
+<td style="text-align: center;"><strong>24</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Виконання завдань із практичних робіт.</strong><br>Усього виконується 7 практичних робіт.<br>Здобувачі виконують індивідуальні варіанти завдань.<br>Завдання — виконати завдання, оформити звіт із практичної роботи та захистити отримані результати: за 1 захищену роботу <strong>2 бали</strong> (<span class="arithmatex">\(8 \cdot 2 = 16\)</span>).</td>
+<td style="text-align: center;"><strong>16</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Виконання тестового завдання за змістовими модулями.</strong><br>Для закріплення теоретичних знань та практичних навичок за змістовими модулями здобувачу надається доступ до контрольного тесту: за 1 пройдений тест <strong>7 балів</strong> (<span class="arithmatex">\(2 \cdot 7 = 14\)</span>).</td>
+<td style="text-align: center;"><strong>14</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Виконання та захист індивідуального завдання (РГР).</strong><br>Розрахунково-графічна робота виконується здобувачем повністю самостійно. Оцінювання проводиться за поданою пояснювальною запискою та результатами публічного захисту презентації до неї.</td>
+<td style="text-align: center;"><strong>15</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Підсумковий контроль (вид контролю «іспит»).</strong><br>Підсумкове оцінювання знань відбувається під час іспиту, який складається з двох частин: комп'ютерного тестового завдання (10 балів) та виконання практичного завдання (10 балів).</td>
+<td style="text-align: center;"><strong>20</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Усього балів:</strong></td>
+<td style="text-align: center;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-">13.  Критерії оцінювання за видом контролю «Розрахунково-графічна робота»</h2>
+<p>Розрахунково-графічна робота є формою самостійної індивідуальної роботи здобувача вищої освіти, спрямованою на наскрізне проєктування. Завершений проєкт подається керівникові у вигляді пояснювальної записки та графічної мультимедійної презентації. Підсумкова оцінка за розрахунково-графічну роботу виставляється за результатами комплексної перевірки наданих матеріалів та публічного захисту, під час якого здобувач має до 5–7 хвилин для доповіді, демонструє результати виконання розробки та відповідає на запитання.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">№ з/п</th>
+<th style="text-align: left;">Об’єкт оцінювання</th>
+<th style="text-align: center;">Максимальна кількість балів</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Зміст, обґрунтованість та практична/технічна якість розробки</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Якість оформлення пояснювальної записки та презентації</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Захист роботи, доповідь та відповіді на запитання</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"><strong>УСЬОГО</strong></td>
+<td style="text-align: center;"><strong>15</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Оцінювання змісту та якості виконання роботи (до 5 балів) ґрунтується на глибині опрацювання теми та ступені складності реалізованих завдань. Для отримання максимального бала здобувач повинен представити коректну структуру або схему досліджуваного проєкту чи системи, обґрунтувати вибір прийнятих рішень та сформулювати розрахунковий або математичний апарат. Практична (розрахункова чи програмна) частина роботи має містити діючі алгоритми, моделі, розрахунки або технічні рішення, підкріплені необхідним аналізом та обґрунтуванням їхньої ефективності. Важливим показником високої якості розробки є коректна реалізація, тестування та успішна демонстрація функціонування створених рішень чи сервісів.</p>
+<p>Якість оформлення пояснювальної записки та графічних матеріалів презентації (до 5 балів) оцінюється за ступенем відповідності чинним міжнародним чи державним стандартам України та вимогам до викладу науково-технічних текстів. Текстова частина повинна бути логічно структурованою, із дотриманням правил оформлення математичних виразів, схем, алгоритмів, таблиць та діаграм. Слайди мультимедійної презентації мають бути професійно оформленими, забезпечувати наочну візуалізацію структури проєкту, процесів обробки даних та результатів виконання роботи. Бібліографічний опис у пояснювальній записці повинен містити актуальні джерела, фахову літературу та офіційну технічну й нормативну документацію, оформлені згідно з установленими вимогами.</p>
+<p>Захист розрахунково-графічної роботи (до 5 балів) є завершальним етапом контролю, на якому оцінюється рівень професійної підготовки, академічної грамотності та системного мислення здобувача. Максимальний бал виставляється за умови вільного володіння матеріалом, здатності логічно та переконливо викласти сутність прийнятих рішень із використанням наочних матеріалів презентації. Здобувач повинен надавати вичерпні й аргументовані відповіді на запитання щодо вибору обраних методів, принципів функціонування розробки, процесів її оптимізації та забезпечення її надійності й безпеки.</p>
+<p>Обов’язковою умовою допуску до захисту є дотримання принципів академічної доброчесності та самостійне виконання всіх етапів проєктування. Будь-які виявлені ознаки плагіату, запозичення програмного коду або використання чужих розрахункових і графічних матеріалів без належного цитування призводять до скасування результатів оцінювання з виставленням незадовільної оцінки.</p>
+<hr />
+<h2 id="14-ects">14. Шкала оцінювання: національна та ECTS</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Сума балів за 100-бальною шкалою</th>
+<th style="text-align: center;">Оцінка в ECTS</th>
+<th style="text-align: left;">Значення оцінки ECTS</th>
+<th style="text-align: left;">Критерії оцінювання</th>
+<th style="text-align: center;">Рівень компетентності</th>
+<th style="text-align: center;">Оцінка за національною шкалою (іспит, диференційований залік)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>90–100</strong></td>
+<td style="text-align: center;"><strong>A</strong></td>
+<td style="text-align: left;"><strong>Відмінно</strong></td>
+<td style="text-align: left;">Здобувач виявляє особливі творчі здібності, уміє самостійно здобувати знання, без допомоги викладача знаходить та опрацьовує необхідну інформацію, уміє використовувати набуті знання і вміння для прийняття рішень у нестандартних ситуаціях, переконливо аргументує відповіді, самостійно розкриває власні обдарування і нахили</td>
+<td style="text-align: center;"><strong>Високий</strong><br>(творчий)</td>
+<td style="text-align: center;"><strong>Відмінно</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>82–89</strong></td>
+<td style="text-align: center;"><strong>B</strong></td>
+<td style="text-align: left;"><strong>Дуже добре</strong></td>
+<td style="text-align: left;">Здобувач вільно володіє вивченим обсягом матеріалу, застосовує його на практиці, вільно розв’язує вправи і задачі у стандартних ситуаціях, самостійно виправляє допущені помилки, кількість яких незначна</td>
+<td style="text-align: center;"><strong>Достатній</strong><br>(конструктивно-варіативний)</td>
+<td style="text-align: center;"><strong>Добре</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>74–81</strong></td>
+<td style="text-align: center;"><strong>C</strong></td>
+<td style="text-align: left;"><strong>Добре</strong></td>
+<td style="text-align: left;">Здобувач уміє зіставляти, узагальнювати, систематизувати інформацію під керівництвом викладача; в цілому самостійно застосовувати її на практиці; контролювати власну діяльність; виправляти помилки, серед яких є суттєві, добирати аргументи для підтвердження думок</td>
+<td style="text-align: center;"><strong>Достатній</strong><br>(конструктивно-варіативний)</td>
+<td style="text-align: center;"><strong>Добре</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>64–73</strong></td>
+<td style="text-align: center;"><strong>D</strong></td>
+<td style="text-align: left;"><strong>Задовільно</strong></td>
+<td style="text-align: left;">Здобувач відтворює значну частину теоретичного матеріалу, виявляє знання і розуміння основних положень; за допомогою викладача може аналізувати навчальний матеріал, виправляти помилки, серед яких є значна кількість суттєвих</td>
+<td style="text-align: center;"><strong>Середній</strong><br>(репродуктивний)</td>
+<td style="text-align: center;"><strong>Задовільно</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>60–63</strong></td>
+<td style="text-align: center;"><strong>E</strong></td>
+<td style="text-align: left;"><strong>Достатньо</strong></td>
+<td style="text-align: left;">Здобувач володіє навчальним матеріалом на рівні, вищому, ніж початковий, значну частину його відтворює на репродуктивному рівні</td>
+<td style="text-align: center;"><strong>Середній</strong><br>(репродуктивний)</td>
+<td style="text-align: center;"><strong>Задовільно</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>35–59</strong></td>
+<td style="text-align: center;"><strong>FX</strong></td>
+<td style="text-align: left;"><strong>Незадовільно</strong><br>з можливістю повторного складання семестрового контролю</td>
+<td style="text-align: left;">Здобувач володіє матеріалом на рівні окремих фрагментів, що становлять незначну частину навчального матеріалу</td>
+<td style="text-align: center;"><strong>Низький</strong><br>(рецептивно-продуктивний)</td>
+<td style="text-align: center;"><strong>Незадовільно</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1–34</strong></td>
+<td style="text-align: center;"><strong>F</strong></td>
+<td style="text-align: left;"><strong>Незадовільно</strong><br>з обов’язковим повторним вивченням залікового кредиту</td>
+<td style="text-align: left;">Здобувач володіє матеріалом на рівні елементарного розпізнання і відтворення окремих фактів, елементів, об’єктів</td>
+<td style="text-align: center;"><strong>Низький</strong><br>(рецептивно-продуктивний)</td>
+<td style="text-align: center;"><strong>Незадовільно</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="15">15. Рекомендована література та інформаційні ресурси</h2>
+<p><strong>Основна література:</strong></p>
+<ol>
+<li>
+<p><strong>Минайленко Р. М.</strong> Паралельні та розподілені обчислення : навч. посіб. Кропивницький : Видавець Лисенко В. Ф., 2021. 153 с. URL: <a href="https://files.znu.edu.ua/files/Bibliobooks/Inshi84/0063829.pdf">https://files.znu.edu.ua/files/Bibliobooks/Inshi84/0063829.pdf</a>.</p>
+</li>
+<li>
+<p>Організація обчислювальних процесів : метод. реком. для практ. занять та самост. роботи здобувачів першого (бакалаврського) рівня вищої освіти ОПП «Комп'ютерні науки» спеціальності 122 «Комп'ютерні науки» денної форми здобуття вищої освіти / уклад.: О. В. Шебаніна, С. І. Тищенко, О. Ю. Пархоменко, В. О. Крайній, І. І. Хилько. Миколаїв : МНАУ, 2024. 85 с. URL: <a href="https://dspace.mnau.edu.ua/jspui/bitstream/123456789/17390/1/organizaciya-obchislyuvalnih-procesiv-122-metod-bakalavr.pdf">https://dspace.mnau.edu.ua/jspui/bitstream/123456789/17390/1/organizaciya-obchislyuvalnih-procesiv-122-metod-bakalavr.pdf</a>.</p>
+</li>
+<li>
+<p><strong>Шликов В. В., Данілова В. А.</strong> Високопродуктивні розподілені обчислювальні системи : практикум : навч. посіб. для студ. спеціальності 122 «Комп'ютерні науки». Київ : КПІ ім. Ігоря Сікорського, 2018. 108 с. URL: <a href="https://library.knuba.edu.ua/books/23_1_24_1.pdf">https://library.knuba.edu.ua/books/23_1_24_1.pdf</a></p>
+</li>
+<li>
+<p>Комп'ютерне моделювання систем та процесів. Методи обчислень. Ч. 1 : навч. посіб. / Р. Н. Квєтний, І. В. Богач, О. Р. Бойко, О. Ю. Софина, О. М. Шушура ; за заг. ред. Р. Н. Квєтного. Вінниця : ВНТУ, 2013. 191 с. URL: <a href="https://pdf.lib.vntu.edu.ua/books/2015/Kvetnuy_P1_2013_191.pdf">https://pdf.lib.vntu.edu.ua/books/2015/Kvetnuy_P1_2013_191.pdf</a></p>
+</li>
+<li>
+<p><strong>Соловей О. Л.</strong> Технологія розподілених систем та паралельних обчислень : конспект лекцій для здобувачів вищої освіти за спеціальністю 122 «Комп'ютерні науки». Київ : КНУБА, 2024. 100 с. URL: <a href="https://ela.kpi.ua/server/api/core/bitstreams/7421218e-d7dd-4e75-aa3e-bd7979db4e6d/content">https://ela.kpi.ua/server/api/core/bitstreams/7421218e-d7dd-4e75-aa3e-bd7979db4e6d/content</a></p>
+</li>
+<li>
+<p><strong>Довгий Б. П., Вакал Є. С., Гап’як І. В., Обвінцев О. В.</strong> Навчальний посібник із дисципліни «Методи обчислень» для студентів механіко-математичного факультету заочної форми навчання. Київ : КНУ імені Тараса Шевченка, 2022. 182 с. URL: <a href="https://mechmat.knu.ua/wp-content/uploads/2022/11/metody_obchyslen_zv.pdf">https://mechmat.knu.ua/wp-content/uploads/2022/11/metody_obchyslen_zv.pdf</a></p>
+</li>
+<li>
+<p><strong>Корочкін О. В., Русанова О. В.</strong> Паралельні та розподілені обчислення. Вибрані розділи : навч. посіб. до кредитного модуля «Паралельні та розподілені обчислення» для студентів спеціальності 123 «Комп'ютерна інженерія». Київ : КПІ ім. Ігоря Сікорського, 2020. 123 с. URL: <a href="https://ela.kpi.ua/server/api/core/bitstreams/ab11e9da-6287-4a50-b2ac-f9ebf63c4fb2/content">https://ela.kpi.ua/server/api/core/bitstreams/ab11e9da-6287-4a50-b2ac-f9ebf63c4fb2/content</a>.</p>
+</li>
+<li>
+<p><strong>Корочкін О. В., Кулаков Ю. О., Русанова О. В.</strong> Програмне забезпечення високопродуктивних комп'ютерних систем : конспект лекцій : навч. посіб. для здобувачів ступеня бакалавра за спеціальністю 121 «Інженерія програмного забезпечення». Київ : КПІ ім. Ігоря Сікорського, 2024. 257 с. URL: <a href="https://ela.kpi.ua/server/api/core/bitstreams/781c88bf-0f18-4af9-aed2-c92d952e3f01/content">https://ela.kpi.ua/server/api/core/bitstreams/781c88bf-0f18-4af9-aed2-c92d952e3f01/content</a>.</p>
+</li>
+<li>
+<p>Штучний інтелект. Вступний курс : навч. посіб. для студентів спеціальностей 121, 122, 123, 124, 125, 126, 172 / О. С. Звенігородський, О. В. Зінченко, Є. А. Чичкарьов, Т. М. Кисіль. Київ : ДУТ, 2022. 193 с. URL: <a href="https://duikt.edu.ua/uploads/l_492_92652604.pdf">https://duikt.edu.ua/uploads/l_492_92652604.pdf</a></p>
+</li>
+</ol>
+<p><strong>Додаткова література:</strong></p>
+<ol>
+<li>
+<p><strong>Peksa J., Perekrest A., Vadurin K., Mamchur D.</strong> A Quantum-Hybrid Framework for Urban Environmental Forecasting Integrating Advanced AI and Geospatial Simulation. <em>Sensors</em>. 2025. Vol. 25(24). Article 7422. DOI: <a href="https://doi.org/10.3390/s25247422">https://doi.org/10.3390/s25247422</a></p>
+</li>
+<li>
+<p><strong>Юдіна А. Л., Матяш М. В., Вадурін К. О., Мосьпан Д. В., Юрко О. О.</strong> Розпізнавання образів мікробіологічного консорціуму в процесі виробництва біогазу на основі штучних нейронних мереж. <em>Вісник Кременчуцького національного університету імені Михайла Остроградського</em>. 2024. Вип. 6 (149). С. 132–138. DOI: <a href="https://doi.org/10.32782/1995-0519.2024.6.16">https://doi.org/10.32782/1995-0519.2024.6.16</a></p>
+</li>
+<li>
+<p><strong>Vadurin K., Kortsova O., Vasiutynska K., Perekrest A., Bakharev V.</strong> A Big Data Framework for Automated Environmental Risk Stratification Using a Composite Hazard Index and Unsupervised Clustering. <em>Proceedings of International Conference on Applied Innovation in IT (ICAIIT)</em>. 2025. Vol. 13, No. 5. P. 127–133.</p>
+</li>
+<li>
+<p><strong>Udovyk I., Vadurin K.</strong> Investigation of the state of the art in intelligent time series analysis and geospatial modeling within municipal environmental monitoring systems. <em>Вісник Кременчуцького національного університету імені Михайла Остроградського</em>. 2026. Вип. 2 (157). С. 158–171. DOI: <a href="https://doi.org/10.32782/1995-0519.2026.2.16">https://doi.org/10.32782/1995-0519.2026.2.16</a></p>
+</li>
+<li>
+<p><strong>Тоцький О. О., Вадурін К. О., Юрко О. О.</strong> Методика апаратно-алгоритмічної оптимізації TinyML-моделей для периферійних вузлів моніторингу. <em>Актуальні проблеми життєдіяльності суспільства : матеріали ХXXІII Міжнар. наук.-практ. конф.</em> Кременчук : КрНУ, 2026. С. 63–64. DOI: <a href="https://doi.org/10.32782/2079-5009.krnu26.3.1">https://doi.org/10.32782/2079-5009.krnu26.3.1</a></p>
+</li>
+<li>
+<p><strong>Vadurin K., Perekrest A., Bakharev V., Shendryk V., Parfenenko Y., Shendryk S.</strong> Towards Digitalization for Air Pollution Detection: Forecasting Information System of the Environmental Monitoring. <em>Sustainability</em>. 2025. Vol. 17. Article 3760. DOI: <a href="https://doi.org/10.3390/su17093760">https://doi.org/10.3390/su17093760</a></p>
+</li>
+</ol>
+<p><strong>Інформаційні ресурси в Інтернеті:</strong></p>
+<ol>
+<li>
+<p>Офіційна документація фреймворку PyTorch &amp; CUDA C++ Programming Guide: <a href="https://pytorch.org/docs/stable/">https://pytorch.org/docs/stable/</a></p>
+</li>
+<li>
+<p>Документація mpi4py (Python bindings for MPI): <a href="https://mpi4py.readthedocs.io/">https://mpi4py.readthedocs.io/</a></p>
+</li>
+<li>
+<p>Офіційний репозиторій та документація Gymnasium / MuJoCo: <a href="https://gymnasium.farama.org/">https://gymnasium.farama.org/</a></p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1999 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk5/">
+      
+      
+        <link rel="next" href="../lk7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 6. Машинне навчання: концепції, оптимізація та регуляризація - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-supervisedunsupervisedrl-l1l2" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Формалізація патернів даних та векторних просторів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичні моделі функцій втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Алгоритми градієнтної оптимізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Математичний апарат регуляризації
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Формалізація патернів даних та векторних просторів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичні моделі функцій втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Алгоритми градієнтної оптимізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Математичний апарат регуляризації
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="6-supervisedunsupervisedrl-l1l2">Тема 6. Машинне навчання: концепції, оптимізація та регуляризація. Постановка задач Supervised/Unsupervised/RL. Функції втрат, градієнтний спуск, L1/L2 регуляризація</h1>
+<h2 id="1">1. Основний зміст та теоретичний базис</h2>
+<p>Парадигма <strong>машинного навчання (Machine Learning, ML)</strong> репрезентує фундаментальний зсув у комп'ютерній інженерії та прикладному математичному моделюванні. На відміну від детермінованого імперативного програмування, де алгоритм побудовано на явних формальних правилах, закладених інженером, машинне навчання реалізує дата-центричний підхід. У даній концепції обчислювальна система самостійно формує функціональні залежності та виявляє приховані патерни шляхом опрацювання прецедентів — емпіричних даних. </p>
+<p>У межах даного освітнього компонента концептуальний базис машинного навчання систематизується за трьома провідними парадигмами навчання, які відрізняються характером зворотного зв'язку, структурою вихідної інформації та формалізацією цільової функції:</p>
+<ol>
+<li><strong>Навчання з учителем (Supervised Learning).</strong>
+   Навчання з учителем спирається на наявність розміченого набору даних, де для кожного вхідного вектора ознак існує відомий істинний цільовий маркер (еталонний результат). Основною метою є побудова мапінгу (функції відображення) з простору вхідних ознак у простір цільових змінних. </li>
+</ol>
+<p>Залежно від топології та природи цільового маркера, Supervised Learning розпадається на дві фундаментальні задачі:</p>
+<ul>
+<li>
+<p><strong>Регресія (Regression):</strong> простір цільових значень є безперервною множиною дійсних чисел (<span class="arithmatex">\(\mathbb{R}^k\)</span>). Прикладами є прогнозування часових рядів, визначення фізичних параметрів об'єктів або оцінювання неперервних технологічних величин.</p>
+</li>
+<li>
+<p><strong>Класифікація (Classification):</strong> простір цільових значень є дискретною множиною класів чи категорій. Залежно від кількості категорій розрізняють бінарну класифікацію, багатокласову класифікацію (<strong>Multiclass Classification</strong>) та багатоміткову класифікацію (<strong>Multilabel Classification</strong>), де об'єкт може одночасно належати до кількох категорій.</p>
+</li>
+<li>
+<p><strong>Навчання без учителя (Unsupervised Learning).</strong>
+   У цій парадигмі розмітка даних повністю відсутня. Обчислювальний процес опрацьовує неструктурований простір ознак із метою виявлення внутрішньої топологічної структури, прихованих причинних зв'язків або щільності розподілу ймовірностей. </p>
+</li>
+</ul>
+<p>Ключовими задачами Unsupervised Learning є:</p>
+<ul>
+<li>
+<p><strong>Кластеризація (Clustering):</strong> групування об'єктів у геометрично або семантично близькі кластери на основі обраної метрики відстані.</p>
+</li>
+<li>
+<p><strong>Зменшення розмірності (Dimensionality Reduction):</strong> ортогональне або нелінійне проектування високовимірного простору ознак у підпростір меншої розмірності зі збереженням максимальної дисперсії чи локальних сусідських зв'язків.</p>
+</li>
+<li>
+<p><strong>Оцінювання щільності та виявлення аномалій (Density Estimation &amp; Anomaly Detection):</strong> ідентифікація рідкісних спостережень, що суттєво відхиляються від генеральної сукупності.</p>
+</li>
+<li>
+<p><strong>Навчання з підкріпленням (Reinforcement Learning, RL).</strong>
+   Навчання з підкріпленням моделює адаптивну поведінку інтелектуального агента, який взаємодіє з динамічним (часто невизначеним) середовищем. На відміну від Supervised Learning, агент не отримує прямих вказівок про правильність кожної окремої дії. Замість цього середовище повертає скалярний сигнал винагороди або покарання у відповідь на виконані дії. Метою агента є синтез оптимальної стратегії поведінки (<strong>Policy</strong>), яка максимізує сумарну дисконтовану винагороду на довготривалому часовому горизонті.</p>
+</li>
+</ul>
+<p>Усі три парадигми об'єднує загальний концептуальний конвеєр. Для оцінювання якості роботи ML-моделі вводиться <strong>функція втрат (Loss Function)</strong>, що математично формалізує розмір розходження між передбаченням моделі та істинним станом. Завдання навчання моделі зводиться до задачі математичного програмування — пошуку вектора параметрів (ваг) моделі, що мінімізує емпіричний ризик на навчальній вибірці.</p>
+<p>Процес мінімізації виконується за допомогою чисельних алгоритмів оптимізації, найважливішими з яких є варіанти <strong>градієнтного спуску (Gradient Descent)</strong>. Однак сліпа мінімізація втрат лише на навчальних даних призводить до ефекту <strong>перенавчання (Overfitting)</strong> — ситуації, коли модель «запам'ятовує» шум і конкретні деталі навчальної вибірки, втрачаючи здатність до узагальнення (<strong>Generalization</strong>) на нових, не бачених раніше даних. </p>
+<p>Для розв'язання цієї проблеми застосовують <strong>регуляризацію (Regularization)</strong> — накладання додаткових математичних обмежень на гладкість, норму або складність вектора параметрів моделі.</p>
+<hr />
+<h2 id="2">2. Математичний апарат, моделі та аналітичні залежності</h2>
+<h3 id="1_1">1. Формалізація патернів даних та векторних просторів</h3>
+<p>Нехай задано навчальну вибірку <span class="arithmatex">\(\mathcal{D} = \{(x_i, y_i)\}_{i=1}^N\)</span>, де <span class="arithmatex">\(x_i \in \mathbb{R}^M\)</span> — <span class="arithmatex">\(M\)</span>-вимірний вектор ознак <span class="arithmatex">\(i\)</span>-го об'єкта, <span class="arithmatex">\(y_i\)</span> — відповідний цільовий маркер, <span class="arithmatex">\(N\)</span> — загальний обсяг вибірки.</p>
+<p>Модель машинного навчання представляє собою сімейство гіпотез <span class="arithmatex">\(h(x; w)\)</span>, де <span class="arithmatex">\(w \in \mathbb{R}^K\)</span> — вектор внутрішніх параметрів (ваг) моделі розмінністю <span class="arithmatex">\(K\)</span>.</p>
+<h3 id="2_1">2. Математичні моделі функцій втрат</h3>
+<p><strong>А. Функції втрат для задач регресії.</strong></p>
+<ul>
+<li><strong>Середньоквадратична помилка (Mean Squared Error, MSE).</strong> Використовується при припущенні про нормальний (гаусівський) розподіл шуму в цільовій змінній. Формула має вигляд:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{L}_{\text{MSE}}(w) = \frac{1}{N} \sum_{i=1}^N \left( y_i - h(x_i; w) \right)^2\]</div>
+<p>де <span class="arithmatex">\(\mathcal{L}_{\text{MSE}}\)</span> — середньоквадратична функція втрат (<span class="arithmatex">\(\text{одиниці вимірювання } y^2\)</span>), <span class="arithmatex">\(N\)</span> — кількість об'єктів у вибірці, <span class="arithmatex">\(y_i\)</span> — істинне значення цільової змінної для <span class="arithmatex">\(i\)</span>-го об'єкта, <span class="arithmatex">\(h(x_i; w)\)</span> — прогноз моделі для <span class="arithmatex">\(i\)</span>-го об'єкта.</p>
+<p><em>Властивість:</em> MSE сильно штрафує за великі відхилення (через наявність квадрата), що робить її чутливою до викидів (<strong>Outliers</strong>) у даних.</p>
+<ul>
+<li><strong>Середня абсолютна помилка (Mean Absolute Error, MAE).</strong> Застосовується при розподілі Лапласа для шуму і є більш стійкою (<strong>Robust</strong>) до викидів:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{L}_{\text{MAE}}(w) = \frac{1}{N} \sum_{i=1}^N \left| y_i - h(x_i; w) \right|\]</div>
+<p>де <span class="arithmatex">\(\mathcal{L}_{\text{MAE}}\)</span> — середня абсолютна помилка (одиниці вимірювання <span class="arithmatex">\(y\)</span>). Градієнт MAE є константним за модулем, що може викликати нестабільність поблизу мінімуму.</p>
+<p><strong>Б. Функції втрат для задач класифікації.</strong></p>
+<ul>
+<li><strong>Бінарна крос-ентропія (Binary Cross-Entropy, BCE / Log Loss).</strong> Виводиться з принципу максимізації правдоподібності (<strong>Maximum Likelihood Estimation, MLE</strong>) для бернуллівського розподілу цільової змінної <span class="arithmatex">\(y_i \in \{0, 1\}\)</span>. Прогноз моделі <span class="arithmatex">\(\hat{y}_i = h(x_i; w) \in (0, 1)\)</span> інтерпретується як ймовірність належності до класу <span class="arithmatex">\(1\)</span>:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{L}_{\text{BCE}}(w) = -\frac{1}{N} \sum_{i=1}^N \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]\]</div>
+<p>де <span class="arithmatex">\(\mathcal{L}_{\text{BCE}}\)</span> — значення бінарної крос-ентропії (безрозмірна величина), <span class="arithmatex">\(y_i \in \{0, 1\}\)</span> — істинний бінарний клас, <span class="arithmatex">\(\hat{y}_i\)</span> — оцінена модельна ймовірність.</p>
+<ul>
+<li><strong>Категоріальна крос-ентропія (Categorical Cross-Entropy, CCE).</strong> Узагальнення BCE на випадок <span class="arithmatex">\(C\)</span> взаємовиключних класів (<span class="arithmatex">\(C &gt; 2\)</span>), де <span class="arithmatex">\(y_{i,c} \in \{0, 1\}\)</span> — One-Hot кодований вектор цільового класу, а <span class="arithmatex">\(\hat{y}_{i,c}\)</span> — ймовірність класу <span class="arithmatex">\(c\)</span>, отримана на виході функції Softmax:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{L}_{\text{CCE}}(w) = -\frac{1}{N} \sum_{i=1}^N \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c})\]</div>
+<p><em>Зв'язок із дивергенцією Кульбака-Лейблера:</em> Мінімізація CCE еквівалентна мінімізації дивергенції KL між істинним емпіричним розподілом ймовірностей <span class="arithmatex">\(P(Y|X)\)</span> та оціненим розподілом <span class="arithmatex">\(Q_w(Y|X)\)</span>:</p>
+<div class="arithmatex">\[D_{\text{KL}}(P \parallel Q_w) = \sum_{c=1}^C P(y_c) \log \frac{P(y_c)}{Q_w(y_c)} = H(P, Q_w) - H(P)\]</div>
+<p>де <span class="arithmatex">\(H(P, Q_w)\)</span> — крос-ентропія, а <span class="arithmatex">\(H(P)\)</span> — абсолютна ентропія істинного розподілу (константа).</p>
+<h3 id="3">3. Алгоритми градієнтної оптимізації</h3>
+<p>Для оновлення ваг <span class="arithmatex">\(w\)</span> у напрямку, протилежному до градієнта функції втрат <span class="arithmatex">\(\nabla_w \mathcal{L}(w)\)</span>, застосовуються ітераційні схеми.</p>
+<ul>
+<li><strong>Класичний стохастичний градієнтний спуск (Stochastic Gradient Descent, SGD).</strong> Оновлення ваг виконується на основі підмножини даних (mini-batch) обсягом <span class="arithmatex">\(B\)</span>:</li>
+</ul>
+<div class="arithmatex">\[w_{t+1} = w_t - \eta \cdot g_t\]</div>
+<p>де <span class="arithmatex">\(w_t\)</span> — вектор параметрів на ітерації <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(\eta &gt; 0\)</span> — швидкість навчання (<strong>Learning Rate</strong>), <span class="arithmatex">\(g_t = \nabla_w \mathcal{L}_B(w_t)\)</span> — градієнт функції втрат, обчислений на поточним батчі <span class="arithmatex">\(B\)</span>.</p>
+<ul>
+<li><strong>SGD із моментом (Momentum).</strong>   Згладжує осциляції градієнта у вузьких ярах шляхом акумуляції векторів попередніх рухів:</li>
+</ul>
+<div class="arithmatex">\[v_{t+1} = \beta \cdot v_t + (1 - \beta) \cdot g_t$$
+$$w_{t+1} = w_t - \eta \cdot v_{t+1}\]</div>
+<p>де <span class="arithmatex">\(v_t\)</span> — вектор швидкості (моменту), <span class="arithmatex">\(\beta \in [0, 1)\)</span> — коефіцієнт згасання моменту (зазвичай <span class="arithmatex">\(\beta = 0.9\)</span>).</p>
+<ul>
+<li><strong>Адаптивний оптимізатор Adam (Adaptive Moment Estimation).</strong>   Обєднує ідеї Momentum (перший момент градієнта) та RMSprop (другий неопосередкований момент градієнта):</li>
+</ul>
+<div class="arithmatex">\[m_t = \beta_1 \cdot m_{t-1} + (1 - \beta_1) \cdot g_t \quad \text{(оцінка експоненційного середнього)}$$
+$$v_t = \beta_2 \cdot v_{t-1} + (1 - \beta_2) \cdot g_t^2 \quad \text{(оцінка експоненційного дисперсійного кроку)}\]</div>
+<p>Оскільки <span class="arithmatex">\(m_0 = 0\)</span> та <span class="arithmatex">\(v_0 = 0\)</span>, на початкових ітераціях виконується коригування зсуву (<strong>Bias Correction</strong>):</p>
+<div class="arithmatex">\[\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}\]</div>
+<p>Оновлення ваг здійснюється за формулою:</p>
+<div class="arithmatex">\[w_{t+1} = w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \cdot \hat{m}_t\]</div>
+<p>де <span class="arithmatex">\(m_t, v_t\)</span> — вектори першого та другого моментів, <span class="arithmatex">\(\beta_1, \beta_2\)</span> — коефіцієнти гіперпараметрів (стандартно <span class="arithmatex">\(\beta_1 = 0.9, \beta_2 = 0.999\)</span>), <span class="arithmatex">\(\epsilon \approx 10^{-8}\)</span> — мала константа для запобігання діленню на нуль.</p>
+<h3 id="4">4. Математичний апарат регуляризації</h3>
+<p>Регуляризація додає до цільової функції втрат додатковий штрафний доданок <span class="arithmatex">\(\mathcal{R}(w)\)</span>, обмежений гіперпараметром <span class="arithmatex">\(\lambda \ge 0\)</span>:</p>
+<div class="arithmatex">\[\mathcal{J}(w) = \mathcal{L}(w) + \lambda \cdot \mathcal{R}(w)\]</div>
+<ul>
+<li><strong><span class="arithmatex">\(L_2\)</span>-регуляризація (Ridge / Weight Decay):</strong>
+  Штрафує суму квадратів ваг, стискаючи параметри до нуля та запобігаючи надмірному зростанню амплітуди ваг:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{R}_{L_2}(w) = \frac{1}{2} \|w\|_2^2 = \frac{1}{2} \sum_{j=1}^M w_j^2 \implies \nabla_w \mathcal{R}_{L_2}(w) = w\]</div>
+<p>Градієнтне оновлення з <span class="arithmatex">\(L_2\)</span>-штрафом набуває вигляду:</p>
+<div class="arithmatex">\[w_{t+1} = w_t (1 - \eta \lambda) - \eta \nabla_w \mathcal{L}(w_t)\]</div>
+<p><em>Байєсівська інтерпретація:</em> <span class="arithmatex">\(L_2\)</span>-регуляризація еквівалентна введенню апріорного нормального (гаусівського) розподілу з нульовим середнім на ваги моделі <span class="arithmatex">\(p(w) \sim \mathcal{N}(0, \sigma^2)\)</span>.</p>
+<ul>
+<li><strong><span class="arithmatex">\(L_1\)</span>-регуляризація (Lasso).</strong> Штрафує суму абсолютних значень ваг, що призводить до занулення частини неефективних коефіцієнтів та забезпечення відбору ознак (<strong>Feature Selection / Sparsity</strong>):</li>
+</ul>
+<p>$<span class="arithmatex">\(\mathcal{R}_{L_1}(w) = \|w\|_1 = \sum_{j=1}^M |w_j| \implies \nabla_w \mathcal{R}_{L_1}(w) = \text{sign}(w)\)</span>$</p>
+<p><em>Байєсівська інтерпретація:</em> <span class="arithmatex">\(L_1\)</span>-регуляризація еквівалентна введенню апріорного розподілу Лапласа <span class="arithmatex">\(p(w) \sim \text{Laplace}(0, b)\)</span>.</p>
+<ul>
+<li><strong>ElasticNet регуляризація.</strong>   Лінійна комбінація <span class="arithmatex">\(L_1\)</span> та <span class="arithmatex">\(L_2\)</span> штрафів для збалансування занулення та загального стиснення ваг:</li>
+</ul>
+<p>$<span class="arithmatex">\(\mathcal{R}_{\text{ElasticNet}}(w) = \alpha \|w\|_1 + \frac{1 - \alpha}{2} \|w\|_2^2, \quad \alpha \in [0, 1]\)</span>$</p>
+<hr />
+<h2 id="3_1">3. Систематизація даних та порівняльний аналіз</h2>
+<p>Для глибокого системного порівняння математичних властивостей, швидкості збіжності та специфіки застосування алгоритмів градієнтної оптимізації нижче наведено порівняльну таблицю.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр / Алгоритм</th>
+<th style="text-align: left;">Batch Gradient Descent (BGD)</th>
+<th style="text-align: left;">Stochastic Gradient Descent (SGD)</th>
+<th style="text-align: left;">SGD + Momentum</th>
+<th style="text-align: left;">RMSprop</th>
+<th style="text-align: left;">Adam (Adaptive Moment)</th>
+<th style="text-align: left;">AdamW (Decoupled Weight Decay)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Обсяг батчу для 1 кроку (<span class="arithmatex">\(B\)</span>)</strong></td>
+<td style="text-align: left;">Весь датасет (<span class="arithmatex">\(B = N\)</span>)</td>
+<td style="text-align: left;">1 елемент (<span class="arithmatex">\(B = 1\)</span>)</td>
+<td style="text-align: left;">Mini-batch (<span class="arithmatex">\(1 &lt; B &lt; N\)</span>)</td>
+<td style="text-align: left;">Mini-batch (<span class="arithmatex">\(1 &lt; B &lt; N\)</span>)</td>
+<td style="text-align: left;">Mini-batch (<span class="arithmatex">\(1 &lt; B &lt; N\)</span>)</td>
+<td style="text-align: left;">Mini-batch (<span class="arithmatex">\(1 &lt; B &lt; N\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Адаптація Learning Rate</strong></td>
+<td style="text-align: left;">Відсутня (єдиний <span class="arithmatex">\(\eta\)</span>)</td>
+<td style="text-align: left;">Відсутня (єдиний <span class="arithmatex">\(\eta\)</span>)</td>
+<td style="text-align: left;">Відсутня (єдиний <span class="arithmatex">\(\eta\)</span>)</td>
+<td style="text-align: left;">Поелементна за <span class="arithmatex">\(v_t\)</span> (2-й момент)</td>
+<td style="text-align: left;">Поелементна за <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span></td>
+<td style="text-align: left;">Поелементна за <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Обробка градієнтного шуму</strong></td>
+<td style="text-align: left;">Шуму немає (точний градієнт)</td>
+<td style="text-align: left;">Високий рівень шуму</td>
+<td style="text-align: left;">Згладжування через вектор моменту</td>
+<td style="text-align: left;">Часткове згладжування</td>
+<td style="text-align: left;">Повне скориговане згладжування</td>
+<td style="text-align: left;">Повне скориговане згладжування</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Механізм Weight Decay (<span class="arithmatex">\(L_2\)</span>)</strong></td>
+<td style="text-align: left;">Вбудований у градієнт <span class="arithmatex">\(\mathcal{L}\)</span></td>
+<td style="text-align: left;">Вбудований у градієнт <span class="arithmatex">\(\mathcal{L}\)</span></td>
+<td style="text-align: left;">Вбудований у градієнт <span class="arithmatex">\(\mathcal{L}\)</span></td>
+<td style="text-align: left;">Вбудований у градієнт <span class="arithmatex">\(\mathcal{L}\)</span></td>
+<td style="text-align: left;">Вбудований у градієнт (викликає викривлення <span class="arithmatex">\(m_t, v_t\)</span>)</td>
+<td style="text-align: left;">Явно відокремлений від адаптивного кроку</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Швидкість збіжності</strong></td>
+<td style="text-align: left;">Низька (повільний 1 крок)</td>
+<td style="text-align: left;">Низька / Нестабільна</td>
+<td style="text-align: left;">Середня</td>
+<td style="text-align: left;">Висока</td>
+<td style="text-align: left;">Дуже висока</td>
+<td style="text-align: left;">Висока (з кращою генералізацією)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Сфера застосування</strong></td>
+<td style="text-align: left;">Малі датасети, локальна регресія</td>
+<td style="text-align: left;">Онлайн-навчання, виклики пам'яті</td>
+<td style="text-align: left;">Класичні CNN, комп'ютерний зір</td>
+<td style="text-align: left;">Рекурентні мережі (RNN/LSTM)</td>
+<td style="text-align: left;">Загальні глибокі мережі, GAN</td>
+<td style="text-align: left;">Трансформери (LLM), сучасний Deep Learning</td>
+</tr>
+</tbody>
+</table>
+<p>Аналіз алгоритмів оптимізації демонструє еволюцію від точного, але обчислювально витратного Batch Gradient Descent до адаптивних методів. Ключовою проблемою класичного застосування <span class="arithmatex">\(L_2\)</span>-регуляризації в адаптивних алгоритмах (таких як Adam) є те, що штраф <span class="arithmatex">\(L_2\)</span> додається безпосередньо до градієнта <span class="arithmatex">\(g_t\)</span>. У результаті скалювання на другий момент <span class="arithmatex">\(\sqrt{\hat{v}_t}\)</span> регуляризаційний внесок для ваг з великими адаптивними кроками зменшується, що спотворює дію <span class="arithmatex">\(L_2\)</span>-штрафу. </p>
+<p>Алгоритм <strong>AdamW</strong> усуває цей недолік шляхом прямого віднімання <span class="arithmatex">\(w_t \cdot \lambda\)</span> від ваг поза розрахунком адаптивних моментів <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span>. Саме тому AdamW став стандартом для тренування великомасштабних нейромережевих моделей (LLM, ViT, Transformers).</p>
+<hr />
+<h2 id="4_1">4. Візуалізація процесів та структурних зв'язків</h2>
+<p>Для ілюстрації цілісного циклу навчання машинного навчання — від завантаження даних до обчислення Loss-функції, зворотного поширення градієнтів, адаптивної оптимізації та регуляризації — нижче наведено структурну схему.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Data_Pipeline [1. Підготовка даних]
+        A[Вхідний датасет D] --&gt; B{Парадигма навчання?}
+        B --&gt;|Supervised| C["Пари: Вектор ознак X ,&lt;br/&gt;Ціль Y"]
+        B --&gt;|Unsupervised| D["Множина ознак X без&lt;br/&gt;міток"]
+        B --&gt;|Reinforcement| E["Середовище: Стан S,&lt;br/&gt;Дія A, Винагорода R"]
+    end
+
+    subgraph Forward_Pass ["2. Прямий хід Forward&lt;br/&gt;Pass"]
+        C --&gt; F["Модель / Гіпотеза h X;&lt;br/&gt;w"]
+        F --&gt; G["Прогнозний результат&lt;br/&gt;Y_hat"]
+    end
+
+    subgraph Loss_Evaluation [3. Оцінювання втрат]
+        G &amp; C --&gt; H{Тип задачі?}
+        H --&gt;|Регресія| I[MSE / MAE Loss]
+        H --&gt;|Класифікація| J[Cross-Entropy Loss]
+
+        I &amp; J --&gt; K[Емпіричний ризик L w]
+
+        L_Reg["Регуляризаційний штраф&lt;br/&gt;R w"] --&gt;|L1 Lasso / L2 Ridge| M["Загальна цільова&lt;br/&gt;функція J w = L +&lt;br/&gt;lambda*R"]
+        K --&gt; M
+    end
+
+    subgraph Backward_Pass ["4. Оптимізація та&lt;br/&gt;оновлення"]
+        M --&gt; N["Обчислення градієнта&lt;br/&gt;grad = dJ/dw"]
+        N --&gt; O{Обраний оптимізатор?}
+
+        O --&gt;|SGD + Momentum| P[Акумуляція моменту v_t]
+        O --&gt;|Adam / AdamW| Q["Розрахунок 1-го m_t та&lt;br/&gt;2-го v_t моментів"]
+
+        P --&gt; R[Оновлення ваг w_t+1]
+        Q --&gt;|"Відокремлений Weight&lt;br/&gt;Decay AdamW"| R
+    end
+
+    R --&gt;|"Перевірка умови&lt;br/&gt;зупинки"| S{Збіжність / Епохи?}
+    S --&gt;|"Ні: Наступний&lt;br/&gt;mini-batch"| F
+    S --&gt;|Так| T["Навчена модель з&lt;br/&gt;високою генералізацією"]</code></pre>
+<p><em>Рисунок 1 — Структурно-логічна схема концептуального конвеєра машинного навчання, систем оптимізації та регуляризації</em></p>
+<p>Схема показує повний замкнений цикл навчання машинного навчання. Конвеєр розпочинається з вибору парадигми та підготовки даних (<code>Data_Pipeline</code>). У режимі Supervised Learning вектор ознак <span class="arithmatex">\(X\)</span> передається на прямий хід у модель <span class="arithmatex">\(h(X; w)\)</span> (<code>Forward_Pass</code>), яка формує прогноз <span class="arithmatex">\(\hat{Y}\)</span>. </p>
+<p>На етапі оцінювання втрат (<code>Loss_Evaluation</code>) обчислюється емпіричний ризик <span class="arithmatex">\(\mathcal{L}(w)\)</span> через MSE для регресії або Cross-Entropy для класифікації. Для запобігання перенавчанню до емпіричного ризику додається регуляризаційний штраф <span class="arithmatex">\(\mathcal{R}(w)\)</span> (<span class="arithmatex">\(L_1\)</span> або <span class="arithmatex">\(L_2\)</span>), формуючи загальну цільову функцію <span class="arithmatex">\(\mathcal{J}(w)\)</span>. </p>
+<p>На етапі зворотного ходу (<code>Backward_Pass</code>) обчислюються градієнти <span class="arithmatex">\(\nabla_w \mathcal{J}\)</span>, які передаються в оптимізатор (SGD+Momentum або AdamW). Оптимізатор розраховує оновлення параметрів <span class="arithmatex">\(w_{t+1}\)</span> з урахуванням адаптивних моментів або моменту інерції. Цикл повторюється ітеративно по mini-батчах до досягнення збіжності за критерієм мінімуму функції втрат на валидаційній вибірці.</p>
+<hr />
+<h2 id="5">5. Питання для самоперевірки та аналітичного осмислення</h2>
+<ol>
+<li>
+<p>Математично доведіть, чому мінімізація категоріальної крос-ентропії (<span class="arithmatex">\(\mathcal{L}_{\text{CCE}}\)</span>) для задачі багатокласової класифікації є еквівалентною максимізації логарифма функції правдоподібності (<strong>Log-Likelihood</strong>) та мінімізації дивергенції Кульбака-Лейблера (<span class="arithmatex">\(D_{\text{KL}}\)</span>).</p>
+</li>
+<li>
+<p>Поясніть геометричну та байєсівську інтерпретацію <span class="arithmatex">\(L_1\)</span> (Lasso) та <span class="arithmatex">\(L_2\)</span> (Ridge) регуляризації. Чому використання <span class="arithmatex">\(L_1\)</span>-штрафу призводить до точного занулення частини ваг (утворення розріджених векторів параметрів), тоді як <span class="arithmatex">\(L_2\)</span>-штраф лише наближає ваги до нуля, але рідко робить їх точними нулями?</p>
+</li>
+<li>
+<p>У чому полягає математична проблема концептуального об'єднання класичного <span class="arithmatex">\(L_2\)</span>-штрафу (Weight Decay) з адаптивними алгоритмами оптимізації типу Adam? Яким чином алгоритм AdamW розв'язує цю проблему, і як це впливає на генералізаційні властивості глибоких нейронних мереж?</p>
+</li>
+<li>
+<p>Проаналізуйте компроміс між зсувом та дисперсією (<strong>Bias-Variance Tradeoff</strong>). Як зміна обсягу навчальної вибірки <span class="arithmatex">\(N\)</span>, складності моделі (кількості параметрів <span class="arithmatex">\(K\)</span>) та коефіцієнта регуляризації <span class="arithmatex">\(\lambda\)</span> впливає на складові загальної помилки моделі?</p>
+</li>
+<li>
+<p>Розгляньте задачу класифікації з вираженим дисбалансом класів (наприклад, <span class="arithmatex">\(99,9\%\)</span> об'єктів належать до класу <span class="arithmatex">\(0\)</span>, і <span class="arithmatex">\(0,1\%\)</span> — до класу <span class="arithmatex">\(1\)</span>). Чому стандартна функція втрат Binary Cross-Entropy може виявитися неефективною в даному випадку, і які модифікації (наприклад, Weighted Cross-Entropy або Focal Loss) застосовуються для математичного вирішення цієї проблеми?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

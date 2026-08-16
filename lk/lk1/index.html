@@ -1,0 +1,1938 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../lk2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amdahls-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Закон Амдала (Amdahl's Law)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gustafson-barsis-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Закон Густафсона-Барсіса (Gustafson-Barsis Law)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isoefficiency-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Показник та функція ізоефективності (Isoefficiency Metric)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Основний зміст та теоретичний базис
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Математичний апарат, моделі та аналітичні залежності
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Математичний апарат, моделі та аналітичні залежності">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amdahls-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Закон Амдала (Amdahl's Law)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-gustafson-barsis-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Закон Густафсона-Барсіса (Gustafson-Barsis Law)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isoefficiency-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Показник та функція ізоефективності (Isoefficiency Metric)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Систематизація даних та порівняльний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Візуалізація процесів та структурних зв'язків
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Питання для самоперевірки та аналітичного осмислення
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-">Тема 1. Архітектури високопродуктивних обчислень та класифікація Флінна. Закони Амдала, Густафсона-Барсіса й показник ізоефективності</h1>
+<h2 id="1">1. Основний зміст та теоретичний базис</h2>
+<p>Сучасний етап розвитку комп'ютерної інженерії та системного програмування характеризується вичерпанням можливостей підвищення швидкодії обчислювальних систем за рахунок екстенсивного нарощування тактової частоти одноядерних напівпровідникових процесорів. Фізичні обмеження, зумовлені затримками поширення електромагнітного сигналу в кремнієвих кристалах, критичним зростанням щільності тепловиділення та проявом квантових ефектів на нанометрових масштабах технологічних процесів, обумовили парадигмальний перехід до паралельних та розподілених обчислювальних архітектур. У межах даного освітнього компонента вивчення високопродуктивних обчислень (<strong>High-Performance Computing, HPC</strong>) базується на концепції організації багаторівневого паралелізму, що охоплює апаратні та програмні рішення — від векторних інструкцій на рівні окремого ядра до масивно-паралельних кластерних систем.</p>
+<p>Для систематизації різноманіття обчислювальних систем у теорії архітектури ЕОМ використовують таксономію, запропоновану Майклом Флінном у 1966 році. <strong>Класифікація Флінна</strong> базується на концепції поділу інформаційних потоків у системі на два фундаментальні типи: <strong>потік команд</strong> (<strong>Instruction Stream</strong>) — послідовність машинних інструкцій, що виконуються пристроєм керування, та <strong>потік даних</strong> (<strong>Data Stream</strong>) — послідовність операндів, що опрацьовуються арифметично-логічними пристроями. Залежно від кількості та характеру взаємодії цих потоків, Флінн виділив чотири базові класи обчислювальних архітектур:</p>
+<ol>
+<li>
+<p><strong>SISD (Single Instruction Stream, Single Data Stream) — Одиночний потік команд, одиночний потік даних.</strong> Це класична послідовна архітектура фоннейманівського типу. У системі даного класу присутній один пристрій керування, який послідовно вибірає інструкції з пам'яті, та один арифметично-логічний пристрій, що послідовно виконує операції над єдиним потоком операндів. Попри те, що сучасні одноядерні процесори застосовують внутрішньоядерний паралелізм (конвеєризацію, суперскалярність, позапорядок виконання машинних команд), на логічному рівні для здобувачів вищої освіти вони репрезентують класичну SISD-модель.</p>
+</li>
+<li>
+<p><strong>SIMD (Single Instruction Stream, Multiple Data Stream) — Одиночний потік команд, множинний потік даних.</strong> У даній архітектурі єдиний пристрій керування генерує та декодує командний потік, проте команда одночасно транслюється на безліч векторних або матричних обчислювальних елементів. Кожен із цих елементів виконує одну й ту саму операцію над власним локальним операндом із векторного масиву даних. Спеціалізованими представниками даного класу є графічні процесорні прискорювачі (<strong>GPU</strong>), векторно-конвеєрні суперкомп'ютери, а також розширення векторних інструкцій універсальних процесорів (наприклад, Intel AVX-512, ARM NEON). Модель SIMD вважається базовою для прискорення математичних операцій лінійної алгебри, тензорних перетворень та алгоритмів перцепції у штучному інтелекті.</p>
+</li>
+<li>
+<p><strong>MISD (Multiple Instruction Stream, Single Data Stream) — Множинний потік команд, одиночний потік даних.</strong> Теоретичний клас системи, у якому декілька автономних пристроїв керування подають власні команди на різні обчислювальні процесори, які паралельно або конвеєрно опрацьовують один і той самий потік вихідних даних. На практиці чистої реалізації MISD-архітектури у масовому обчислювальному сегменті не існує. Проте найближчими конструктивними аналогами цього класу є отказостійкі резервовані обчислювальні комплекси критичного призначення (де кілька процесорів виконують різні алгоритми перевірки над одним потоком датчиків для дублювання результатів) та спеціалізовані систолічні масиви процесорів.</p>
+</li>
+<li>
+<p><strong>MIMD (Multiple Instruction Stream, Multiple Data Stream) — Множинний потік команд, множинний потік даних.</strong> Найбільш поширений, універсальний та масштабний клас сучасних високопродуктивних систем. У MIMD-архітектурі функціонує множина незалежних процесорних ядер чи обчислювальних вузлів, кожен з яких оснащений власним пристроєм керування та арифметично-логічним блоком. Кожен процесор виконує свій власний потік команд над власною підмножиною потоку даних. Клас MIMD поділяється на системи зі спільною пам'яттю (<strong>Symmetric Multiprocessing, SMP</strong>; <strong>Non-Uniform Memory Access, NUMA</strong>) та системи з розподіленою пам'яттю (масивно-паралельні системи <strong>MPP</strong>, обчислювальні кластери).</p>
+</li>
+</ol>
+<p>Ефективність функціонування паралельних обчислювальних процесів у межах зазначених архітектур визначається не лише піковою продуктивністю апаратних засобів, а й характеристиками самого алгоритму. Процес розпаралелювання алгоритмів неминуче супроводжується появою накладних витрат (<strong>Overhead</strong>), основними складовими яких є:</p>
+<ul>
+<li>
+<p>накладні витрати на міжпроцесорну комунікацію та передачу повідомлень мережевими каналами;</p>
+</li>
+<li>
+<p>часові затримки на синхронізацію паралельних гілок (захист критичних секцій, очікування на бар'єрах);</p>
+</li>
+<li>
+<p>витрати на некорисну роботу, пов'язану з дублюванням обчислень або вимушеним простоєм окремих ядер (дисбаланс навантаження).</p>
+</li>
+</ul>
+<p>Для аналітичного оцінювання межевих можливостей прискорення та масштабованості паралельних програм використовуються фундаментальні закони обчислювальних систем: закон Амдала, закон Густафсона-Барсіса та показник ізоефективності Грами-Гупти-Кумара.</p>
+<hr />
+<h2 id="2">2. Математичний апарат, моделі та аналітичні залежності</h2>
+<p>Для математичного опису часових характеристик паралельного обчислювального процесу вводиться ряд базових метрик. </p>
+<p>Нехай <span class="arithmatex">\(T_1(n)\)</span> — час виконання послідовного алгоритму (або паралельного алгоритму на одному процесорі) для задачі розмірністю <span class="arithmatex">\(n\)</span>, а <span class="arithmatex">\(T_p(n)\)</span> — час виконання того самого алгоритму на обчислювальній системі з <span class="arithmatex">\(p\)</span> паралельних процесорних ядер.</p>
+<p><strong>Прискорення (Speedup) <span class="arithmatex">\(S_p(n, p)\)</span></strong> визначається як відношення часу послідовного виконання задачі до часу її паралельного виконання:</p>
+<div class="arithmatex">\[S_p(n, p) = \frac{T_1(n)}{T_p(n)}\]</div>
+<p>де <span class="arithmatex">\(S_p(n, p)\)</span> — коефіцієнт прискорення (безрозмірна величина), <span class="arithmatex">\(T_1(n)\)</span> — час виконання послідовної версії програми у секундах (<span class="arithmatex">\(c\)</span>), <span class="arithmatex">\(T_p(n)\)</span> — час виконання паралельної версії програми на <span class="arithmatex">\(p\)</span> процесорах у секундах (<span class="arithmatex">\(c\)</span>).</p>
+<p><strong>Ефективність (Efficiency) <span class="arithmatex">\(E_p(n, p)\)</span></strong> характеризує середню частку корисної роботи, яку виконує кожен із <span class="arithmatex">\(p\)</span> процесорів під час паралельного обчислення:</p>
+<div class="arithmatex">\[E_p(n, p) = \frac{S_p(n, p)}{p} = \frac{T_1(n)}{p \cdot T_p(n)}\]</div>
+<p>де <span class="arithmatex">\(E_p(n, p)\)</span> — коефіцієнт ефективності використання паралельної системи (<span class="arithmatex">\(E_p \in (0, 1]\)</span>), <span class="arithmatex">\(p\)</span> — кількість задіяних процесорних ядер (числове значення, <span class="arithmatex">\(p \ge 1\)</span>).</p>
+<p><strong>Функція накладних витрат (Overhead Function) <span class="arithmatex">\(T_o(n, p)\)</span></strong> акумулює сумарні часові втрати всіх <span class="arithmatex">\(p\)</span> процесорів, які не пов'язані безпосередньо з виконанням корисного алгоритму:</p>
+<div class="arithmatex">\[T_o(n, p) = p \cdot T_p(n) - T_1(n)\]</div>
+<p>де <span class="arithmatex">\(T_o(n, p)\)</span> — сумарний час накладних витрат процесорного часу (людино-секунди або процесоро-секунди, <span class="arithmatex">\(c\)</span>).</p>
+<h3 id="amdahls-law">Закон Амдала (Amdahl's Law)</h3>
+<p>Закон Джина Амдала (1967 р.) оцінює максимально досяжне прискорення програми на паралельній системі за умови <strong>фіксованого обсягу обчислювальної задачі</strong> (<span class="arithmatex">\(n = \text{const}\)</span>).</p>
+<p>Припустимо, що послідовний алгоритм можна розбити на дві частки:</p>
+<ol>
+<li>
+<p>Послідовну частку <span class="arithmatex">\(f\)</span> (<span class="arithmatex">\(0 \le f \le 1\)</span>), яка принципово не піддається паралелізації (наприклад, зчитування даних з диска, початкова ініціалізація, послідовна вибірка).</p>
+</li>
+<li>
+<p>Паралельну частку <span class="arithmatex">\((1 - f)\)</span>, яка може бути рівномірно розподілена між <span class="arithmatex">\(p\)</span> обчислювальними процесорами.</p>
+</li>
+</ol>
+<p>Тоді загальний час виконання алгоритму на одному процесорі становить <span class="arithmatex">\(T_1 = f \cdot T_1 + (1 - f) \cdot T_1\)</span>. Час виконання на <span class="arithmatex">\(p\)</span> процесорах без урахування накладних витрат мережі описується формулою:</p>
+<div class="arithmatex">\[T_p = f \cdot T_1 + \frac{(1 - f) \cdot T_1}{p}\]</div>
+<p>Підставляючи дане вираження у формулу прискорення, отримуємо математичне формулювання <strong>Закону Амдала</strong>:</p>
+<div class="arithmatex">\[S_p = \frac{T_1}{f \cdot T_1 + \frac{(1 - f) \cdot T_1}{p}} = \frac{1}{f + \frac{1 - f}{p}} = \frac{p}{1 + f \cdot (p - 1)}\]</div>
+<p>де <span class="arithmatex">\(S_p\)</span> — коефіцієнт прискорення для фіксованого обсягу задачі, <span class="arithmatex">\(f\)</span> — частка послідовних (непаралельних) обчислень в алгоритмі (<span class="arithmatex">\(0 \le f \le 1\)</span>), <span class="arithmatex">\(p\)</span> — кількість процесорних ядер.</p>
+<p>Якщо кількість процесорів у системі прямує до нескінченності (<span class="arithmatex">\(p \to \infty\)</span>), то гранично можливе прискорення описується асимптотичною межею Амдала:</p>
+<div class="arithmatex">\[\lim_{p \to \infty} S_p = S_{\max} = \frac{1}{f}\]</div>
+<p>де <span class="arithmatex">\(S_{\max}\)</span> — асимптотична межа прискорення. Звідси випливає, що якщо алгоритм містить хоча б <span class="arithmatex">\(f = 10\%\)</span> (<span class="arithmatex">\(0{,}1\)</span>) послідовного коду, то навіть на нескінченній кількості процесорів неможливо отримати прискорення більше ніж у <span class="arithmatex">\(10\)</span> разів.</p>
+<h3 id="-gustafson-barsis-law">Закон Густафсона-Барсіса (Gustafson-Barsis Law)</h3>
+<p>Джон Густафсон та Едвін Барсіс (1988 р.) переглянули обмеження Амдала, вказуючи на те, що на практиці зі збільшенням кількості процесорів користувачі не розв'язують задачу фіксованого розміру за менший час, а <strong>збільшують розмірності задачі</strong> (<span class="arithmatex">\(n \to \infty\)</span>) за фіксований часовий інтервал (<span class="arithmatex">\(T_p = \text{const}\)</span>).</p>
+<p>Нехай у паралельному запуску на <span class="arithmatex">\(p\)</span> процесорах час виконання послідовної частини програми становить <span class="arithmatex">\(s\)</span>, а час виконання паралельної частини становить <span class="arithmatex">\(p_t\)</span>. Нормуємо загальний час паралельного виконання до одиниці: <span class="arithmatex">\(T_p = s + p_t = 1\)</span>.</p>
+<p>Якщо цю саму масштабовану задачу виконувати послідовно на одному процесорі, то час її виконання <span class="arithmatex">\(T_1\)</span> дорівнюватиме сумі часу послідовної частини та часу виконання всіх паралельних блоків, виконаних послідовно:</p>
+<div class="arithmatex">\[T_1 = s + p \cdot p_t = s + p \cdot (1 - s)\]</div>
+<p>Тоді <strong>Масштабоване прискорення (Scaled Speedup)</strong> за Густафсоном-Барсісом описується виразом:</p>
+<div class="arithmatex">\[S_p^s = \frac{T_1}{T_p} = \frac{s + p \cdot (1 - s)}{1} = p - s \cdot (p - 1) = s + p \cdot (1 - s)\]</div>
+<p>де <span class="arithmatex">\(S_p^s\)</span> — масштабоване прискорення за Густафсоном-Барсісом, <span class="arithmatex">\(s\)</span> — частка часу, витраченого на послідовні обчислення під час паралельного виконання (<span class="arithmatex">\(0 \le s \le 1\)</span>), <span class="arithmatex">\(p\)</span> — кількість процесорних ядер.</p>
+<p>Закон Густафсона-Барсіса демонструє лінійну залежність прискорення від кількості процесорів за умови, що обсяг паралельної роботи зростає пропорційно обчислювальній потужності системи.</p>
+<h3 id="isoefficiency-metric">Показник та функція ізоефективності (Isoefficiency Metric)</h3>
+<p>Концепція ізоефективності (запропонована В. Кумаром та А. Грамою) характеризує <strong>масштабованість (Scalability)</strong> паралельної системи — її здатність підтримувати постійний рівень ефективності <span class="arithmatex">\(E_p\)</span> при одночасному збільшенні кількості процесорів <span class="arithmatex">\(p\)</span> та обсягу обчислювальної задачі <span class="arithmatex">\(W\)</span>.</p>
+<p>Введемо поняття обсягу корисних обчислень задачі <span class="arithmatex">\(W\)</span> (Workload), де <span class="arithmatex">\(W = T_1(n)\)</span> (виражається у кількості базових операцій або одиницях часу).</p>
+<p>Рівняння ефективності через <span class="arithmatex">\(W\)</span> та функцію накладних витрат <span class="arithmatex">\(T_o(W, p)\)</span> має вигляд:</p>
+<div class="arithmatex">\[E_p = \frac{S_p}{p} = \frac{W}{p \cdot T_p} = \frac{W}{W + T_o(W, p)} = \frac{1}{1 + \frac{T_o(W, p)}{W}}\]</div>
+<p>Щоб ефективність залишалася постійною (<span class="arithmatex">\(E_p = K = \text{const}\)</span>, де <span class="arithmatex">\(0 &lt; K &lt; 1\)</span>), необхідно задовольнити умову:</p>
+<div class="arithmatex">\[\frac{T_o(W, p)}{W} = \frac{1 - K}{K} \implies W = \left(\frac{K}{1 - K}\right) \cdot T_o(W, p) = C \cdot T_o(W, p)\]</div>
+<p>де <span class="arithmatex">\(C = \frac{K}{1 - K}\)</span> — константа, яка визначається бажаним рівнем ефективності <span class="arithmatex">\(K\)</span>.</p>
+<p>Виразивши обсяг робіт <span class="arithmatex">\(W\)</span> як функцію від кількості процесорів <span class="arithmatex">\(p\)</span> із співвідношення <span class="arithmatex">\(W = C \cdot T_o(W, p)\)</span>, отримуємо <strong>функцію ізоефективності (Isoefficiency Function)</strong>:</p>
+<div class="arithmatex">\[W = \Theta(g(p))\]</div>
+<p>де <span class="arithmatex">\(g(p)\)</span> — асимптотична функція зростання обсягу робіт, необхідна для збереження стабільної ефективності <span class="arithmatex">\(E_p\)</span>. Чим повільніше зростає функція <span class="arithmatex">\(g(p)\)</span> (наприклад, <span class="arithmatex">\(g(p) = \mathcal{O}(p)\)</span> на відміну від <span class="arithmatex">\(g(p) = \mathcal{O}(p^3)\)</span>), тим більш масштабованою є комбінація паралельного алгоритму та архітектури обчислювальної системи.</p>
+<hr />
+<h2 id="3">3. Систематизація даних та порівняльний аналіз</h2>
+<p>Для глибокого порівняльного аналізу архітектурних класів за класифікацією Флінна нижче наведено систематизовані характеристики за ключовими системними параметрами.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Критерій порівняння</th>
+<th style="text-align: left;">SISD</th>
+<th style="text-align: left;">SIMD</th>
+<th style="text-align: left;">MISD</th>
+<th style="text-align: left;">MIMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Кількість потоків команд (Instruction Streams)</strong></td>
+<td style="text-align: left;">Одиночний (1)</td>
+<td style="text-align: left;">Одиночний (1)</td>
+<td style="text-align: left;">Множинний (<span class="arithmatex">\(&gt;1\)</span>)</td>
+<td style="text-align: left;">Множинний (<span class="arithmatex">\(&gt;1\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кількість потоків даних (Data Streams)</strong></td>
+<td style="text-align: left;">Одиночний (1)</td>
+<td style="text-align: left;">Множинний (<span class="arithmatex">\(&gt;1\)</span>)</td>
+<td style="text-align: left;">Одиночний (1)</td>
+<td style="text-align: left;">Множинний (<span class="arithmatex">\(&gt;1\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Синхронізація обчислень</strong></td>
+<td style="text-align: left;">Строго послідовна (на рівні ядра)</td>
+<td style="text-align: left;">Строга апаратна синхронізація (Lock-step)</td>
+<td style="text-align: left;">Конвеєрна або фазова</td>
+<td style="text-align: left;">Асинхронна (з явними точками бар'єрів чи передачі даних)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Типова апаратна реалізація</strong></td>
+<td style="text-align: left;">Одноядерні класичні CPU, мікроконтролери</td>
+<td style="text-align: left;">GPU (NVIDIA CUDA Cores), Векторні прискорювачі, AVX/NEON</td>
+<td style="text-align: left;">Систолічні масиви, дубльовані отказостійкі вузли</td>
+<td style="text-align: left;">Багатоядерні CPU, SMP-сервери, HPC-кластери, MPP</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Модель організації пам'яті</strong></td>
+<td style="text-align: left;">Єдиний локальний адресний простір</td>
+<td style="text-align: left;">Локальні регістрові файли / спільна векторна пам'ять</td>
+<td style="text-align: left;">Спільна локальна пам'ять або конвеєрний канал</td>
+<td style="text-align: left;">Спільна (SMP/NUMA) або Розподілена (Distributed Cluster)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Складність програмування</strong></td>
+<td style="text-align: left;">Мінімальна (послідовний код)</td>
+<td style="text-align: left;">Середня (векторизація, тензорні оператори, CUDA C++)</td>
+<td style="text-align: left;">Висока (спеціалізовані алгоритми)</td>
+<td style="text-align: left;">Висока (MPI, OpenMP, багатопотоковість, Pthreads)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Основні сфери застосування в AI та системній інженерії</strong></td>
+<td style="text-align: left;">Базові управляючі скрипти, системні служби OS</td>
+<td style="text-align: left;">Тензорна алгебра, обробка матриць, CNN, Deep Learning</td>
+<td style="text-align: left;">Відбраковка помилок у критикал-системах, DSP-фільтрація</td>
+<td style="text-align: left;">Розподілене навчання великомасштабних LLM, Ray, DDP</td>
+</tr>
+</tbody>
+</table>
+<p>Аналіз даних таблиці показує, що для сучасних задач штучного інтелекту та комп'ютерної інженерії найбільш критичним є гібридне поєднання архітектур <strong>SIMD</strong> та <strong>MIMD</strong>. У подібних конфігураціях масивно-паралельні кластерні вузли (MIMD-рівень) обмінюються між собою градієнтами та вагами моделей через мережеві протоколи передачі повідомлень (MPI), тоді як усередині кожного окремого вузла обчислення матричних згорткових шарів чи операцій Self-Attention розпаралелюються на тисячах масивів векторних ядер GPU (SIMD-рівень).</p>
+<hr />
+<h2 id="4">4. Візуалізація процесів та структурних зв'язків</h2>
+<p>Для ілюстрації зв'язку між класифікацією архітектур за Флінном, виникаючими накладними витратами паралелізму та аналітичними законами оцінювання продуктивності нижче наведено оглядову графічну діаграму.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Класифікація&lt;br/&gt;обчислювальних систем"] --&gt; B[Таксономія Флінна]
+
+    B --&gt; C["SISD: Одиночний потік&lt;br/&gt;команд / даних"]
+    B --&gt; D["SIMD: Векторні / GPU&lt;br/&gt;обчислення"]
+    B --&gt; E["MISD: Конвеєрні /&lt;br/&gt;Систолічні системи"]
+    B --&gt; F["MIMD: Багатоядерні CPU&lt;br/&gt;/ Кластери / MPP"]
+
+    D &amp; F --&gt; G["Паралельний&lt;br/&gt;обчислювальний процес"]
+
+    G --&gt; H[Накладні витрати То]
+    H --&gt; H1["Міжпроцесорна&lt;br/&gt;комунікація MPI"]
+    H --&gt; H2["Синхронізація та&lt;br/&gt;затримки бар'єрів"]
+    H --&gt; H3["Дисбаланс навантаження&lt;br/&gt;процесів"]
+
+    G --&gt; I["Оцінювання&lt;br/&gt;ефективності та&lt;br/&gt;масштабованості"]
+
+    I --&gt; J["Закон Амдала:&lt;br/&gt;Фіксований обсяг W"]
+    J --&gt; J1["Sp = p / (1 + f*(p - 1))"]
+    J1 --&gt; J2["Межа прискорення: Sp&lt;br/&gt;-&gt; 1/f"]
+
+    I --&gt; K["Закон&lt;br/&gt;Густафсона-Барсіса:&lt;br/&gt;Масштабований обсяг W"]
+    K --&gt; K1["Scaled Speedup: Sp = p - s*(p - 1)"]
+    K1 --&gt; K2["Лінійне зростання при&lt;br/&gt;збільшенні розміру&lt;br/&gt;задачі"]
+
+    I --&gt; L["Показник&lt;br/&gt;ізоефективності"]
+    L --&gt; L1["Умова сталості ефективності: W = C * To(W, p)"]
+    L1 --&gt; L2["Функція ізоефективності: W = Theta(g(p))"]</code></pre>
+<p><em>Рисунок 1 — Структурно-логічна схема класифікації обчислювальних архітектур за Флінном та моделей оцінювання продуктивності паралельних систем</em></p>
+<p>Діаграма відображає концептуальний перехід від теоретичної класифікації апаратних архітектур за Флінном (вузли <code>C, D, E, F</code>) до практичної організації паралельного обчислювального процесу (<code>G</code>). При виконанні програмного коду на архітектурах SIMD та MIMD виникають неминучі системні накладні витрати <span class="arithmatex">\(T_o\)</span> (<code>H</code>), викликані затримками комунікаційної мережі (<code>H1</code>), затримками на синхронізацію процесів (<code>H2</code>) та нерівномірним розподілом робіт (<code>H3</code>). </p>
+<p>Для аналізу впливу цих витрат на підсумкову продуктивність застосовуються три взаємодоповнюючі математичні моделі (<code>I</code>):</p>
+<ol>
+<li>
+<p><strong>Модель Амдала</strong> (<code>J</code>) розглядає випадок строгих обмежень на розмір вихідної задачі (<span class="arithmatex">\(W = \text{const}\)</span>) та встановлює верхню теоретичну межу прискорення <span class="arithmatex">\(1/f\)</span>, обумовлену наявністю послідовного коду.</p>
+</li>
+<li>
+<p><strong>Модель Густафсона-Барсіса</strong> (<code>K</code>) знімає це обмеження, показуючи, що при масштабуванні розмірності задачі пропорційно зростанню кількості процесорів <span class="arithmatex">\(p\)</span>, вплив послідовної частки <span class="arithmatex">\(s\)</span> компенсується, забезпечуючи майже лінійне зростання продуктивності.</p>
+</li>
+<li>
+<p><strong>Концепція ізоефективності</strong> (<code>L</code>) зв'язує обидва підходи через функцію ізоефективності <span class="arithmatex">\(W = \Theta(g(p))\)</span>, яка дає змогу визначити точний закон зростання обсягу робіт <span class="arithmatex">\(W\)</span>, необхідний для утримання коефіцієнта ефективності <span class="arithmatex">\(E_p\)</span> на стабільному рівні при нарощуванні кількості обчислювальних вузлів <span class="arithmatex">\(p\)</span>.</p>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. Питання для самоперевірки та аналітичного осмислення</h2>
+<ol>
+<li>
+<p>Здобувач вищої освіти розробив паралельну програму для обробки зображень, у якій частка послідовного коду становить <span class="arithmatex">\(f = 5\%\)</span>. Яке максимально можливе теоретичне прискорення можна отримати на суперкомп'ютері з <span class="arithmatex">\(1024\)</span> ядрами? Обчисліть ефективність використання даного суперкомп'ютера та поясніть економічну доцільність залучення такої кількості ядер за законом Амдала.</p>
+</li>
+<li>
+<p>У чому полягає фундаментальна відмінність між методологічними передумовами закону Амдала та закону Густафсона-Барсіса? Наведіть приклад інженерної задачі обробки великих даних, для якої застосування закону Густафсона-Барсіса є більш обґрунтованим, ніж застосування закону Амдала.</p>
+</li>
+<li>
+<p>Якщо для паралельного алгоритму множення матриць на розподіленій пам'яті функція ізоефективності становить <span class="arithmatex">\(W = \Theta(p^{1.5})\)</span>, а для іншого алгоритму — <span class="arithmatex">\(W = \Theta(p \log p)\)</span>, який із цих двох алгоритмів володіє кращою масштабованістю при переході від малого кластера до масивно-паралельного суперкомп'ютера? Відповідь обґрунтуйте математично.</p>
+</li>
+<li>
+<p>До якого класу за таксономією Флінна належить графічний прискорювач NVIDIA з архітектурою SIMT (Single Instruction, Multiple Threads)? Порівняйте SIMT із класичною SIMD-архітектурою за критеріями гнучкості ветвлення коду (Instruction Divergence) та управління потоками.</p>
+</li>
+<li>
+<p>Які основні чинники формують функцію накладних витрат <span class="arithmatex">\(T_o(n, p)\)</span> при реалізації алгоритмів машинного навчання у розподілених кластерах за допомогою бібліотеки <code>mpi4py</code>? Як співвідношення між обсягом обчислень та обсягом комунікацій (Communication-to-Computation Ratio) впливає на підсумкову ефективність <span class="arithmatex">\(E_p\)</span>?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
