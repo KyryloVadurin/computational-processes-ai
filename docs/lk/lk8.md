@@ -99,12 +99,12 @@ $$\delta^{[1]} = \left[ \prod_{k=1}^{L-1} \left(W^{[k+1]}\right)^T \cdot \text{d
 * **Ініціалізація Ксав'єра / Глорота (Xavier / Glorot Initialization).**
   Розроблена для симетричних функцій активації поблизу нуля (Tanh, Sigmoid). Початкові ваги вибираються з нормального розподілу з нульовим середнім та дисперсією:
 
-  $$\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]} + n^{[l]}} \implies W^{[l]} \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n^{[l-1]} + n^{[l]}}}\right)$$
+$$\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]} + n^{[l]}} \implies W^{[l]} \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n^{[l-1]} + n^{[l]}}}\right)$$
 
 * **Ініціалізація Хе / Каймінга (He / Kaiming Initialization).**
   Розроблена спеціально для функцій активації типу ReLU, які обнуляють від'ємну півплощину (зменшуючи ефективну дисперсію вдвічі):
 
-  $$\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]}} \implies W^{[l]} \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n^{[l-1]}}}\right)$$
+$$\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]}} \implies W^{[l]} \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n^{[l-1]}}}\right)$$
 
 ---
 
