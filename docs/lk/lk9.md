@@ -110,17 +110,17 @@ $$\frac{\partial \mathcal{E}}{\partial x_l} = \frac{\partial \mathcal{E}}{\parti
 
 1. **Обчислювальна складність стандартної згортки:**
 
-   $$\text{FLOPs}_{\text{standard}} = H_{out} \cdot W_{out} \cdot K \cdot K \cdot C_{in} \cdot C_{out}$$
+$$\text{FLOPs}_{\text{standard}} = H_{out} \cdot W_{out} \cdot K \cdot K \cdot C_{in} \cdot C_{out}$$
 
 2. **Обчислювальна складність Depthwise Separable згортки.**
    * Складність Depthwise етапу: $H_{out} \cdot W_{out} \cdot K \cdot K \cdot C_{in}$
    * Складність Pointwise етапу ($1 \times 1$ Conv): $H_{out} \cdot W_{out} \cdot 1 \cdot 1 \cdot C_{in} \cdot C_{out}$
 
-   $$\text{FLOPs}_{\text{dw\_sep}} = H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})$$
+$$\text{FLOPs}_{\text{dw\_sep}} = H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})$$
 
 3. **Коефіцієнт виграшу в обчислюваній складності та параметрах:**
 
-   $$\text{Ratio} = \frac{\text{FLOPs}_{\text{dw\_sep}}}{\text{FLOPs}_{\text{standard}}} = \frac{H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})}{H_{out} \cdot W_{out} \cdot K^2 \cdot C_{in} \cdot C_{out}} = \frac{1}{C_{out}} + \frac{1}{K^2}$$
+$$\text{Ratio} = \frac{\text{FLOPs}_{\text{dw\_sep}}}{\text{FLOPs}_{\text{standard}}} = \frac{H_{out} \cdot W_{out} \cdot C_{in} \cdot (K^2 + C_{out})}{H_{out} \cdot W_{out} \cdot K^2 \cdot C_{in} \cdot C_{out}} = \frac{1}{C_{out}} + \frac{1}{K^2}$$
 
 При використанні ядра $K = 3$ ($K^2 = 9$) та великої кількості каналів $C_{out} \gg 9$ виграш в обчисленнях та кількості вагових параметрів становить приблизно $8$--$9$ разів при мінімальній втраті точності розпізнавання.
 
