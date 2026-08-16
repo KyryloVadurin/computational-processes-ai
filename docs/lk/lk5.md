@@ -77,12 +77,12 @@ $$CCR = \frac{T_{\text{comm}}}{T_{\text{comp}}} = \frac{\sum_{k=1}^{K} \left( \a
 1. **Централізований бар'єр із лічильником (Centralized Counter Barrier):**
    Усі $p$ процесів атомарно інкрементують єдиний спільний лічильник у системній пам'яті. Часова складність такого бар'єра через колізії звернення до пам'яті або мережевого адаптера становить:
 
-   $$T_{\text{central\_barrier}}(p) = \mathcal{O}(p \cdot \alpha)$$
+$$T_{\text{central\_barrier}}(p) = \mathcal{O}(p \cdot \alpha)$$
 
 2. **Деревоподібний / Диссемінаційний бар'єр (Tree / Dissemination Barrier):**
    Процеси організуються у логічну бінарну або диссемінаційну структуру, де синхронізаційні сигнали передаються пошарово. Часова складність зменшується до логарифмічної:
 
-   $$T_{\text{tree\_barrier}}(p) = 2 \cdot \lceil \log_2 p \rceil \cdot \left( \alpha + \beta \cdot m_{\text{sync}} \right)$$
+$$T_{\text{tree\_barrier}}(p) = 2 \cdot \lceil \log_2 p \rceil \cdot \left( \alpha + \beta \cdot m_{\text{sync}} \right)$$
 
 де $p$ — кількість процесів у комунікаторі, $\alpha$ — латентність мережі, $m_{\text{sync}}$ — мінімальний розмір управляючого прапорця синхронізації (зазвичай $4$ або $8$ байтів).
 
