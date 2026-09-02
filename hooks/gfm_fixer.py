@@ -1,5 +1,30 @@
 import re
 
+def auto_wrap_mermaid_text(markdown):
+    """
+    Виправляє лапки всередині блоків Mermaid та автопереносить довгі рядки.
+    """
+    def process_mermaid_block(match):
+        code = match.group(1)
+
+        # 1. Замінюємо вкладені подвійні лапки всередині назв вузлів на одинарні або лапки-ялинки
+        # Приклад: ["Текст ("підтекст")"] -> ["Текст ('підтекст')"]
+        def sanitize_internal_quotes(m):
+            prefix = m.group(1)
+            content = m.group(2)
+            suffix = m.group(3)
+            # Прибираємо внутрішні подвійні лапки
+            cleaned_content = content.replace('"', "'")
+            return f'{prefix}"{cleaned_content}"{suffix}'
+
+        # Знаходимо всі конструкції ["..."], (...), {...}
+        code = re.sub(r'(\[|\(|\{)\s*\"(.*?)\"\s*(\]|\)|\})', sanitize_internal_quotes, code)
+
+        return f"```mermaid\n{code}\n```"
+
+    return re.sub(r'```mermaid\s*\n([\s\S]*?)\n```', process_mermaid_block, markdown)
+
+
 def fix_details_and_lists(markdown):
     """
     Забезпечує порожні рядки всередині <details> та перед усіма списками.
