@@ -123,3 +123,24 @@
 .mermaid .node foreignObject {
     font-family: var(--md-text-font-family, Roboto, sans-serif) !important;
 }
+
+
+/* Розтягування на весь екран */
+.md-grid {
+    max-width: 100% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+@media screen and (min-width: 76.25em) {
+    .md-sidebar--primary {
+        width: 16rem;
+    }
+    .md-sidebar--secondary {
+        width: 17rem;
+    }
+    .md-content {
+        margin-left: 16rem;
+        margin-right: 17rem;
+    }
+}
