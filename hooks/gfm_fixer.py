@@ -1,62 +1,66 @@
 import re
 
 def auto_wrap_mermaid_text(markdown):
-    """
-    Виправляє лапки всередині блоків Mermaid та автопереносить довгі рядки.
-    """
     def process_mermaid_block(match):
         code = match.group(1)
 
-        # 1. Замінюємо вкладені подвійні лапки всередині назв вузлів на одинарні або лапки-ялинки
-        # Приклад: ["Текст ("підтекст")"] -> ["Текст ('підтекст')"]
         def sanitize_internal_quotes(m):
             prefix = m.group(1)
             content = m.group(2)
             suffix = m.group(3)
-            # Прибираємо внутрішні подвійні лапки
             cleaned_content = content.replace('"', "'")
             return f'{prefix}"{cleaned_content}"{suffix}'
 
-        # Знаходимо всі конструкції ["..."], (...), {...}
         code = re.sub(r'(\[|\(|\{)\s*\"(.*?)\"\s*(\]|\)|\})', sanitize_internal_quotes, code)
-
         return f"```mermaid\n{code}\n```"
 
     return re.sub(r'```mermaid\s*\n([\s\S]*?)\n```', process_mermaid_block, markdown)
 
 
-def fix_details_and_lists(markdown):
+def convert_details_to_admonitions(markdown):
     """
-    Забезпечує порожні рядки всередині <details> та перед усіма списками.
+    Конвертує сирі HTML <details> у нативні згортаємі блоки Material for MkDocs (??? note)
+    з автоматичним виправленням відступів і списків.
     """
-    # 1. Додаємо порожній рядок після <summary>...</summary>, якщо його немає
-    markdown = re.sub(r'(</summary>)\s*\n(?!\n)', r'\1\n\n', markdown)
+    def replace_details(match):
+        summary = match.group(1).strip()
+        content = match.group(2).strip()
 
-    # 2. Додаємо порожній рядок перед закриваючим </details>
-    markdown = re.sub(r'([^\n])\n\s*(</details>)', r'\1\n\n\2', markdown)
+        # 1. Забезпечуємо порожні рядки перед нумерованими та маркованими списками
+        content = re.sub(r'([^\n])\n([ \t]*(\d+\.|[-*+])\s+)', r'\1\n\n\2', content)
+        content = re.sub(r'(:\s*)\n([ \t]*[-*+]\s+)', r'\1\n\n\2', content)
 
-    # 3. Гарантуємо порожній рядок перед списками (1., 2. або *, -), якщо перед ними йде звичайний текст
-    markdown = re.sub(r'([^\n])\n([ \t]*(\d+\.|[-*+])\s+)', r'\1\n\n\2', markdown)
+        # 2. Робимо відступ 4 пробіли для кожного рядка контенту всередині блоку
+        lines = content.split('\n')
+        indented_lines = []
+        for line in lines:
+            if line.strip():
+                indented_lines.append('    ' + line)
+            else:
+                indented_lines.append('')
 
-    # 4. Гарантуємо порожній рядок перед вкладеними зірочками після двокрапки (наприклад, "дистракторів:\n*")
-    markdown = re.sub(r'(:\s*)\n([ \t]*[-*+]\s+)', r'\1\n\n\2', markdown)
+        indented_content = '\n'.join(indented_lines)
+        return f'??? note "{summary}"\n\n{indented_content}\n'
 
-    return markdown
+    # Шукаємо всі теги <details> ... <summary>Заголовок</summary> Текст </details>
+    pattern = r'<details[^>]*>\s*<summary>(.*?)</summary>([\s\S]*?)</details>'
+    return re.sub(pattern, replace_details, markdown)
+
 
 def on_page_markdown(markdown, page, config, files):
-    # Додаємо markdown="1" до <details>
-    markdown = re.sub(r'<details(?![^>]*markdown="1")', r'<details markdown="1"', markdown)
+    # 1. Автоматична конвертація спойлерів <details> у нативні блоки Material ??? note
+    markdown = convert_details_to_admonitions(markdown)
 
-    # Виправляємо переноси та списки
-    markdown = fix_details_and_lists(markdown)
-
-    # Обробка та виправлення синтаксису Mermaid
+    # 2. Обробка та виправлення синтаксису Mermaid
     markdown = auto_wrap_mermaid_text(markdown)
 
-    # Перетворення ```math на $$
+    # 3. Перетворення блоків ```math на $$ ... $$
     markdown = re.sub(r'```math\s*\n([\s\S]*?)\n```', r'\n$$\n\1\n$$\n', markdown)
 
-    # Заміна < у формулах на \lt
+    # 4. Гарантуємо порожні рядки перед списками у всьому документі
+    markdown = re.sub(r'([^\n])\n([ \t]*[-*+]|\d+\.)\s+', r'\1\n\n\2 ', markdown)
+
+    # 5. Заміна знаку '<' у формулах $$ на '\lt', щоб не ламався рендеринг
     def fix_math_tags(match):
         math_content = match.group(0)
         return re.sub(r'<(\s*[0-9a-zA-Z_\\])', r'\\lt \1', math_content)
