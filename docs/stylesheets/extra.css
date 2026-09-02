@@ -125,22 +125,56 @@
 }
 
 
-/* Розтягування на весь екран */
+/* ==========================================================================
+   8. ПРАВИЛЬНИЙ ПОВНОЕКРАННИЙ РЕЖИМ (100% FLUID WIDTH БЕЗ ЗЛАМУ КОНТЕНТУ)
+   ========================================================================== */
+
+/* 1. Розтягуємо загальний контейнер сітки на весь екран */
 .md-grid {
     max-width: 100% !important;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
 }
 
+/* 2. Центральна область контенту: займає весь вільний простір між панелями */
+.md-content {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin-left: 1.5rem !important;
+    margin-right: 1.5rem !important;
+}
+
+/* 3. Фіксуємо ширину панелей навігації та змісту на десктопах */
 @media screen and (min-width: 76.25em) {
+    /* Ліве меню навігації */
     .md-sidebar--primary {
-        width: 16rem;
+        width: 16rem !important;
+        flex-shrink: 0 !important;
     }
+
+    /* Правий зміст сторінки (TOC) */
     .md-sidebar--secondary {
-        width: 17rem;
+        width: 18rem !important;
+        flex-shrink: 0 !important;
     }
-    .md-content {
-        margin-left: 16rem;
-        margin-right: 17rem;
-    }
+}
+
+/* 4. Забороняємо штучний розрив слів по буквах у заголовках */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: manual !important;
+}
+
+/* 5. Таблиці та діаграми розтягуються на всю ширину центрального блоку */
+.md-typeset table:not([class]) {
+    width: 100%;
+    display: table;
+}
+
+.md-typeset .mermaid {
+    width: 100%;
+    max-width: 100%;
 }
