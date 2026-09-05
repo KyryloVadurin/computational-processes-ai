@@ -1,0 +1,3809 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk2/">
+      
+      
+        <link rel="next" href="../lk4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-mpi-ai-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні засади розподілених обчислень, парадигма передачі повідомлень та специфікація MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі комунікаційної затримки, топологічні метрики та алгоритмічна складність колективних операцій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Проектування та реалізація децентралізованої синхронізації градієнтів у розподіленому навчанні нейромереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-smp-cc-numa-norma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Архітектурна диференціація багатопроцесорних комплексів: фундаментальні відмінності систем зі спільною пам'яттю (SMP, CC-NUMA) від розподілених кластерних комплексів без прямого віддаленого доступу до пам'яті (NORMA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-message-passing-spmp-mpi_comm_world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Концептуальна модель передачі повідомлень (Message Passing): парадигма «одна програма — множина процесів» (SPMP), простори адрес, контексти взаємодії, структура комунікаторів та ідентифікація рангів процесів у середовищі MPI_COMM_WORLD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Точкові комунікаційні операції: порівняльна характеристика стандартного, блокуючого, неблокуючого, синхронного та буферизованого режимів обміну, протоколи квитування, причини виникнення ситуацій взаємного блокування (дедлоків) і методи їх усунення
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-ai-nvswitch-nvlink-fat-tree-2d3d-torus-mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Мережеві комутаційні фабрики та топології сучасних AI-кластерів: аналіз повнозв'язних структур (NVSwitch / NVLink), ієрархічних потовщених дерев (Fat-Tree) і тороїдальних ґраток (2D/3D Torus), а також програмне конструювання віртуальних декартових топологій в MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та класифікація базових архітектур розподілених обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-loggp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітичне оцінювання часу передачі повідомлень у кластерних системах на основі класичної двопараметричної моделі Хокні та багатопараметричної моделі LogGP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Формалізація топологічних характеристик комунікаційних мереж: аналітичний розрахунок мережевого діаметра, ступеня зв'язності, ширини бінарного поділу та апаратної вартості ліній зв'язку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання, розподілу масивів, глобального збору, персоналізованого обміну та глобальної редукції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання, розподілу масивів, глобального збору, персоналізованого обміну та глобальної редукції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpi_bcast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Широкомовне розсилання (MPI_Bcast)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_scatter-mpi_gather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Розподіл масивів (MPI_Scatter) та глобальний збір (MPI_Gather)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_alltoall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Персоналізований обмін («кожен з кожним», MPI_Alltoall)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_reduce-mpi_allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Глобальна редукція (MPI_Reduce та MPI_Allreduce)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-ring-allreduce-scatter-reduce-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму Ring-Allreduce: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму Ring-Allreduce: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-scatter-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Фаза 1: Збір-редукція (Scatter-Reduce)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Фаза 2: Загальний збір (Allgather)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ring-allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Повний час синхронізації Ring-Allreduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Аналіз масштабованості паралельних процесів: формалізація функції ізоефективності та дослідження впливу комунікаційних накладних витрат на прискорення обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація аналітичних моделей та алгоритмів комунікації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення аналітичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ring-allreduce-ai-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок мережевої трудомісткості та децентралізованої синхронізації градієнтів методом Ring-Allreduce для багатовузлового AI-кластера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок мережевої трудомісткості та децентралізованої синхронізації градієнтів методом Ring-Allreduce для багатовузлового AI-кластера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок фізичного розміру вектора градієнтів та розбиття на блоки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-scatter-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Розрахунок часу виконання фази Scatter-Reduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок часу виконання фази Allgather
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ring-allreduce-parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок сумарного часу Ring-Allreduce та зіставлення зі схемою Parameter Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Оцінка прискорення та ефективності паралельного кроку навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні засади розподілених обчислень, парадигма передачі повідомлень та специфікація MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі комунікаційної затримки, топологічні метрики та алгоритмічна складність колективних операцій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Проектування та реалізація децентралізованої синхронізації градієнтів у розподіленому навчанні нейромереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-smp-cc-numa-norma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Архітектурна диференціація багатопроцесорних комплексів: фундаментальні відмінності систем зі спільною пам'яттю (SMP, CC-NUMA) від розподілених кластерних комплексів без прямого віддаленого доступу до пам'яті (NORMA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-message-passing-spmp-mpi_comm_world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Концептуальна модель передачі повідомлень (Message Passing): парадигма «одна програма — множина процесів» (SPMP), простори адрес, контексти взаємодії, структура комунікаторів та ідентифікація рангів процесів у середовищі MPI_COMM_WORLD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Точкові комунікаційні операції: порівняльна характеристика стандартного, блокуючого, неблокуючого, синхронного та буферизованого режимів обміну, протоколи квитування, причини виникнення ситуацій взаємного блокування (дедлоків) і методи їх усунення
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-ai-nvswitch-nvlink-fat-tree-2d3d-torus-mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Мережеві комутаційні фабрики та топології сучасних AI-кластерів: аналіз повнозв'язних структур (NVSwitch / NVLink), ієрархічних потовщених дерев (Fat-Tree) і тороїдальних ґраток (2D/3D Torus), а також програмне конструювання віртуальних декартових топологій в MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та класифікація базових архітектур розподілених обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-loggp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітичне оцінювання часу передачі повідомлень у кластерних системах на основі класичної двопараметричної моделі Хокні та багатопараметричної моделі LogGP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Формалізація топологічних характеристик комунікаційних мереж: аналітичний розрахунок мережевого діаметра, ступеня зв'язності, ширини бінарного поділу та апаратної вартості ліній зв'язку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання, розподілу масивів, глобального збору, персоналізованого обміну та глобальної редукції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання, розподілу масивів, глобального збору, персоналізованого обміну та глобальної редукції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpi_bcast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Широкомовне розсилання (MPI_Bcast)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_scatter-mpi_gather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Розподіл масивів (MPI_Scatter) та глобальний збір (MPI_Gather)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_alltoall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Персоналізований обмін («кожен з кожним», MPI_Alltoall)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi_reduce-mpi_allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Глобальна редукція (MPI_Reduce та MPI_Allreduce)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-ring-allreduce-scatter-reduce-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму Ring-Allreduce: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму Ring-Allreduce: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-scatter-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Фаза 1: Збір-редукція (Scatter-Reduce)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Фаза 2: Загальний збір (Allgather)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ring-allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Повний час синхронізації Ring-Allreduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Аналіз масштабованості паралельних процесів: формалізація функції ізоефективності та дослідження впливу комунікаційних накладних витрат на прискорення обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація аналітичних моделей та алгоритмів комунікації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення аналітичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ring-allreduce-ai-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок мережевої трудомісткості та децентралізованої синхронізації градієнтів методом Ring-Allreduce для багатовузлового AI-кластера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок мережевої трудомісткості та децентралізованої синхронізації градієнтів методом Ring-Allreduce для багатовузлового AI-кластера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок фізичного розміру вектора градієнтів та розбиття на блоки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-scatter-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Розрахунок часу виконання фази Scatter-Reduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-allgather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок часу виконання фази Allgather
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ring-allreduce-parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок сумарного часу Ring-Allreduce та зіставлення зі схемою Parameter Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Оцінка прискорення та ефективності паралельного кроку навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="3-mpi-ai-">Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI: модель передачі повідомлень, точкові та колективні комунікаційні операції, топології зв'язку AI-кластерів</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекції є формування у здобувачів вищої освіти комплексної системи теоретичних знань і прикладних інженерних компетентностей щодо організації розподілених обчислювальних процесів на базі стандарту Message Passing Interface (MPI) в інфраструктурах високопродуктивних систем штучного інтелекту. У межах навчальної пари розглядаються архітектурні принципи функціонування багатопроцесорних комплексів без спільного доступу до пам'яті (NORMA), апаратна та логічна семантика точкових і колективних комунікаційних примітивів, а також топологічні структури інтерконекту спеціалізованих AI-кластерів. Особливу увагу приділено математичному моделюванню мережевих затримок і аналізу обчислювальної складності децентралізованих алгоритмів синхронізації градієнтів, необхідних для масштабування навчання великих нейронних моделей.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<p>Після успішного опанування матеріалу лекції здобувачі вищої освіти демонструватимуть такі результати:</p>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Здобувачі детально знають концептуальну модель передачі повідомлень, специфікацію стандарту MPI, життєвий цикл процесів у парадигмі SPMP, структуру комунікаторів, формати конвертів повідомлень, а також принципи взаємодії обчислювальних вузлів у кластерних мережах з різними фізичними та віртуальними топологіями.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Здобувачі вміють самостійно проектувати паралельні програми мовами C/C++ та Python (за допомогою бібліотеки <code>mpi4py</code>), обирати оптимальні режими передачі даних (блокуючі, неблокуючі, синхронні, буферизовані), реалізовувати колективні операції збору і редукції, а також будувати безпечні схеми комунікації для виключення взаємних блокувань (дедлоків).</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Здобувачі здатні аналітично оцінювати часові витрати на пересилання даних у розподілених середовищах із застосуванням моделей Хокні та LogGP, а також досліджувати кількісні параметри комунікаційних графів, включаючи діаметр, ступінь зв'язності, ширину бісекції та апаратну вартість ліній зв'язку.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Здобувачі володіють навичками критичного порівняння архітектур розподіленого навчання систем штучного інтелекту (централізованої моделі Parameter Server та децентралізованого підходу Ring-Allreduce), синтезують оптимальні алгоритмічні схеми балансування навантаження та оптимізують комунікаційну складність алгоритмів паралелізму за даними (Data Parallelism) для великомасштабних GPU-кластерів.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1-mpi">1. Теоретичний модуль. Архітектурні засади розподілених обчислень, парадигма передачі повідомлень та специфікація MPI</h3>
+<ul>
+<li>
+<p>1.1. Архітектурна диференціація багатопроцесорних комплексів: фундаментальні відмінності систем зі спільною пам'яттю (SMP, CC-NUMA) від розподілених кластерних комплексів без прямого віддаленого доступу до пам'яті (NORMA).</p>
+</li>
+<li>
+<p>1.2. Концептуальна модель передачі повідомлень (Message Passing): парадигма «одна програма — множина процесів» (SPMP), простори адрес, контексти взаємодії, структура комунікаторів та ідентифікація рангів процесів у середовищі <code>MPI_COMM_WORLD</code>.</p>
+</li>
+<li>
+<p>1.3. Точкові комунікаційні операції: порівняльна характеристика стандартного, блокуючого, неблокуючого, синхронного та буферизованого режимів обміну, протоколи квитування, причини виникнення ситуацій взаємного блокування (дедлоків) і методи їх усунення.</p>
+</li>
+<li>
+<p>1.4. Мережеві комутаційні фабрики та топології сучасних AI-кластерів: аналіз повнозв'язних структур (NVSwitch / NVLink), ієрархічних потовщених дерев (Fat-Tree) і тороїдальних ґраток (2D/3D Torus), а також програмне конструювання віртуальних декартових топологій в MPI.</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичні моделі комунікаційної затримки, топологічні метрики та алгоритмічна складність колективних операцій</h3>
+<ul>
+<li>
+<p>2.1. Аналітичне оцінювання часу передачі повідомлень у кластерних системах на основі класичної двопараметричної моделі Хокні та багатопараметричної моделі LogGP.</p>
+</li>
+<li>
+<p>2.2. Формалізація топологічних характеристик комунікаційних мереж: аналітичний розрахунок мережевого діаметра, ступеня зв'язності, ширини бінарного поділу (bisection width) та апаратної вартості ліній зв'язку.</p>
+</li>
+<li>
+<p>2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання (<code>MPI_Bcast</code>), розподілу масивів (<code>MPI_Scatter</code>), глобального збору (<code>MPI_Gather</code>), персоналізованого обміну (<code>MPI_Alltoall</code>) та глобальної редукції (<code>MPI_Reduce</code>, <code>MPI_Allreduce</code>).</p>
+</li>
+<li>
+<p>2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму <code>Ring-Allreduce</code>: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів.</p>
+</li>
+<li>
+<p>2.5. Аналіз масштабованості паралельних процесів: формалізація функції ізоефективності та дослідження впливу комунікаційних накладних витрат на прискорення обчислень у моделях розподіленого навчання штучного інтелекту.</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Проектування та реалізація децентралізованої синхронізації градієнтів у розподіленому навчанні нейромереж</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Аналітичний розрахунок мережевої трудомісткості та алгоритмічна реалізація децентралізованої синхронізації векторів градієнтів методом Ring-Allreduce для багатовузлового кластера навчання штучного інтелекту».</p>
+<h2 id="1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-smp-cc-numa-norma">1.1. Архітектурна диференціація багатопроцесорних комплексів: фундаментальні відмінності систем зі спільною пам'яттю (SMP, CC-NUMA) від розподілених кластерних комплексів без прямого віддаленого доступу до пам'яті (NORMA)</h3>
+<p>Сучасний розвиток систем штучного інтелекту характеризується експоненційним зростанням обчислювальної складності моделей глибокого навчання. Параметричний обсяг сучасних великих мовних моделей (<strong>Large Language Models, LLM</strong>), мультимодальних трансформерів та систем комп'ютерного зору досягає сотень мільярдів і трильйонів ваг. Збереження матриць параметрів таких розмірностей, проміжних активацій прямих проходів, векторів градієнтів та внутрішніх станів оптимізаторів потребує десятків терабайтів високошвидкісної пам'яті, що принципово перевищує фізичну ємність окремого апаратного прискорювача чи автономного обчислювального вузла. Подолання цього бар'єра вимагає агрегації обчислювальних потужностей багатьох процесорів у межах єдиної системи.</p>
+<p>У класичній систематиці обчислювальних систем Майкла Флінна переважна більшість паралельних комплексів належить до класу <strong>MIMD (Multiple Instruction stream, Multiple Data stream)</strong>, де множинні потоки інструкцій обробляють множинні потоки даних. Проте внутрішня різнорідність класу MIMD є надзвичайно високою, через що виникає необхідність структурно-функціональної класифікації за способом організації пам'яті та механізмами доступу до неї.</p>
+<pre class="mermaid"><code>flowchart TD
+    MIMD["Системи класу MIMD"]
+
+    Shared["Мультипроцесори (Спільна пам'ять)"]
+    Distributed["Мультикомп'ютери (Розподілена пам'ять)"]
+
+    UMA["UMA / SMP (Однорідний доступ)"]
+    NUMA["NUMA / CC-NUMA (Неоднорідний доступ)"]
+    COMA["COMA (Лише кеш-пам'ять)"]
+
+    NORMA["NORMA / Кластери (Без віддаленого доступу)"]
+    MPP["MPP (Масивно-паралельні системи)"]
+
+    MIMD --&gt; Shared
+    MIMD --&gt; Distributed
+
+    Shared --&gt; UMA
+    Shared --&gt; NUMA
+    Shared --&gt; COMA
+
+    Distributed --&gt; NORMA
+    Distributed --&gt; MPP</code></pre>
+<p>Системи із спільною пам'яттю (<strong>Shared Memory Systems, Multiprocessors</strong>) характеризуються наявністю єдиного логічного або фізичного адресного простору, доступного всім обчислювальним ядрам. </p>
+<p>Першим базовим підвидом є архітектура <strong>SMP (Symmetric Multiprocessor)</strong>, яка реалізує концепцію однорідного доступу до пам'яті (<strong>Uniform Memory Access, UMA</strong>). У таких комплексах усі процесори володіють ідентичними характеристиками, функціонують під управлінням єдиного екземпляра операційної системи та з'єднані із централізованою пам'яттю через спільну системну шину або комутатор. Головною властивістю UMA є те, що час доступу <span class="arithmatex">\(\tau\)</span> від будь-якого процесора <span class="arithmatex">\(P_i\)</span> до будь-якої комірки пам'яті <span class="arithmatex">\(M_j\)</span> є строго інваріантним:</p>
+<div class="arithmatex">\[\tau(P_i, M_j) = \mathrm{const}, \quad \forall i, j.\]</div>
+<p>де <span class="arithmatex">\(\tau(P_i, M_j)\)</span> позначає фізичний час затримки звернення процесора до адреси пам'яті, виражений у наносекундах (<span class="arithmatex">\(\text{нс}\)</span>).</p>
+<p>Основним лімітуючим фактором масштабування SMP-систем є конфлікт за смугу пропускання системної шини та апаратна <strong>проблема когерентності кешів (Cache Coherence Problem)</strong>. Оскільки кожне ядро має багаторівневу локальну кеш-пам'ять (<span class="arithmatex">\(L1\)</span>, <span class="arithmatex">\(L2\)</span>, <span class="arithmatex">\(L3\)</span>), зміна значення спільної змінної одним процесором вимагає негайної інвалідації або оновлення відповідних копій у кешах інших процесорів через механізми відстеження шини (<strong>Bus Snooping</strong>) або каталогів (<strong>Directory-based protocols</strong>). При збільшенні кількості ядер понад 32–64 пропускна здатність шини насичується службовим трафіком синхронізації, що призводить до падіння ефективності системи.</p>
+<p>Для подолання бар'єра масштабування UMA було створено архітектури неоднорідного доступу до пам'яті (<strong>Non-Uniform Memory Access, NUMA</strong>), серед яких домінують комплекси з апаратною підтримкою когерентності кешів (<strong>Cache-Coherent NUMA, CC-NUMA</strong>). У таких системах оперативна пам'ять фізично розподілена між окремими процесорними модулями (сокетами або лезами), проте логічно формує єдиний глобальний адресний простір. Звернення процесора до локальної пам'яті виконується безпосередньо через інтегрований контролер, тоді як доступ до пам'яті віддаленого вузла здійснюється через спеціалізовані мости інтерконекту (наприклад, Intel UPI, AMD Infinity Fabric). Це формує суттєву асиметрію часу доступу, яка описується коефіцієнтом неоднорідності:</p>
+<div class="arithmatex">\[\gamma_{\mathrm{NUMA}} = \frac{\tau(P_i, M_{\mathrm{remote}})}{\tau(P_i, M_{\mathrm{local}})} &gt; 1.\]</div>
+<p>де <span class="arithmatex">\(\tau(P_i, M_{\mathrm{remote}})\)</span> позначає латентність транзакції читання або запису до блоку пам'яті чужого вузла, виміряну в наносекундах (<span class="arithmatex">\(\text{нс}\)</span>), <span class="arithmatex">\(\tau(P_i, M_{\mathrm{local}})\)</span> є латентністю доступу до локального банку пам'яті поточного вузла у наносекундах (<span class="arithmatex">\(\text{нс}\)</span>), а <span class="arithmatex">\(\gamma_{\mathrm{NUMA}}\)</span> є безрозмірним коефіцієнтом затримки (зазвичай лежить у межах від <span class="arithmatex">\(1{,}5\)</span> до <span class="arithmatex">\(4{,}0\)</span>).</p>
+<p>Розподілені обчислювальні комплекси (<strong>Multicomputers</strong>) спираються на парадигму архітектури без прямого віддаленого доступу до пам'яті (<strong>No-Remote Memory Access, NORMA</strong>). До цього класу належать обчислювальні кластери (<strong>Clusters</strong>) та масивно-паралельні системи (<strong>Massively Parallel Processors, MPP</strong>). </p>
+<p>У системах архітектури NORMA відсутній глобальний апаратний адресний простір. Кожен обчислювальний вузол (сервер) є повністю автономною обчислювальною машиною, яка функціонує під управлінням власного екземпляра ядра операційної системи, володіє власними контролерами введення-виведення, локальною оперативною пам'яттю та прискорювачами. Жоден процесор системи NORMA не здатний апаратно адресувати або модифікувати комірки пам'яті іншого вузла за допомогою звичайних машинних інструкцій <code>LOAD</code> чи <code>STORE</code>. Обмін інформацією між компонентами здійснюється виключно на програмному рівні за допомогою <strong>передачі повідомлень (Message Passing)</strong> через виділені високошвидкісні комунікаційні мережі. Саме архітектура NORMA становить апаратний фундамент сучасних розподілених кластерів штучного інтелекту завдяки практично необмеженій горизонтальній масштабованості, що охоплює десятки тисяч прискорювачів.</p>
+<hr />
+<h3 id="12-message-passing-spmp-mpi_comm_world">1.2. Концептуальна модель передачі повідомлень (Message Passing): парадигма «одна програма — множина процесів» (SPMP), простори адрес, контексти взаємодії, структура комунікаторів та ідентифікація рангів процесів у середовищі <code>MPI_COMM_WORLD</code></h3>
+<p>Відсутність єдиного фізичного адресного простору в кластерних системах вимагає спеціалізованої моделі програмування. Загальновизнаним індустріальним та академічним стандартом такої взаємодії є специфікація <strong>MPI (Message Passing Interface)</strong>, розроблена міжнародним консорціумом MPI Forum.</p>
+<p>У системі координат MPI паралельна програма моделюється сукупністю незалежних <strong>процесів (Processes)</strong>, які виконуються одночасно. Кожен процес має повністю ізольований віртуальний адресний простір, що унеможливлює виникнення класичних конфліктів апаратної пам'яті на кшталт станів гонитви (<strong>Race Conditions</strong>) за несинхронізовані змінні. Для взаємодії процесів застосовується модель <strong>SPMP (Single Program Multiple Processes)</strong>, яка є алгоритмічним варіантом SPMD. Відповідно до цієї моделі, абсолютно всі вузли кластера запускають ідентичний бінарний виконуваний код. Диверсифікація функціональної логіки обчислень та обробка унікальних підмножин вхідних даних здійснюється за допомогою програмного розгалуження, що базується на унікальному номері процесу.</p>
+<p>Фундаментальними категоріями середовища MPI є:</p>
+<ol>
+<li>
+<p><strong>Комунікатор (Communicator).</strong> Службовий системний об'єкт непрозорого типу (<code>MPI_Comm</code>), який інкапсулює групу процесів, контекст зв'язку та топологічну структуру. Комунікатор ізолює комунікаційні операції всередині певної групи, гарантуючи, що повідомлення, відправлені в межах однієї бібліотеки чи модуля, не будуть помилково перехоплені іншими частинами програми.</p>
+</li>
+<li>
+<p><strong>Базовий комунікатор <code>MPI_COMM_WORLD</code>.</strong> Створюється автоматично під час ініціалізації середовища викликом <code>MPI_Init</code> та охоплює абсолютно всі процеси, виділені планувальником задач для виконання даної паралельної програми. Поряд із ним існує статичний комунікатор <code>MPI_COMM_SELF</code>, що містить виключно один викликаючий процес.</p>
+</li>
+<li>
+<p><strong>Ранг процесу (Process Rank).</strong> Унікальний цілочисельний ідентифікатор процесу всередині заданого комунікатора. Ранги нумеруються послідовно цілими числами від <span class="arithmatex">\(0\)</span> до <span class="arithmatex">\(P - 1\)</span>, де <span class="arithmatex">\(P\)</span> — потужність групи комунікатора (розмір комунікатора). Ранг процесу не є фіксованою фізичною характеристикою процесора, а визначається логічно:</p>
+</li>
+</ol>
+<div class="arithmatex">\[r \in \{0, 1, \dots, P - 1\}, \quad P = |\mathcal{G}|.\]</div>
+<p>де <span class="arithmatex">\(r\)</span> — ранг процесу (безрозмірна величина типу <code>int</code>), <span class="arithmatex">\(P\)</span> — загальна кількість процесів у комунікаторі, а <span class="arithmatex">\(\mathcal{G}\)</span> позначає впорядковану множину процесів комунікатора.</p>
+<p>Для отримання характеристик комунікаційного простору кожен процес викликає обов'язкові функції:</p>
+<ul>
+<li>
+<p><code>MPI_Comm_size(MPI_Comm comm, int *size)</code> — повертає загальну кількість процесів <span class="arithmatex">\(P\)</span> у комунікаторі <code>comm</code>.</p>
+</li>
+<li>
+<p><code>MPI_Comm_rank(MPI_Comm comm, int *rank)</code> — повертає ранг <span class="arithmatex">\(r\)</span> поточного викликаючого процесу.</p>
+</li>
+<li>
+<p><strong>Конверт повідомлення (Message Envelope).</strong> Будь-яка передача даних у системі MPI супроводжується набором метаданих, що формують конверт повідомлення. Конверт однозначно ідентифікує пакет у комунікаційній мережі та містить такий кортеж параметрів:</p>
+</li>
+</ul>
+<div class="arithmatex">\[\mathcal{E} = \langle \mathrm{src}, \, \mathrm{dst}, \, \mathrm{tag}, \, \mathrm{comm}, \, \mathrm{datatype}, \, \mathrm{count} \rangle.\]</div>
+<p>де <span class="arithmatex">\(\mathrm{src}\)</span> — ранг процесу-відправника (<code>int</code>), <span class="arithmatex">\(\mathrm{dst}\)</span> — ранг процесу-одержувача (<code>int</code>), <span class="arithmatex">\(\mathrm{tag}\)</span> — користувацький цілочисельний маркер повідомлення для розрізнення типів даних (<code>int</code>), <span class="arithmatex">\(\mathrm{comm}\)</span> — дескриптор комунікатора (<code>MPI_Comm</code>), <span class="arithmatex">\(\mathrm{datatype}\)</span> — специфікатор типу елементів (<code>MPI_Datatype</code>), <span class="arithmatex">\(\mathrm{count}\)</span> — кількість елементів даного типу у буфері (<code>int</code>).</p>
+<p>Життєвий цикл паралельної MPI-програми регламентується суворими правилами. Першим викликом бібліотеки завжди має бути <code>MPI_Init(&amp;argc, &amp;argv)</code>, який ініціалізує внутрішні комунікаційні структури та прив'язує процеси до мережевого середовища. Завершення паралельної секції здійснюється викликом <code>MPI_Finalize()</code>, після якого виконання будь-яких комунікаційних функцій стандарту категорично забороняється.</p>
+<hr />
+<h3 id="13">1.3. Точкові комунікаційні операції: порівняльна характеристика стандартного, блокуючого, неблокуючого, синхронного та буферизованого режимів обміну, протоколи квитування, причини виникнення ситуацій взаємного блокування (дедлоків) і методи їх усунення</h3>
+<p>Точкові операції (<strong>Point-to-Point Communication</strong>) забезпечують передачу дискретного масиву даних строго від одного процесу-джерела (<strong>Source</strong>) до одного процесу-одержувача (<strong>Destination</strong>). Успішність операції вимагає сумісності викликів: на стороні відправника має бути активована функція передачі, а на стороні одержувача — парна функція прийому з відповідними параметрами конверта.</p>
+<p>Залежно від поведінки процесу та механізмів виділення пам'яті, стандарт MPI регламентує чотири базові режими передачі повідомлень:</p>
+<ol>
+<li>
+<p><strong>Стандартний режим (<code>MPI_Send</code>).</strong> Поведінка виклику не зафіксована стандартом жорстко і залежить від внутрішньої реалізації бібліотеки MPI та розміру повідомлення. Для малих пакетів зазвичай активується <strong>протокол швидкого пересилання (Eager Protocol)</strong>: дані негайно копіюються в системний проміжний буфер процесу-одержувача або комунікаційного демона, після чого функція відправника негайно повертає управління, не чекаючи виклику <code>MPI_Recv</code>. Для великих повідомлень система автоматично перемикається на <strong>протокол зустрічі (Rendezvous Protocol)</strong>, де передача масиву розпочинається лише після того, як одержувач підтвердить готовність власного буфера за допомогою спеціального службового рукостискання (<strong>Handshake</strong>).</p>
+</li>
+<li>
+<p><strong>Синхронний режим (<code>MPI_Ssend</code>).</strong> Виклик завершується тоді й тільки тоді, коли процес-одержувач почав виконання відповідної операції прийому <code>MPI_Recv</code>. Цей режим повністю виключає використання неконтрольованих системних буферів і гарантує синхронізацію часових шкал процесів.</p>
+</li>
+<li>
+<p><strong>Буферизований режим (<code>MPI_Bsend</code>).</strong> Відправник примусово записує дані у попередньо виділений користувацький сегмент оперативної пам'яті за допомогою функції <code>MPI_Buffer_attach</code>. Виклик завершується миттєво після копіювання у буфер. Якщо розмір переданих даних перевищує виділену ємність буфера, програма генерує аварійну помилку переповнення пам'яті <code>MPI_ERR_BUFFER</code>.</p>
+</li>
+<li>
+<p><strong>Режим передачі за готовністю (<code>MPI_Rsend</code>).</strong> Може ініціюватися виключно за умови, що процес-одержувач уже запустив відповідну операцію <code>MPI_Recv</code>. Використання цього режиму усуває витрати на службове узгодження готовності каналу, однак, якщо одержувач не був готовий на момент старту відправки, поведінка програми стає невизначеною (<strong>Undefined Behavior</strong>).</p>
+</li>
+</ol>
+<p>За часовою семантикою виконання всі операції поділяються на <strong>блокуючі</strong> та <strong>неблокуючі</strong>.</p>
+<p>Блокуючі функції (<code>MPI_Send</code>, <code>MPI_Recv</code>) призупиняють потік виконання викликаючого процесу до моменту, поки буфер передачі не звільниться для повторного безпечного запису (для відправника), або поки буфер прийому не буде повністю заповнений цільовими даними (для одержувача).</p>
+<p>Неблокуючі функції додають до назви префікс <code>I</code> (<strong>Immediate</strong>) — <code>MPI_Isend</code>, <code>MPI_Irecv</code>. Вони лише реєструють комунікаційний запит у внутрішній черзі мережевого адаптера, повертають спеціальний непрозорий дескриптор операції <code>MPI_Request</code> і негайно повертають управління у програму. Це дозволяє організувати ефективне суміщення обчислень на CPU чи GPU з паралельним пересиланням даних через мережеві контролери (<strong>DMA / RDMA</strong>).</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant S as Процес-відправник (Sender)
+    participant N as Мережевий адаптер (NIC/HCA)
+    participant R as Процес-одержувач (Receiver)
+
+    Note over S,R: Сценарій 1: Неблокуючий обмін з перекриттям (Isend/Irecv)
+    R-&gt;&gt;N: MPI_Irecv(buf_R, request_R)
+    S-&gt;&gt;N: MPI_Isend(buf_S, request_S)
+    par Фоновий обмін та корисні обчислення
+        N--&gt;&gt;N: Апаратна передача даних через RDMA
+    and Обчислення на процесорі
+        S-&gt;&gt;S: Виконання тензорних операцій на GPU
+        R-&gt;&gt;R: Виконання тензорних операцій на GPU
+    end
+    S-&gt;&gt;N: MPI_Wait(request_S)
+    R-&gt;&gt;N: MPI_Wait(request_R)
+    Note over S,R: Синхронізація завершена: буфери валідні</code></pre>
+<p>Для моніторингу стану неблокуючої комунікації використовуються такі операції:</p>
+<ul>
+<li>
+<p><code>MPI_Test(MPI_Request *request, int *flag, MPI_Status *status)</code> — неблокуюча перевірка завершення операції, що записує значення <code>true</code> або <code>false</code> у змінну <code>flag</code>.</p>
+</li>
+<li>
+<p><code>MPI_Wait(MPI_Request *request, MPI_Status *status)</code> — блокуюче очікування остаточного завершення пересилання.</p>
+</li>
+<li>
+<p>Множинні виклики: <code>MPI_Waitall</code>, <code>MPI_Waitany</code>, <code>MPI_Waitsome</code>, які контролюють масиви дескрипторів запитів.</p>
+</li>
+</ul>
+<p>Некоректне структурування блокуючих точкових операцій призводить до критичної аномалії паралельних програм — <strong>взаємного блокування (Deadlock)</strong>. Класичний приклад виникає під час спроби симетричного обміну даними між двома процесами:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Потенційно тупикова ситуація (Deadlock)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">MPI_Send</span><span class="p">(</span><span class="n">send_buf</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="n">recv_buf</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">MPI_Send</span><span class="p">(</span><span class="n">send_buf</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="n">recv_buf</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Якщо розмір повідомлення перевищує поріг системного буферизування протоколу Eager, обидва процеси одночасно перейдуть у стан блокування всередині <code>MPI_Send</code> в очікуванні початку читання протилежною стороною, яка ніколи не настане. Для гарантованого запобігання дедлокам стандарт MPI надає комбінований атомарний виклик:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Sendrecv</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sendcount</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">sendtype</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dest</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sendtag</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">recvcount</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">recvtype</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">recvtag</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Status</span><span class="w"> </span><span class="o">*</span><span class="n">status</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">);</span>
+</span></code></pre></div>
+<p>Функція <code>MPI_Sendrecv</code> гарантує безпечний одночасний прийом та передачу даних без небезпеки виникнення циклічних блокувань пам'яті завдяки внутрішньому управлінню чергами вводу-виводу на рівні бібліотеки.</p>
+<hr />
+<h3 id="14-ai-nvswitch-nvlink-fat-tree-2d3d-torus-mpi">1.4. Мережеві комутаційні фабрики та топології сучасних AI-кластерів: аналіз повнозв'язних структур (NVSwitch / NVLink), ієрархічних потовщених дерев (Fat-Tree) і тороїдальних ґраток (2D/3D Torus), а також програмне конструювання віртуальних декартових топологій в MPI</h3>
+<p>Продуктивність розподілених обчислень в інженерії штучного інтелекту безпосередньо обмежується архітектурою та топологією міжпроцесорного інтерконекту. Під <strong>топологією мережі передачі даних</strong> розуміють просторову структуру з'єднання обчислювальних вузлів (процесорів, прискорювачів) фізичними лініями комутації. </p>
+<p>У межах одного сервера високої щільності (наприклад, NVIDIA DGX) зв'язок між графічними прискорювачами організовується як <strong>повнозв'язана комутаційна фабрика (Switch-Fabric)</strong> на базі шин <strong>NVLink</strong> та комутаторів <strong>NVSwitch</strong>. Ця топологія функціонує як апаратний повний граф (<strong>clique</strong>), де кожен графічний процесор має прямий канал обміну з будь-яким іншим процесором із пропускною здатністю до <span class="arithmatex">\(900\)</span> ГБ/с на напрямок, забезпечуючи мінімальну затримку рівня десятків наносекунд.</p>
+<p>При масштабуванні за межі одного сервера застосовуються мережеві інтерфейси <strong>InfiniBand (HDR, NDR, XDR)</strong> або <strong>RoCE (RDMA over Converged Ethernet)</strong>. Для об'єднання тисяч вузлів використовуються такі фундаментальні мережеві топології:</p>
+<ol>
+<li>
+<p><strong>Ієрархічне потовщене дерево (Fat-Tree).</strong> Модифікація класичного дерева, у якій смуга пропускання каналів зв'язку збільшується в міру наближення до кореневих комутаторів. Завдяки дублюванню висхідних каналів топологія Fat-Tree забезпечує <strong>повну неблокуючу бісекційну ширину (Non-blocking Bisection Bandwidth)</strong>, що усуває падіння швидкості передачі при випадкових патернах одночасної міжвузлової комунікації. Це робить Fat-Tree промисловим стандартом для побудови суперкомп'ютерних кластерів навчання штучного інтелекту.</p>
+</li>
+<li>
+<p><strong>Тороїдальні ґратки (2D/3D Torus).</strong> Регулярні багатовимірні сітки, у яких граничні вузли з'єднані кільцевими лініями зв'язку із протилежними вузлами. Топології типу Torus характеризуються низькою вартістю та фіксованою локальною кількістю портів на вузол (<span class="arithmatex">\(2N\)</span> для <span class="arithmatex">\(N\)</span>-вимірного тора), проте володіють відносно великим мережевим діаметром, що вимагає маршрутизації через багато проміжних транзитних вузлів (<strong>Multi-hop Latency</strong>).</p>
+</li>
+</ol>
+<p>Стандарт MPI абстрагує фізичну конфігурацію ліній зв'язку через механізм <strong>віртуальних топологій</strong>. Логічна топологія процесорної групи за замовчуванням завжди розглядається як повний граф. Проте відображення процесів на структури завдань чисельного аналізу (матричні множення, диференціальні сітки) найефективніше здійснюється за допомогою <strong>декартових топологій (Cartesian Topologies)</strong>.</p>
+<p>Створення віртуальної декартової решітки виконується функцією:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Cart_create</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">oldcomm</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ndims</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dims</span><span class="p">[],</span><span class="w"> </span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">periods</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">reorder</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="o">*</span><span class="n">cartcomm</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">);</span>
+</span></code></pre></div>
+<p>де <code>ndims</code> задає розмірність просторової сітки (<span class="arithmatex">\(N\)</span>), масив <code>dims</code> довжиною <code>ndims</code> фіксує кількість процесів уздовж кожного виміру, масив прапорців <code>periods</code> визначає наявність замкнених циклічних зв'язків (перетворення лінійки на кільце, а решітки — на тор), а параметр <code>reorder</code> дозволяє бібліотеці MPI перевпорядкувати ранги процесів для їх оптимального відображення на фізичні топологічні вузли кластера з мінімізацією довжини кабельних з'єднань.</p>
+<p>Після створення комунікатора з декартовою топологією процеси здійснюють взаємну адресацію не за лінійними рангами, а за <span class="arithmatex">\(N\)</span>-вимірними координатами:</p>
+<ul>
+<li>
+<p><code>MPI_Cart_coords(MPI_Comm comm, int rank, int maxdims, int coords[])</code> — перетворює глобальний лінійний ранг процесу <code>rank</code> у вектор декартових координат <code>coords</code>.</p>
+</li>
+<li>
+<p><code>MPI_Cart_rank(MPI_Comm comm, const int coords[], int *rank)</code> — обчислює скалярний ранг процесу за його просторовими координатами <code>coords</code>.</p>
+</li>
+<li>
+<p><code>MPI_Cart_sub(MPI_Comm comm, const int remain_dims[], MPI_Comm *newcomm)</code> — розбиває вихідну багатовимірну декартову решітку на підрешітки меншої розмірності (наприклад, виділення окремих вектор-комунікаторів для рядків або стовпців матриці).</p>
+</li>
+<li>
+<p><code>MPI_Cart_shift(MPI_Comm comm, int direction, int disp, int *rank_source, int *rank_dest)</code> — визначає ранги сусідніх процесів для здійснення циклічного або лінійного зсуву вздовж вибраного координатного виміру <code>direction</code> на величину кроку <code>disp</code>.</p>
+</li>
+</ul>
+<hr />
+<h3 id="_4">Систематизація та класифікація базових архітектур розподілених обчислень</h3>
+<p>Нижче наведено порівняльну характеристику сучасних архітектур багатопроцесорних комплексів за ключовими параметрами організації оперативної пам'яті, масштабованості та специфіки використання в розподілених завданнях штучного інтелекту.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурний тип системи</th>
+<th style="text-align: left;">Організація адресного простору</th>
+<th style="text-align: left;">Механізм апаратної синхронізації</th>
+<th style="text-align: left;">Масштабованість (кількість ядер / вузлів)</th>
+<th style="text-align: left;">Затримка віддаленого доступу</th>
+<th style="text-align: left;">Домінуюча сфера застосування у системах ШІ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>SMP (UMA)</strong></td>
+<td style="text-align: left;">Єдиний фізичний та логічний адресний простір</td>
+<td style="text-align: left;">Спільна системна шина, протоколи відстеження (Snooping)</td>
+<td style="text-align: left;">Низька (до <span class="arithmatex">\(32\)</span>–<span class="arithmatex">\(64\)</span> обчислювальних ядер)</td>
+<td style="text-align: left;">Відсутня (однорідна затримка <span class="arithmatex">\(\approx 50\)</span>–<span class="arithmatex">\(100\)</span> нс)</td>
+<td style="text-align: left;">Інференс невеликих моделей машинного навчання на окремих серверах</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CC-NUMA</strong></td>
+<td style="text-align: left;">Логічно єдиний, фізично розподілений простір</td>
+<td style="text-align: left;">Каталожні протоколи когерентності (Directory-based)</td>
+<td style="text-align: left;">Середня (до <span class="arithmatex">\(128\)</span>–<span class="arithmatex">\(512\)</span> процесорних сокетів)</td>
+<td style="text-align: left;">Низька або помірна (<span class="arithmatex">\(\approx 150\)</span>–<span class="arithmatex">\(350\)</span> нс через міжсокетні мости)</td>
+<td style="text-align: left;">Попереднє завантаження та обробка гігантських графів знань і табличних даних</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Switch-Fabric (NVLink/NVSwitch)</strong></td>
+<td style="text-align: left;">Спільний віртуальний простір GPU (Unified Memory)</td>
+<td style="text-align: left;">Прямі апаратні кросбари, протокол NVLink</td>
+<td style="text-align: left;">Локальна (до <span class="arithmatex">\(8\)</span>–<span class="arithmatex">\(72\)</span> GPU у межах одного вузла чи стійки)</td>
+<td style="text-align: left;">Екстремально низька (<span class="arithmatex">\(\approx 80\)</span>–<span class="arithmatex">\(120\)</span> нс, швидкість до <span class="arithmatex">\(900\)</span> ГБ/с)</td>
+<td style="text-align: left;">Тензорний та конвеєрний паралелізм (Megatron-LM, Tensor Parallelism)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NORMA / Кластери</strong></td>
+<td style="text-align: left;">Повністю ізольовані локальні адресні простори</td>
+<td style="text-align: left;">Відсутній (виключно програмні повідомлення по мережі)</td>
+<td style="text-align: left;">Практично необмежена (<span class="arithmatex">\(10^3\)</span>–<span class="arithmatex">\(10^5\)</span> серверних вузлів)</td>
+<td style="text-align: left;">Висока (<span class="arithmatex">\(\approx 1\)</span>–<span class="arithmatex">\(5\)</span> мкс для InfiniBand, до десятків мкс для Ethernet)</td>
+<td style="text-align: left;">Паралелізм за даними (DDP), тренування базових моделей Foundation Models</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPP (Massively Parallel)</strong></td>
+<td style="text-align: left;">Фізично розподілена пам'ять зі спеціалізованим інтерконектом</td>
+<td style="text-align: left;">Спеціалізовані мікроядра та апаратні роутери</td>
+<td style="text-align: left;">Дуже висока (<span class="arithmatex">\(10^4\)</span>–<span class="arithmatex">\(10^6\)</span> обчислювальних ядер)</td>
+<td style="text-align: left;">Помірна (<span class="arithmatex">\(\approx 0{,}8\)</span>–<span class="arithmatex">\(2\)</span> мкс завдяки виділеним лініям 3D-Torus)</td>
+<td style="text-align: left;">Великомасштабне наукове чисельне моделювання та квантова хімія</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Поширеним хибним уявленням серед розробників-початківців є ототожнення успішного повернення управління з блокуючої функції <code>MPI_Send</code> із фактом фізичної доставки повідомлення процесу-одержувачу. 
+Насправді семантика виклику <code>MPI_Send</code> гарантує виключно безпеку повторного використання вхідного буфера в оперативній пам'яті програми. Це означає, що передані дані або повністю переміщені в мережевий адаптер, або скопійовані у внутрішній системний буфер середовища MPI. Сам процес-одержувач на цей момент може навіть не викликати функцію <code>MPI_Recv</code>. Спроба побудови логіки часової синхронізації або взаємного квитування дій на базі виклику <code>MPI_Send</code> призводить до прихованих гонитов пам'яті, некоректних замірів часу виконання алгоритмів та непрогнозованих дедлоків при зміні розміру вхідних тензорів. Для гарантованої фіксації початку отримання повідомлення слід застосовувати виключно синхронний режим <code>MPI_Ssend</code> або спеціалізовані бар'єри <code>MPI_Barrier</code>.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> У чому полягає принципова різниця в поведінці неблокуючих операцій <code>MPI_Isend</code> та блокуючих буферизованих операцій <code>MPI_Bsend</code> з точки зору управління оперативною пам'яттю та безпеки повторного запису у вихідний буфер повідомлення?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Правильний аналіз відмінностей полягає у такому порівнянні механізмів буферизації та станів дескрипторів:</strong></p>
+<ol>
+<li>
+<p>Під час виконання блокуючого виклику <code>MPI_Bsend</code> середовище MPI виконує синхронне копіювання переданого повідомлення у попередньо виділений та зареєстрований користувачем системний буфер (<code>MPI_Buffer_attach</code>). 
+Внаслідок цього вихідний буфер програми стає безпечним для перезапису або видалення негайно після виходу з функції <code>MPI_Bsend</code>, проте загальна ємність оперативної пам'яті зменшується на розмір буферного пулу.</p>
+</li>
+<li>
+<p>На противагу цьому, неблокуюча функція <code>MPI_Isend</code> не виконує примусового дублювання масиву в окремий користувацький буфер пам'яті. Вона лише передає покажчик на вихідний масив комунікаційному рушію мережевої карти або DMA-контролеру. 
+Тому вихідний буфер категорично забороняється змінювати або читати доти, доки відповідний дескриптор запиту <code>MPI_Request</code> не буде переведений у фінальний стан за допомогою виклику <code>MPI_Wait</code> або позитивного повернення <code>MPI_Test</code>. Модифікація буфера до завершення очікування призведе до спотворення даних у каналі передачі.</p>
+</li>
+<li>
+<p>Аналіз альтернативних варіантів:</p>
+<ul>
+<li>
+<p>Припущення про те, що <code>MPI_Isend</code> створює копію даних у стеку виклику, є хибним, оскільки копіювання великих тензорів призвело б до неприпустимих часових затримок та переповнення стека.</p>
+</li>
+<li>
+<p>Твердження, що <code>MPI_Bsend</code> потребує виклику <code>MPI_Wait</code>, є некоректним, оскільки префікс <code>B</code> позначає блокуючий за процесом виклик, який синхронізує стан буфера на момент виходу з функції.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h3 id="_5">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проаналізуйте компроміс між апаратною підтримкою когерентності пам'яті в кластерах класу CC-NUMA та програмною моделлю передачі повідомлень у системах класу NORMA. Поясніть, чому розробники спеціалізованих суперкомп'ютерів для штучного інтелекту відмовляються від глобальної апаратної когерентності пам'яті на рівні тисяч вузлів на користь явного використання стандарту MPI.</p>
+</li>
+<li>
+<p>Дослідіть вплив розміру мережевого пакета на вибір протоколу передачі (Eager проти Rendezvous) у внутрішніх механізмах стандартного виклику <code>MPI_Send</code>. Обґрунтуйте причини, з яких розробники розподілених нейромережевих фреймворків уникають використання стандартного режиму <code>MPI_Send</code> для передачі багатовимірних масивів градієнтів, віддаючи перевагу неблокуючим викликам <code>MPI_Isend</code> та колективним операціям.</p>
+</li>
+<li>
+<p>Зіставте топологічні характеристики комутаційних мереж типу Fat-Tree та 3D-Torus. Визначте, які топологічні фактори спричиняють деградацію швидкодії під час виконання операцій глобального збору даних (<code>MPI_Alltoall</code>) у великих тороїдальних ґратках порівняно з ієрархічними фабриками без блокування бісекції.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21-loggp">2.1. Аналітичне оцінювання часу передачі повідомлень у кластерних системах на основі класичної двопараметричної моделі Хокні та багатопараметричної моделі LogGP</h3>
+<p>Для аналітичного розрахунку продуктивності та комунікаційної трудомісткості розподілених алгоритмів у системах без спільного доступу до пам'яті застосовуються формальні моделі мережевої взаємодії. Базовою моделлю для визначення тривалості точкового обміну повідомленнями між двома процесорними вузлами є класична двопараметрична <strong>модель Хокні (Hockney model)</strong>. </p>
+<p>У моделі Хокні сумарний час передачі дискретного повідомлення розміром <span class="arithmatex">\(m\)</span> байтів розглядається як лінійна функція від обсягу даних і складається з постійної затримки ініціалізації та адитивного часу транспортування:</p>
+<div class="arithmatex">\[T_{\mathrm{Hockney}}(m) = \alpha + \beta \cdot m = \alpha + \frac{m}{B}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{Hockney}}(m)\)</span> — загальна тривалість пересилання повідомлення між двома безпосередньо з'єднаними вузлами, виміряна в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\alpha\)</span> — латентність мережі або час початкової підготовки зв'язку (startup latency), що включає програмні накладні витрати операційної системи на формування мережевого пакету, копіювання в буфери драйвера та апаратну комутацію, виміряна в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\beta\)</span> — питомий час передачі одного байта інформації каналом зв'язку, що вимірюється в секундах на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(B\)</span> — реальна пропускна здатність комунікаційного каналу, яка визначається як величина, обернена до питомого часу передачі (<span class="arithmatex">\(B = 1 / \beta\)</span>), виміряна в байтах за секунду (<span class="arithmatex">\(\text{байт}/\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m\)</span> — довжина переданого повідомлення, виражена в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<p>У реальних мережевих середовищах повідомлення передаються не безперервним масивом, а фрагментуються на пакети фіксованого розміру (MTU). Якщо розбити повідомлення <span class="arithmatex">\(m\)</span> на <span class="arithmatex">\(n\)</span> пакетів із максимальним розміром інформаційного поля <span class="arithmatex">\(V_{\max}\)</span> та обсягом заголовка службових даних <span class="arithmatex">\(V_c\)</span>, то кількість пакетів становить <span class="arithmatex">\(n = \lceil m / (V_{\max} - V_c) \rceil\)</span>. Уточнена модель враховує час передачі службової інформації <span class="arithmatex">\(t_c\)</span> та апаратну затримку комутатора <span class="arithmatex">\(t_k\)</span>:</p>
+<div class="arithmatex">\[T_{\mathrm{packet}}(m) = t_{\mathrm{start}} + n \cdot t_c + (m + n \cdot V_c) \cdot t_k\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{packet}}(m)\)</span> — тривалість пакетного пересилання повідомлення з урахуванням службових заголовків у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_{\mathrm{start}}\)</span> — апаратна латентність запуску інтерфейсу в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_c\)</span> — час обробки службового заголовка пакета комутаційним обладнанням у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_k\)</span> — темп передачі байта фізичним середовищем у секундах на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V_{\max}\)</span> — максимальний обсяг корисного навантаження одного мережевого пакета в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V_c\)</span> — довжина заголовка службових даних пакета в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<p>Класична модель Хокні не враховує завантаження центрального процесора під час відправлення та асинхронні перекриття на рівні мережевих адаптерів. Для усунення цих обмежень застосовується багатопараметрична <strong>модель LogGP</strong>, яка формалізує комунікацію через п'ять апаратних параметрів:</p>
+<div class="arithmatex">\[T_{\mathrm{LogGP}}(m) = 2 \cdot o + L + (m - 1) \cdot g\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{LogGP}}(m)\)</span> — час доставки повідомлення розміром <span class="arithmatex">\(m\)</span> байтів за моделлю LogGP у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(L\)</span> — фізична затримка поширення сигналу мережею від джерела до одержувача (Latency), виражена в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(o\)</span> — програмні накладні витрати процесора на ініціалізацію операції вводу-виводу (Overhead), протягом яких CPU зайнятий і не може виконувати корисні обчислення, виражені в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(g\)</span> — мінімальний інтервал часу між передачею послідовних повідомлень або байтів (Gap), що визначається граничною пропускною здатністю мережевого процесора, у секундах на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(G\)</span> — додатковий параметр для довгих повідомлень, що визначає темп передачі великих неперервних блоків пам'яті (величина, аналогічна <span class="arithmatex">\(\beta\)</span> в моделі Хокні), у секундах на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m\)</span> — довжина повідомлення в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<p>Перехід від моделі Хокні до моделі LogGP дозволяє розділити комунікаційний час на латентність фізичного тракту (<span class="arithmatex">\(L\)</span>), процесорні затримки (<span class="arithmatex">\(o\)</span>) та апаратну межу пропускної здатності адаптера (<span class="arithmatex">\(g, G\)</span>). Це має критичне значення для розрахунку неблокуючих операцій, оскільки процесор звільняється вже через час <span class="arithmatex">\(o\)</span>, після чого пересилання виконується апаратними механізмами DMA без участі обчислювальних ядер.</p>
+<hr />
+<h3 id="22">2.2. Формалізація топологічних характеристик комунікаційних мереж: аналітичний розрахунок мережевого діаметра, ступеня зв'язності, ширини бінарного поділу та апаратної вартості ліній зв'язку</h3>
+<p>Топологія інтерконекту розподіленої системи описується неорієнтованим або орієнтованим графом <span class="arithmatex">\(G = (V, E)\)</span>, де множина вершин <span class="arithmatex">\(V\)</span> відповідає обчислювальним процесорам (або вузлам), а множина ребер <span class="arithmatex">\(E\)</span> — фізичним дуплексним лініям зв'язку. Кількість вузлів системи позначається як <span class="arithmatex">\(|V| = P\)</span>, а кількість каналів комунікації — як <span class="arithmatex">\(|E| = M\)</span>.</p>
+<p>Для математичного аналізу ефективності та масштабованості топологій застосовуються такі фундаментальні метрики:</p>
+<ol>
+<li><strong>Діаметр мережі (<span class="arithmatex">\(D\)</span>).</strong> Максимальна відстань серед найкоротших шляхів між будь-якою парою вузлів графа:</li>
+</ol>
+<div class="arithmatex">\[D(G) = \max_{u, v \in V} d(u, v)\]</div>
+<p>де <span class="arithmatex">\(d(u, v)\)</span> — довжина найкоротшого шляху (кількість транзитних переходів, hops) між вершинами <span class="arithmatex">\(u\)</span> та <span class="arithmatex">\(v\)</span>. Діаметр визначає найгірший час доставки сигналу в мережі за відсутності колізій.</p>
+<ol>
+<li><strong>Ступінь зв'язності (<span class="arithmatex">\(\kappa\)</span>).</strong> Мінімальна кількість ребер, видалення яких перетворює граф <span class="arithmatex">\(G\)</span> на незв'язний:</li>
+</ol>
+<div class="arithmatex">\[\kappa(G) = \min \{ |E'| : E' \subset E, \, G \setminus E' \text{ не є зв'язним} \}\]</div>
+<p>Ступінь зв'язності характеризує відмовостійкість інтерконекту та наявність альтернативних маршрутів для обходу перевантажених або пошкоджених комутаторів.</p>
+<ol>
+<li><strong>Ширина бінарного поділу або бісекції (<span class="arithmatex">\(B_w\)</span>).</strong> Мінімальна кількість ліній зв'язку, які необхідно перетнути або видалити, щоб розділити граф <span class="arithmatex">\(G\)</span> на дві ізольовані підмножини <span class="arithmatex">\(V_1\)</span> та <span class="arithmatex">\(V_2\)</span> однакової потужності (<span class="arithmatex">\(|V_1| = |V_2| = P/2\)</span>):</li>
+</ol>
+<div class="arithmatex">\[B_w(G) = \min_{|V_1| = |V_2| = P/2} |\{ (u, v) \in E : u \in V_1, v \in V_2 \}|\]</div>
+<p>Ширина бісекції визначає вузьке місце системи під час виконання глобальних перестановок даних: максимальна пропускна здатність між двома половинами кластера лімітується величиною <span class="arithmatex">\(B_w \cdot B\)</span>.</p>
+<ol>
+<li><strong>Апаратна вартість топології (<span class="arithmatex">\(C\)</span>).</strong> Визначається загальною кількістю фізичних комунікаційних каналів <span class="arithmatex">\(M = |E|\)</span>, необхідних для побудови мережі з <span class="arithmatex">\(P\)</span> вузлів.</li>
+</ol>
+<p>Нижче наведено порівняльний аналіз аналітичних залежностей метрик для базових топологій багатопроцесорних комплексів за умови кількості процесорів <span class="arithmatex">\(P\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Топологічна структура</th>
+<th style="text-align: left;">Діаметр мережі (<span class="arithmatex">\(D\)</span>)</th>
+<th style="text-align: left;">Ширина бісекції (<span class="arithmatex">\(B_w\)</span>)</th>
+<th style="text-align: left;">Ступінь зв'язності (<span class="arithmatex">\(\kappa\)</span>)</th>
+<th style="text-align: left;">Апаратна вартість (<span class="arithmatex">\(C = \|E\|\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Повний граф (Clique)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{P^2}{4}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(P - 1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{P(P - 1)}{2}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Лінійка (Linear Array)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(P - 1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(P - 1\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кільце (Ring)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\lfloor \frac{P}{2} \rfloor\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(P\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Зірка (Star)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(P - 1\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Двовимірна ґратка (2D Mesh, <span class="arithmatex">\(\sqrt{P} \times \sqrt{P}\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2(\sqrt{P} - 1)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\sqrt{P}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2(P - \sqrt{P})\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Двовимірний тор (2D Torus, <span class="arithmatex">\(\sqrt{P} \times \sqrt{P}\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \lfloor \frac{\sqrt{P}}{2} \rfloor\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\sqrt{P}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(4\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2P\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Гіперкуб (<span class="arithmatex">\(N\)</span>-Hypercube, <span class="arithmatex">\(P = 2^N\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\log_2 P\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{P}{2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\log_2 P\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{P \log_2 P}{2}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Потовщене дерево (Fat-Tree, <span class="arithmatex">\(k\)</span>-ary <span class="arithmatex">\(n\)</span>-tree)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2n\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{P}{2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(k\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(P \log_k P)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Аналіз матриці свідчить, що топологія повного графа забезпечує ідеальний діаметр <span class="arithmatex">\(D = 1\)</span> та максимальну бісекцію, але вимагає квадратичної кількості ліній зв'язку <span class="arithmatex">\(\mathcal{O}(P^2)\)</span>, що апаратно неможливо реалізувати для <span class="arithmatex">\(P &gt; 64\)</span>. Натомість топології Fat-Tree та Hypercube підтримують логарифмічне зростання діаметра <span class="arithmatex">\(\mathcal{O}(\log P)\)</span> та лінійну ширину бісекції <span class="arithmatex">\(\mathcal{O}(P)\)</span> за квазілінійної вартості, завдяки чому вони є базовими для високопродуктивних кластерів.</p>
+<hr />
+<h3 id="23">2.3. Алгебраїчний та часовий аналіз базових колективних операцій: широкомовного розсилання, розподілу масивів, глобального збору, персоналізованого обміну та глобальної редукції</h3>
+<p>Колективні комунікаційні операції виконуються за участю всіх <span class="arithmatex">\(P\)</span> процесів заданого комунікатора. Часова складність цих операцій залежить від алгоритму передачі (лінійний, біноміальне дерево, кільце) та параметрів моделі Хокні <span class="arithmatex">\((\alpha, \beta)\)</span>.</p>
+<h4 id="mpi_bcast">Широкомовне розсилання (<code>MPI_Bcast</code>)</h4>
+<p>Один процес (root) передає ідентичне повідомлення розміром <span class="arithmatex">\(m\)</span> усім іншим <span class="arithmatex">\(P - 1\)</span> процесам. При використанні оптимального алгоритму логарифмічного біноміального дерева (Binomial Tree) процес подвоює кількість поінформованих вузлів на кожному кроці:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Визначення кількості рівнів дерева):} &amp; \quad K = \lceil \log_2 P \rceil \\
+\text{Етап 2 (Формування рекурентного часу кроку):} &amp; \quad T_{\mathrm{step}} = \alpha + \beta \cdot m \\
+\text{Етап 3 (Агрегація загального часу):} &amp; \quad T_{\mathrm{Bcast}}(m, P) = \lceil \log_2 P \rceil \cdot (\alpha + \beta \cdot m)
+\end{aligned}
+\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{Bcast}}(m, P)\)</span> — сумарний час широкомовного розсилання в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\lceil \log_2 P \rceil\)</span> — висота біноміального дерева розсилки.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\alpha\)</span> — латентність ініціалізації передачі в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\beta\)</span> — питомий час передачі байта в секундах на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m\)</span> — довжина трансльованого повідомлення в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<h4 id="mpi_scatter-mpi_gather">Розподіл масивів (<code>MPI_Scatter</code>) та глобальний збір (<code>MPI_Gather</code>)</h4>
+<p>Операція <code>MPI_Scatter</code> розділяє вхідний масив розміром <span class="arithmatex">\(m\)</span> на <span class="arithmatex">\(P\)</span> рівних сегментів розміром <span class="arithmatex">\(m/P\)</span> і розсилає по одному блоку кожному процесу. Операція <code>MPI_Gather</code> виконує строго дуальну дію: збирає блоки розміром <span class="arithmatex">\(m/P\)</span> від кожного процесу у впорядкований масив розміром <span class="arithmatex">\(m\)</span> на кореневому процесі. При деревоподібній реалізації тривалість обох операцій ідентична:</p>
+<div class="arithmatex">\[T_{\mathrm{Scatter}}(m, P) = T_{\mathrm{Gather}}(m, P) = \alpha \cdot \log_2 P + \beta \cdot \frac{P - 1}{P} \cdot m\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{Scatter}}(m, P)\)</span> — час виконання розподілу даних у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\frac{P - 1}{P} \cdot m\)</span> — сумарний обсяг корисних даних, що виходить за межі кореневого процесу, у байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<h4 id="mpi_alltoall">Персоналізований обмін («кожен з кожним», <code>MPI_Alltoall</code>)</h4>
+<p>Кожен процес надсилає унікальне індивідуальне повідомлення розміром <span class="arithmatex">\(m_{\mathrm{msg}}\)</span> кожному іншому процесу. Загальний обсяг даних, що циркулює в системі, дорівнює <span class="arithmatex">\(P^2 \cdot m_{\mathrm{msg}}\)</span>. Реалізація через послідовні зсуви або парні обміни вимагає <span class="arithmatex">\(P - 1\)</span> комунікаційних фаз:</p>
+<div class="arithmatex">\[T_{\mathrm{Alltoall}}(m_{\mathrm{msg}}, P) = (P - 1) \cdot \alpha + (P - 1) \cdot m_{\mathrm{msg}} \cdot \beta\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\mathrm{Alltoall}}(m_{\mathrm{msg}}, P)\)</span> — тривалість операції персоналізованого обміну в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m_{\mathrm{msg}}\)</span> — розмір порції даних, що надсилається одному адресату, в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<h4 id="mpi_reduce-mpi_allreduce">Глобальна редукція (<code>MPI_Reduce</code> та <code>MPI_Allreduce</code>)</h4>
+<p>В операції <code>MPI_Reduce</code> вектори розміром <span class="arithmatex">\(m\)</span> від усіх процесів покроково агрегуються за допомогою асоціативної бінарної математичної операції <span class="arithmatex">\(\otimes \in \{+, \times, \max, \min\}\)</span>, а кінцевий результат розміщується на root-процесі. Час виконання включає передачу мережею та виконання арифметичних дій:</p>
+<div class="arithmatex">\[T_{\mathrm{Reduce}}(m, P) = \log_2 P \cdot (\alpha + \beta \cdot m + \gamma \cdot m)\]</div>
+<p>де <span class="arithmatex">\(\gamma\)</span> — час виконання елементарної арифметичної операції над одним байтом векторного буфера (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>).</p>
+<p>Операція <code>MPI_Allreduce</code> повертає скоригований результат редукції всім процесам комунікатора. У разі класичної наївної реалізації вона складається з виклику <code>MPI_Reduce</code> та наступного <code>MPI_Bcast</code>:</p>
+<div class="arithmatex">\[T_{\mathrm{Allreduce\_naive}}(m, P) = T_{\mathrm{Reduce}} + T_{\mathrm{Bcast}} = 2 \log_2 P \cdot (\alpha + \beta \cdot m) + \log_2 P \cdot \gamma \cdot m\]</div>
+<hr />
+<h3 id="24-ring-allreduce-scatter-reduce-allgather">2.4. Математичне виведення комунікаційної складності децентралізованого кільцевого алгоритму <code>Ring-Allreduce</code>: поетапний розрахунок фаз Scatter-Reduce та Allgather і доведення незалежності обсягу переданих даних від кількості процесорів</h3>
+<p>У розподіленому синхронному навчанні великих моделей штучного інтелекту операція <code>MPI_Allreduce</code> виконується на кожній ітерації для усереднення градієнтів вагових коефіцієнтів. При великих розмірах моделей (<span class="arithmatex">\(m &gt; 100\)</span> МБ) наївні деревоподібні схеми перевантажують мережеві інтерфейси окремих вузлів. Промисловим стандартом синхронізації градієнтів є децентралізований <strong>кільцевий алгоритм (Ring-Allreduce)</strong>.</p>
+<p>Нехай <span class="arithmatex">\(P\)</span> процесорів логічно об'єднані в кільце: вузол <span class="arithmatex">\(r\)</span> надсилає повідомлення вузлу <span class="arithmatex">\((r + 1) \pmod P\)</span> і приймає повідомлення від <span class="arithmatex">\((r - 1 + P) \pmod P\)</span>. Вектор градієнтів довжиною <span class="arithmatex">\(M\)</span> байтів логічно розбивається на <span class="arithmatex">\(P\)</span> рівних частин (блоків):</p>
+<div class="arithmatex">\[M = \sum_{k=0}^{P-1} S_k, \quad |S_k| = \frac{M}{P}\]</div>
+<p>Алгоритм виконується у дві строго послідовні фази.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant P0 as Процесор 0
+    participant P1 as Процесор 1
+    participant P2 as Процесор 2
+    participant P3 as Процесор 3
+
+    Note over P0,P3: Фаза 1: Scatter-Reduce (Крок 1 з P-1)
+    par Кільцевий обмін блоками M/P
+        P0-&gt;&gt;P1: Передача блоку S[0]
+        P1-&gt;&gt;P2: Передача блоку S[1]
+        P2-&gt;&gt;P3: Передача блоку S[2]
+        P3-&gt;&gt;P0: Передача блоку S[3]
+    end
+    Note over P0,P3: Локальна редукція: S_local = S_local + S_received
+
+    Note over P0,P3: Фаза 2: Allgather (Крок 1 з P-1)
+    par Розповсюдження повністю редукованих блоків
+        P0-&gt;&gt;P1: Передача редукованого S[1]
+        P1-&gt;&gt;P2: Передача редукованого S[2]
+        P2-&gt;&gt;P3: Передача редукованого S[3]
+        P3-&gt;&gt;P0: Передача редукованого S[0]
+    end
+    Note over P0,P3: Кожен процесор оновлює свій повний градієнтний тензор</code></pre>
+<h4 id="1-scatter-reduce">Фаза 1: Збір-редукція (Scatter-Reduce)</h4>
+<p>Фаза триває рівно <span class="arithmatex">\(P - 1\)</span> комунікаційних кроків. На кожному кроці кожен процесор відправляє сусіду по кільцю один свій блок розміром <span class="arithmatex">\(\frac{M}{P}\)</span> і одночасно приймає блок від попереднього процесора. Отриманий блок додається до відповідного локального сегмента:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Час комунікації на одному кроці):} &amp; \quad t_{\mathrm{comm\_step}} = \alpha + \beta \cdot \frac{M}{P} \\
+\text{Етап 2 (Час обчислень на одному кроці):} &amp; \quad t_{\mathrm{comp\_step}} = \gamma \cdot \frac{M}{P} \\
+\text{Етап 3 (Сумарний час фази Scatter-Reduce):} &amp; \quad T_{\mathrm{SR}}(M, P) = (P - 1) \cdot \left( \alpha + \beta \cdot \frac{M}{P} + \gamma \cdot \frac{M}{P} \right)
+\end{aligned}
+\]</div>
+<p>Після завершення <span class="arithmatex">\(P - 1\)</span> кроків кожен процес має рівно один повністю редукований (просумований по всьому кластеру) блок розміром <span class="arithmatex">\(\frac{M}{P}\)</span>.</p>
+<h4 id="2-allgather">Фаза 2: Загальний збір (Allgather)</h4>
+<p>Фаза також триває <span class="arithmatex">\(P - 1\)</span> кроків. Вузли пересилають повністю обчислені блоки по кільцю, перезаписуючи старі значення без додаткових арифметичних дій:</p>
+<div class="arithmatex">\[T_{\mathrm{AG}}(M, P) = (P - 1) \cdot \left( \alpha + \beta \cdot \frac{M}{P} \right)\]</div>
+<h4 id="ring-allreduce">Повний час синхронізації Ring-Allreduce</h4>
+<p>Сумуючи часові витрати обох фаз, отримуємо точний аналітичний вираз:</p>
+<div class="arithmatex">\[T_{\mathrm{RingAllreduce}}(M, P) = T_{\mathrm{SR}} + T_{\mathrm{AG}} = 2(P - 1) \alpha + 2 \cdot \frac{P - 1}{P} M \beta + \frac{P - 1}{P} M \gamma\]</div>
+<p>Дослідимо граничну поведінку функції при зростанні розміру моделі <span class="arithmatex">\(M \to \infty\)</span> та збільшенні кількості вузлів <span class="arithmatex">\(P \to \infty\)</span>:</p>
+<div class="arithmatex">\[\lim_{M \to \infty} \frac{T_{\mathrm{RingAllreduce}}(M, P)}{M} = 2 \cdot \frac{P - 1}{P} \beta + \frac{P - 1}{P} \gamma\]</div>
+<p>Оскільки при великій кількості процесорів дріб наближається до одиниці:</p>
+<div class="arithmatex">\[\lim_{P \to \infty} \frac{P - 1}{P} = 1\]</div>
+<p>Отримуємо фундаментальну асимптотичну межу часу передачі:</p>
+<div class="arithmatex">\[T_{\mathrm{RingAllreduce}}(M, P) \approx 2(P - 1)\alpha + 2 M \beta + M \gamma, \quad \text{при } P \gg 1, M \gg 1\]</div>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Теорема про пропускну здатність Ring-Allreduce стверджує: сумарний обсяг даних, що передається мережевим адаптером кожного окремого процесора протягом виконання повної операції Ring-Allreduce, строго дорівнює <span class="arithmatex">\(2 \cdot \frac{P - 1}{P} \cdot M\)</span> байтів і обмежений зверху константою <span class="arithmatex">\(2M\)</span>. Комунікаційний час, зумовлений смугою пропускання, є асимптотично інваріантним до кількості обчислювальних вузлів <span class="arithmatex">\(P\)</span>. Збільшення кількості процесорів призводить до лінійного зростання виключно латентнісного доданка <span class="arithmatex">\(2(P - 1)\alpha\)</span>, вплив якого нівелюється при передачі великих масивів параметрів (<span class="arithmatex">\(M \gg 1\)</span>).</p>
+</blockquote>
+<hr />
+<h3 id="25">2.5. Аналіз масштабованості паралельних процесів: формалізація функції ізоефективності та дослідження впливу комунікаційних накладних витрат на прискорення обчислень</h3>
+<p>Оцінювання якості паралельного розв'язку задачі обсягом <span class="arithmatex">\(W\)</span> (кількість базових операцій) на <span class="arithmatex">\(P\)</span> процесорах здійснюється за допомогою показників <strong>прискорення (<span class="arithmatex">\(S_P\)</span>)</strong> та <strong>ефективності (<span class="arithmatex">\(E_P\)</span>)</strong>:</p>
+<div class="arithmatex">\[S_P(W) = \frac{T_1(W)}{T_P(W)}, \quad E_P(W) = \frac{S_P(W)}{P} = \frac{T_1(W)}{P \cdot T_P(W)}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_1(W)\)</span> — тривалість виконання послідовного алгоритму на одному процесорі в секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_P(W)\)</span> — тривалість паралельного виконання задачі на <span class="arithmatex">\(P\)</span> процесорах у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+</li>
+</ul>
+<p>Сумарний час паралельних обчислень <span class="arithmatex">\(T_P\)</span> містить обчислювальну компоненту та комунікаційні накладні витрати <span class="arithmatex">\(T_o(W, P)\)</span>:</p>
+<div class="arithmatex">\[T_P(W) = \frac{T_1(W)}{P} + \frac{T_o(W, P)}{P}\]</div>
+<p>де <span class="arithmatex">\(T_o(W, P)\)</span> — функція сумарних накладних витрат кластера (Total Overhead Function), що виражає втрати часу всіма процесорами на очікування повідомлень, простої та пересилання даних:</p>
+<div class="arithmatex">\[T_o(W, P) = P \cdot T_P(W) - T_1(W)\]</div>
+<p>Підставивши вираз для <span class="arithmatex">\(T_o\)</span> у формулу ефективності, отримуємо базове метричне співвідношення:</p>
+<div class="arithmatex">\[E_P(W) = \frac{T_1(W)}{T_1(W) + T_o(W, P)} = \frac{1}{1 + \frac{T_o(W, P)}{T_1(W)}}\]</div>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; LocalCompute : Старт ітерації
+    LocalCompute --&gt; GradientExchange : Завершення розрахунку градієнтів
+
+    state GradientExchange {
+        [*] --&gt; ScatterReduce : Старт фази 1
+        ScatterReduce --&gt; Allgather : Редукція блоків завершена
+        Allgather --&gt; [*] : Усі процесори мають повний градієнт
+    }
+
+    GradientExchange --&gt; OptimizerStep : Синхронізація параметрів
+    OptimizerStep --&gt; CheckIsoefficiency : Оновлення ваг W
+
+    state CheckIsoefficiency &lt;&lt;choice&gt;&gt;
+    CheckIsoefficiency --&gt; LocalCompute : W зростає пропорційно T_o (збереження E)
+    CheckIsoefficiency --&gt; DegradedScaling : T_o домінує (падіння E)
+    DegradedScaling --&gt; LocalCompute : Наступний батч даних</code></pre>
+<p>Аналіз формули свідчить: якщо обсяг обчислень залишається фіксованим (<span class="arithmatex">\(T_1(W) = \mathrm{const}\)</span>), зі збільшенням кількості процесорів <span class="arithmatex">\(P\)</span> величина накладних витрат <span class="arithmatex">\(T_o(W, P)\)</span> зростає, що неминуче спричиняє деградацію ефективності (<span class="arithmatex">\(E_P \to 0\)</span>). </p>
+<p>Для збереження стабільного рівня ефективності <span class="arithmatex">\(E_P = E = \mathrm{const}\)</span> (<span class="arithmatex">\(0 &lt; E &lt; 1\)</span>) необхідно одночасно зі збільшенням <span class="arithmatex">\(P\)</span> нарощувати обчислювальний обсяг задачі <span class="arithmatex">\(W\)</span>. </p>
+<p>Поклавши <span class="arithmatex">\(E_P = E\)</span> у рівнянні ефективності, отримуємо умову ізоефективності:</p>
+<div class="arithmatex">\[T_1(W) = \frac{E}{1 - E} \cdot T_o(W, P) = K_E \cdot T_o(W, P)\]</div>
+<p>де <span class="arithmatex">\(K_E = \frac{E}{1 - E}\)</span> — безрозмірна константа, визначена заданим цільовим рівнем ефективності.</p>
+<p>Функціональна залежність між обсягом обчислень <span class="arithmatex">\(W\)</span> та кількістю процесорів <span class="arithmatex">\(P\)</span>, яка забезпечує незмінну ефективність <span class="arithmatex">\(E\)</span>, називається <strong>функцією ізоефективності (Isoefficiency Function)</strong>:</p>
+<div class="arithmatex">\[W = \mathcal{F}_{\mathrm{iso}}(P)\]</div>
+<p>У контексті розподіленого паралелізму за даними (Data Parallelism) у машинному навчанні, час виконання послідовного кроку на батчі розміром <span class="arithmatex">\(B_{\mathrm{total}}\)</span> дорівнює <span class="arithmatex">\(T_1 = W \cdot t_{\mathrm{flop}}\)</span>, де <span class="arithmatex">\(W \propto B_{\mathrm{total}} \cdot M\)</span>. Сумарні накладні витрати на синхронізацію градієнтів за алгоритмом Ring-Allreduce складають:</p>
+<div class="arithmatex">\[T_o(M, P) = P \cdot T_{\mathrm{RingAllreduce}} \approx 2 P (P - 1) \alpha + 2 (P - 1) M \beta\]</div>
+<p>Звідси умова стабільної ефективності навчання записується як:</p>
+<div class="arithmatex">\[W \cdot t_{\mathrm{flop}} = K_E \cdot [2 P (P - 1) \alpha + 2 (P - 1) M \beta]\]</div>
+<p>Асимптотична функція ізоефективності щодо кількості вузлів має вигляд:</p>
+<div class="arithmatex">\[W = \mathcal{O}(P^2) \quad \text{при домінуванні латентності } \alpha\]</div>
+<div class="arithmatex">\[W = \mathcal{O}(P) \quad \text{при домінуванні смуги пропускання } \beta\]</div>
+<p>Це доводить, що за умови використання високошвидкісних мереж із високою смугою пропускання алгоритм Ring-Allreduce демонструє майже лінійну функцію ізоефективності <span class="arithmatex">\(\mathcal{O}(P)\)</span>, що забезпечує масштабування розподіленого тренування штучного інтелекту до тисяч обчислювальних вузлів.</p>
+<hr />
+<h3 id="_6">Систематизація аналітичних моделей та алгоритмів комунікації</h3>
+<p>Нижче наведено зведену матрицю аналітичних характеристик комунікаційних моделей і алгоритмів, що використовуються для проектування розподілених систем штучного інтелекту.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Модель / Алгоритм</th>
+<th style="text-align: left;">Аналітичний вираз часової складності</th>
+<th style="text-align: left;">Чутливість до латентності (<span class="arithmatex">\(\alpha\)</span>)</th>
+<th style="text-align: left;">Чутливість до смуги (<span class="arithmatex">\(\beta\)</span>)</th>
+<th style="text-align: left;">Асимптотична межа при <span class="arithmatex">\(P \to \infty\)</span></th>
+<th style="text-align: left;">Обмеження масштабованості в задачах ШІ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Hockney (Точкова)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = \alpha + \beta m\)</span></td>
+<td style="text-align: left;">Висока при <span class="arithmatex">\(m &lt; 1\)</span> КБ</td>
+<td style="text-align: left;">Висока при <span class="arithmatex">\(m &gt; 1\)</span> МБ</td>
+<td style="text-align: left;">Не застосовується (для двох вузлів)</td>
+<td style="text-align: left;">Не враховує навантаження на процесор і блокування черг</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LogGP (Точкова)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2o + L + (m - 1)g\)</span></td>
+<td style="text-align: left;">Локалізована параметрами <span class="arithmatex">\(o\)</span> та <span class="arithmatex">\(L\)</span></td>
+<td style="text-align: left;">Визначається параметром <span class="arithmatex">\(g\)</span> або <span class="arithmatex">\(G\)</span></td>
+<td style="text-align: left;">Не застосовується (для двох вузлів)</td>
+<td style="text-align: left;">Складна процедура експериментальної ідентифікації констант</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Master-Worker Allreduce</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2(P-1)(\alpha + \beta M)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(P)\)</span> (лінійна)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(P)\)</span> (критична)</td>
+<td style="text-align: left;"><span class="arithmatex">\(T \to \infty\)</span> при фіксованому <span class="arithmatex">\(M\)</span></td>
+<td style="text-align: left;">Пляшкове горло на адаптері Master-вузла, непридатна для <span class="arithmatex">\(P &gt; 8\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Binomial Tree Allreduce</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2\log_2 P (\alpha + \beta M)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(\log P)\)</span> (низька)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(\log P \cdot M)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(T \propto \log_2 P\)</span></td>
+<td style="text-align: left;">Неоптимальне використання каналів листкових вузлів дерева</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ring-Allreduce</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2(P-1)\alpha + 2\frac{P-1}{P}M\beta\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(P)\)</span> (помірна)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(1)\)</span> (інваріантна)</td>
+<td style="text-align: left;"><span class="arithmatex">\(T \to 2M\beta + \text{const}\)</span></td>
+<td style="text-align: left;">Зростання латентності <span class="arithmatex">\(2P\alpha\)</span> при малих розмірах пакетів <span class="arithmatex">\(M\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Recursive Halving-Doubling</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2\log_2 P \alpha + 2\frac{P-1}{P}M\beta\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(\log P)\)</span> (мінімальна)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(1)\)</span> (інваріантна)</td>
+<td style="text-align: left;"><span class="arithmatex">\(T \to 2M\beta\)</span></td>
+<td style="text-align: left;">Потребує, щоб <span class="arithmatex">\(P\)</span> було строго ступенем двійки (<span class="arithmatex">\(P = 2^k\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Для обчислювального кластера з <span class="arithmatex">\(P = 16\)</span> вузлів характеристики мережі становлять: латентність <span class="arithmatex">\(\alpha = 2{,}0 \times 10^{-6}\)</span> с, питомий час передачі <span class="arithmatex">\(\beta = 1{,}0 \times 10^{-9}\)</span> с/байт (пропускна здатність <span class="arithmatex">\(B = 1\)</span> ГБ/с). </p>
+<p>Визначте критичний розмір повідомлення градієнтів <span class="arithmatex">\(M^*\)</span>, починаючи з якого децентралізований кільцевий алгоритм Ring-Allreduce стає швидшим за деревоподібну схему Binomial Tree Allreduce (вважати, що обчислювальні витрати <span class="arithmatex">\(\gamma\)</span> на редукцію є нехтовно малими).</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Аналітичний розв'язок задачі:</strong></p>
+<ol>
+<li>Запишемо аналітичні вирази часу виконання для обох алгоритмів без урахування обчислювальних витрат (<span class="arithmatex">\(\gamma = 0\)</span>):</li>
+</ol>
+<div class="arithmatex">\[T_{\mathrm{Tree}}(M, P) = 2 \lceil \log_2 P \rceil \alpha + 2 \lceil \log_2 P \rceil M \beta\]</div>
+<div class="arithmatex">\[T_{\mathrm{Ring}}(M, P) = 2(P - 1)\alpha + 2 \frac{P - 1}{P} M \beta\]</div>
+<ol>
+<li>Для визначення точки рівноваги <span class="arithmatex">\(M^*\)</span> прирівняємо ці вирази:</li>
+</ol>
+<div class="arithmatex">\[2 \log_2 P \cdot \alpha + 2 \log_2 P \cdot M \beta = 2(P - 1)\alpha + 2 \frac{P - 1}{P} M \beta\]</div>
+<ol>
+<li>Скоротимо на <span class="arithmatex">\(2\)</span> та згрупуємо члени, що містять <span class="arithmatex">\(M\)</span>, з одного боку рівняння, а латентнісні константи — з іншого:</li>
+</ol>
+<div class="arithmatex">\[M \beta \left( \log_2 P - \frac{P - 1}{P} \right) = \alpha (P - 1 - \log_2 P)\]</div>
+<div class="arithmatex">\[M^* = \frac{\alpha}{\beta} \cdot \frac{P - 1 - \log_2 P}{\log_2 P - \frac{P - 1}{P}}\]</div>
+<ol>
+<li>Підставимо числові дані: <span class="arithmatex">\(P = 16\)</span>, <span class="arithmatex">\(\log_2 16 = 4\)</span>, <span class="arithmatex">\(\frac{P - 1}{P} = \frac{15}{16} = 0{,}9375\)</span>, <span class="arithmatex">\(\alpha = 2{,}0 \times 10^{-6}\)</span> с, <span class="arithmatex">\(\beta = 1{,}0 \times 10^{-9}\)</span> с/байт:</li>
+</ol>
+<div class="arithmatex">\[M^* = \frac{2{,}0 \times 10^{-6}}{1{,}0 \times 10^{-9}} \cdot \frac{15 - 4}{4 - 0{,}9375} = 2000 \cdot \frac{11}{3{,}0625} \approx 2000 \cdot 3{,}5918 \approx 7183{,}67 \text{ байт}\]</div>
+<ol>
+<li>Висновок: критичний розмір повідомлення становить <span class="arithmatex">\(M^* \approx 7{,}18\)</span> КБ.
+При будь-якому розмірі тензора градієнтів, що перевищує <span class="arithmatex">\(7{,}2\)</span> КБ, кільцевий алгоритм перевершує деревоподібну схему за швидкодією. Оскільки розмір градієнтів сучасних моделей ШІ вимірюється сотнями мегабайтів (<span class="arithmatex">\(M \ge 10^8\)</span> байт), алгоритм Ring-Allreduce забезпечує багаторазовий виграш у продуктивності.</li>
+</ol>
+</details>
+<hr />
+<h3 id="_7">Вказівки для самостійного осмислення аналітичного базису</h3>
+<ol>
+<li>
+<p>Виведіть функцію ізоефективності для топології тривимірного тора (3D-Torus) під час виконання операції матричного множення методом Кеннона. Оцініть, як впливає обмеження пропускної здатності бісекції <span class="arithmatex">\(\mathcal{O}(P^{2/3})\)</span> на граничну масштабованість алгоритму порівняно з повнозв'язною комутаційною фабрикою.</p>
+</li>
+<li>
+<p>Дослідіть поведінку алгоритму Recursive Halving-Doubling для довільних значень кількості процесів <span class="arithmatex">\(P\)</span>, які не є степенем двійки (<span class="arithmatex">\(P \ne 2^k\)</span>). Побудуйте аналітичний вираз накладних витрат на попередній збір даних до найближчого степеня двійки та оцініть втрату продуктивності порівняно зі стандартним Ring-Allreduce.</p>
+</li>
+<li>
+<p>Проаналізуйте компроміс між накладними витратами на синхронізацію в моделі LogGP при зміні політики черг передачі повідомлень. Покажіть аналітично, за якої умови розпаралелювання обчислювального потоку та неблокуючої передачі <span class="arithmatex">\(T_{\mathrm{comp}} \approx T_{\mathrm{comm}}\)</span> перетворює комунікаційні витрати на величину, залежну виключно від затримки обробки процесора <span class="arithmatex">\(2 \cdot o\)</span>.</p>
+</li>
+</ol>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31-ring-allreduce-ai-">3.1. Комплексний інженерний кейс. Аналітичний розрахунок мережевої трудомісткості та децентралізованої синхронізації градієнтів методом Ring-Allreduce для багатовузлового AI-кластера</h3>
+<h4 id="_8">Постановка інженерної задачі</h4>
+<p>Розглядається завдання проектування системи розподіленого синхронного тренування мовної моделі архітектури трансформер із <span class="arithmatex">\(7\)</span> мільярдами параметрів (<span class="arithmatex">\(7\text{B}\)</span>) за парадигмою паралелізму за даними (<strong>Distributed Data Parallel, DDP</strong>). Обчислювальний комплекс складається з <span class="arithmatex">\(64\)</span> автономних серверних вузлів (робочих станцій із GPU-прискорювачами), об'єднаних у логічне комунікаційне кільце за допомогою високошвидкісного інтерконекту InfiniBand HDR. </p>
+<p>На кожній ітерації стохастичного градієнтного спуску обчислювальні вузли паралельно виконують прямий (<strong>forward</strong>) та зворотний (<strong>backward</strong>) проходи на локальних мікробатчах, генеруючи локальні градієнти вагових коефіцієнтів у 16-бітному форматі з плаваючою комою (<strong>FP16</strong>). Для поновлення глобального вектора ваг перед наступним кроком оптимізатора необхідно провести глобальне усереднення (синхронізацію) всіх градієнтних масивів за децентралізованою схемою <strong>Ring-Allreduce</strong>. </p>
+<p>Необхідно виконати строгий аналітичний розрахунок часових характеристик комунікації, оцінити накладні витрати передачі повідомлень, порівняти швидкодію алгоритму з централізованою архітектурою <strong>Parameter Server</strong> та визначити показники прискорення й ефективності паралельного кроку навчання.</p>
+<p>Вхідні апаратні та алгоритмічні параметри системи наведено у таблиці нижче.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Кількість параметрів нейромережі</td>
+<td style="text-align: left;"><span class="arithmatex">\(N_{\mathrm{param}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(7{,}0 \times 10^9\)</span></td>
+<td style="text-align: left;">елементів</td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмір одного параметра (формат FP16)</td>
+<td style="text-align: left;"><span class="arithmatex">\(d_{\mathrm{elem}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;">байти (<span class="arithmatex">\(\text{байт}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Кількість обчислювальних вузлів у кластері</td>
+<td style="text-align: left;"><span class="arithmatex">\(P\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: left;">одиниць</td>
+</tr>
+<tr>
+<td style="text-align: left;">Латентність мережевої передачі (Startup time)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\alpha\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1{,}2 \times 10^{-6}\)</span></td>
+<td style="text-align: left;">секунди (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Реальна пропускна здатність каналу одного вузла</td>
+<td style="text-align: left;"><span class="arithmatex">\(B\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(25{,}0 \times 10^9\)</span></td>
+<td style="text-align: left;">байти за секунду (<span class="arithmatex">\(\text{байт}/\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Питомий час передачі одного байта (<span class="arithmatex">\(\beta = 1/B\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\beta\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(4{,}0 \times 10^{-11}\)</span></td>
+<td style="text-align: left;">секунди на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Питомий час векторного додавання двох FP16 елементів</td>
+<td style="text-align: left;"><span class="arithmatex">\(\gamma\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(5{,}0 \times 10^{-11}\)</span></td>
+<td style="text-align: left;">секунди на байт (<span class="arithmatex">\(\text{с}/\text{байт}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Тривалість локальних обчислень (Forward + Backward)</td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\mathrm{comp}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0{,}420\)</span></td>
+<td style="text-align: left;">секунди (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart TD
+    A["Старт ітерації DDP: Обчислення локальних градієнтів T_comp"]
+    B["Крок 1: Сегментація вектора градієнтів M на P рівних блоків"]
+    C["Крок 2: Фаза Scatter-Reduce: P-1 комунікаційних кроків"]
+    D["Крок 3: Фаза Allgather: P-1 комунікаційних кроків"]
+    E["Крок 4: Формування глобального градієнта та оновлення ваг"]
+    F["Крок 5: Аналітичне оцінювання прискорення Sp та ефективності Ep"]
+
+    A --&gt; B
+    B --&gt; C
+    C --&gt; D
+    D --&gt; E
+    E --&gt; F</code></pre>
+<h4 id="_9">Покроковий аналітичний розрахунок</h4>
+<h5 id="1_1">Крок 1. Розрахунок фізичного розміру вектора градієнтів та розбиття на блоки</h5>
+<p>Загальний інформаційний обсяг масиву градієнтів <span class="arithmatex">\(M\)</span>, що підлягає синхронізації, визначається добутком кількості параметрів моделі на розрядність формату представлення:</p>
+<div class="arithmatex">\[M = N_{\mathrm{param}} \cdot d_{\mathrm{elem}} = 7{,}0 \times 10^9 \cdot 2 = 1{,}4 \times 10^{10} \text{ байтів} = 14{,}0 \text{ ГБ}.\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(M\)</span> — сумарний обсяг градієнтного масиву моделі в байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\mathrm{param}}\)</span> — загальна кількість навчальних параметрів нейромережі.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(d_{\mathrm{elem}}\)</span> — розмірність типу даних FP16 у байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+</li>
+</ul>
+<p>У межах алгоритму Ring-Allreduce вектор розміром <span class="arithmatex">\(M\)</span> розбивається на <span class="arithmatex">\(P\)</span> рівних неперервних блоків <span class="arithmatex">\(S_k\)</span>, довжина кожного з яких складає:</p>
+<div class="arithmatex">\[S_{\mathrm{chunk}} = \frac{M}{P} = \frac{1{,}4 \times 10^{10} \text{ байтів}}{64} = 218\,750\,000 \text{ байтів} \approx 218{,}75 \text{ МБ}.\]</div>
+<p>де <span class="arithmatex">\(S_{\mathrm{chunk}}\)</span> позначає фізичний обсяг сегмента тензора, який передається між суміжними вузлами кільця на кожному комунікаційному кроці, виражений у байтах (<span class="arithmatex">\(\text{байт}\)</span>).</p>
+<h5 id="2-scatter-reduce">Крок 2. Розрахунок часу виконання фази Scatter-Reduce</h5>
+<p>Фаза Scatter-Reduce складається з <span class="arithmatex">\(P - 1\)</span> послідовних кроків пересилання та локального поблочного підсумовування. На кожному кроці кожен процесор передає <span class="arithmatex">\(S_{\mathrm{chunk}}\)</span> байтів сусідньому вузлу та виконує додавання отриманих значень зі швидкістю <span class="arithmatex">\(\gamma\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Час комунікації одного кроку):} &amp; \quad t_{\mathrm{comm\_step}} = \alpha + \beta \cdot S_{\mathrm{chunk}} \\
+&amp; \quad t_{\mathrm{comm\_step}} = 1{,}2 \times 10^{-6} + 4{,}0 \times 10^{-11} \cdot 218\,750\,000 = 1{,}2 \times 10^{-6} + 0{,}00875 = 0{,}0087512 \text{ с}. \\
+\text{Етап 2 (Час редукції одного кроку):} &amp; \quad t_{\mathrm{comp\_step}} = \gamma \cdot S_{\mathrm{chunk}} \\
+&amp; \quad t_{\mathrm{comp\_step}} = 5{,}0 \times 10^{-11} \cdot 218\,750\,000 = 0{,}0109375 \text{ с}. \\
+\text{Етап 3 (Сумарний час кроку):} &amp; \quad t_{\mathrm{step\_SR}} = t_{\mathrm{comm\_step}} + t_{\mathrm{comp\_step}} = 0{,}0087512 + 0{,}0109375 = 0{,}0196887 \text{ с}. \\
+\text{Етап 4 (Загальний час фази Scatter-Reduce):} &amp; \quad T_{\mathrm{SR}} = (P - 1) \cdot t_{\mathrm{step\_SR}} = (64 - 1) \cdot 0{,}0196887 \approx 1{,}240388 \text{ с}.
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(T_{\mathrm{SR}}\)</span> — сумарна тривалість виконання фази Scatter-Reduce у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+<h5 id="3-allgather">Крок 3. Розрахунок часу виконання фази Allgather</h5>
+<p>Фаза Allgather також вимагає <span class="arithmatex">\(P - 1\)</span> кроків передачі даних по кільцю для розповсюдження повністю редукованих блоків, проте не містить обчислювальної складової (<span class="arithmatex">\(\gamma = 0\)</span>):</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Час комунікації одного кроку):} &amp; \quad t_{\mathrm{step\_AG}} = \alpha + \beta \cdot S_{\mathrm{chunk}} = 0{,}0087512 \text{ с}. \\
+\text{Етап 2 (Загальний час фази Allgather):} &amp; \quad T_{\mathrm{AG}} = (P - 1) \cdot t_{\mathrm{step\_AG}} = 63 \cdot 0{,}0087512 \approx 0{,}551326 \text{ с}.
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(T_{\mathrm{AG}}\)</span> — сумарна тривалість виконання фази Allgather у секундах (<span class="arithmatex">\(\text{с}\)</span>).</p>
+<h5 id="4-ring-allreduce-parameter-server">Крок 4. Розрахунок сумарного часу Ring-Allreduce та зіставлення зі схемою Parameter Server</h5>
+<p>Повний час виконання децентралізованої синхронізації Ring-Allreduce становить:</p>
+<div class="arithmatex">\[T_{\mathrm{Ring}} = T_{\mathrm{SR}} + T_{\mathrm{AG}} = 1{,}240388 \text{ с} + 0{,}551326 \text{ с} = 1{,}791714 \text{ с} \approx 1{,}792 \text{ с}.\]</div>
+<p>Для порівняння розрахуємо теоретичний час виконання синхронізації за централізованою схемою <strong>Parameter Server (PS)</strong>, де один центральний вузол приймає градієнти від <span class="arithmatex">\(P - 1\)</span> робітників і потім розсилає оновлені ваги. Центральний вузол повинен послідовно прийняти та відправити <span class="arithmatex">\((P - 1) \cdot M\)</span> байтів даних:</p>
+<div class="arithmatex">\[T_{\mathrm{PS}} = 2(P - 1)\alpha + 2 \cdot (P - 1) \cdot M \cdot \beta\]</div>
+<p>Підставимо числові параметри:</p>
+<div class="arithmatex">\[T_{\mathrm{PS}} = 2 \cdot 63 \cdot 1{,}2 \times 10^{-6} + 2 \cdot 63 \cdot 1{,}4 \times 10^{10} \cdot 4{,}0 \times 10^{-11} = 0{,}000151 + 70{,}56 \approx 70{,}560 \text{ с}.\]</div>
+<p>Коефіцієнт переваги децентралізованого кільцевого підходу над централізованим сервером параметрів становить:</p>
+<div class="arithmatex">\[K_{\mathrm{speedup\_arch}} = \frac{T_{\mathrm{PS}}}{T_{\mathrm{Ring}}} = \frac{70{,}560 \text{ с}}{1{,}792 \text{ с}} \approx 39{,}38 \text{ раза}.\]</div>
+<h5 id="5">Крок 5. Оцінка прискорення та ефективності паралельного кроку навчання</h5>
+<p>Визначимо загальну тривалість однієї ітерації синхронного навчання на кластері з <span class="arithmatex">\(P = 64\)</span> вузлів:</p>
+<div class="arithmatex">\[T_P = T_{\mathrm{comp}} + T_{\mathrm{Ring}} = 0{,}420 \text{ с} + 1{,}792 \text{ с} = 2{,}212 \text{ с}.\]</div>
+<p>Час виконання аналогічного обсягу обчислень на одному вузлі (без витрат на міжвузлову комунікацію для еквівалентного сумарного батчу):</p>
+<div class="arithmatex">\[T_1 = P \cdot T_{\mathrm{comp}} = 64 \cdot 0{,}420 \text{ с} = 26{,}880 \text{ с}.\]</div>
+<p>Розрахуємо підсумкове реальне прискорення <span class="arithmatex">\(S_P\)</span> та обчислювальну ефективність використання кластера <span class="arithmatex">\(E_P\)</span>:</p>
+<div class="arithmatex">\[S_P = \frac{T_1}{T_P} = \frac{26{,}880 \text{ с}}{2{,}212 \text{ с}} \approx 12{,}15.\]</div>
+<div class="arithmatex">\[E_P = \frac{S_P}{P} = \frac{12{,}15}{64} \approx 0{,}1898 \quad (18{,}98\%).\]</div>
+<h4 id="_10">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Застосування децентралізованого алгоритму Ring-Allreduce скорочує час міжвузлової комунікації у <span class="arithmatex">\(39{,}38\)</span> раза порівняно із традиційною схемою Parameter Server, оскільки повністю виключає мережеве насичення центрального комутаційного вузла.</p>
+</li>
+<li>
+<p>Комунікаційні накладні витрати на передачу великого градієнтного масиву (<span class="arithmatex">\(14\)</span> ГБ) за чистої послідовної схеми становлять <span class="arithmatex">\(1{,}792\)</span> с на ітерацію, що переважає час локальних обчислень (<span class="arithmatex">\(0{,}420\)</span> с) і призводить до падіння підсумкової ефективності кластера до <span class="arithmatex">\(18{,}98\%\)</span>.</p>
+</li>
+<li>
+<p>Для досягнення цільової ефективності масштабування (<span class="arithmatex">\(E_P \ge 80\%\)</span>) у реальних виробничих AI-системах критично необхідно впроваджувати апаратне суміщення обчислень та передачі даних за допомогою неблокуючих викликів або конвеєризації блоків (Bucket-based gradient bucketing у фреймворках PyTorch DDP та DeepSpeed).</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Модель Хокні (Hockney)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T(m) = \alpha + \beta \cdot m\)</span></td>
+<td style="text-align: left;">Оцінювання часу точкової та колективної передачі повідомлень у мережах кластерів.</td>
+<td style="text-align: left;">Не враховує накладні витрати CPU на обробку пакетів та асинхронні черги DMA.</td>
+<td style="text-align: left;">Ототожнення параметра <span class="arithmatex">\(\beta\)</span> з паспортною пропускною здатністю без урахування службових заголовків.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Модель LogGP</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T(m) = 2o + L + (m - 1)g\)</span></td>
+<td style="text-align: left;">Прецизійний аналіз неблокуючих пересилань і розрахунок інтервалів міжпроцесорного суміщення.</td>
+<td style="text-align: left;">Складність експериментальної ідентифікації констант <span class="arithmatex">\(o\)</span> та <span class="arithmatex">\(g\)</span> на гетерогенному інтерконекті.</td>
+<td style="text-align: left;">Плутанина між апаратною затримкою лінії <span class="arithmatex">\(L\)</span> та накладними витратами процесора <span class="arithmatex">\(o\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Діаметр мережі (<span class="arithmatex">\(D\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(D(G) = \max_{u, v} d(u, v)\)</span></td>
+<td style="text-align: left;">Проектування топологій суперкомп'ютерів, мінімізація затримок багатохопової маршрутизації.</td>
+<td style="text-align: left;">Характеризує тільки структурну довжину шляху і не враховує заторів у комутаторах під навантаженням.</td>
+<td style="text-align: left;">Припущення, що мережі з однаковим діаметром мають однакову реальну пропускну здатність.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ширина бісекції (<span class="arithmatex">\(B_w\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(B_w = \min_{V_1, V_2} \|E(V_1, V_2)\|\)</span></td>
+<td style="text-align: left;">Розрахунок граничної смуги пропускання кластера під час операцій <code>Alltoall</code> та глобальних перестановок.</td>
+<td style="text-align: left;">Вимагає симетричного поділу вершин навпіл (<span class="arithmatex">\(IV_1I = IV_2I = P/2\)</span>), складна для нерегулярних графів.</td>
+<td style="text-align: left;">Ігнорування бісекційного обмеження при масштабуванні задач із щільним інформаційним обміном.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ring-Allreduce</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T = 2(P-1)\alpha + 2\frac{P-1}{P}M\beta\)</span></td>
+<td style="text-align: left;">Синхронізація градієнтів у розподіленому навчанні моделей штучного інтелекту (DDP, Horovod, NCCL).</td>
+<td style="text-align: left;">Зростання латентнісних втрат <span class="arithmatex">\(2(P-1)\alpha\)</span> при передачі великої кількості дрібних тензорів.</td>
+<td style="text-align: left;">Хибне твердження, що час роботи кільцевого алгоритму зростає пропорційно кількості процесорів <span class="arithmatex">\(P\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Декартова топологія</strong></td>
+<td style="text-align: left;"><code>MPI_Cart_create</code></td>
+<td style="text-align: left;">Організація 2D/3D решіток та торів для матричних обчислень і розв'язання рівнянь у частинних похідних.</td>
+<td style="text-align: left;">Вимагає регулярної факторизації кількості процесів за вимірами (<span class="arithmatex">\(P = \prod P_i\)</span>).</td>
+<td style="text-align: left;">Плутанина між віртуальною адресацією координат і фізичним розміщенням ядер у стійках.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Взаємне блокування (Deadlock)</strong></td>
+<td style="text-align: left;">Циклічне очікування в графі процесів-ресурсів</td>
+<td style="text-align: left;">Спільний аналіз протоколів взаємодії, проектування надійних систем передачі повідомлень.</td>
+<td style="text-align: left;">Виникає виключно за умови використання блокуючих примітивів без буферизації.</td>
+<td style="text-align: left;">Переконання, що функції типу <code>MPI_Send</code> завжди безпечно завершуються без очікування <code>MPI_Recv</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_11">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>За якої з наведених умов під час використання стандартної функції <code>MPI_Send</code> у програмі гарантовано <strong>НЕ</strong> виникне станція взаємного блокування (Deadlock), якщо два процеси одночасно надсилають повідомлення один одному?</p>
+<ul>
+<li>
+<p>A. Якщо використовується комунікатор <code>MPI_COMM_WORLD</code> замість локального комунікатора.</p>
+</li>
+<li>
+<p>B. Якщо розмір повідомлення є меншим за внутрішній системний поріг протоколу Eager, що дозволяє завершити виклик через копіювання в проміжний системний буфер.</p>
+</li>
+<li>
+<p>C. Якщо значення числового тегу <code>tag</code> в обох процесах дорівнює нулю.</p>
+</li>
+<li>
+<p>D. Якщо перед функцією <code>MPI_Send</code> викликано колективний бар'єр <code>MPI_Barrier</code>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>У стандартному режимі <code>MPI_Send</code> для повідомлень малого обсягу середовище MPI застосовує протокол Eager: дані копіюються в системний буфер процесу-одержувача, і функція негайно повертає управління відправнику. Це тимчасово розриває циклічну залежність блокування, оскільки обидва процеси успішно завершують відправку і переходять до виклику <code>MPI_Recv</code>. Проте, якщо розмір повідомлення перевищує ємність системного буфера, реалізація перемикається на протокол Rendezvous, що призводить до дедлоку.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки тип комунікатора не змінює семантику синхронізації та буферизації повідомлень.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що значення тегу використовується виключно для фільтрації повідомлень і не впливає на блокування потоків виконання.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки виклик <code>MPI_Barrier</code> лише синхронізує момент одночасного входу процесів у тупикову пару викликів <code>MPI_Send</code>, гарантуючи настання дедлоку.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Як зміниться сумарний комунікаційний час фази Allgather в алгоритмі Ring-Allreduce для масиву розміром <span class="arithmatex">\(M\)</span> байтів, якщо кількість процесорів <span class="arithmatex">\(P\)</span> у кільці збільшити з <span class="arithmatex">\(16\)</span> до <span class="arithmatex">\(64\)</span> при незмінній пропускній здатності каналів <span class="arithmatex">\(\beta\)</span>?</p>
+<ul>
+<li>
+<p>A. Збільшиться рівно в 4 рази.</p>
+</li>
+<li>
+<p>B. Зменшиться рівно в 4 рази.</p>
+</li>
+<li>
+<p>C. Зросте на величину латентності <span class="arithmatex">\(96\alpha\)</span>, а компонент передачі даних зросте лише у <span class="arithmatex">\(\frac{63}{64} / \frac{15}{16} \approx 1{,}05\)</span> раза, залишаючись майже незмінним.</p>
+</li>
+<li>
+<p>D. Зменшиться до нуля завдяки горизонтальному масштабуванню.</p>
+</li>
+</ul>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>Час виконання фази Allgather описується виразом:</li>
+</ol>
+<div class="arithmatex">\[T_{\mathrm{AG}}(M, P) = (P - 1)\alpha + \frac{P - 1}{P} M \beta.\]</div>
+<p>Для <span class="arithmatex">\(P_1 = 16\)</span>: <span class="arithmatex">\(T_{\mathrm{AG}, 16} = 15\alpha + \frac{15}{16} M \beta = 15\alpha + 0{,}9375 M \beta\)</span>.
+Для <span class="arithmatex">\(P_2 = 64\)</span>: <span class="arithmatex">\(T_{\mathrm{AG}, 64} = 63\alpha + \frac{63}{64} M \beta = 63\alpha + 0{,}984375 M \beta\)</span>.
+Різниця латентностей становить <span class="arithmatex">\((63 - 15)\alpha = 48\alpha\)</span> (а для обох фаз Allreduce — <span class="arithmatex">\(96\alpha\)</span>). Відношення коефіцієнтів при обсязі <span class="arithmatex">\(M\beta\)</span> дорівнює <span class="arithmatex">\(\frac{0{,}984375}{0{,}9375} = 1{,}05\)</span>. Обсяг передачі даних через канал вузла залишається практично незмінним.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки лінійно від <span class="arithmatex">\(P\)</span> масштабується лише централізована схема Parameter Server, а не Ring-Allreduce.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що передача градієнтів за парадигмою паралелізму за даними вимагає розповсюдження повного масиву ваг на кожен процесор, що принципово не дозволяє зменшити мережевий обсяг.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є абсурдним, оскільки комунікаційні операції мають фізичні обмеження швидкості передачі сигналу та смуги каналу.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яка топологія комунікаційної мережі забезпечує найвищу відмовостійкість (ступінь зв'язності <span class="arithmatex">\(\kappa\)</span>) та найменший діаметр <span class="arithmatex">\(D\)</span> при фіксованій кількості вузлів <span class="arithmatex">\(P = 16\)</span>?</p>
+<ul>
+<li>
+<p>A. Двовимірна ґратка (2D Mesh <span class="arithmatex">\(4 \times 4\)</span>).</p>
+</li>
+<li>
+<p>B. Одновимірне замкнене кільце (Ring).</p>
+</li>
+<li>
+<p>C. Топологія 4-вимірного двійкового гіперкуба (4-Hypercube).</p>
+</li>
+<li>
+<p>D. Централізована зірка (Star).</p>
+</li>
+</ul>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>
+<p>Розрахуємо характеристики представлених топологій для <span class="arithmatex">\(P = 16\)</span>:
+Для 4-гіперкуба (<span class="arithmatex">\(N = \log_2 16 = 4\)</span>): діаметр <span class="arithmatex">\(D = 4\)</span>, зв'язність <span class="arithmatex">\(\kappa = 4\)</span>.
+Для 2D Mesh <span class="arithmatex">\(4 \times 4\)</span>: діаметр <span class="arithmatex">\(D = 2(\sqrt{16} - 1) = 6\)</span>, зв'язність <span class="arithmatex">\(\kappa = 2\)</span>.
+Для Ring: діаметр <span class="arithmatex">\(D = \lfloor 16/2 \rfloor = 8\)</span>, зв'язність <span class="arithmatex">\(\kappa = 2\)</span>.
+Для Star: діаметр <span class="arithmatex">\(D = 2\)</span>, проте ступінь зв'язності <span class="arithmatex">\(\kappa = 1\)</span> (вихід з ладу центрального комутатора повністю руйнує всю мережу). Таким чином, 4-гіперкуб забезпечує оптимальне поєднання високої зв'язності (<span class="arithmatex">\(\kappa = 4\)</span>) та малого діаметра (<span class="arithmatex">\(D = 4\)</span>).</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки ґратка має більший діаметр (<span class="arithmatex">\(6\)</span>) та вдвічі меншу зв'язність через наявність кутових вузлів із двома зв'язками.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що кільце володіє неприпустимо великим діаметром (<span class="arithmatex">\(8\)</span>) для 16 вузлів.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки зірка має мінімальну відмовостійкість (<span class="arithmatex">\(\kappa = 1\)</span>) і створює критичну точку відмови.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У чому полягає основна відмінність між функціями <code>MPI_Reduce</code> та <code>MPI_Allreduce</code> відповідно до стандарту MPI?</p>
+<ul>
+<li>
+<p>A. <code>MPI_Reduce</code> є неблокуючою функцією, тоді як <code>MPI_Allreduce</code> — строго блокуючою.</p>
+</li>
+<li>
+<p>B. <code>MPI_Reduce</code> обчислює скалярний результат, а <code>MPI_Allreduce</code> призначена виключно для багатовимірних тензорів.</p>
+</li>
+<li>
+<p>C. <code>MPI_Reduce</code> записує підсумковий результат редукції лише в буфер кореневого процесу (root), тоді як <code>MPI_Allreduce</code> гарантує наявність однакового редукованого результату на всіх процесах комунікатора.</p>
+</li>
+<li>
+<p>D. <code>MPI_Allreduce</code> виконує лише операцію підсумовування <code>MPI_SUM</code>, а <code>MPI_Reduce</code> підтримує довільні операції користувача.</p>
+</li>
+</ul>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>
+<p>Семантична різниця між примітивами полягає у розподілі результату: сигнатура <code>MPI_Reduce</code> вимагає явного зазначення аргументу <code>root</code>, і результуючий буфер заповнюється лише на процесі з відповідним рангом. Функція <code>MPI_Allreduce</code> не потребує параметра <code>root</code>, оскільки семантично еквівалентна виклику <code>MPI_Reduce</code> з подальшим широкомовним розсиланням <code>MPI_Bcast</code> фінальних даних усім процесам групи.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки обидві функції належать до колективних операцій і є логічно блокуючими відносно повторного використання буферів.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що обидва методи оперують довільними одномірними та багатомірними буферами пам'яті через специфікатор <code>count</code>.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки обидві функції приймають однаковий набір базових (<code>MPI_MAX</code>, <code>MPI_MIN</code>, <code>MPI_PROD</code>) та призначених для користувача операцій <code>MPI_Op</code>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_12">Завдання для самостійної роботи</h4>
+<h5 id="_13">Постановка задачі</h5>
+<p>Для забезпечення масштабованого навчання нейромережі комп'ютерного зору (модель сегментації медичних зображень) розгортається кластер із <span class="arithmatex">\(P = 32\)</span> обчислювальних вузлів. Розмір масиву параметрів моделі становить <span class="arithmatex">\(N_{\mathrm{param}} = 1{,}2 \times 10^9\)</span> ваг у форматі FP32 (<span class="arithmatex">\(4\)</span> байти на елемент). Вузли зв'язані мережею з латентністю <span class="arithmatex">\(\alpha = 2{,}5\)</span> мкс (<span class="arithmatex">\(2{,}5 \times 10^{-6}\)</span> с) та смугою пропускання <span class="arithmatex">\(B = 10\)</span> ГБ/с (<span class="arithmatex">\(1{,}0 \times 10^{10}\)</span> байт/с). Час виконання локальної ітерації обчислень становить <span class="arithmatex">\(T_{\mathrm{comp}} = 0{,}650\)</span> с.</p>
+<h5 id="_14">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Обчисліть повний обсяг вектора градієнтів <span class="arithmatex">\(M\)</span> у гігабайтах та визначте розмір одного блоку <span class="arithmatex">\(S_{\mathrm{chunk}}\)</span>, що циркулює між вузлами в алгоритмі Ring-Allreduce.</p>
+</li>
+<li>
+<p>Розрахуйте точний аналітичний час виконання синхронізації градієнтів за алгоритмом Ring-Allreduce (вважаючи питомі витрати на локальне векторне додавання рівними <span class="arithmatex">\(\gamma = 1{,}0 \times 10^{-10}\)</span> с/байт).</p>
+</li>
+<li>
+<p>Зіставте отриманий час із тривалістю класичної централізованої синхронізації через Сервер Параметрів (Parameter Server) та визначте коефіцієнт прискорення комунікаційної фази.</p>
+</li>
+<li>
+<p>Розрахуйте підсумкове прискорення <span class="arithmatex">\(S_P\)</span> та ефективність використання 32-вузлового кластера <span class="arithmatex">\(E_P\)</span>, а також сформулюйте інженерні рекомендації щодо підвищення ефективності, якщо цільовий поріг становить <span class="arithmatex">\(E_P \ge 75\%\)</span>.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

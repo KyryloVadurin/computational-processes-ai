@@ -1,0 +1,3536 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk10/">
+      
+      
+        <link rel="next" href="../../lb/lb1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 11. Навчання з підкріпленням та автономні агенти - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11-q-learning-deep-q-network-mujoco" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 11. Навчання з підкріпленням та автономні агенти
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні та концептуальні основи парадигми навчання з підкріпленням
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deep-q-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математична формалізація рівнянь Белмана та оптимізація Deep Q-Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-mujoco-deep-q-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Синтез системи стабілізації багатоланкового маятника у MuJoCo за допомогою Deep Q-Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Замкнений кібернетичний контур керування та дилема дослідження-експлуатації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-mdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Концептуальна формалізація марковських процесів прийняття рішень (MDP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принципи оцінювання корисності рішень у табличному алгоритмі Q-learning та межі його масштабування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-mujoco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Архітектурні особливості та обчислювальний базис фізичного рушія MuJoCo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз базових підходів RL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формальне виведення рівнянь усереднення та оптимальності Белмана для функцій цінності стану та дій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат помилки часової різниці та аналітичні умови збіжності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-deep-q-network-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Постановка задачі оптимізації Deep Q-Network як мінімізації похибки Белмана за допомогою SGD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Теоретичне обґрунтування ліквідації автокореляції спостережень та стабілізація цільових оцінок
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-double-dqn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математична модифікація алгоритму Double DQN для усунення завищення цінності дій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення моделей функціональної оптимізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-double-dqn-inverteddoublependulum-mujoco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез дискретного нейрорегулятора Double DQN для стабілізації дволанкового інвертованого маятника InvertedDoublePendulum у середовищі MuJoCo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез дискретного нейрорегулятора Double DQN для стабілізації дволанкового інвертованого маятника InvertedDoublePendulum у середовищі MuJoCo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Аналіз збереженого переходу динамічної системи
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Пряме обчислення виходів активної мережі для наступного стану
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Оцінка корисності обраної дії цільовою мережею
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок цільової мітки Белмана та помилки часової різниці
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Градієнтне коригування ваг та м'яка синхронізація цільової мережі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні та концептуальні основи парадигми навчання з підкріпленням
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-deep-q-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математична формалізація рівнянь Белмана та оптимізація Deep Q-Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-mujoco-deep-q-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Синтез системи стабілізації багатоланкового маятника у MuJoCo за допомогою Deep Q-Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Замкнений кібернетичний контур керування та дилема дослідження-експлуатації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-mdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Концептуальна формалізація марковських процесів прийняття рішень (MDP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принципи оцінювання корисності рішень у табличному алгоритмі Q-learning та межі його масштабування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-mujoco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Архітектурні особливості та обчислювальний базис фізичного рушія MuJoCo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз базових підходів RL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формальне виведення рівнянь усереднення та оптимальності Белмана для функцій цінності стану та дій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат помилки часової різниці та аналітичні умови збіжності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-deep-q-network-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Постановка задачі оптимізації Deep Q-Network як мінімізації похибки Белмана за допомогою SGD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Теоретичне обґрунтування ліквідації автокореляції спостережень та стабілізація цільових оцінок
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-double-dqn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математична модифікація алгоритму Double DQN для усунення завищення цінності дій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення моделей функціональної оптимізації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-double-dqn-inverteddoublependulum-mujoco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез дискретного нейрорегулятора Double DQN для стабілізації дволанкового інвертованого маятника InvertedDoublePendulum у середовищі MuJoCo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез дискретного нейрорегулятора Double DQN для стабілізації дволанкового інвертованого маятника InvertedDoublePendulum у середовищі MuJoCo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Аналіз збереженого переходу динамічної системи
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Пряме обчислення виходів активної мережі для наступного стану
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Оцінка корисності обраної дії цільовою мережею
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок цільової мітки Белмана та помилки часової різниці
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Градієнтне коригування ваг та м'яка синхронізація цільової мережі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="11-q-learning-deep-q-network-mujoco">Тема 11. Навчання з підкріпленням та автономні агенти: марковські процеси прийняття рішень, рівняння Белмана, алгоритми Q-learning та Deep Q-Network у фізичному середовищі MuJoCo</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Формування цілісної теоретичної та інженерно-математичної системи знань щодо парадигми навчання з підкріпленням, аналітичної формалізації марковських процесів прийняття рішень та оптимізації функцій цінності дій в умовах стохастичної невизначеності. Дослідження математичного апарату рівнянь Белмана, механізмів градієнтного навчання глибоких Q-мереж, а також архітектурних підходів до стабілізації навчання шляхом розриву часових автокореляцій та фіксації цільових оновлень. Оволодіння принципами синтезу дискретних керуючих контурів для високоточного фізичного середовища симуляції багатоланкових контактних систем MuJoCo.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Студенти повинні засвоїти фундаментальні принципи функціонування замкнених контурів навчання з підкріпленням, формальне визначення компонентів марковського процесу прийняття рішень, математичний зміст операцій дисконтування та усереднення Белмана, а також архітектурну роль буфера повторного відтворення досвіду й цільової нейромережі у Deep Q-Network.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти повинні демонструвати здатність формалізувати фізичну задачу керування динамічним об'єктом у термінах просторів станів, дискретизованих дій і функцій винагороди, складати аналітичні розрахункові схеми алгоритму Q-learning та розраховувати цільові градієнти функції втрат Белмана для нейромережевих апроксиматорів.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Студенти повинні вміти здійснювати критичний аналіз причин чисельної розбіжності та градієнтної нестабільності під час навчання глибинних моделей безпосередньо з фізичних потоків спостережень, а також аналізувати виникнення систематичного зсуву переоцінки корисності дій (Overestimation Bias) та методи його компенсації.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Студенти повинні вміти обґрунтовано оцінювати якість збіжності процесу навчання автономного агента за метриками сумарної винагороди та TD-помилки, визначати межі застосовності алгоритмів сімейства DQN у неперервних середовищах MuJoCo та синтезувати комбіновані інженерні модифікації алгоритмів для стабілізації багатозв'язного керування.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Архітектурні та концептуальні основи парадигми навчання з підкріпленням</h3>
+<ul>
+<li>
+<p>1.1. Замкнений кібернетичний контур взаємодії агента із середовищем та розв'язання фундаментальної дилеми дослідження-експлуатації (Exploration vs. Exploitation Tradeoff).</p>
+</li>
+<li>
+<p>1.2. Концептуальна формалізація марковських процесів прийняття рішень (MDP) та фундаментальна фізична властивість марковості динамічних систем.</p>
+</li>
+<li>
+<p>1.3. Принципи оцінювання корисності рішень у табличному алгоритмі Q-learning та межі його масштабування в умовах прокляття розмірності.</p>
+</li>
+<li>
+<p>1.4. Архітектурні особливості та обчислювальний базис фізичного рушія багатоланкової кінематики з контактами MuJoCo.</p>
+</li>
+</ul>
+<h3 id="2-deep-q-networks">2. Аналітичний модуль. Математична формалізація рівнянь Белмана та оптимізація Deep Q-Networks</h3>
+<ul>
+<li>
+<p>2.1. Формальне виведення рівнянь усереднення та оптимальності Белмана для функцій цінності стану <span class="arithmatex">\(V(s)\)</span> та функцій цінності дії <span class="arithmatex">\(Q(s, a)\)</span>.</p>
+</li>
+<li>
+<p>2.2. Математичний апарат помилки часової різниці (TD-Error) та аналітичні умови збіжності стохастичного оновлення оцінок корисності дій.</p>
+</li>
+<li>
+<p>2.3. Постановка задачі оптимізації Deep Q-Network як мінімізації середньоквадратичної похибки Белмана (MSBE) за допомогою стохастичного градієнтного спуску.</p>
+</li>
+<li>
+<p>2.4. Теоретичне обґрунтування ліквідації автокореляції спостережень за допомогою буфера повтору досвіду та усунення рухомості цілей через фіксовану цільову мережу (Target Network).</p>
+</li>
+<li>
+<p>2.5. Математична модифікація алгоритму Double DQN для усунення систематичного завищення оцінки цінності дій.</p>
+</li>
+</ul>
+<h3 id="3-mujoco-deep-q-network">3. Практично-розрахунковий кейс. Синтез системи стабілізації багатоланкового маятника у MuJoCo за допомогою Deep Q-Network</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Синтез дискретного нейромережевого регулятора Deep Q-Network для балансування зв'язаного дволанкового маятника в умовах контактних збурень у фізичному середовищі MuJoCo»</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-">1.1. Замкнений кібернетичний контур керування та дилема дослідження-експлуатації</h3>
+<p>Парадигма <strong>навчання з підкріпленням (Reinforcement Learning, RL)</strong> посідає особливе місце в теорії штучного інтелекту та кібернетиці, докорінно відрізняючись як від навчання з учителем (<strong>Supervised Learning</strong>), так і від навчання без учителя (<strong>Unsupervised Learning</strong>). Якщо в задачах навчання з учителем оптимізація моделі відбувається на основі заздалегідь сформованого статичного набору даних з апріорно відомими еталонними мітками (супервізорними сигналами), то в парадигмі навчання з підкріпленням зовнішній вчитель повністю відсутній. Навчальний суб'єкт — <strong>інтелектуальний агент (Agent)</strong> — змушений самостійно видобувати навчальну інформацію шляхом безпосередньої активної взаємодії із динамічним <strong>середовищем (Environment)</strong> в умовах неповної визначеності.</p>
+<p>Фундаментом теорії адаптивного керування є замкнений зворотний зв'язок між агентом і середовищем, що розгортається у дискретному часі <span class="arithmatex">\(t \in \{0, 1, 2, \dots\}\)</span>. У кожен дискретний квант часу <span class="arithmatex">\(t\)</span> агент реєструє поточний <strong>стан середовища (State)</strong> <span class="arithmatex">\(S_t \in \mathcal{S}\)</span>, на основі якого, керуючись поточною внутрішньою стратегією, вибирає та реалізує <strong>дію (Action)</strong> <span class="arithmatex">\(A_t \in \mathcal{A}\)</span>. Середовище, отримавши керівний вплив, здійснює стохастичний або детермінований перехід у новий стан <span class="arithmatex">\(S_{t+1} \in \mathcal{S}\)</span> та генерує чисельний скалярний відгук — <strong>винагороду (Reward)</strong> <span class="arithmatex">\(R_{t+1} \in \mathbb{R}\)</span>. Цей процес неперервно повторюється, утворюючи послідовність життєвого циклу агента, яка в літературі називається траєкторією або епізодом.</p>
+<pre class="mermaid"><code>flowchart LR
+    Agent["Інтелектуальний агент (Політика / Модель цінності)"]
+    Env["Динамічне середовище (Фізичний рушій / Світ)"]
+
+    Agent --&gt;|"Керівна дія A_t"| Env
+    Env --&gt;|"Новий стан S_(t+1)"| Agent
+    Env --&gt;|"Скалярна винагорода R_(t+1)"| Agent</code></pre>
+<p>Цілепокладання в навчанні з підкріпленням спирається на <strong>гіпотезу про винагороду (Reward Hypothesis)</strong>, згідно з якою будь-яка інженерна чи оптимізаційна мета може бути формалізована як максимізація математичного сподівання сумарного дисконтованого скалярного сигналу, отриманого агентом на часовому горизонті функціонування. На відміну від жадібної оптимізації, мета агента полягає не в максимізації миттєвого значення <span class="arithmatex">\(R_{t+1}\)</span>, а в максимізації довгострокового кумулятивного виграшу. Це вимагає від інтелектуального агента здатності до відтермінованого задоволення, коли виконання субдослідницьких або локально невигідних дій на початкових етапах забезпечує досягнення глобально оптимального стану системи в майбутньому.</p>
+<p>Під час накопичення досвіду агент неминуче стикається з фундаментальним протиріччям, відомим у теорії прийняття рішень як <strong>дилема дослідження та експлуатації (Exploration vs. Exploitation Tradeoff)</strong>:</p>
+<ol>
+<li>
+<p><strong>Експлуатація накопиченого досвіду (Exploitation)</strong> полягає у виборі дії, яка на основі вже наявної у агента інформації забезпечує максимальну оцінку очікуваного кумулятивного виграшу, що дозволяє максимізувати поточну ефективність системи керування.</p>
+</li>
+<li>
+<p><strong>Дослідження середовища (Exploration)</strong> полягає у виборі альтернативних, субоптимальних або випадкових дій з метою отримання нових знань про простір станів, перевірки гіпотез щодо функцій переходів та пошуку потенційно більш ефективних стратегій, які наразі не виявлені через брак емпіричних спостережень.</p>
+</li>
+</ol>
+<p>Нехтування дослідженням призводить до передчасної збіжності агента до локальних екстремумів функціонала якості, тоді як надмірне дослідження руйнує стабільність керування та суттєво уповільнює процес навчання. Для розв'язання цього конфлікту найчастіше використовується <strong><span class="arithmatex">\(\epsilon\)</span>-жадібна стратегія (<span class="arithmatex">\(\epsilon\)</span>-greedy policy)</strong>. Формально стохастичний розподіл ймовірності вибору дії агентом у стані <span class="arithmatex">\(s\)</span> задається виразом:</p>
+<div class="arithmatex">\[\pi(a \mid s) = \begin{cases} 1 - \epsilon + \frac{\epsilon}{|\mathcal{A}(s)|}, &amp; \text{якщо } a = \arg\max_{a' \in \mathcal{A}} Q(s, a'), \\ \frac{\epsilon}{|\mathcal{A}(s)|}, &amp; \text{якщо } a \neq \arg\max_{a' \in \mathcal{A}} Q(s, a'). \end{cases}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\pi(a \mid s)\)</span> визначає ймовірність обрання агентом конкретної дії <span class="arithmatex">\(a\)</span> за умови перебування у стані середовища <span class="arithmatex">\(s\)</span>, вимірювану в діапазоні від <span class="arithmatex">\(0.0\)</span> до <span class="arithmatex">\(1.0\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\epsilon \in [0, 1]\)</span> виступає безрозмірним параметром дослідження, що регулює ступінь випадковості поведінки інтелектуального агента.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(|\mathcal{A}(s)|\)</span> позначає потужність скінченної множини допустимих дій, доступних для виконання агентом у поточному стані <span class="arithmatex">\(s\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(Q(s, a')\)</span> репрезентує очікувану цінність виконання дії <span class="arithmatex">\(a'\)</span> у стані <span class="arithmatex">\(s\)</span>, що має тип дійсного числа з плаваючою комою <span class="arithmatex">\(\mathbb{R}\)</span>.</p>
+</li>
+</ul>
+<p>На практиці параметр <span class="arithmatex">\(\epsilon\)</span> не є константою: на початку процесу навчання встановлюється <span class="arithmatex">\(\epsilon_0 = 1.0\)</span> для всебічного вивчення середовища, після чого застосовується експоненційний або лінійний графік зменшення (<strong>Epsilon Decay</strong>) до фіксованого значення <span class="arithmatex">\(\epsilon_{\text{end}} \approx 0.01 \dots 0.05\)</span>.</p>
+<pre class="mermaid"><code>flowchart TD
+    StartStep["Поточний стан S_t"] --&gt; RandomCheck{"Згенеровано випадкове число xi ~ U(0, 1) &lt; epsilon?"}
+
+    RandomCheck -- "Так (Дослідження / Exploration)" --&gt; RandomAction["Випадковий вибір дії A_t з множини A(S_t)"]
+    RandomCheck -- "Ні (Експлуатація / Exploitation)" --&gt; GreedyAction["Жадібний вибір: A_t = argmax Q(S_t, a)"]
+
+    RandomAction --&gt; ExecuteAction["Передача дії A_t у виконавчі механізми середовища"]
+    GreedyAction --&gt; ExecuteAction</code></pre>
+<hr />
+<h3 id="12-mdp">1.2. Концептуальна формалізація марковських процесів прийняття рішень (MDP)</h3>
+<p>Математичним фундаментом, що формалізує задачу навчання з підкріпленням, виступає теорія <strong>марковських процесів прийняття рішень (Markov Decision Processes, MDP)</strong>. Класичний марковський процес прийняття рішень спирається на фундаментальне припущення щодо динаміки фізичного світу, яке носить назву <strong>марковської властивості (Markov Property)</strong>.</p>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Стан <span class="arithmatex">\(S_t\)</span> володіє марковською властивістю тоді і тільки тоді, коли ймовірнісний розподіл майбутнього стану системи <span class="arithmatex">\(S_{t+1}\)</span> та винагороди <span class="arithmatex">\(R_{t+1}\)</span> повністю визначається інформацією, закладеною в поточному стані <span class="arithmatex">\(S_t\)</span> і дії <span class="arithmatex">\(A_t\)</span>, та є абсолютно незалежним від усієї попередньої передісторії станів, дій і винагород:</p>
+<div class="arithmatex">\[\mathbb{P}(S_{t+1} = s', R_{t+1} = r \mid S_t = s_t, A_t = a_t, S_{t-1} = s_{t-1}, A_{t-1} = a_{t-1}, \dots, S_0 = s_0, A_0 = a_0) = \mathbb{P}(S_{t+1} = s', R_{t+1} = r \mid S_t = s_t, A_t = a_t).\]</div>
+</blockquote>
+<p>З фізичної та інженерної точок зору марковська властивість вимагає, щоб вектор стану <span class="arithmatex">\(S_t\)</span> містив повну фазову інформацію про динамічну систему. Наприклад, у класичній механіці положення матеріальної точки не є марковським станом, оскільки траєкторія її подальшого руху залежить від швидкості; натомість фазовий вектор, що об'єднує просторові координати та узагальнені швидкості, повністю задовольняє марковську властивість.</p>
+<p>Формально скінченний марковський процес прийняття рішень визначається кортежем із п'яти ключових математичних об'єктів:</p>
+<div class="arithmatex">\[\mathcal{M} = \langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{S}\)</span> є простором усіх можливих допустимих станів середовища, який може бути скінченною дискретною множиною або неперервним многовидом вимірності <span class="arithmatex">\(d_s \in \mathbb{N}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{A}\)</span> є простором дій, доступних агенту для керування об'єктом, що задається у вигляді скінченного дискретного набору або неперервної області у просторі <span class="arithmatex">\(\mathbb{R}^{d_a}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{P}: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \to [0, 1]\)</span> виступає узагальненою функцією ймовірностей переходу станів:</p>
+</li>
+</ul>
+<div class="arithmatex">\[\mathcal{P}(s' \mid s, a) = \mathbb{P}(S_{t+1} = s' \mid S_t = s, A_t = a)\]</div>
+<p>що визначає густину ймовірності переходу об'єкта в стан <span class="arithmatex">\(s'\)</span> за умови прикладання дії <span class="arithmatex">\(a\)</span> у стані <span class="arithmatex">\(s\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(\mathcal{R}: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \to \mathbb{R}\)</span> являє собою детерміновану або стохастичну функцію винагороди, яка формує математичне сподівання отриманого числового виграшу:</li>
+</ul>
+<div class="arithmatex">\[\mathcal{R}(s, a, s') = \mathbb{E}\left[ R_{t+1} \mid S_t = s, A_t = a, S_{t+1} = s' \right]\]</div>
+<ul>
+<li><span class="arithmatex">\(\gamma \in [0, 1)\)</span> позначає безрозмірний <strong>коефіцієнт дисконтування (Discount Factor)</strong> майбутніх винагород.</li>
+</ul>
+<p>Для аналізу тривалості життя агента використовують поняття <strong>кумулятивного дисконтованого виграшу (Return)</strong> <span class="arithmatex">\(G_t\)</span>, який формалізує інтегральну метрику успішності керування:</p>
+<div class="arithmatex">\[G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(G_t\)</span> виступає скалярною величиною сумарного зваженого виграшу, отриманого починаючи з дискретного кроку <span class="arithmatex">\(t\)</span>, вираженою в одиницях шкали винагород.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\gamma^k\)</span> задає геометрично спадний ваговий коефіцієнт для винагороди, отриманої через <span class="arithmatex">\(k\)</span> кроків у майбутньому.</p>
+</li>
+</ul>
+<p>Введення коефіцієнта дисконтування <span class="arithmatex">\(\gamma &lt; 1\)</span> має три критичні причини:</p>
+<ol>
+<li><strong>Математична регуляризація.</strong> Для задач із нескінченним часовим горизонтом (<strong>Continuing Tasks</strong>) коефіцієнт <span class="arithmatex">\(\gamma &lt; 1\)</span> гарантує збіжність нескінченного ряду до скінченного значення за умови обмеженості миттєвої винагороди <span class="arithmatex">\(|R_t| \le R_{\max}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[G_t \le \sum_{k=0}^{\infty} \gamma^k R_{\max} = \frac{R_{\max}}{1 - \gamma} \lt  \infty.\]</div>
+<ol>
+<li>
+<p><strong>Моделювання невизначеності майбутнього.</strong> У реальних фізичних та економічних системах впевненість у достовірності довгострокових прогнозів експоненційно зменшується через накопичення випадкових збурень середовища.</p>
+</li>
+<li>
+<p><strong>Регулювання поведінкової далекоглядності.</strong> Значення <span class="arithmatex">\(\gamma \to 0\)</span> формує короткозору (<strong>Myopic</strong>) стратегію, орієнтовану виключно на негайне отримання винагороди, тоді як значення <span class="arithmatex">\(\gamma \to 1\)</span> спонукає агента до далекоглядного (<strong>Far-sighted</strong>) стратегічного планування поведінки.</p>
+</li>
+</ol>
+<hr />
+<h3 id="13-q-learning">1.3. Принципи оцінювання корисності рішень у табличному алгоритмі Q-learning та межі його масштабування</h3>
+<p>Для оптимізації поведінки агента необхідно кількісно оцінювати якість перебування в станах або якість виконання конкретних дій. Ця функція покладається на <strong>функцію цінності дій (Action-Value Function)</strong> або <strong>Q-функцію (Q-Function)</strong>, що позначається як <span class="arithmatex">\(Q^\pi(s, a)\)</span>. Значення <span class="arithmatex">\(Q^\pi(s, a)\)</span> визначає математичне сподівання виграшу <span class="arithmatex">\(G_t\)</span>, якщо агент, перебуваючи у стані <span class="arithmatex">\(s\)</span>, виконає дію <span class="arithmatex">\(a\)</span>, а всі наступні кроки керування здійснюватиме відповідно до стратегії <span class="arithmatex">\(\pi\)</span>:</p>
+<div class="arithmatex">\[Q^\pi(s, a) = \mathbb{E}_\pi \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \;\middle|\; S_t = s, A_t = a \right].\]</div>
+<p>Запропонований Крістофером Воткінсом (Watkins, 1989) алгоритм <strong>Q-learning</strong> є класичним безмодельним (<strong>Model-Free</strong>) методом навчання з підкріпленням, який дозволяє знаходити оптимальну Q-функцію <span class="arithmatex">\(Q^*(s, a) = \max_\pi Q^\pi(s, a)\)</span> без попереднього знання аналітичної моделі переходів <span class="arithmatex">\(\mathcal{P}(s' \mid s, a)\)</span> або функції винагород <span class="arithmatex">\(\mathcal{R}(s, a, s')\)</span>.</p>
+<p>Фундаментальною властивістю Q-learning є його позастратегічний характер (<strong>Off-Policy</strong>). Це означає, що процес оцінювання та апроксимації оптимальної стратегії здійснюється незалежно від тієї поведінкової стратегії (<strong>Behavior Policy</strong>, наприклад <span class="arithmatex">\(\epsilon\)</span>-greedy), за якою агент генерує рух у середовищі. Позастратегічність реалізується за рахунок використання оператора максимуму по простору дій для наступного стану <span class="arithmatex">\(S_{t+1}\)</span>.</p>
+<p>У табличній реалізації Q-learning значення <span class="arithmatex">\(Q(s, a)\)</span> зберігаються у двовимірній матриці розмірністю <span class="arithmatex">\(|\mathcal{S}| \times |\mathcal{A}|\)</span>. Оновлення кожного елемента таблиці під час виконання кроку переходу <span class="arithmatex">\((S_t, A_t, R_{t+1}, S_{t+1})\)</span> здійснюється за правилом часової різниці:</p>
+<div class="arithmatex">\[Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \cdot \left[ R_{t+1} + \gamma \max_{a \in \mathcal{A}} Q(S_{t+1}, a) - Q(S_t, A_t) \right]\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\alpha \in (0, 1]\)</span> виступає безрозмірним коефіцієнтом швидкості навчання (<strong>Learning Rate</strong>), що визначає темп оновлення числових оцінок у комірках таблиці.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\left[ R_{t+1} + \gamma \max_{a \in \mathcal{A}} Q(S_{t+1}, a) - Q(S_t, A_t) \right]\)</span> позначає <strong>помилку часової різниці (Temporal Difference Error, TD-Error)</strong>, що характеризує локальну неузгодженість між поточною оцінкою цінності та новим одномоментним спостереженням.</p>
+</li>
+</ul>
+<pre class="mermaid"><code>flowchart TD
+    A["Методи навчання з підкріпленням (RL)"] --&gt; B["Безмодельні методи (Model-Free)"]
+    A --&gt; C["Модельні методи (Model-Based)"]
+
+    B --&gt; D["Методи оцінки цінності (Value-Based)"]
+    B --&gt; E["Методи прямого пошуку політики (Policy-Based)"]
+    B --&gt; F["Гібридні методи (Actor-Critic)"]
+
+    D --&gt; G["Табличний Q-learning"]
+    D --&gt; H["Deep Q-Network (DQN)"]
+    D --&gt; I["Double DQN / Dueling DQN"]
+
+    E --&gt; J["REINFORCE / Policy Gradients"]
+    F --&gt; K["DDPG / TD3"]
+    F --&gt; L["PPO (Proximal Policy Opt)"]
+    F --&gt; M["SAC (Soft Actor-Critic)"]</code></pre>
+<p>Попри строге математичне доведення асимптотичної збіжності табличного Q-learning до оптимальних значень <span class="arithmatex">\(Q^*(s, a)\)</span> при виконанні умов Роббінса-Монро для кроку навчання <span class="arithmatex">\(\alpha\)</span>, цей метод має нездоланні обмеження при застосуванні до реальних фізичних та інженерних систем:</p>
+<ol>
+<li>
+<p><strong>Прокляття розмірності (Curse of Dimensionality).</strong> Обсяг пам'яті для зберігання таблиці зростає експоненційно зі збільшенням кількості вимірів простору станів: <span class="arithmatex">\(|\mathcal{S}| = K^{d}\)</span>, де <span class="arithmatex">\(d\)</span> — розмірність вектора стану, а <span class="arithmatex">\(K\)</span> — кількість інтервалів квантування неперервної координати. Для складного маніпулятора з 12 ступенями вільності квантування кожного виміру лише на 100 дискретних значень потребує таблиці з <span class="arithmatex">\(100^{12} = 10^{24}\)</span> станів, що фізично неможливо алокувати в оперативній пам'яті сучасних ЕОМ.</p>
+</li>
+<li>
+<p><strong>Неможливість узагальнення (Generalization Failure).</strong> У табличному алгоритмі оновлення значення <span class="arithmatex">\(Q(s, a)\)</span> модифікує виключно одну ізольовану комірку таблиці. Отриманий досвід абсолютно не екстраполюється на топологічно сусідні або фізично подібні стани, внаслідок чого агент повинен відвідати кожен стан колосальну кількість разів для формування адекватної політики керування.</p>
+</li>
+<li>
+<p><strong>Непридатність для неперервних просторів дій.</strong> Пошук жадібної дії вимагає обчислення оператора <span class="arithmatex">\(\max_{a \in \mathcal{A}} Q(s, a)\)</span>. Якщо для скінченного дискретного набору це зводиться до лінійного перебору, то в неперервному просторі дій <span class="arithmatex">\(\mathcal{A} \subseteq \mathbb{R}^m\)</span> розв'язання нелінійної оптимізаційної задачі на кожному мікрокроці симуляції стає обчислювально нездійсненним у реальному часі.</p>
+</li>
+</ol>
+<p>Подолання цих бар'єрів зумовило перехід від табличних методів до методів <strong>функціональної апроксимації (Function Approximation)</strong>, де функція цінності <span class="arithmatex">\(Q(s, a)\)</span> параметризується глибокою нейронною мережею <span class="arithmatex">\(Q(s, a; \boldsymbol{\theta})\)</span> з вектором вагових коефіцієнтів <span class="arithmatex">\(\boldsymbol{\theta}\)</span>, що й лягло в основу архітектури <strong>Deep Q-Network (DQN)</strong>.</p>
+<hr />
+<h3 id="14-mujoco">1.4. Архітектурні особливості та обчислювальний базис фізичного рушія MuJoCo</h3>
+<p>Експериментальна верифікація та навчання алгоритмів RL вимагає адекватного віртуального середовища, здатного з високою точністю відтворювати складні динамічні процеси реального світу. Стандартні ігрові фізичні рушії (такі як PhysX, Bullet або ODE) розроблялися насамперед для забезпечення візуальної правдоподібності та стабільності симуляції в реальному часі за рахунок спрощення або евристичної модифікації фізичних законів. Для наукових і робототехнічних завдань такий підхід є неприпустимим, оскільки нефізичні спрощення призводять до виникнення явища <strong>розриву між симуляцією та реальністю (Simulation-to-Reality Gap, Sim2Real Gap)</strong>, через що навчений у симуляторі агент втрачає працездатність на реальному залізі.</p>
+<p>Середовище <strong>MuJoCo (Multi-Joint dynamics with Contact)</strong> являє собою спеціалізований фізичний рушій нового покоління, оптимізований для задач робототехніки, біомеханічного моделювання та машинного навчання.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Core_Physics [Обчислювальне ядро симулятора MuJoCo]
+        StateVector["Фазовий стан: q (узагальнені координати), q_dot (швидкості)"] --&gt; EOM["Рівняння руху прямої динаміки у формі Лагранжа"]
+        ControlTorque["Керівні моменти актуаторів tau_u"] --&gt; EOM
+        EOM --&gt; Solver["Оптимізаційний контактний солвер: LCP / Квадратичне програмування"]
+        Solver --&gt; Accel["Узагальнені прискорення q_ddot"]
+        Accel --&gt; Integrator["Чисельне інтегрування: Метод Ейлера / Рунге-Кутти RK4"]
+        Integrator --&gt; NextStateVector["Оновлений стан: q(t+dt), q_dot(t+dt)"]
+    end</code></pre>
+<p>Математичний апарат MuJoCo базується на формалізмі аналітичної механіки у <strong>просторі узагальнених координат (Generalized Coordinates)</strong>. На відміну від симуляторів, які описують кожне тверде тіло шістьма декартовими координатами і накладають зовнішні білатеральні зв'язки (що призводить до порушення стабільності з'єднань і «розриву» суглобів), MuJoCo виключає невільні ступені вільності на рівні самої кінематичної моделі через рівняння Лагранжа другого роду:</p>
+<div class="arithmatex">\[\mathbf{M}(\mathbf{q}) \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}}) \dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau} + \mathbf{J}_c^T(\mathbf{q}) \mathbf{f}_c\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathbf{q} \in \mathbb{R}^{n_q}\)</span> являє собою вектор узагальнених координат системи, що описує кути повороту шарнірів та лінійні зміщення ланок, виражений у радіанах або метрах.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\dot{\mathbf{q}}, \ddot{\mathbf{q}} \in \mathbb{R}^{n_v}\)</span> визначають вектори узагальнених швидкостей і прискорень відповідно, що мають розмірності <span class="arithmatex">\(\text{рад}/\text{с}\)</span> (<span class="arithmatex">\(\text{м}/\text{с}\)</span>) та <span class="arithmatex">\(\text{рад}/\text{с}^2\)</span> (<span class="arithmatex">\(\text{м}/\text{с}^2\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{M}(\mathbf{q}) \in \mathbb{R}^{n_v \times n_v}\)</span> є симетричною додатно визначеною матрицею узагальненої інерції багатоланкової системи.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}}) \in \mathbb{R}^{n_v \times n_v}\)</span> відображає матрицю коріолісових та відцентрових сил інерції.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{g}(\mathbf{q}) \in \mathbb{R}^{n_v}\)</span> задає вектор сил гравітаційного навантаження.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\boldsymbol{\tau} \in \mathbb{R}^{n_v}\)</span> визначає вектор узагальнених сил і керуючих моментів, створених актуаторами системи, виражений у Ньютон-метрах (<span class="arithmatex">\(\text{Н}\cdot\text{м}\)</span>) або Ньютонах (<span class="arithmatex">\(\text{Н}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{J}_c(\mathbf{q})\)</span> являє собою матрицю Якобі контактних зв'язків, а <span class="arithmatex">\(\mathbf{f}_c\)</span> — вектор сил контактної взаємодії.</p>
+</li>
+</ul>
+<p>Ключова обчислювальна інновація MuJoCo полягає в трактуванні сухих контактів і тертя не через жорсткі переривчасті умови взаємодоповнюваності Синьйоріні-Герца, які формують складну некоректну задачу лінійного доповнення (<strong>Linear Complementarity Problem, LCP</strong>), а через гладку опуклу оптимізацію. Контактні сили обчислюються шляхом мінімізації спеціально сконструйованого квадрічного функціонала енергії з обмеженнями у формі конусів тертя. Це забезпечує:</p>
+<ol>
+<li>
+<p><strong>Чисельну стабільність.</strong> Відсутність сингулярностей матриць під час контакту кількох поверхонь одночасно.</p>
+</li>
+<li>
+<p><strong>Обчислювальну швидкодію.</strong> Можливість інтегрування динаміки складних систем зі швидкістю, що на декілька порядків перевищує фізичний реальний час, дозволяючи генерувати мільйони кроків досвіду RL за лічені години.</p>
+</li>
+<li>
+<p><strong>Аналітичну диференційованість.</strong> Можливість обчислення градієнтів динаміки <span class="arithmatex">\(\nabla_{\mathbf{q}} \ddot{\mathbf{q}}\)</span> та <span class="arithmatex">\(\nabla_{\boldsymbol{\tau}} \ddot{\mathbf{q}}\)</span>, що є критичним для поєднання навчання з підкріпленням із методами прямої траєкторної оптимізації.</p>
+</li>
+</ol>
+<p>При застосуванні алгоритму Deep Q-Network до середовищ MuJoCo виникає фундаментальне архітектурне протиріччя: простір керування роботів у MuJoCo за своєю фізичною природою є неперервним вектором моментів <span class="arithmatex">\(\boldsymbol{\tau} \in [-\boldsymbol{\tau}_{\max}, \boldsymbol{\tau}_{\max}]\)</span>, тоді як класичний DQN оперує виключно скінченними дискретними множинами дій. Для подолання цієї невідповідності вдаються до штучної решітчастої <strong>дискретизації дій (Action Discretization)</strong>, коли для кожного актуатора виділяється скінченний набір квантованих значень, наприклад <span class="arithmatex">\(\{-u_{\max}, 0, +u_{\max}\}\)</span>.</p>
+<hr />
+<h3 id="rl">Систематизація та порівняльний аналіз базових підходів RL</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Парадигма / Алгоритм</th>
+<th style="text-align: left;">Простір станів <span class="arithmatex">\(\mathcal{S}\)</span></th>
+<th style="text-align: left;">Простір дій <span class="arithmatex">\(\mathcal{A}\)</span></th>
+<th style="text-align: left;">Математичний апроксиматор</th>
+<th style="text-align: left;">Обчислювальна складність кроку</th>
+<th style="text-align: left;">Стійкість у фізичних симуляторах</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Tabular Q-Learning</strong></td>
+<td style="text-align: left;">Малий дискретний (<span class="arithmatex">\(\vert\mathcal{S}\vert &lt; 10^5\)</span>)</td>
+<td style="text-align: left;">Скінченний дискретний (<span class="arithmatex">\(\vert\mathcal{A}\vert &lt; 10^2\)</span>)</td>
+<td style="text-align: left;">Двовимірний масив у пам'яті</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(\vert\mathcal{A}\vert)\)</span></td>
+<td style="text-align: left;">Непридатний через прокляття розмірності фазового простору</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Deep Q-Network (DQN)</strong></td>
+<td style="text-align: left;">Високовимірний неперервний <span class="arithmatex">\(\mathbb{R}^n\)</span></td>
+<td style="text-align: left;">Дискретний квантований</td>
+<td style="text-align: left;">Глибока нейромережа <span class="arithmatex">\(Q(s, a; \boldsymbol{\theta})\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(B \cdot \vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Задовільна за умови грубої дискретизації моментів шарнірів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Double DQN (DDQN)</strong></td>
+<td style="text-align: left;">Високовимірний неперервний <span class="arithmatex">\(\mathbb{R}^n\)</span></td>
+<td style="text-align: left;">Дискретний квантований</td>
+<td style="text-align: left;">Дві розв'язані мережі <span class="arithmatex">\(Q\)</span> та <span class="arithmatex">\(Q_{\text{targ}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(B \cdot \vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Висока завдяки ліквідації завищення оцінок цінності дій</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dueling DQN</strong></td>
+<td style="text-align: left;">Високовимірний неперервний <span class="arithmatex">\(\mathbb{R}^n\)</span></td>
+<td style="text-align: left;">Дискретний квантований</td>
+<td style="text-align: left;">Двопотокова мережа <span class="arithmatex">\(V(s) + A(s, a)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(B \cdot \vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Підвищена у станах, де вибір конкретної дії мало впливає на динаміку</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Continuous Actor-Critic (SAC / PPO)</strong></td>
+<td style="text-align: left;">Високовимірний неперервний <span class="arithmatex">\(\mathbb{R}^n\)</span></td>
+<td style="text-align: left;">Неперервний вектор <span class="arithmatex">\(\mathbb{R}^m\)</span></td>
+<td style="text-align: left;">Дві мережі: критик <span class="arithmatex">\(Q(s,a)\)</span> та актор <span class="arithmatex">\(\pi(a \mid s)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(B \cdot (\vert\boldsymbol{\theta}\vert + \vert\boldsymbol{\phi}\vert))\)</span></td>
+<td style="text-align: left;">Еталонна для робототехнічних завдань у середовищі MuJoCo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Ототожнення вектора спостережень сенсорів робота із дійсним марковським станом динамічної системи.</p>
+<p>У реальних інженерних застосунках та симуляціях початківці часто подають на вхід нейронної мережі лише покази геометричних датчиків (наприклад, кути суглобів маніпулятора <span class="arithmatex">\(\mathbf{q}\)</span> або окремий статичний кадр із камери), вважаючи це повним описом стану <span class="arithmatex">\(S_t\)</span>. Однак за відсутності перших похідних (швидкостей <span class="arithmatex">\(\dot{\mathbf{q}}\)</span>) або інформації про попередні кадри система перестає задовольняти марковську властивість, оскільки два однакових кутових положення можуть відповідати абсолютно протилежним напрямкам руху об'єкта. </p>
+<p>Подібна редукція перетворює марковський процес прийняття рішень (MDP) на <strong>частково спостережуваний марковський процес (Partially Observable Markov Decision Process, POMDP)</strong>, у якому алгоритми класу DQN втрачають теоретичну збіжність і демонструють хаотичну розбіжність через невідповідність математичної моделі припущенням алгоритму. Для збереження марковості необхідно або включати повний фазовий вектор швидкостей, або застосовувати стекування послідовних кадрів (<strong>Frame Stacking</strong>), або інтегрувати рекурентні шари LSTM/GRU.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Чому в задачах керування без обмеження за часом (Continuing Tasks) принципово неможливо покласти коефіцієнт дисконтування рівним одиниці (<span class="arithmatex">\(\gamma = 1.0\)</span>), і яким чином порушення цієї вимоги впливає на спектральний радіус оператора динамічного програмування Белмана?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Аналітична відповідь:</strong></p>
+<ol>
+<li>Якщо часовий горизонт функціонування агента є нескінченним і задача не містить поглинаючих термінальних станів, значення кумулятивної винагороди при <span class="arithmatex">\(\gamma = 1.0\)</span> набуває вигляду:</li>
+</ol>
+<div class="arithmatex">\[G_t = \sum_{k=0}^{\infty} 1^k \cdot R_{t+k+1} = \sum_{k=0}^{\infty} R_{t+k+1}.\]</div>
+<p>Якщо функція винагороди формує постійний ненульовий сигнал на кожному кроці (наприклад, <span class="arithmatex">\(R_t = +1\)</span> за утримання рівноваги інвертованого маятника), то ряд строго розбігається до нескінченності:</p>
+<div class="arithmatex">\[\lim_{T \to \infty} \sum_{k=0}^{T} 1.0 = +\infty.\]</div>
+<p>У результаті всі допустимі дії та траєкторії набувають однакової нескінченної цінності <span class="arithmatex">\(Q(s, a) = +\infty\)</span>, що позбавляє агента можливості градієнтного порівняння та селекції оптимальних дій.</p>
+<ol>
+<li>З точки зору функціонального аналізу, оператор стиску Белмана <span class="arithmatex">\(\mathcal{T}^\pi\)</span>:</li>
+</ol>
+<div class="arithmatex">\[(\mathcal{T}^\pi Q)(s, a) = \mathcal{R}(s, a) + \gamma \sum_{s'} \mathcal{P}(s' \mid s, a) \sum_{a'} \pi(a' \mid s') Q(s', a')\]</div>
+<p>є стискаючим відображенням у банаховому просторі функцій із нормою Чебишова <span class="arithmatex">\(\|Q\|_\infty = \max_{s, a} |Q(s, a)|\)</span> з коефіцієнтом стиску саме <span class="arithmatex">\(\gamma\)</span>:</p>
+<div class="arithmatex">\[\|\mathcal{T}^\pi Q_1 - \mathcal{T}^\pi Q_2\|_\infty \le \gamma \|Q_1 - Q_2\|_\infty.\]</div>
+<p>При <span class="arithmatex">\(\gamma = 1.0\)</span> оператор перестає бути строго стискаючим, теорема Банаха про нерухому точку втрачає силу, спектральний радіус відповідної матриці переходу стає рівним одиниці, а ітераційні чисельні алгоритми розв'язання рівнянь Белмана втрачають гарантію збіжності до єдиного розв'язку.</p>
+</details>
+<hr />
+<h3 id="_4">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проаналізуйте зв'язок між частотою дискретизації керування за часом <span class="arithmatex">\(\Delta t\)</span> у фізичному симуляторі MuJoCo та числовим значенням коефіцієнта дисконтування <span class="arithmatex">\(\gamma\)</span>, звернувши увагу на те, як зберегти еквівалентний часовий горизонт планування при зміні частоти інтегрування фізики.</p>
+</li>
+<li>
+<p>Дослідіть вплив кроку квантування простору неперервних керуючих моментів у багатоланкових системах на виникнення комбінаторного вибуху простору дій та оцініть межі фізичної реалізованості отриманих дискретних імпульсів на реальних електродвигунах.</p>
+</li>
+<li>
+<p>Зіставте концепцію побудови контактних сил у MuJoCo через регуляризовану опуклу оптимізацію із класичним підходом розв'язання задач лінійного доповнення (LCP) у рушіях типу ODE, оцінивши компроміс між чисельною стабільністю симулятора та фізичною точністю відтворення контактного тертя.</p>
+</li>
+</ol>
+<h2 id="2">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21">2.1. Формальне виведення рівнянь усереднення та оптимальності Белмана для функцій цінності стану та дій</h3>
+<p>Математична оптимізація стратегії поведінки інтелектуального агента в марковських процесах прийняття рішень спирається на рекурентний аналіз очікуваної корисності майбутніх подій. За своєю суттю <strong>функція цінності стану (State-Value Function)</strong> <span class="arithmatex">\(V^\pi(s)\)</span> визначає математичне сподівання кумулятивного дисконтованого виграшу <span class="arithmatex">\(G_t\)</span>, досяжного за умови виходу із фіксованого початкового стану <span class="arithmatex">\(s\)</span> за умови строгого дотримання заданої ймовірнісної політики <span class="arithmatex">\(\pi\)</span>:</p>
+<div class="arithmatex">\[V^\pi(s) = \mathbb{E}_\pi \left[ G_t \;\middle|\; S_t = s \right] = \mathbb{E}_\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \;\middle|\; S_t = s \right]\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(V^\pi(s)\)</span> позначає скалярну величину цінності перебування у стані <span class="arithmatex">\(s \in \mathcal{S}\)</span> за умови реалізації політики <span class="arithmatex">\(\pi\)</span>, що має розмірність накопиченого сумарного виграшу в шкалі винагород <span class="arithmatex">\(\mathbb{R}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbb{E}_\pi[\,\cdot\,]\)</span> визначає оператор математичного сподівання випадкової величини за траєкторіями, згенерованими розподілом дій <span class="arithmatex">\(\pi(a \mid s)\)</span> та переходами середовища <span class="arithmatex">\(\mathcal{P}(s' \mid s, a)\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(G_t\)</span> являє собою випадкову величину сумарного дисконтованого виграшу, починаючи з моменту часу <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\gamma \in [0, 1)\)</span> є безрозмірним коефіцієнтом дисконтування, що забезпечує геометричне згасання вагомості відтермінованих винагород.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(R_{t+k+1} \in \mathbb{R}\)</span> визначає випадкову величину скалярної винагороди, отриманої на кроці <span class="arithmatex">\(t+k+1\)</span>.</p>
+</li>
+</ul>
+<p>Аналогічним чином визначається <strong>функція цінності дії (Action-Value Function)</strong> <span class="arithmatex">\(Q^\pi(s, a)\)</span>, яка оцінює ефективність конкретного керівного впливу <span class="arithmatex">\(a\)</span> у стані <span class="arithmatex">\(s\)</span> із подальшим дотриманням стратегії <span class="arithmatex">\(\pi\)</span>:</p>
+<div class="arithmatex">\[Q^\pi(s, a) = \mathbb{E}_\pi \left[ G_t \;\middle|\; S_t = s, A_t = a \right] = \mathbb{E}_\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \;\middle|\; S_t = s, A_t = a \right]\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(Q^\pi(s, a)\)</span> відображає математичне сподівання сумарного виграшу агента після виконання дії <span class="arithmatex">\(a \in \mathcal{A}\)</span> у стані <span class="arithmatex">\(s \in \mathcal{S}\)</span> із подальшим вибором усіх наступних дій згідно з розподілом <span class="arithmatex">\(\pi\)</span>.</li>
+</ul>
+<p>Аналітичне виведення <strong>рівняння усереднення Белмана (Bellman Expectation Equation)</strong> для <span class="arithmatex">\(V^\pi(s)\)</span> базується на відокремленні миттєвої винагороди <span class="arithmatex">\(R_{t+1}\)</span> від суми майбутніх дисконтованих винагород за формулою розкладання <span class="arithmatex">\(G_t = R_{t+1} + \gamma G_{t+1}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Розклад кумулятивного виграшу):} &amp; \quad V^\pi(s) = \mathbb{E}_\pi \left[ R_{t+1} + \gamma \sum_{k=0}^{\infty} \gamma^k R_{t+k+2} \;\middle|\; S_t = s \right] \\
+\text{Етап 2 (Застосування закону повного сподівання):} &amp; \quad V^\pi(s) = \mathbb{E}_\pi \left[ R_{t+1} + \gamma V^\pi(S_{t+1}) \;\middle|\; S_t = s \right] \\
+\text{Етап 3 (Розгортання через поліморфні суми):} &amp; \quad V^\pi(s) = \sum_{a \in \mathcal{A}} \pi(a \mid s) \sum_{s' \in \mathcal{S}} \mathcal{P}(s' \mid s, a) \left[ \mathcal{R}(s, a, s') + \gamma V^\pi(s') \right]
+\end{aligned}
+\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\pi(a \mid s)\)</span> позначає ймовірність призначення агентом керівної дії <span class="arithmatex">\(a\)</span> у стані <span class="arithmatex">\(s\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{P}(s' \mid s, a) = \mathbb{P}(S_{t+1} = s' \mid S_t = s, A_t = a)\)</span> задає функцію густини ймовірності переходу динамічної системи у стан <span class="arithmatex">\(s'\)</span> за умови виконання дії <span class="arithmatex">\(a\)</span> у стані <span class="arithmatex">\(s\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{R}(s, a, s') = \mathbb{E}[R_{t+1} \mid S_t = s, A_t = a, S_{t+1} = s']\)</span> позначає детерміноване математичне сподівання отриманої винагороди.</p>
+</li>
+</ul>
+<p>Використовуючи прямий алгебраїчний зв'язок між функціями <span class="arithmatex">\(V^\pi(s)\)</span> та <span class="arithmatex">\(Q^\pi(s, a)\)</span>, а саме <span class="arithmatex">\(V^\pi(s) = \sum_{a} \pi(a \mid s) Q^\pi(s, a)\)</span>, отримуємо аналогічне рівняння усереднення Белмана для функції цінності дії:</p>
+<div class="arithmatex">\[Q^\pi(s, a) = \sum_{s' \in \mathcal{S}} \mathcal{P}(s' \mid s, a) \left[ \mathcal{R}(s, a, s') + \gamma \sum_{a' \in \mathcal{A}} \pi(a' \mid s') Q^\pi(s', a') \right]\]</div>
+<p>Для визначення граничної продуктивності системи вводиться поняття <strong>оптимальної Q-функції</strong> <span class="arithmatex">\(Q^*(s, a) = \max_\pi Q^\pi(s, a)\)</span>. Оскільки оптимальна стратегія <span class="arithmatex">\(\pi^*\)</span> є детерміновано жадібною відносно оптимальної функції цінності, тобто <span class="arithmatex">\(\pi^*(a \mid s) = 1\)</span> для <span class="arithmatex">\(a = \arg\max_{a'} Q^*(s, a')\)</span>, математичне сподівання за простором дій замінюється нелінійним оператором точної верхньої грані. Це породжує <strong>рівняння оптимальності Белмана (Bellman Optimality Equation)</strong>:</p>
+<div class="arithmatex">\[Q^*(s, a) = \sum_{s' \in \mathcal{S}} \mathcal{P}(s' \mid s, a) \left[ \mathcal{R}(s, a, s') + \gamma \max_{a' \in \mathcal{A}} Q^*(s', a') \right]\]</div>
+<p>В аналітичній формі рівняння оптимальності записується як операторне рівняння нерухомої точки: <span class="arithmatex">\(Q^* = \mathcal{T}^* Q^*\)</span>, де <span class="arithmatex">\(\mathcal{T}^*\)</span> позначає <strong>оператор оптимальності Белмана</strong>.</p>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Оператор оптимальності Белмана <span class="arithmatex">\(\mathcal{T}^*\)</span> є строго стискаючим відображенням у банаховому просторі функцій із рівномірною Чебишовською нормою <span class="arithmatex">\(\|Q\|_\infty = \max_{s \in \mathcal{S}, a \in \mathcal{A}} |Q(s, a)|\)</span>. Для будь-яких двох функцій цінності <span class="arithmatex">\(Q_1\)</span> та <span class="arithmatex">\(Q_2\)</span> гарантовано виконується нерівність стиску з модулем <span class="arithmatex">\(\gamma\)</span>:</p>
+<div class="arithmatex">\[\|\mathcal{T}^* Q_1 - \mathcal{T}^* Q_2\|_\infty \le \gamma \|Q_1 - Q_2\|_\infty\]</div>
+<p>Згідно з <strong>теоремою Банаха про нерухому точку</strong>, операторне рівняння <span class="arithmatex">\(Q = \mathcal{T}^* Q\)</span> має один і тільки один розв'язок <span class="arithmatex">\(Q^*\)</span>, а послідовність ітерацій <span class="arithmatex">\(Q_{k+1} = \mathcal{T}^* Q_k\)</span> асимптотично збігається до <span class="arithmatex">\(Q^*\)</span> із швидкістю геометричної прогресії:</p>
+<div class="arithmatex">\[\lim_{k \to \infty} \|Q_k - Q^*\|_\infty = 0, \quad \|Q_k - Q^*\|_\infty \le \frac{\gamma^k}{1 - \gamma} \|Q_1 - Q_0\|_\infty\]</div>
+</blockquote>
+<hr />
+<h3 id="22">2.2. Математичний апарат помилки часової різниці та аналітичні умови збіжності</h3>
+<p>Коли аналітичні матриці переходів <span class="arithmatex">\(\mathcal{P}(s' \mid s, a)\)</span> фізичного середовища невідомі (налаштування <strong>Model-Free</strong>), обчислення точного математичного сподівання замінюється обчисленням вибіркових стохастичних оцінок. Базовим інструментом коригування поточних прогнозів виступає <strong>помилка часової різниці (Temporal Difference Error, TD-Error)</strong> <span class="arithmatex">\(\delta_t\)</span>:</p>
+<div class="arithmatex">\[\delta_t = Y_t^{\text{Q}} - Q(S_t, A_t) = R_{t+1} + \gamma \max_{a \in \mathcal{A}} Q(S_{t+1}, a) - Q(S_t, A_t)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\delta_t\)</span> позначає величину часової нев'язки на кроці <span class="arithmatex">\(t\)</span>, яка характеризує похибку локальної самоузгодженості оцінок цінності Белмана.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(Y_t^{\text{Q}} = R_{t+1} + \gamma \max_{a} Q(S_{t+1}, a)\)</span> виступає вибірковою цільовою оцінкою Белмана (<strong>TD Target</strong>), сформованою на основі реальної винагороди та прогнозу цінності наступного стану.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(Q(S_t, A_t)\)</span> визначає поточне значення прогнозованої цінності пари стан-дія.</p>
+</li>
+</ul>
+<p>Ітераційне стохастичне наближення табличного алгоритму Q-learning описується різницевим оператором:</p>
+<div class="arithmatex">\[Q_{t+1}(S_t, A_t) = Q_t(S_t, A_t) + \alpha_t(S_t, A_t) \cdot \delta_t\]</div>
+<p>Аналітичне доведення асимптотичної збіжності оцінок <span class="arithmatex">\(Q_t(s, a)\)</span> до теоретичного оптимуму <span class="arithmatex">\(Q^*(s, a)\)</span> з імовірністю <span class="arithmatex">\(1\)</span> базується на теоремі стохастичної апроксимації Роббінса-Монро. Для математичної гарантії збіжності стохастичного процесу вимагається одночасне виконання трьох аналітичних умов:</p>
+<ol>
+<li>Нескінченна продуктивність кроку навчання для забезпечення подолання довільного початкового зміщення та повного проходження фазового простору:</li>
+</ol>
+<div class="arithmatex">\[\sum_{t=0}^{\infty} \alpha_t(s, a) = \infty, \quad \forall s \in \mathcal{S}, \; a \in \mathcal{A}\]</div>
+<ol>
+<li>Скінченність суми квадратів кроків навчання, що гарантує асимптотичне згасання дисперсії стохастичного градієнтного шуму, зумовленого випадковістю середовища:</li>
+</ol>
+<div class="arithmatex">\[\sum_{t=0}^{\infty} \alpha_t^2(s, a) \lt  \infty, \quad \forall s \in \mathcal{S}, \; a \in \mathcal{A}\]</div>
+<ol>
+<li>Умова необмеженого дослідження простору станів, згідно з якою кожна допустима пара <span class="arithmatex">\((s, a)\)</span> повинна відвідуватися агентом нескінченну кількість разів у границі <span class="arithmatex">\(t \to \infty\)</span>.</li>
+</ol>
+<hr />
+<h3 id="23-deep-q-network-sgd">2.3. Постановка задачі оптимізації Deep Q-Network як мінімізації похибки Белмана за допомогою SGD</h3>
+<p>В умовах фізичних багатовимірних просторів станів таблична репрезентація замінюється нелінійною функціональною апроксимацією: <span class="arithmatex">\(Q(s, a) \approx Q(s, a; \boldsymbol{\theta})\)</span>, де <span class="arithmatex">\(\boldsymbol{\theta} \in \mathbb{R}^{D}\)</span> — вектор оптимізованих параметрів штучної нейронної мережі. </p>
+<p>Формалізація процесу навчання полягає в мінімізації функціонала середньоквадратичної похибки Белмана (<strong>Mean Squared Bellman Error, MSBE</strong>) за емпіричним розподілом переходів:</p>
+<div class="arithmatex">\[\mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{(s, a, r, s') \sim \mathcal{D}} \left[ \left( r + \gamma \max_{a' \in \mathcal{A}} Q(s', a'; \boldsymbol{\theta}^-) - Q(s, a; \boldsymbol{\theta}) \right)^2 \right]\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{L}(\boldsymbol{\theta})\)</span> позначає цільову функцію втрат нейромережі, виражену в квадратичних одиницях шкали винагород.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{D}\)</span> являє собою розподіл ймовірностей кортежів переходу <span class="arithmatex">\((s, a, r, s')\)</span>, збережених у пам'яті агента.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\boldsymbol{\theta}\)</span> позначає вектор вагових коефіцієнтів активної оптимізованої нейромережі (<strong>Online Network</strong>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\boldsymbol{\theta}^-\)</span> визначає вектор ваг допоміжної фіксованої цільової нейромережі (<strong>Target Network</strong>).</p>
+</li>
+</ul>
+<p>Виведення вектора градієнта функції втрат вимагає застосування процедури <strong>напівградієнта (Semi-gradient descent)</strong>, оскільки цільова мітка <span class="arithmatex">\(y^{\text{DQN}} = r + \gamma \max_{a'} Q(s', a'; \boldsymbol{\theta}^-)\)</span> розглядається як інваріант відносно вектора ваг <span class="arithmatex">\(\boldsymbol{\theta}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Диференціювання за ланцюговим правилом):} &amp; \quad \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E} \left[ \nabla_{\boldsymbol{\theta}} \left( y^{\text{DQN}} - Q(s, a; \boldsymbol{\theta}) \right)^2 \right] \\
+\text{Етап 2 (Розкриття похідної внутрішньої функції):} &amp; \quad \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E} \left[ 2 \left( y^{\text{DQN}} - Q(s, a; \boldsymbol{\theta}) \right) \cdot \nabla_{\boldsymbol{\theta}} \left( y^{\text{DQN}} - Q(s, a; \boldsymbol{\theta}) \right) \right] \\
+\text{Етап 3 (Фіксація цільової мітки } \nabla_{\boldsymbol{\theta}} y^{\text{DQN}} = \mathbf{0}\text{):} &amp; \quad \nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta}) = -2 \cdot \mathbb{E}_{(s, a, r, s')} \left[ \left( r + \gamma \max_{a'} Q(s', a'; \boldsymbol{\theta}^-) - Q(s, a; \boldsymbol{\theta}) \right) \nabla_{\boldsymbol{\theta}} Q(s, a; \boldsymbol{\theta}) \right]
+\end{aligned}
+\]</div>
+<p>Стохастична апроксимація теоретичного градієнта за випадковим міні-батчем розміром <span class="arithmatex">\(B\)</span> обчислюється як:</p>
+<div class="arithmatex">\[\mathbf{g}_{\boldsymbol{\theta}} = -\frac{2}{B} \sum_{i=1}^{B} \left( r_i + \gamma (1 - d_i) \max_{a' \in \mathcal{A}} Q(s'_i, a'; \boldsymbol{\theta}^-) - Q(s_i, a_i; \boldsymbol{\theta}) \right) \nabla_{\boldsymbol{\theta}} Q(s_i, a_i; \boldsymbol{\theta})\]</div>
+<p>де <span class="arithmatex">\(d_i \in \{0, 1\}\)</span> позначає булевий прапорець завершення епізоду (<strong>Terminal Flag</strong>), що обнуляє майбутню цінність у момент фізичного переривання процесу.</p>
+<hr />
+<h3 id="24">2.4. Теоретичне обґрунтування ліквідації автокореляції спостережень та стабілізація цільових оцінок</h3>
+<p>Застосування стандартних алгоритмів стохастичного градієнтного спуску до навчання глибоких нейромереж базується на строгій статистичній аксіомі: вибіркові спостереження мають бути <strong>незалежними та однаково розподіленими (Independent and Identically Distributed, I.I.D.)</strong>. Однак траєкторія агента у фізичному симуляторі є неперервним марковським ланцюгом, де послідовні стани характеризуються сильною автокореляцією:</p>
+<div class="arithmatex">\[\operatorname{Cov}(S_t, S_{t+1}) \neq 0, \quad \lim_{\Delta t \to 0} \|S_{t+\Delta t} - S_t\|_2 = 0\]</div>
+<p>Навчання нейромережі на безпосередньому послідовному потоці даних призводить до катастрофічного руйнування вагових коефіцієнтів (<strong>Catastrophic Forgetting</strong>) та чисельної нестабільності параметрів. </p>
+<p>Для розриву автокореляційних зв'язків у DQN застосовується <strong>буфер повтору досвіду (Experience Replay Buffer)</strong> <span class="arithmatex">\(\mathcal{D}\)</span>, ємністю <span class="arithmatex">\(N_{\text{mem}}\)</span> переходів. Формування міні-батчу здійснюється за законом дискретного рівномірного розподілу:</p>
+<div class="arithmatex">\[\mathbb{P}\left( (s_i, a_i, r_i, s'_i) \sim \mathcal{D} \right) = \frac{1}{|\mathcal{D}|}\]</div>
+<p>Рівномірна випадкова вибірка гарантує, що матриця коваріації між векторами станів всередині навчального батчу асимптотично наближається до діагональної:</p>
+<div class="arithmatex">\[\lim_{B, N_{\text{mem}} \to \infty} \operatorname{Cov}(s_j, s_k) = \mathbf{0}, \quad \forall j \neq k \in \{1, \dots, B\}\]</div>
+<p>Другим джерелом розбіжності виступає проблема «рухомої мітки» (<strong>Moving Target Problem</strong>), спричинена тим, що одна й та сама функція <span class="arithmatex">\(Q\)</span> використовується і для прогнозування, і для обчислення цільового сигналу Белмана. Для стабілізації використовується <strong>цільова мережа (Target Network)</strong> з вагами <span class="arithmatex">\(\boldsymbol{\theta}^-\)</span>. Оновлення ваг цільової мережі виконується за двома альтернативними протоколами:</p>
+<ol>
+<li><strong>Жорстке періодичне оновлення (Hard Update):</strong></li>
+</ol>
+<div class="arithmatex">\[\boldsymbol{\theta}^- \leftarrow \boldsymbol{\theta} \quad \text{кожні } C \text{ дискретних кроків градієнтного спуску}.\]</div>
+<ol>
+<li><strong>Плавне експоненційне оновлення (Soft Polyak Update):</strong></li>
+</ol>
+<div class="arithmatex">\[\boldsymbol{\theta}^- \leftarrow \tau \boldsymbol{\theta} + (1 - \tau) \boldsymbol{\theta}^-\]</div>
+<p>де <span class="arithmatex">\(\tau \ll 1\)</span> (наприклад, <span class="arithmatex">\(\tau = 0.005\)</span>) є безрозмірним коефіцієнтом згладжування, що реалізує фільтрацію низьких частот для простору параметрів.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Env as Фізичне середовище (MuJoCo)
+    participant Agent as Агент (Online Q-Network theta)
+    participant Buffer as Буфер досвіду (Replay Buffer D)
+    participant TargetNet as Цільова мережа (Target Q-Net theta_minus)
+    participant Optimizer as Градієнтний оптимізатор (Adam)
+
+    loop Збір фізичного досвіду
+        Env-&gt;&gt;Agent: Вектор фазового стану S_t
+        Agent-&gt;&gt;Env: Керівний імпульс A_t (epsilon-greedy)
+        Env-&gt;&gt;Buffer: Збереження кортежу (S_t, A_t, R_t+1, S_t+1, d_t)
+    end
+
+    par Пакетна оптимізація нейромережі
+        Buffer-&gt;&gt;Agent: Стохастичний міні-батч розміром B
+        Buffer-&gt;&gt;TargetNet: Наступні стани S'_i батчу
+        TargetNet--&gt;&gt;Agent: Цільові оцінки: max_a' Q(S'_i, a'; theta_minus)
+        Note over Agent: Розрахунок помилки Белмана MSBE Loss
+        Agent-&gt;&gt;Optimizer: Обчислення напівградієнта dL/d_theta
+        Optimizer-&gt;&gt;Agent: Оновлення активних ваг: theta &lt;- theta - lr * grad
+    and Синхронізація параметрів
+        Agent--&gt;&gt;TargetNet: Плавне оновлення: theta_minus &lt;- tau*theta + (1-tau)*theta_minus
+    end</code></pre>
+<hr />
+<h3 id="25-double-dqn">2.5. Математична модифікація алгоритму Double DQN для усунення завищення цінності дій</h3>
+<p>У класичному алгоритмі Deep Q-Network розрахунок цільової мітки спирається на максимізацію функції цінності цільової мережі: <span class="arithmatex">\(Y_t^{\text{DQN}} = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a'; \boldsymbol{\theta}^-)\)</span>. Присутність оператора максимуму над зашумленими апроксимованими оцінками призводить до виникнення систематичного позитивного зсуву — <strong>переоцінки цінності дій (Overestimation Bias)</strong>.</p>
+<p>Математична природа виникнення зміщення максимізації ґрунтується на <strong>нерівності Єнсена</strong>. Нехай дійсні оцінки дій містять випадковий апроксимаційний шум із нульовим математичним сподіванням: <span class="arithmatex">\(\hat{Q}(s, a) = Q^*(s, a) + \epsilon_a\)</span>, де <span class="arithmatex">\(\mathbb{E}[\epsilon_a] = 0\)</span>. Оскільки функція <span class="arithmatex">\(\max_a(\cdot)\)</span> є строго опуклою, математичне сподівання максимуму випадкових величин завжди більше або дорівнює максимуму від їхніх математичних сподівань:</p>
+<div class="arithmatex">\[\mathbb{E}\left[ \max_{a \in \mathcal{A}} \hat{Q}(s, a) \right] \ge \max_{a \in \mathcal{A}} \mathbb{E}\left[ \hat{Q}(s, a) \right] = \max_{a \in \mathcal{A}} Q^*(s, a)\]</div>
+<p>Навіть якщо середній рівень похибки мережі дорівнює нулю, оператор максимізації систематично обирає оцінки з позитивними флуктуаціями шуму. Внаслідок рекурсивного бутстрепінгу в рівнянні Белмана завищене значення <span class="arithmatex">\(Q(s', a')\)</span> переноситься на стан <span class="arithmatex">\(Q(s, a)\)</span>, що приводить до експоненційного роздування функціонала цінності та колапсу політики керування.</p>
+<p>Алгоритм <strong>Double DQN (DDQN)</strong> усуває дане явище шляхом математичного розщеплення операцій <strong>вибору дії</strong> та <strong>оцінки її цінності</strong> між двома незалежними наборами ваг:</p>
+<div class="arithmatex">\[Y_t^{\text{DoubleQ}} = R_{t+1} + \gamma (1 - d_t) \cdot Q\left( S_{t+1}, \arg\max_{a \in \mathcal{A}} Q(S_{t+1}, a; \boldsymbol{\theta}_t) ; \boldsymbol{\theta}_t^- \right)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(a^* = \arg\max_{a} Q(S_{t+1}, a; \boldsymbol{\theta}_t)\)</span> визначає дію, обрану виключно <strong>активною</strong> нейромережею на основі поточних ваг <span class="arithmatex">\(\boldsymbol{\theta}_t\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(Q(S_{t+1}, a^*; \boldsymbol{\theta}_t^-)\)</span> являє собою числову оцінку вартості обраної дії <span class="arithmatex">\(a^*\)</span>, розраховану незалежною <strong>цільовою</strong> нейромережею <span class="arithmatex">\(\boldsymbol{\theta}_t^-\)</span>.</p>
+</li>
+</ul>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; InitializeMemory: Ініціалізація буфера D та ваг theta, theta_minus
+    InitializeMemory --&gt; StateObservation: Отримання початкового фазового стану S_0
+
+    state ExecutionCycle {
+        StateObservation --&gt; ActionSelection: Генерація epsilon-greedy дії A_t
+        ActionSelection --&gt; PhysicsStep: Інтегрування рівнянь руху у MuJoCo
+        PhysicsStep --&gt; ExperienceStorage: Фіксація кортежу переходу в Replay Buffer
+        ExperienceStorage --&gt; StateObservation: Перехід S_t &lt;- S_(t+1)
+    }
+
+    state OptimizationCycle {
+        ExperienceStorage --&gt; BatchSampling: Формування міні-батчу з Replay Buffer
+        BatchSampling --&gt; ActionDecoupling: DDQN селекція дії: a* = argmax Q(s', a; theta)
+        ActionDecoupling --&gt; TargetEvaluation: Оцінка цінності через TargetNet: Q(s', a*; theta_minus)
+        TargetEvaluation --&gt; LossComputation: Розрахунок MSBE Loss та оновлення ваг theta
+        LossComputation --&gt; TargetSoftSync: Плавне оновлення цільових ваг theta_minus
+        TargetSoftSync --&gt; BatchSampling
+    }</code></pre>
+<hr />
+<h3 id="_5">Аналітична матриця зіставлення моделей функціональної оптимізації</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурна модель</th>
+<th style="text-align: left;">Формула цільової мітки <span class="arithmatex">\(Y_t\)</span></th>
+<th style="text-align: left;">Функція втрат <span class="arithmatex">\(\mathcal{L}(\boldsymbol{\theta})\)</span></th>
+<th style="text-align: left;">Математичне зміщення оцінки</th>
+<th style="text-align: left;">Витрати пам'яті на крок</th>
+<th style="text-align: left;">Стійкість оптимізації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Табличний Q-learning</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{t+1} + \gamma \max_a Q(S_{t+1}, a)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{1}{2} \delta_t^2\)</span></td>
+<td style="text-align: left;">Високе позитивне (через шум середовища)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(\vert\mathcal{S}\vert \cdot \vert\mathcal{A}\vert)\)</span></td>
+<td style="text-align: left;">Абсолютна за умов Роббінса-Монро</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Класичний DQN</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{t+1} + \gamma \max_a Q(S_{t+1}, a; \boldsymbol{\theta}^-)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{1}{B} \sum_{i=1}^B (y_i - Q_i)^2\)</span></td>
+<td style="text-align: left;">Значне позитивне (Overestimation Bias)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(N_{\text{mem}} \cdot d_s + 2\vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Середня (схильний до розбіжності <span class="arithmatex">\(Q \to \infty\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Double DQN (DDQN)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{t+1} + \gamma Q(S_{t+1}, \arg\max_a Q; \boldsymbol{\theta}^-)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{1}{B} \sum_{i=1}^B (y_i^{\text{DDQN}} - Q_i)^2\)</span></td>
+<td style="text-align: left;">Асимптотично нейтральне (незміщене)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(N_{\text{mem}} \cdot d_s + 2\vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Висока у складних динамічних системах</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dueling DDQN</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{t+1} + \gamma Q_{\text{duel}}(S_{t+1}, a^*; \boldsymbol{\theta}^-)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{1}{B} \sum_{i=1}^B (y_i^{\text{Duel}} - Q_i)^2\)</span></td>
+<td style="text-align: left;">Асимптотично нейтральне</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(N_{\text{mem}} \cdot d_s + 2\vert\boldsymbol{\theta}\vert)\)</span></td>
+<td style="text-align: left;">Максимальна при пасивному русі ланок</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Нехай у деякому стані <span class="arithmatex">\(s'\)</span> вихідні істинні значення функції цінності для двох допустимих дискретних дій <span class="arithmatex">\(a_1\)</span> та <span class="arithmatex">\(a_2\)</span> становлять: <span class="arithmatex">\(Q^*(s', a_1) = 4.0\)</span> та <span class="arithmatex">\(Q^*(s', a_2) = 4.0\)</span>. </p>
+<p>Внаслідок випадкових шумів апроксимації поточна активна мережа <span class="arithmatex">\(Q(s', a; \boldsymbol{\theta})\)</span> оцінює ці дії випадковими величинами <span class="arithmatex">\(\hat{Q}(s', a_1) \sim \mathcal{N}(4.0, \sigma^2)\)</span> та <span class="arithmatex">\(\hat{Q}(s', a_2) \sim \mathcal{N}(4.0, \sigma^2)\)</span>, де <span class="arithmatex">\(\sigma = 1.0\)</span>. Незалежна цільова мережа <span class="arithmatex">\(Q(s', a; \boldsymbol{\theta}^-)\)</span> також видає незалежні зашумлені значення з тими самими статистичними параметрами.</p>
+<p>Розрахуйте аналітичне математичне сподівання цільової оцінки майбутнього стану <span class="arithmatex">\(\mathbb{E}[\max_{a'} Q(s', a'; \boldsymbol{\theta}^-)]\)</span> для стандартного алгоритму DQN та порівняйте його із математичним сподіванням оцінки алгоритму Double DQN: <span class="arithmatex">\(\mathbb{E}[Q(s', \arg\max_{a'} Q(s', a'; \boldsymbol{\theta}); \boldsymbol{\theta}^-)]\)</span>.</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Аналітичний розв'язок:</strong></p>
+<ol>
+<li><strong>Розрахунок для стандартного алгоритму Deep Q-Network (DQN):</strong></li>
+</ol>
+<p>У стандартному DQN цільова оцінка містить безпосередній максимум по випадкових величинах цільової мережі <span class="arithmatex">\(X_1 = Q(s', a_1; \boldsymbol{\theta}^-)\)</span> та <span class="arithmatex">\(X_2 = Q(s', a_2; \boldsymbol{\theta}^-)\)</span>. Нехай <span class="arithmatex">\(X_1, X_2\)</span> — незалежні однаково розподілені нормальні величини: <span class="arithmatex">\(X_1, X_2 \sim \mathcal{N}(\mu, \sigma^2)\)</span>, де <span class="arithmatex">\(\mu = 4.0\)</span>, <span class="arithmatex">\(\sigma = 1.0\)</span>.</p>
+<p>Математичне сподівання максимуму двох незалежних нормально розподілених випадкових величин обчислюється за точною аналітичною формулою теорії порядкових статистик:</p>
+<div class="arithmatex">\[\mathbb{E}[\max(X_1, X_2)] = \mu + \frac{\sigma}{\sqrt{\pi}}\]</div>
+<p>Підставляючи вихідні числові параметри (<span class="arithmatex">\(\mu = 4.0, \sigma = 1.0\)</span>):</p>
+<div class="arithmatex">\[\mathbb{E}[\max(X_1, X_2)] = 4.0 + \frac{1.0}{\sqrt{\pi}} \approx 4.0 + 0.5642 = 4.5642\]</div>
+<p>Величина абсолютного позитивного зміщення (Overestimation Bias) становить <span class="arithmatex">\(+0.5642\)</span>, тобто похибка перевищує <span class="arithmatex">\(14\%\)</span> від істинного значення <span class="arithmatex">\(Q^*\)</span>.</p>
+<ol>
+<li><strong>Розрахунок для алгоритму Double Deep Q-Network (Double DQN):</strong></li>
+</ol>
+<p>В алгоритмі Double DQN дія-кандидат <span class="arithmatex">\(a^*\)</span> обирається активною мережею <span class="arithmatex">\(Q(\cdot; \boldsymbol{\theta})\)</span>:</p>
+<div class="arithmatex">\[a^* = \arg\max_{a \in \{a_1, a_2\}} Q(s', a; \boldsymbol{\theta})\]</div>
+<p>Оскільки обидві дії мають ідентичні математичні сподівання <span class="arithmatex">\(\mu = 4.0\)</span> та однакові дисперсії <span class="arithmatex">\(\sigma^2 = 1.0\)</span>, симетрія розподілу визначає апостеріорні ймовірності вибору дій:</p>
+<div class="arithmatex">\[\mathbb{P}(a^* = a_1) = 0.5, \quad \mathbb{P}(a^* = a_2) = 0.5\]</div>
+<p>Цільова мережа <span class="arithmatex">\(Q(\cdot; \boldsymbol{\theta}^-)\)</span> генерує незалежні випадкові оцінки <span class="arithmatex">\(Y_1 = Q(s', a_1; \boldsymbol{\theta}^-)\)</span> та <span class="arithmatex">\(Y_2 = Q(s', a_2; \boldsymbol{\theta}^-)\)</span>, які не беруть участі в операції <span class="arithmatex">\(\arg\max\)</span>. За формулою повного математичного сподівання:</p>
+<div class="arithmatex">\[\mathbb{E}[Y_{a^*}] = \mathbb{P}(a^* = a_1) \cdot \mathbb{E}[Y_1] + \mathbb{P}(a^* = a_2) \cdot \mathbb{E}[Y_2]\]</div>
+<p>Враховуючи незалежність шуму цільової мережі від вибору дії основною мережею:</p>
+<div class="arithmatex">\[\mathbb{E}[Y_{a^*}] = 0.5 \cdot 4.0 + 0.5 \cdot 4.0 = 4.0\]</div>
+<p><strong>Висновок:</strong> 
+Алгоритм Double DQN забезпечує математично незміщену оцінку цільової величини Белмана (<span class="arithmatex">\(\mathbb{E}[Y_t^{\text{DoubleQ}}] = 4.0\)</span>), повністю ліквідуючи систематичне завищення у <span class="arithmatex">\(+0.5642\)</span>, характерне для базового алгоритму DQN.</p>
+</details>
+<hr />
+<h3 id="_6">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Дослідіть вплив спектрального радіуса матриці переходу станів <span class="arithmatex">\(\mathcal{P}\)</span> на швидкість стиску оператора Белмана та визначте, за яких топологічних властивостей графа марковського процесу збіжність алгоритмів ітерації цінності суттєво уповільнюється.</p>
+</li>
+<li>
+<p>Проаналізуйте зв'язок між величиною гіперпараметра <span class="arithmatex">\(\tau\)</span> у механізмі Polyak Soft Update та формуванням зсуву градієнтних оцінок у навчанні DQN, визначивши межі діапазону стійкості регуляризатора параметрів.</p>
+</li>
+<li>
+<p>Формально доведіть, що операція віднімання середнього значення переваги у функції <span class="arithmatex">\(Q(s, a) = V(s) + \left(A(s, a) - \frac{1}{|\mathcal{A}|}\sum_{a'} A(s, a')\right)\)</span> архітектури Dueling DQN зберігає єдиність ідентифікації складових функцій <span class="arithmatex">\(V\)</span> та <span class="arithmatex">\(A\)</span>.</p>
+</li>
+</ol>
+<h2 id="3-">3. Практично-прикладний блок</h2>
+<h3 id="31-double-dqn-inverteddoublependulum-mujoco">3.1. Комплексний інженерний кейс. Синтез дискретного нейрорегулятора Double DQN для стабілізації дволанкового інвертованого маятника InvertedDoublePendulum у середовищі MuJoCo</h3>
+<h4 id="_7">Постановка інженерної задачі</h4>
+<p>Розглядається задача синтезу цифрової системи стабілізації нестійкого динамічного об'єкта — зв'язаного дволанкового інвертованого маятника на рухомому візку (<strong>InvertedDoublePendulum-v4</strong>) у контактному фізичному середовищі <strong>MuJoCo</strong>. Система складається з каретки масою <span class="arithmatex">\(M\)</span>, яка рухається вздовж горизонтальної осі під дією сили <span class="arithmatex">\(u\)</span>, першої ланки масою <span class="arithmatex">\(m_1\)</span> довжиною <span class="arithmatex">\(l_1\)</span>, шарнірно закріпленої на каретці, та другої ланки масою <span class="arithmatex">\(m_2\)</span> довжиною <span class="arithmatex">\(l_2\)</span>, приєднаної шарніром до кінця першої ланки. Метою автономного інтелектуального агента є утримання обох ланок у вертикальному положенні рівноваги (<span class="arithmatex">\(\theta_1 \approx 0, \theta_2 \approx 0\)</span>) при обмеженні лінійного переміщення візка <span class="arithmatex">\(|x| \le x_{\max}\)</span>.</p>
+<p>Фізичний рушій MuJoCo розраховує рівняння аналітичної динаміки у просторі узагальнених координат <span class="arithmatex">\(\mathbf{q} = [x, \theta_1, \theta_2]^T\)</span> та швидкостей <span class="arithmatex">\(\dot{\mathbf{q}} = [\dot{x}, \dot{\theta}_1, \dot{\theta}_2]^T\)</span> з кроком чисельного інтегрування <span class="arithmatex">\(\Delta t_{\text{sim}} = 0.01\text{ с}\)</span>. Керування здійснюється на рівні макрокроку агента <span class="arithmatex">\(\Delta t = 0.02\text{ с}\)</span> (з пропуском кадрів <span class="arithmatex">\(\text{frame\_skip} = 2\)</span>). Оскільки класичний алгоритм Double DQN оперує дискретним простором керування, неперервний діапазон сили тяги візка <span class="arithmatex">\(u \in [-u_{\max}, u_{\max}]\)</span> дискретизується на три елементарні рівновіддалені дії: рух ліворуч, відсутність зусилля, рух праворуч.</p>
+<p>Вхідні параметри фізичної моделі, просторів станів, дій та нейромережевого апроксиматора зведені в таблицю.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Символьне позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання за SI / Тип даних</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Маса рухомого візка</td>
+<td style="text-align: left;"><span class="arithmatex">\(M\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1.0\)</span></td>
+<td style="text-align: left;">кілограм (<span class="arithmatex">\(\text{кг}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Маса першої ланки маятника</td>
+<td style="text-align: left;"><span class="arithmatex">\(m_1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.1\)</span></td>
+<td style="text-align: left;">кілограм (<span class="arithmatex">\(\text{кг}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Маса другої ланки маятника</td>
+<td style="text-align: left;"><span class="arithmatex">\(m_2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.1\)</span></td>
+<td style="text-align: left;">кілограм (<span class="arithmatex">\(\text{кг}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Довжина першої ланки</td>
+<td style="text-align: left;"><span class="arithmatex">\(l_1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.6\)</span></td>
+<td style="text-align: left;">метр (<span class="arithmatex">\(\text{м}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Довжина другої ланки</td>
+<td style="text-align: left;"><span class="arithmatex">\(l_2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.6\)</span></td>
+<td style="text-align: left;">метр (<span class="arithmatex">\(\text{м}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Прискорення вільного падіння</td>
+<td style="text-align: left;"><span class="arithmatex">\(g\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(9.81\)</span></td>
+<td style="text-align: left;">метр на секунду в квадраті (<span class="arithmatex">\(\text{м}/\text{с}^2\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Максимальна керівна сила</td>
+<td style="text-align: left;"><span class="arithmatex">\(u_{\max}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(15.0\)</span></td>
+<td style="text-align: left;">Ньютон (<span class="arithmatex">\(\text{Н}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Простір дискретних дій</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{A}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\{-15.0, 0.0, +15.0\}\)</span></td>
+<td style="text-align: left;">дискретний кортеж <span class="arithmatex">\(\mathbb{R}^3\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмірність вектора стану</td>
+<td style="text-align: left;"><span class="arithmatex">\(d_s\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: left;">вектор дійсних чисел (<span class="arithmatex">\(x, \dot{x}, \sin\theta_1, \cos\theta_1, \sin\theta_2, \cos\theta_2, \dot{\theta}_1, \dot{\theta}_2\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Крок дискретизації агента</td>
+<td style="text-align: left;"><span class="arithmatex">\(\Delta t\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.02\)</span></td>
+<td style="text-align: left;">секунда (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Коефіцієнт дисконтування</td>
+<td style="text-align: left;"><span class="arithmatex">\(\gamma\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.95\)</span></td>
+<td style="text-align: left;">безрозмірна величина</td>
+</tr>
+<tr>
+<td style="text-align: left;">Швидкість навчання мережі</td>
+<td style="text-align: left;"><span class="arithmatex">\(\alpha\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.001\)</span></td>
+<td style="text-align: left;">безрозмірна величина</td>
+</tr>
+<tr>
+<td style="text-align: left;">Коефіцієнт м'якого оновлення</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.01\)</span></td>
+<td style="text-align: left;">безрозмірна величина</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart TD
+    InitState["Вхідний вектор фазового стану S_t"] --&gt; ActionDecision["Прямий прохід Online Network: вибір дії A_t"]
+    ActionDecision --&gt; SimStep["Інтегрування динаміки в MuJoCo на часі Delta t"]
+    SimStep --&gt; TransitionData["Формування кортежу переходу: S_t, A_t, R_(t+1), S_(t+1), d_(t+1)"]
+    TransitionData --&gt; BufferStore["Запис кортежу в Replay Buffer D"]
+    BufferStore --&gt; SampleBatch["Вибірка міні-батчу переходів з буфера"]
+    SampleBatch --&gt; ActionSelect["Селекція оптимальної дії активною мережею Online Net"]
+    ActionSelect --&gt; TargetEval["Оцінка цінності обраної дії цільовою мережею Target Net"]
+    TargetEval --&gt; LossComp["Обчислення помилки MSBE Loss та градієнтів"]
+    LossComp --&gt; WeightUpdate["Коригування ваг активної мережі: theta &lt;- theta - alpha * grad"]
+    WeightUpdate --&gt; SoftSync["Потокове оновлення ваг цільової мережі: theta_minus"]</code></pre>
+<hr />
+<h4 id="_8">Покроковий аналітичний розрахунок</h4>
+<p>Розглянемо процес чисельної оптимізації ваг вихідного лінійного шару нейромережі агента на одному виділеному переході із буфера повтору досвіду.</p>
+<h5 id="1_2">Крок 1. Аналіз збереженого переходу динамічної системи</h5>
+<p>Нехай із буфера відтворення отримано кортеж переходу <span class="arithmatex">\((s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})\)</span>, де агент у стані <span class="arithmatex">\(s_t\)</span> обрав дію <span class="arithmatex">\(a_t = a_3 = +15.0\text{ Н}\)</span>. У результаті симуляції отримано скалярну винагороду <span class="arithmatex">\(r_{t+1} = +1.0\)</span> (вертикальне положення збережено), стан не є термінальним (<span class="arithmatex">\(d_{t+1} = 0\)</span>), а система перейшла в новий стан <span class="arithmatex">\(s_{t+1}\)</span>.</p>
+<h5 id="2_1">Крок 2. Пряме обчислення виходів активної мережі для наступного стану</h5>
+<p>Вектор наступного стану <span class="arithmatex">\(s_{t+1}\)</span> подається на вхід поточної активної мережі <span class="arithmatex">\(Q(s, a; \boldsymbol{\theta}_t)\)</span>. Припустимо, що прямий прохід нейронної мережі дав такі нескориговані оцінки цінності для трьох допустимих дій:</p>
+<div class="arithmatex">\[Q(s_{t+1}, a_1; \boldsymbol{\theta}_t) = 8.45, \quad Q(s_{t+1}, a_2; \boldsymbol{\theta}_t) = 6.20, \quad Q(s_{t+1}, a_3; \boldsymbol{\theta}_t) = 9.10\]</div>
+<p>Селекція найкращої дії в алгоритмі Double DQN здійснюється виключно за вагами активної мережі <span class="arithmatex">\(\boldsymbol{\theta}_t\)</span>:</p>
+<div class="arithmatex">\[a^* = \arg\max_{a \in \{a_1, a_2, a_3\}} Q(s_{t+1}, a; \boldsymbol{\theta}_t) = a_3\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(a^*\)</span> визначає індекс дискретної дії, що має максимальну прогнозовану цінність за оцінкою активної моделі.</li>
+</ul>
+<h5 id="3">Крок 3. Оцінка корисності обраної дії цільовою мережею</h5>
+<p>Вектор стану <span class="arithmatex">\(s_{t+1}\)</span> одночасно подається на вхід цільової нейромережі <span class="arithmatex">\(Q(s, a; \boldsymbol{\theta}_t^-)\)</span>. На виході цільової мережі отримано значення:</p>
+<div class="arithmatex">\[Q(s_{t+1}, a_1; \boldsymbol{\theta}_t^-) = 8.10, \quad Q(s_{t+1}, a_2; \boldsymbol{\theta}_t^-) = 5.90, \quad Q(s_{t+1}, a_3; \boldsymbol{\theta}_t^-) = 8.60\]</div>
+<p>На відміну від стандартного DQN, який обрав би значення <span class="arithmatex">\(8.60\)</span> через простий максимум, Double DQN вибирає значення, що відповідає раніше знайденій дії <span class="arithmatex">\(a^* = a_3\)</span>:</p>
+<div class="arithmatex">\[Q\left(s_{t+1}, a^*; \boldsymbol{\theta}_t^-\right) = Q(s_{t+1}, a_3; \boldsymbol{\theta}_t^-) = 8.60\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(Q(s_{t+1}, a^*; \boldsymbol{\theta}_t^-)\)</span> є нескоригованим числовим прогнозом цінності дії <span class="arithmatex">\(a^*\)</span>, сформованим незалежною цільовою мережею, вираженим у балах винагороди.</li>
+</ul>
+<h5 id="4">Крок 4. Розрахунок цільової мітки Белмана та помилки часової різниці</h5>
+<p>Цільова мітка Белмана для алгоритму Double DQN обчислюється аналітично:</p>
+<div class="arithmatex">\[Y_t^{\text{DoubleQ}} = r_{t+1} + \gamma \cdot (1 - d_{t+1}) \cdot Q\left(s_{t+1}, a^*; \boldsymbol{\theta}_t^-\right) = 1.0 + 0.95 \cdot (1 - 0) \cdot 8.60 = 1.0 + 8.17 = 9.17\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(Y_t^{\text{DoubleQ}}\)</span> є цільовим числовим значенням відгуку Белмана для поточного кроку ітерації.</li>
+</ul>
+<p>Поточний прогноз активної мережі для виконаної дії <span class="arithmatex">\(a_3\)</span> у стані <span class="arithmatex">\(s_t\)</span> становив <span class="arithmatex">\(Q(s_t, a_3; \boldsymbol{\theta}_t) = 7.85\)</span>. Тоді аналітична помилка часової різниці (TD-Error) становить:</p>
+<div class="arithmatex">\[\delta_t = Y_t^{\text{DoubleQ}} - Q(s_t, a_3; \boldsymbol{\theta}_t) = 9.17 - 7.85 = +1.32\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(\delta_t\)</span> визначає різницю між уточненою оцінкою майбутнього виграшу та поточним передбаченням мережі.</li>
+</ul>
+<h5 id="5">Крок 5. Градієнтне коригування ваг та м'яка синхронізація цільової мережі</h5>
+<p>Розглянемо вихідний нейрон для дії <span class="arithmatex">\(a_3\)</span>, лінійна активація якого задається формулою <span class="arithmatex">\(Q(s_t, a_3; \boldsymbol{\theta}) = \mathbf{w}_3^T \mathbf{h}(s_t) + b_3\)</span>, де <span class="arithmatex">\(\mathbf{h}(s_t)\)</span> є вектором виходів прихованого шару. Нехай для одного з ваг <span class="arithmatex">\(w_{3,k}\)</span> значення прихованого нейрона дорівнює <span class="arithmatex">\(h_k(s_t) = 0.50\)</span>, а поточне значення ваги <span class="arithmatex">\(w_{3,k} = 1.200\)</span>. </p>
+<p>Градієнт квадратичної функції втрат <span class="arithmatex">\(\mathcal{L}(\boldsymbol{\theta}) = \frac{1}{2} \delta_t^2\)</span> за даним параметром становить:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial w_{3,k}} = -\delta_t \cdot \frac{\partial Q(s_t, a_3; \boldsymbol{\theta})}{\partial w_{3,k}} = -\delta_t \cdot h_k(s_t) = -1.32 \cdot 0.50 = -0.66\]</div>
+<p>Оновлення вагового коефіцієнта активної мережі за методом градієнтного спуску зі швидкістю навчання <span class="arithmatex">\(\alpha = 0.001\)</span>:</p>
+<div class="arithmatex">\[w_{3,k}^{(\text{new})} = w_{3,k} - \alpha \cdot \frac{\partial \mathcal{L}(\boldsymbol{\theta})}{\partial w_{3,k}} = 1.200 - 0.001 \cdot (-0.66) = 1.200 + 0.00066 = 1.20066\]</div>
+<p>Після кроку градієнтного оптимізатора здійснюється м'яке оновлення (Polyak Soft Update) відповідного параметра цільової мережі <span class="arithmatex">\(w_{3,k}^-\)</span>, початкове значення якого дорівнювало <span class="arithmatex">\(1.150\)</span>:</p>
+<div class="arithmatex">\[w_{3,k}^{-(\text{new})} = \tau \cdot w_{3,k}^{(\text{new})} + (1 - \tau) \cdot w_{3,k}^- = 0.01 \cdot 1.20066 + 0.99 \cdot 1.150 = 0.0120066 + 1.1385 = 1.1505066\]</div>
+<p>де:</p>
+<ul>
+<li><span class="arithmatex">\(w_{3,k}^{-(\text{new})}\)</span> відображає оновлене значення ваги цільової мережі, яке плавно змістилося в напрямку активного вагового коефіцієнта.</li>
+</ul>
+<hr />
+<h4 id="_9">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Застосування роздільної оцінки дій за схемою Double DQN забезпечило формування помірної цільової оцінки (<span class="arithmatex">\(Y_t = 9.17\)</span>), запобігши штучному роздуванню цільового значення, яке виникло б при використанні класичного оператора <span class="arithmatex">\(\max_a Q(s', a; \boldsymbol{\theta}_t) = 9.10\)</span> у зв'язці із цільовою мережею.</p>
+</li>
+<li>
+<p>Позитивне значення помилки часової різниці <span class="arithmatex">\(\delta_t = +1.32\)</span> свідчить про те, що перехід у стан <span class="arithmatex">\(s_{t+1}\)</span> виявився більш перспективним з точки зору довгострокової стійкості маятника, ніж прогнозувала модель, що призвело до збільшення вагових коефіцієнтів для обраної дії <span class="arithmatex">\(+15.0\text{ Н}\)</span>.</p>
+</li>
+<li>
+<p>Механізм м'якого оновлення з параметром <span class="arithmatex">\(\tau = 0.01\)</span> змінив вагу цільової мережі лише на <span class="arithmatex">\(0.044\%\)</span>, що гарантує збереження низькочастотної стабільності цільових міток на наступних кроках пакетного навчання.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Марковський процес прийняття рішень (MDP)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{M} = \langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle\)</span></td>
+<td style="text-align: left;">Математична формалізація дискретних та неперервних контурів автоматичного керування</td>
+<td style="text-align: left;">Вимагає повної спостережуваності вектора фазового стану динамічної системи</td>
+<td style="text-align: left;">Ототожнення вихідних сирих вимірювань датчиків із марковським станом за наявності шумів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Коефіцієнт дисконтування <span class="arithmatex">\(\gamma\)</span></strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\)</span></td>
+<td style="text-align: left;">Налаштування часового горизонту планування автономних транспортних та робототехнічних систем</td>
+<td style="text-align: left;"><span class="arithmatex">\(\gamma \in [0, 1)\)</span>; значення <span class="arithmatex">\(\gamma = 1.0\)</span> неприпустиме для нескінченних епізодів</td>
+<td style="text-align: left;">Трактування <span class="arithmatex">\(\gamma\)</span> як суто чисельного регуляризатора без урахування частоти квантування системи</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Рівняння оптимальності Белмана</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(Q^*(s, a) = \mathbb{E}[R + \gamma \max_{a'} Q^*(s', a')]\)</span></td>
+<td style="text-align: left;">Чисельне знаходження гранично досяжної продуктивності керування динамічними об'єктами</td>
+<td style="text-align: left;">Нелінійне через оператор <span class="arithmatex">\(\max\)</span>; не має аналітичного розв'язку в загальному вигляді</td>
+<td style="text-align: left;">Спроба безпосереднього розв'язання системи матричним оберненням замість ітерацій стиску</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Помилка часової різниці (TD-Error)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\delta_t = R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)\)</span></td>
+<td style="text-align: left;">Базовий сигнал зворотного зв'язку для адаптивного підстроювання апроксиматорів цінності дій</td>
+<td style="text-align: left;">Дисперсія оцінки зростає при високій стохастичності фізичного середовища</td>
+<td style="text-align: left;">Плутанина між квадратичною похибкою контролера та скалярною нев'язкою самоузгодженості Белмана</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Буфер повтору досвіду (Replay Buffer)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{D} = \{(s_i, a_i, r_i, s'_i, d_i)\}_{i=1}^{N_{\text{mem}}}\)</span></td>
+<td style="text-align: left;">Ліквідація автокореляції навчальної послідовності станів у градієнтних алгоритмах RL</td>
+<td style="text-align: left;">Обмежений обсягом оперативної пам'яті ЕОМ; потребує Off-Policy природи алгоритму</td>
+<td style="text-align: left;">Використання циклічного буфера для алгоритмів класу On-Policy (наприклад, базового SARSA чи A2C)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Цільова нейромережа (Target Network)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\boldsymbol{\theta}^- \leftarrow \tau \boldsymbol{\theta} + (1 - \tau) \boldsymbol{\theta}^-\)</span></td>
+<td style="text-align: left;">Усунення чисельної розбіжності та осциляцій під час оптимізації глибоких Q-мереж</td>
+<td style="text-align: left;">Створює затримку розповсюдження інформації про реальні винагороди за ланцюгом станів</td>
+<td style="text-align: left;">Занадто часте оновлення <span class="arithmatex">\(\boldsymbol{\theta}^-\)</span>, що нівелює стабілізуючий ефект фіксації міток</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Механізм Double DQN</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(Y_t = R + \gamma Q(S', \arg\max_a Q(S', a; \boldsymbol{\theta}); \boldsymbol{\theta}^-)\)</span></td>
+<td style="text-align: left;">Робототехнічні системи зі значним рівнем сенсорного або контактного шуму</td>
+<td style="text-align: left;">Не розв'язує проблему керування в просторах дій високої розмірності</td>
+<td style="text-align: left;">Твердження, що Double DQN подвоює кількість використовуваних нейромереж порівняно з DQN</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Узагальнені координати MuJoCo</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{M}(\mathbf{q}) \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau} + \mathbf{J}_c^T \mathbf{f}_c\)</span></td>
+<td style="text-align: left;">Високоточне фізичне моделювання багатоланкових шарнірних структур без розриву зв'язків</td>
+<td style="text-align: left;">Вимагає аналітичного задання геометрії та масово-інерційних тензорів твердих тіл</td>
+<td style="text-align: left;">Моделювання контактних взаємодій через жорсткі пружини, що руйнує крок інтегрування</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_10">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Яка математична причина обумовлює розбіжність стандартного стохастичного градієнтного спуску під час навчання глибокої нейромережі <span class="arithmatex">\(Q(s, a; \boldsymbol{\theta})\)</span> безпосередньо з потоку послідовних кадрів симуляції фізичного середовища?</p>
+</li>
+<li>
+<p>A. Зростання розмірності простору дій агента при збільшенні частоти дискретизації часу.</p>
+</li>
+<li>
+<p>B. Порушення припущення про незалежність та однакову розподіленість вибіркових даних через автокореляцію станів.</p>
+</li>
+<li>
+<p>C. Неможливість обчислення матриці Якобі для нелінійних функцій активації нейронів.</p>
+</li>
+<li>
+<p>D. Зменшення коефіцієнта дисконтування до нуля при тривалій симуляції процесу.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Теоретичний базис стохастичного градієнтного спуску (SGD) спирається на гіпотезу I.I.D. (Independent and Identically Distributed), згідно з якою зразки у вибірці є взаємно незалежними. Послідовні кроки фізичної системи зв'язані співвідношенням <span class="arithmatex">\(\operatorname{Cov}(S_t, S_{t+1}) \neq 0\)</span>. Навчання на таких даних зміщує градієнт у напрямку локальної траєкторії, спричиняючи катастрофічне забування попередніх зон простору станів та розбіжність ваг.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки збільшення частоти дискретизації змінює властивості функції переходів, але безпосередньо не впливає на розмірність простору дискретних дій <span class="arithmatex">\(|\mathcal{A}|\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що сучасні бібліотеки автоматичного диференціювання коректно обчислюють похідні для стандартних нелінійних функцій активації.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки коефіцієнт дисконтування <span class="arithmatex">\(\gamma\)</span> є фіксованим гіперпараметром моделі і не змінюється автоматично в процесі симуляції.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У чому полягає фундаментальна перевага розрахунку цільової мітки в алгоритмі Double DQN над класичним DQN?</p>
+</li>
+<li>
+<p>A. Забезпечується повне усунення стохастичного шуму вимірювань фізичних сенсорів.</p>
+</li>
+<li>
+<p>B. Селекція оптимальної дії та оцінка її чисельної цінності розщеплюються між двома незалежними наборами параметрів.</p>
+</li>
+<li>
+<p>C. Швидкість виконання одного кроку оптимізатора зростає рівно вдвічі завдяки паралельному обчисленню.</p>
+</li>
+<li>
+<p>D. Зникає потреба у збереженні та оновленні цільової нейромережі Target Network.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>У стандартному DQN дія та її значення визначаються цільовою мережею: <span class="arithmatex">\(\max_a Q(s', a; \boldsymbol{\theta}^-)\)</span>, що через нерівність Єнсена призводить до систематичного позитивного зміщення <span class="arithmatex">\(\mathbb{E}[\max X] \ge \max \mathbb{E}[X]\)</span>. Double DQN використовує активні ваги <span class="arithmatex">\(\boldsymbol{\theta}\)</span> для селекції <span class="arithmatex">\(a^* = \arg\max_a Q(s', a; \boldsymbol{\theta})\)</span>, а цільові ваги <span class="arithmatex">\(\boldsymbol{\theta}^-\)</span> — для оцінки <span class="arithmatex">\(Q(s', a^*; \boldsymbol{\theta}^-)\)</span>, що робить оцінку математично незміщеною.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки алгоритмічна модифікація цільової функції не фільтрує апаратний шум фізичних сенсорів середовища.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що Double DQN потребує додаткового прямого проходу активної мережі для наступного стану, що дещо збільшує обчислювальні витрати, а не зменшує їх.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки для реалізації Double DQN наявність цільової мережі з вагами <span class="arithmatex">\(\boldsymbol{\theta}^-\)</span> залишається обов'язковою архітектурною умовою.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яким чином фізичний рушій MuJoCo забезпечує високу чисельну стійкість під час симуляції ударів та багатоточкового сухого контакту?</p>
+</li>
+<li>
+<p>A. Застосуванням виключно абсолютно пружних зіткнень без урахування дисипації енергії.</p>
+</li>
+<li>
+<p>B. Формалізацією контактної взаємодії через апаратно диференційовану гладку опуклу оптимізацію конусів тертя.</p>
+</li>
+<li>
+<p>C. Повним виключенням сил тертя з диференціальних рівнянь руху системи.</p>
+</li>
+<li>
+<p>D. Зведенням усіх контактів до штучних в'язкопружних сил за законом Гука.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Класичні рушії розв'язують задачу контактів як переривчасту задачу лінійного доповнення (LCP), що призводить до матричних сингулярностей. MuJoCo перетворює обмеження контактів і тертя на гладкий опуклий оптимізаційний функціонал, мінімізація якого гарантує існування та єдиність вектора прискорень без чисельних зривів інтегрування.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки непружні деформації та розсіювання енергії є фундаментальною складовою алгоритмів контактної динаміки MuJoCo.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що моделювання контактів у робототехніці неможливе без врахування сил тертя в шарнірах та на опорних поверхнях.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки класичний метод штрафних пружних сил (penalty methods) породжує надмірно жорсткі диференціальні рівняння, від яких MuJoCo відмовляється на користь оптимізаційних зв'язків.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>За якої умови табличний алгоритм Q-learning теоретично гарантує асимптотичну збіжність до оптимальної функції цінності <span class="arithmatex">\(Q^*(s, a)\)</span>?</p>
+</li>
+<li>
+<p>A. Якщо крок навчання залишається строго постійним <span class="arithmatex">\(\alpha_t = 1.0\)</span> на всіх ітераціях.</p>
+</li>
+<li>
+<p>B. Якщо виконуються умови Роббінса-Монро для послідовності кроків <span class="arithmatex">\(\alpha_t\)</span> та забезпечено нескінченне відвідування всіх пар стан-дія.</p>
+</li>
+<li>
+<p>C. Якщо значення коефіцієнта дисконтування вибрано строго рівним <span class="arithmatex">\(\gamma = 1.0\)</span> для нескінченного часового горизонту.</p>
+</li>
+<li>
+<p>D. Якщо ймовірність випадкового дослідження середовища встановлена на нульовому рівні <span class="arithmatex">\(\epsilon = 0\)</span> з першого кроку.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Теорема збіжності Крістофера Воткінса доводить, що асинхронне стохастичне наближення збігається до нерухомої точки оператора Белмана з імовірністю <span class="arithmatex">\(1\)</span> за умов <span class="arithmatex">\(\sum \alpha_t = \infty\)</span> (можливість подолання початкового наближення), <span class="arithmatex">\(\sum \alpha_t^2 &lt; \infty\)</span> (згасання шуму вибірки) та нескінченного відвідування всіх станів і дій.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки постійний крок <span class="arithmatex">\(\alpha_t = 1.0\)</span> призводить до безперервного коливання оцінок навколо математичного сподівання без чисельної збіжності.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що при <span class="arithmatex">\(\gamma = 1.0\)</span> безперервні задачі призводять до розбіжності сумарного виграшу до нескінченності.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки повна відсутність дослідження (<span class="arithmatex">\(\epsilon = 0\)</span>) фіксує агента в субоптимальних діях і унеможливлює знаходження глобального оптимуму.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_11">Завдання для самостійної роботи</h4>
+<h5 id="_12">Постановка задачі</h5>
+<p>Розглядається навчальний мікрокрок оптимізації агента для однієї ланки маніпулятора у симуляторі MuJoCo. Простір дій агента дискретизовано на 3 значення крутного моменту двигуна: <span class="arithmatex">\(\mathcal{A} = \{-5.0\text{ Н}\cdot\text{м}, 0.0\text{ Н}\cdot\text{м}, +5.0\text{ Н}\cdot\text{м}\}\)</span>. Коефіцієнт дисконтування системи становить <span class="arithmatex">\(\gamma = 0.90\)</span>, швидкість навчання активної нейромережі дорівнює <span class="arithmatex">\(\alpha = 0.005\)</span>, а темп м'якого оновлення ваг цільової мережі складає <span class="arithmatex">\(\tau = 0.02\)</span>.</p>
+<p>Із буфера повтору досвіду випадково вилучено одиничний зразок переходу:</p>
+<ul>
+<li>
+<p>Поточний стан: <span class="arithmatex">\(s_t\)</span>.</p>
+</li>
+<li>
+<p>Виконана дія: <span class="arithmatex">\(a_t = a_1 = -5.0\text{ Н}\cdot\text{м}\)</span>.</p>
+</li>
+<li>
+<p>Отримана скалярна винагорода: <span class="arithmatex">\(r_{t+1} = +2.50\)</span>.</p>
+</li>
+<li>
+<p>Ознака термінального стану: <span class="arithmatex">\(d_{t+1} = 0\)</span> (рух триває).</p>
+</li>
+<li>
+<p>Наступний стан: <span class="arithmatex">\(s_{t+1}\)</span>.</p>
+</li>
+</ul>
+<p>Поточні виходи активної мережі для виконаної дії становлять: <span class="arithmatex">\(Q(s_t, a_1; \boldsymbol{\theta}_t) = 5.20\)</span>.
+Прямий прохід активної нейромережі <span class="arithmatex">\(Q(s_{t+1}, a; \boldsymbol{\theta}_t)\)</span> для наступного стану сформував вихідний вектор оцінок:</p>
+<div class="arithmatex">\[Q(s_{t+1}, a_1; \boldsymbol{\theta}_t) = 4.10, \quad Q(s_{t+1}, a_2; \boldsymbol{\theta}_t) = 7.80, \quad Q(s_{t+1}, a_3; \boldsymbol{\theta}_t) = 6.90\]</div>
+<p>Прямий прохід цільової нейромережі <span class="arithmatex">\(Q(s_{t+1}, a; \boldsymbol{\theta}_t^-)\)</span> для наступного стану сформував вихідний вектор оцінок:</p>
+<div class="arithmatex">\[Q(s_{t+1}, a_1; \boldsymbol{\theta}_t^-) = 4.50, \quad Q(s_{t+1}, a_2; \boldsymbol{\theta}_t^-) = 7.10, \quad Q(s_{t+1}, a_3; \boldsymbol{\theta}_t^-) = 7.30\]</div>
+<p>Значення виходу прихованого шару активної мережі, що веде до ваги <span class="arithmatex">\(w_{1,j}\)</span>, становить <span class="arithmatex">\(h_j(s_t) = 0.80\)</span>. Поточне значення ваги активної мережі дорівнює <span class="arithmatex">\(w_{1,j} = 0.450\)</span>, а відповідної ваги цільової мережі — <span class="arithmatex">\(w_{1,j}^- = 0.410\)</span>.</p>
+<h5 id="_13">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Визначте дію-кандидат <span class="arithmatex">\(a^*\)</span>, яка повинна бути обрана для оцінки наступного стану згідно з принципом алгоритму Double DQN, та обґрунтуйте, чому вказаний вибір запобігає завищенню цінності стану <span class="arithmatex">\(s_{t+1}\)</span>.</p>
+</li>
+<li>
+<p>Розрахуйте числове значення цільової мітки Белмана <span class="arithmatex">\(Y_t^{\text{DoubleQ}}\)</span> та визначте скалярну величину помилки часової різниці <span class="arithmatex">\(\delta_t\)</span> для даного переходу.</p>
+</li>
+<li>
+<p>Обчисліть аналітичний градієнт функції втрат за ваговим коефіцієнтом <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial w_{1,j}}\)</span> та виконайте крок стохастичного градієнтного спуску для отримання нового значення активної ваги <span class="arithmatex">\(w_{1,j}^{(\text{new})}\)</span>.</p>
+</li>
+<li>
+<p>Проведіть аналітичний розрахунок нового значення ваги цільової мережі <span class="arithmatex">\(w_{1,j}^{-(\text{new})}\)</span> за схемою експоненційного згладжування Polyak із заданим коефіцієнтом <span class="arithmatex">\(\tau\)</span>.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

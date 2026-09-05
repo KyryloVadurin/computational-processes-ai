@@ -1,0 +1,3548 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk6/">
+      
+      
+        <link rel="next" href="../lk8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 7. Ансамблеві методи машинного навчання - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-bagging-boosting-random-forest-gradient-boosting-xgboost-lightgbm" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 7. Ансамблеві методи машинного навчання
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Концептуальні основи ансамблювання, розклад помилки та базові парадигми
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-xgboost-lightgbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математична формалізація, регуляризація та оптимізація алгоритмів XGBoost і LightGBM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Проєктування високопродуктивної системи інтелектуальної предиктивної діагностики обчислювальних вузлів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-weak-learners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Поняття композиції моделей, теорема Кондорсе про журі та математичне обґрунтування переваг колективного прийняття рішень слабкими учнями (Weak Learners)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-bias-variance-irreducible-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Розклад похибки узагальнення на зсув (Bias), дисперсію (Variance) та незвідний шум (Irreducible Error) як методологічна основа вибору стратегії ансамблювання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-bagging-bootstrap-aggregating-out-of-bag-oob-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Парадигма Bagging (Bootstrap Aggregating): статистичний метод бутстрапу з поверненням, оцінювання похибки Out-of-Bag (OOB) та декомпозиція алгоритму Random Forest із методом випадкових підпросторів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-boosting-gbdt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Парадигма Boosting: фундаментальна концепція послідовної мінімізації залишкової помилки, градієнтний спуск у функціональному просторі (GBDT Джерома Фрідмана) та обчислення псевдозалишків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та класифікація базових архітектур ансамблевого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітичний вивід формули дисперсії усередненого передбачення ансамблю Random Forest через парний коефіцієнт кореляції базових дерев та розмір ансамблю
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-information-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Критерії бінарного розщеплення вузлів у деревах рішень: неоднорідність Джині, ентропія Шеннона та максимізація інформаційного приросту (Information Gain)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-xgboost-gain-l_1l_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Математичний апарат алгоритму XGBoost: апроксимація диференційовної функції втрат рядом Тейлора другого порядку, аналітичний розрахунок оптимальних ваг листків та вивід формули коефіцієнта Gain із \(L_1\)/\(L_2\) регуляризацією
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-lightgbm-leaf-wise-best-first-goss-efb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Алгоритмічні механізми оптимізації високої швидкодії у фреймворку LightGBM: стратегія росту Leaf-wise (Best-First), однобічна вибірка за градієнтом GOSS та об'єднання взаємовиключних ознак EFB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-sparsity-aware-split-finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математична модель алгоритму Sparsity-aware Split Finding для автоматизованого та оптимального опрацювання пропущених значень в інженерних потоках даних
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематичний порівняльний аналіз аналітичних моделей ансамблювання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез та оптимізація ансамблевої моделі виявлення аномалій і перегріву серверних платформ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез та оптимізація ансамблевої моделі виявлення аномалій і перегріву серверних платформ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Ініціалізація нульового наближення та розрахунок похідних функції втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-t_textcpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Оцінювання кандидатного розщеплення за ознакою температури \(T_{\text{cpu}}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gain-d-textleft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок критерію Gain для варіанта спрямування пропусків ліворуч (\(d = \text{Left}\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gain-d-textright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок критерію Gain для варіанта спрямування пропусків праворуч (\(d = \text{Right}\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Прийняття рішення щодо розщеплення та розрахунок ваг листків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Оновлення моделі та розрахунок скоригованих імовірностей
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Концептуальні основи ансамблювання, розклад помилки та базові парадигми
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-xgboost-lightgbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математична формалізація, регуляризація та оптимізація алгоритмів XGBoost і LightGBM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Проєктування високопродуктивної системи інтелектуальної предиктивної діагностики обчислювальних вузлів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-weak-learners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Поняття композиції моделей, теорема Кондорсе про журі та математичне обґрунтування переваг колективного прийняття рішень слабкими учнями (Weak Learners)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-bias-variance-irreducible-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Розклад похибки узагальнення на зсув (Bias), дисперсію (Variance) та незвідний шум (Irreducible Error) як методологічна основа вибору стратегії ансамблювання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-bagging-bootstrap-aggregating-out-of-bag-oob-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Парадигма Bagging (Bootstrap Aggregating): статистичний метод бутстрапу з поверненням, оцінювання похибки Out-of-Bag (OOB) та декомпозиція алгоритму Random Forest із методом випадкових підпросторів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-boosting-gbdt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Парадигма Boosting: фундаментальна концепція послідовної мінімізації залишкової помилки, градієнтний спуск у функціональному просторі (GBDT Джерома Фрідмана) та обчислення псевдозалишків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та класифікація базових архітектур ансамблевого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітичний вивід формули дисперсії усередненого передбачення ансамблю Random Forest через парний коефіцієнт кореляції базових дерев та розмір ансамблю
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-information-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Критерії бінарного розщеплення вузлів у деревах рішень: неоднорідність Джині, ентропія Шеннона та максимізація інформаційного приросту (Information Gain)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-xgboost-gain-l_1l_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Математичний апарат алгоритму XGBoost: апроксимація диференційовної функції втрат рядом Тейлора другого порядку, аналітичний розрахунок оптимальних ваг листків та вивід формули коефіцієнта Gain із \(L_1\)/\(L_2\) регуляризацією
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-lightgbm-leaf-wise-best-first-goss-efb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Алгоритмічні механізми оптимізації високої швидкодії у фреймворку LightGBM: стратегія росту Leaf-wise (Best-First), однобічна вибірка за градієнтом GOSS та об'єднання взаємовиключних ознак EFB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-sparsity-aware-split-finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математична модель алгоритму Sparsity-aware Split Finding для автоматизованого та оптимального опрацювання пропущених значень в інженерних потоках даних
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематичний порівняльний аналіз аналітичних моделей ансамблювання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез та оптимізація ансамблевої моделі виявлення аномалій і перегріву серверних платформ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез та оптимізація ансамблевої моделі виявлення аномалій і перегріву серверних платформ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Ініціалізація нульового наближення та розрахунок похідних функції втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-t_textcpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Оцінювання кандидатного розщеплення за ознакою температури \(T_{\text{cpu}}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gain-d-textleft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок критерію Gain для варіанта спрямування пропусків ліворуч (\(d = \text{Left}\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gain-d-textright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок критерію Gain для варіанта спрямування пропусків праворуч (\(d = \text{Right}\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Прийняття рішення щодо розщеплення та розрахунок ваг листків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Оновлення моделі та розрахунок скоригованих імовірностей
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="7-bagging-boosting-random-forest-gradient-boosting-xgboost-lightgbm">Тема 7. Ансамблеві методи машинного навчання. Принципи Bagging та Boosting. Алгоритми Random Forest, Gradient Boosting, XGBoost та LightGBM для інженерних даних</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекції є фундаментальне засвоєння студентами теоретичних концепцій, математичного апарату та алгоритмічних принципів побудови композицій моделей машинного навчання на основі парадигм паралельного бутстрап-агрегування (Bagging) та послідовної градієнтної оптимізації функціонала втрат (Boosting). Головна увага зосереджується на формалізації розкладу похибки узагальнення на зсув та дисперсію, вивченні аналітичного апарату апроксимації цільової функції другого порядку в алгоритмі XGBoost, а також дослідженні високоефективних технологій прискорення обчислень GOSS та EFB у фреймворку LightGBM під час аналізу багатовимірних інженерних і телеметричних даних.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Студенти повинні демонструвати глибоке розуміння математичної природи розкладу середньоквадратичної похибки алгоритмів на зсув, дисперсію та неусувний шум, знати теоретико-ймовірнісні засади теореми Кондорсе про журі, принципи генерації вибірок за методом бутстрапу, концепцію функціонального градієнтного спуску та відмінності між парадигмами паралельного й послідовного ансамблювання.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти мають оволодіти вміннями математично розраховувати показники неоднорідності вузлів дерев рішень, визначати аналітичні ваги листків та коефіцієнт приросту якості розщеплення Gain на базі розкладу Тейлора другого порядку, а також програмно реалізовувати конвеєри навчання моделей Random Forest, XGBoost та LightGBM для обробки реальних масивів інженерних показників.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Студенти повинні навчитися аналізувати стратегії розростання дерев за рівнями (Level-wise) та за листками (Leaf-wise), диференціювати механізми регуляризації складності структури моделей, досліджувати вплив кореляції базових класифікаторів на узагальнювальну здатність лісу, а також критично оцінювати наслідки наявності пропусків та дисбалансу класів у даних телеметрії.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Студенти повинні набути здатності комплексно оцінювати обчислювальну складність, енерговитрати й вимоги до пам'яті різноманітних ансамблевих архітектур, проєктувати оптимальні багатокомпонентні гібридні системи машинного навчання та формулювати інженерно обґрунтовані рекомендації щодо вибору гіперпараметрів бустингу для систем діагностики й моніторингу комп'ютерних комплексів у режимі реального часу.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Концептуальні основи ансамблювання, розклад помилки та базові парадигми</h3>
+<ul>
+<li>
+<p>1.1. Поняття композиції моделей, теорема Кондорсе про журі та математичне обґрунтування переваг колективного прийняття рішень слабкими учнями (Weak Learners).</p>
+</li>
+<li>
+<p>1.2. Розклад похибки узагальнення на зсув (Bias), дисперсію (Variance) та незвідний шум (Irreducible Error) як методологічна основа вибору стратегії ансамблювання.</p>
+</li>
+<li>
+<p>1.3. Парадигма Bagging (Bootstrap Aggregating): статистичний метод бутстрапу з поверненням, оцінювання похибки Out-of-Bag (OOB) та декомпозиція алгоритму Random Forest із методом випадкових підпросторів.</p>
+</li>
+<li>
+<p>1.4. Парадигма Boosting: фундаментальна концепція послідовної мінімізації залишкової помилки, градієнтний спуск у функціональному просторі (GBDT Джерома Фрідмана) та обчислення псевдозалишків.</p>
+</li>
+</ul>
+<h3 id="2-xgboost-lightgbm">2. Аналітичний модуль. Математична формалізація, регуляризація та оптимізація алгоритмів XGBoost і LightGBM</h3>
+<ul>
+<li>
+<p>2.1. Аналітичний вивід формули дисперсії усередненого передбачення ансамблю Random Forest через парний коефіцієнт кореляції базових дерев та розмір ансамблю.</p>
+</li>
+<li>
+<p>2.2. Критерії бінарного розщеплення вузлів у деревах рішень: неоднорідність Джині, ентропія Шеннона та максимізація інформаційного приросту (Information Gain).</p>
+</li>
+<li>
+<p>2.3. Математичний апарат алгоритму XGBoost: апроксимація диференційовної функції втрат рядом Тейлора другого порядку, аналітичний розрахунок оптимальних ваг листків та вивід формули коефіцієнта Gain із <span class="arithmatex">\(L_1\)</span>/<span class="arithmatex">\(L_2\)</span> регуляризацією.</p>
+</li>
+<li>
+<p>2.4. Алгоритмічні механізми оптимізації високої швидкодії у фреймворку LightGBM: стратегія росту Leaf-wise (Best-First), однобічна вибірка за градієнтом GOSS та об'єднання взаємовиключних ознак EFB.</p>
+</li>
+<li>
+<p>2.5. Математична модель алгоритму Sparsity-aware Split Finding для автоматизованого та оптимального опрацювання пропущених значень в інженерних потоках даних.</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Проєктування високопродуктивної системи інтелектуальної предиктивної діагностики обчислювальних вузлів</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Синтез, аналітичний розрахунок та оптимізація ансамблевої моделі машинного навчання на основі алгоритмів XGBoost та LightGBM для завчасного виявлення аномалій і перегріву багатопроцесорних серверних платформ за показниками телеметрії»</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-weak-learners">1.1. Поняття композиції моделей, теорема Кондорсе про журі та математичне обґрунтування переваг колективного прийняття рішень слабкими учнями (Weak Learners)</h3>
+<p>В інженерії складних обчислювальних систем та штучного інтелекту класичний підхід до навчання окремої ізольованої моделі часто стикається з фундаментальними обмеженнями обчислювальної стійкості та узагальнювальної здатності. Спроба побудувати єдиний монолітний алгоритм, здатний однаково ефективно апроксимувати складні нелінійні залежності у багатовимірних інженерних вибірках без перенавчання, призводить до надмірної структурної складності оптимізаційних задач. Концептуальним вирішенням цієї суперечності став перехід від ізольованих моделей до <strong>ансамблевого навчання (Ensemble Learning)</strong>, або побудови композицій алгоритмів.</p>
+<p>Основна філософія ансамблювання полягає в агрегації прогнозів множини моделей, які називаються <strong>базовими або слабкими учнями (Weak Learners)</strong>, задля отримання сильного колективного розв'язувального правила (<strong>Strong Learner</strong>). За формальним визначенням Роберта Шапіре та Майкла Кернса, слабким учнем вважається алгоритм машинного навчання, точність класифікації якого на довільному розподілі даних лише трохи перевищує точність випадкового вгадування, тобто ймовірність помилки <span class="arithmatex">\(p &lt; 0.5\)</span> для бінарної постановки задачі.</p>
+<p>Історико-теоретичним базисом, що математично доводить доцільність колективного інтелекту над індивідуальним, виступає <strong>теорема Кондорсе про журі (Condorcet's Jury Theorem)</strong>, сформульована маркізом де Кондорсе у 1785 році в контексті соціального вибору. У термінах машинного навчання теорема стверджує: якщо ансамбль формується з <span class="arithmatex">\(n\)</span> статистично незалежних базових класифікаторів, кожен з яких приймає правильне бінарне рішення з імовірністю <span class="arithmatex">\(p &gt; 0.5\)</span>, то результуюче мажоритарне голосування ансамблю володіє ймовірністю правильного рішення <span class="arithmatex">\(P_{\text{ens}}\)</span>, яка монотонно зростає зі збільшенням потужності ансамблю <span class="arithmatex">\(n\)</span> і асимптотично прямує до одиниці.</p>
+<p>Математична модель мажоритарного голосування для непарної кількості незалежних класифікаторів <span class="arithmatex">\(n\)</span> формалізується біноміальним розподілом:</p>
+<div class="arithmatex">\[P_{\text{ens}} = \sum_{k=\lfloor n/2 \rfloor + 1}^n \binom{n}{k} p^k (1-p)^{n-k}\]</div>
+<p>де <span class="arithmatex">\(P_{\text{ens}}\)</span> — безрозмірна ймовірність прийняття правильного класифікаційного рішення колективом моделей, що набуває значень у діапазоні <span class="arithmatex">\([0, 1]\)</span>. Змінна <span class="arithmatex">\(n\)</span> позначає загальну кількість базових класифікаторів у складі ансамблю, що є додатним непарним цілим числом (<span class="arithmatex">\(n \in \mathbb{N}\)</span>). Параметр <span class="arithmatex">\(k\)</span> є індексом підсумовування, який визначає мінімальну необхідну кількість моделей, що проголосували за правильний клас для забезпечення простої більшості. Величина <span class="arithmatex">\(\binom{n}{k} = \frac{n!}{k!(n-k)!}\)</span> задає біноміальний коефіцієнт комбінацій голосів. Параметр <span class="arithmatex">\(p\)</span> позначає апріорну ймовірність генерації правильного прогнозу окремим ізольованим базовим алгоритмом за умови виконання статистичної нерівності <span class="arithmatex">\(0.5 &lt; p &lt; 1.0\)</span>.</p>
+<p>Головне інженерне обмеження теореми Кондорсе полягає у вимозі суворої статистичної взаємної незалежності помилок базових класифікаторів. Якщо моделі навчаються на ідентичних вибірках за допомогою детермінованих алгоритмів, коефіцієнт взаємної кореляції між їхніми помилками прямує до одиниці, внаслідок чого ансамбль просто дублює системну похибку одного класифікатора. Звідси випливає фундаментальна інженерна вимога ансамблювання: досягнення високої <strong>різноманітності (Diversity)</strong> базових алгоритмів. Ця різноманітність досягається маніпуляціями з простором навчальних прецедентів (бутстрап спостережень), зміною метрик ознакового простору (метод випадкових підпросторів) або послідовною модифікацією градієнтного цільового простору.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Методологія ансамблювання моделей] --&gt; B[Паралельні схеми: Bagging]
+    A --&gt; C[Послідовні схеми: Boosting]
+    A --&gt; D[Гібридні багаторівневі схеми: Stacking]
+
+    B --&gt; B1[Формування вибірок через Bootstrap]
+    B1 --&gt; B2[Незалежне паралельне навчання базових моделей]
+    B2 --&gt; B3[Агрегація: Усереднення / Мажоритарне голосування]
+    B3 --&gt; B4[Цільовий ефект: Зниження дисперсії Variance]
+
+    C --&gt; C1[Ініціалізація константним базовим прогнозом]
+    C1 --&gt; C2[Ітеративне навчання моделі на псевдозалишки]
+    C2 --&gt; C3[Врахування градієнтів функції втрат]
+    C3 --&gt; C4[Цільовий ефект: Зниження зсуву Bias]
+
+    D --&gt; D1[Базові моделі різного типу: Level 0]
+    D1 --&gt; D2[Формування матриці мета-ознак Out-of-Fold]
+    D2 --&gt; D3[Навчання мета-моделі: Level 1]
+    D3 --&gt; D4[Цільовий ефект: Комплексна оптимізація складності]</code></pre>
+<h3 id="12-bias-variance-irreducible-error">1.2. Розклад похибки узагальнення на зсув (Bias), дисперсію (Variance) та незвідний шум (Irreducible Error) як методологічна основа вибору стратегії ансамблювання</h3>
+<p>Математичний вибір конкретної архітектури композиції моделей вимагає строгого кількісного оцінювання джерел похибки машинного навчання. Центральним аналітичним інструментом для цього слугує <strong>розклад похибки на зсув та дисперсію (Bias-Variance Decomposition)</strong>, що виводиться для квадратичної функції втрат в умовах регресійного аналізу.</p>
+<p>Нехай залежна змінна <span class="arithmatex">\(y\)</span> генерується невідомою істинною детермінованою функцією <span class="arithmatex">\(f(x)\)</span> з адитивним випадковим шумом <span class="arithmatex">\(\varepsilon\)</span>:</p>
+<div class="arithmatex">\[y = f(x) + \varepsilon, \quad \mathbb{E}[\varepsilon] = 0, \quad \text{Var}(\varepsilon) = \sigma^2\]</div>
+<p>де <span class="arithmatex">\(y\)</span> є дійсним спостережуваним значенням цільової ознаки у вибірці, вираженим у відповідних фізичних або абстрактних одиницях вимірювання. Функція <span class="arithmatex">\(f(x)\)</span> є об'єктивною детермінованою закономірністю досліджуваного процесу залежно від вектора вхідних ознак <span class="arithmatex">\(x \in \mathbb{R}^M\)</span>. Випадкова величина <span class="arithmatex">\(\varepsilon\)</span> моделює стохастичний шум вимірювань і похибки сенсорів, для якого математичне сподівання дорівнює нулю, а дисперсія становить фіксовану константу <span class="arithmatex">\(\sigma^2 \in \mathbb{R}^+\)</span>.</p>
+<p>Припустимо, що для навчання використовується випадкова вибірка <span class="arithmatex">\(\mathcal{D}\)</span>, за якою відновлюється емпірична функція <span class="arithmatex">\(\hat{f}(x; \mathcal{D})\)</span>. Очікувана середньоквадратична похибка моделі в довільній фіксованій точці <span class="arithmatex">\(x\)</span> по всіх можливих реалізаціях навчальної вибірки <span class="arithmatex">\(\mathcal{D}\)</span> аналітично розкладається на три взаємно ортогональні компоненти:</p>
+<div class="arithmatex">\[\mathbb{E}_{\mathcal{D}, \varepsilon}\left[\left(y - \hat{f}(x; \mathcal{D})\right)^2\right] = \left(\text{Bias}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right]\right)^2 + \text{Var}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right] + \sigma^2\]</div>
+<p>де інтегральні складові правої частини рівняння набувають такого формального змісту:</p>
+<div class="arithmatex">\[\text{Bias}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right] = \mathbb{E}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right] - f(x)\]</div>
+<div class="arithmatex">\[\text{Var}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right] = \mathbb{E}_{\mathcal{D}}\left[\left(\hat{f}(x; \mathcal{D}) - \mathbb{E}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right]\right)^2\right]\]</div>
+<ol>
+<li>
+<p>Квадрат зміщення <span class="arithmatex">\(\left(\text{Bias}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right]\right)^2\)</span> кількісно характеризує помилку апроксимації, яка зумовлена нездатністю обраного сімейства алгоритмів відтворити справжню складність залежності <span class="arithmatex">\(f(x)\)</span>. Високе значення зміщення вказує на стан <strong>недонавчання (Underfitting)</strong> моделі.</p>
+</li>
+<li>
+<p>Дисперсія прогнозу <span class="arithmatex">\(\text{Var}_{\mathcal{D}}\left[\hat{f}(x; \mathcal{D})\right]\)</span> відображає чутливість моделі до випадкових флуктуацій у конкретній вибірці даних <span class="arithmatex">\(\mathcal{D}\)</span>. Висока дисперсія є класичним математичним індикатором <strong>перенавчання (Overfitting)</strong>, коли алгоритм підлаштовується під випадковий шум навчального набору замість генералізації сутнісної закономірності.</p>
+</li>
+<li>
+<p>Дисперсія шуму <span class="arithmatex">\(\sigma^2\)</span> репрезентує <strong>незвідний шум (Irreducible Error)</strong> даних, спричинений неповнотою набору вхідних параметрів або похибками вимірювальних трактів цифрової апаратури, і не може бути усунена жодним алгоритмічним шляхом оптимізації моделі.</p>
+</li>
+</ol>
+<p>У контексті базових алгоритмів, таких як <strong>дерева ухвалення рішень (Decision Trees)</strong>, глибина дерева безпосередньо регулює баланс Bias-Variance. Неглибокі дерева («пеньки») мають високий зсув і низьку дисперсію. Навпаки, глибокі, необмежені у рості дерева володіють нульовим зсувом (вони здатні розділити дані аж до ізольованих листків), проте мають колосальну дисперсію.</p>
+<p>Це призводить до чіткого розмежування двох парадигм інженерного ансамблювання:</p>
+<ol>
+<li>
+<p>Схема <strong>Bagging</strong> орієнтована на алгоритми з низьким зсувом і високою дисперсією (глибокі дерева), здійснюючи паралельне усереднення та радикально знижуючи результуючу дисперсію ансамблю без збільшення зсуву.</p>
+</li>
+<li>
+<p>Схема <strong>Boosting</strong> стартує зі слабких моделей із високим зсувом і низькою дисперсією (прості класифікатори, неглибокі дерева), ітеративно додаючи нові структури, які крок за кроком компенсують систематичну похибку, тим самим мінімізуючи сумарний зсув ансамблю.</p>
+</li>
+</ol>
+<h3 id="13-bagging-bootstrap-aggregating-out-of-bag-oob-random-forest">1.3. Парадигма Bagging (Bootstrap Aggregating): статистичний метод бутстрапу з поверненням, оцінювання похибки Out-of-Bag (OOB) та декомпозиція алгоритму Random Forest із методом випадкових підпросторів</h3>
+<p>Технологія <strong>Bagging (Bootstrap Aggregating)</strong>, представлена Лео Брейманом у 1996 році, спирається на статистичну техніку непараметричного ресемплінгу — <strong>бутстрап (Bootstrap)</strong>, запропоновану Бредлі Ефроном. Нехай задано початковий навчальний набір даних <span class="arithmatex">\(\mathcal{D} = \{(x_i, y_i)\}_{i=1}^N\)</span> обсягом <span class="arithmatex">\(N\)</span> спостережень. Бутстрап полягає в генерації <span class="arithmatex">\(B\)</span> незалежних підвибірок <span class="arithmatex">\(\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{D}_B\)</span>, кожна з яких формується шляхом рівномірного випадкового вибору <span class="arithmatex">\(N\)</span> об'єктів із множини <span class="arithmatex">\(\mathcal{D}\)</span> <strong>із поверненням (with replacement)</strong>.</p>
+<p>Ймовірність того, що конкретне фіксоване спостереження <span class="arithmatex">\(x_i\)</span> не буде обране під час здійснення одного випадкового вилучення з вибірки обсягом <span class="arithmatex">\(N\)</span>, становить <span class="arithmatex">\(1 - \frac{1}{N}\)</span>. Враховуючи незалежність послідовних вилучень із поверненням, ймовірність невипадання цього об'єкта в бутстрап-вибірку за всі <span class="arithmatex">\(N\)</span> ітерацій вибору виражається степеневою функцією:</p>
+<div class="arithmatex">\[P(\text{об'єкт } i \notin \mathcal{D}_b) = \left(1 - \frac{1}{N}\right)^N\]</div>
+<p>При зростанні розмірності вибірки до нескінченності дана ймовірність збігається до другої чудової границі:</p>
+<div class="arithmatex">\[\lim_{N \to \infty} \left(1 - \frac{1}{N}\right)^N = \frac{1}{e} \approx 0.367879 \approx 36.8\%\]</div>
+<p>Це означає, що кожна сформована бутстрап-вибірка <span class="arithmatex">\(\mathcal{D}_b\)</span> містить у середньому лише приблизно <span class="arithmatex">\(63.2\%\)</span> унікальних об'єктів від вихідного набору даних <span class="arithmatex">\(\mathcal{D}\)</span>, тоді як решта складається з дублікатів. Ті <span class="arithmatex">\(36.8\%\)</span> прецедентів, які жодного разу не потрапили у вибірку <span class="arithmatex">\(\mathcal{D}_b\)</span>, утворюють валідаційний набір <strong>Out-of-Bag (OOB)</strong> для даної базової моделі <span class="arithmatex">\(b\)</span>.</p>
+<p>Наявність підвибірок OOB забезпечує важливу інженерну перевагу: можливість проведення внутрішньої перехресної валідації (<strong>OOB Error Estimation</strong>) паралельно з процесом навчання, без виділення окремого відкладеного датасету чи застосування обчислювально витратної <span class="arithmatex">\(k\)</span>-кратної крос-валідації. Для кожного спостереження <span class="arithmatex">\((x_i, y_i)\)</span> підсумковий прогноз формується шляхом агрегації результатів лише тих базових моделей, для яких даний об'єкт <span class="arithmatex">\(x_i\)</span> був у складі Out-of-Bag:</p>
+<div class="arithmatex">\[\hat{y}_i^{\text{OOB}} = \frac{1}{|B_i^{\text{OOB}}|} \sum_{b \in B_i^{\text{OOB}}} \hat{f}_b(x_i)\]</div>
+<p>де <span class="arithmatex">\(B_i^{\text{OOB}} = \{b \in \{1, \dots, B\} \mid x_i \notin \mathcal{D}_b\}\)</span> — підмножина моделей, що не бачили об'єкт <span class="arithmatex">\(i\)</span> під час навчання. Оцінка узагальнюючої помилки за всіма елементами дає математично незміщену характеристику якості ансамблю.</p>
+<p>Логічним розвитком та найпотужнішим втіленням парадигми Bagging став алгоритм <strong>Random Forest (Випадковий ліс)</strong>, розроблений Лео Брейманом у 2001 році. Класичний беггінг над деревами рішень володіє недоліком: якщо у вибірці наявна пара домінантних ознак із високою кореляцією з цільовою змінною, ці ознаки вибиратимуться в якості кореневих розщеплень майже в усіх <span class="arithmatex">\(B\)</span> згенерованих деревах. Як наслідок, дерева стають схожими за топологією, а коефіцієнт кореляції між їхніми передбаченнями залишається високим, що стримує зменшення дисперсії ансамблю.</p>
+<p>Для подолання цієї кореляційної залежності Брейман інтегрував у беггінг <strong>метод випадкових підпросторів (Random Subspace Method)</strong>, попередньо запропонований Тіном Камом Хо. Під час побудови кожного вузла в кожному дереві алгоритм виконує пошук найкращого розщеплення не серед усього набору з <span class="arithmatex">\(M\)</span> доступних ознак, а виключно серед випадково відібраної підвибірки потужністю <span class="arithmatex">\(m \le M\)</span>:</p>
+<ol>
+<li>
+<p>Для задач класифікації стандартним евристичним значенням є <span class="arithmatex">\(m = \lfloor\sqrt{M}\rfloor\)</span>.</p>
+</li>
+<li>
+<p>Для задач регресійного моделювання інженерним стандартом вважається <span class="arithmatex">\(m = \lfloor M / 3 \rfloor\)</span>.</p>
+</li>
+</ol>
+<p>Ця рандомізація примусово декорелює дерева рішень між собою, що дозволяє значно знизити коефіцієнт парної кореляції базових моделей <span class="arithmatex">\(\rho\)</span> та забезпечує спадання загальної дисперсії лісу до мінімально можливих значень.</p>
+<h3 id="14-boosting-gbdt">1.4. Парадигма Boosting: фундаментальна концепція послідовної мінімізації залишкової помилки, градієнтний спуск у функціональному просторі (GBDT Джерома Фрідмана) та обчислення псевдозалишків</h3>
+<p>На відміну від паралельного та незалежного навчання в Bagging, парадигма <strong>Boosting</strong> є принципово послідовною, детермінованою технологією. Початкова концепція бустингу, запропонована в алгоритмі <strong>AdaBoost (Adaptive Boosting)</strong> Йоавом Фройндом та Робертом Шапіре (1995 р.), полягала у динамічному перезважуванні об'єктів навчального датасету: прецеденти, на яких поточна композиція помилилася, отримували збільшену вагу, змушуючи наступний слабкий класифікатор фокусуватися на проблемних областях простору станів.</p>
+<p>Фундаментальний стрибок у розвитку теорії відбувся у 1999–2001 роках, коли Джером Фрідман запропонував концепцію <strong>градієнтного бустингу (Gradient Boosting Machine, GBM)</strong>. Фрідман переосмислив бустинг не як перезважування спостережень, а як процес чисельної оптимізації в нескінченновимірному функціональному просторі (гільбертовому просторі функцій <span class="arithmatex">\(L_2\)</span>).</p>
+<p>Нехай розв'язується задача мінімізації емпіричного ризику для заданої диференційовної функції втрат <span class="arithmatex">\(L(y, \hat{y})\)</span>:</p>
+<div class="arithmatex">\[\mathcal{R}(F) = \sum_{i=1}^N L(y_i, F(x_i)) \to \min_{F}\]</div>
+<p>де <span class="arithmatex">\(\mathcal{R}(F)\)</span> — функціонал сумарних втрат на вибірці прецедентів, що є скалярною величиною, яка підлягає мінімізації. Символ <span class="arithmatex">\(F(x_i)\)</span> відображає прогноз комплексної функції ансамблю для вектора ознак <span class="arithmatex">\(i\)</span>-го об'єкта. Функція втрат <span class="arithmatex">\(L(y_i, F(x_i))\)</span> задає штраф за розбіжність прогнозу та справжнього значення цільової величини <span class="arithmatex">\(y_i\)</span>.</p>
+<p>В алгоритмі градієнтного спуску в просторі параметрів оновлення ваг відбувається вздовж вектора антиградієнта цільової функції. У функціональному ж просторі оптимізованими змінними виступають значення функції <span class="arithmatex">\(F(x)\)</span> у точках вибірки:</p>
+<div class="arithmatex">\[F(x) = \left[F(x_1), F(x_2), \dots, F(x_N)\right]^T\]</div>
+<p>Отже, на кожній ітерації <span class="arithmatex">\(m\)</span> (<span class="arithmatex">\(m = 1, \dots, M_{\text{iter}}\)</span>) необхідно змістити значення функції <span class="arithmatex">\(F_{m-1}(x)\)</span> у напрямку найшвидшого спадання функції втрат. Цей напрямок задається вектором від'ємних похідних функції втрат за поточним значенням апроксимації, які отримали назву <strong>псевдозалишків (Pseudo-Residuals)</strong>:</p>
+<div class="arithmatex">\[r_{im} = -\left[ \frac{\partial L(y_i, F(x_i))}{\partial F(x_i)} \right]_{F(x) = F_{m-1}(x)}\]</div>
+<p>де <span class="arithmatex">\(r_{im}\)</span> — обчислений псевдозалишок для <span class="arithmatex">\(i\)</span>-го об'єкта на <span class="arithmatex">\(m\)</span>-му кроці бустингу, що має фізичну розмірність градієнта функції втрат. Величина <span class="arithmatex">\(L(y_i, F(x_i))\)</span> є двічі неперервно диференційовною функцією втрат (наприклад, квадратичною втратою, логістичною втратою чи функцією Хьюбера). Індекс <span class="arithmatex">\(i\)</span> змінюється від <span class="arithmatex">\(1\)</span> до загального обсягу вибірки <span class="arithmatex">\(N\)</span>. Значення <span class="arithmatex">\(F_{m-1}(x_i)\)</span> являє собою фіксоване передбачення композиції з перших <span class="arithmatex">\(m-1\)</span> побудованих базових моделей.</p>
+<p>Алгоритмічна декомпозиція класичного градієнтного бустингу дерев рішень (<strong>Gradient Boosted Decision Trees, GBDT</strong>) реалізується за наступними послідовними етапами:</p>
+<ol>
+<li><strong>Ініціалізація нульового наближення <span class="arithmatex">\(F_0(x)\)</span>:</strong> вибирається константа, що мінімізує сумарні втрати на навчальній вибірці:</li>
+</ol>
+<div class="arithmatex">\[F_0(x) = \arg\min_{\gamma} \sum_{i=1}^N L(y_i, \gamma)\]</div>
+<ol>
+<li>
+<p><strong>Ітераційний цикл побудови базових функцій (<span class="arithmatex">\(m = 1, 2, \dots, M_{\text{iter}}\)</span>):</strong></p>
+</li>
+<li>
+<p>Обчислення значень псевдозалишків <span class="arithmatex">\(r_{im}\)</span> за всіма об'єктами вибірки <span class="arithmatex">\(i = 1, \dots, N\)</span>.</p>
+</li>
+<li>
+<p>Навчання базової моделі (зазвичай дерева рішень) <span class="arithmatex">\(h_m(x)\)</span> на навчальному датасеті <span class="arithmatex">\(\{(x_i, r_{im})\}_{i=1}^N\)</span>, де псевдозалишки виступають у ролі неперервної цільової змінної. Базове дерево структурує простір ознак на <span class="arithmatex">\(J_m\)</span> неперетинних термінальних областей (листків) <span class="arithmatex">\(R_{jm}\)</span>, де <span class="arithmatex">\(j = 1, \dots, J_m\)</span>.</p>
+</li>
+<li>
+<p>Визначення оптимальних коефіцієнтів зсуву <span class="arithmatex">\(\gamma_{jm}\)</span> для кожного сформованого листка <span class="arithmatex">\(R_{jm}\)</span> шляхом розв'язання одновимірних оптимізаційних підзадач:</p>
+</li>
+</ol>
+<div class="arithmatex">\[\gamma_{jm} = \arg\min_{\gamma} \sum_{x_i \in R_{jm}} L\left(y_i, F_{m-1}(x_i) + \gamma\right)\]</div>
+<ul>
+<li>Оновлення підсумкової апроксимаційної функції ансамблю з урахуванням темпу навчання (<strong>Learning Rate</strong>, або коефіцієнта стиснення <strong>Shrinkage</strong>) <span class="arithmatex">\(\eta \in (0, 1]\)</span>:</li>
+</ul>
+<div class="arithmatex">\[F_m(x) = F_{m-1}(x) + \eta \sum_{j=1}^{J_m} \gamma_{jm} \mathbb{I}(x \in R_{jm})\]</div>
+<p>де <span class="arithmatex">\(\mathbb{I}(\cdot)\)</span> — індикаторна функція, яка набуває значення <span class="arithmatex">\(1\)</span>, якщо вектор ознак <span class="arithmatex">\(x\)</span> потрапляє в термінальну область <span class="arithmatex">\(R_{jm}\)</span>, та <span class="arithmatex">\(0\)</span> в іншому випадку. Коефіцієнт <span class="arithmatex">\(\eta\)</span> запобігає перенавчанню, сповільнюючи процес схождення функціоналу та роблячи окремі кроки градієнтного спуску більш консервативними.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Iteration_1 [Ітерація m = 1]
+        D1[Обчислення псевдозалишків r_i1] --&gt; T1[Навчання дерева h_1 на залишки]
+        T1 --&gt; O1[Оптимізація ваг листків gamma_j1]
+        O1 --&gt; U1[Оновлення: F_1 = F_0 + eta * h_1]
+    end
+
+    subgraph Iteration_2 [Ітерація m = 2]
+        U1 --&gt; D2[Обчислення псевдозалишків r_i2]
+        D2 --&gt; T2[Навчання дерева h_2 на нові залишки]
+        T2 --&gt; O2[Оптимізація ваг листків gamma_j2]
+        O2 --&gt; U2[Оновлення: F_2 = F_1 + eta * h_2]
+    end
+
+    subgraph Iteration_M [Ітерація m = M]
+        U2 -.-&gt; DM[Обчислення псевдозалишків r_iM]
+        DM --&gt; TM[Навчання дерева h_M]
+        TM --&gt; OM[Оптимізація ваг листків gamma_jM]
+        OM --&gt; UM[Фінальна композиція F_M]
+    end</code></pre>
+<hr />
+<h3 id="_4">Систематизація та класифікація базових архітектур ансамблевого навчання</h3>
+<p>Нижче наведено порівняльний аналіз ключових парадигм і промислових реалізацій композицій алгоритмів, що застосовуються в сучасних інформаційно-обчислювальних комплексах.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Парадигма ансамблювання</th>
+<th style="text-align: left;">Базовий алгоритм (Base Learner)</th>
+<th style="text-align: left;">Головний цільовий компонент похибки</th>
+<th style="text-align: left;">Характер взаємодії моделей у системі</th>
+<th style="text-align: left;">Математичний механізм агрегації відповідей</th>
+<th style="text-align: left;">Чутливість до шуму та аномальних вимірювань</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Класичний Bagging</strong></td>
+<td style="text-align: left;">Необмежені за глибиною дерева рішень (High Variance)</td>
+<td style="text-align: left;">Радикальне зменшення дисперсії (Variance Reduction)</td>
+<td style="text-align: left;">Повністю незалежне паралельне навчання на процесорах</td>
+<td style="text-align: left;">Просте арифметичне усереднення або пряме мажоритарне голосування</td>
+<td style="text-align: left;">Низька чутливість через демпфування викидів при усередненні</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Random Forest</strong></td>
+<td style="text-align: left;">Випадкові декорельовані дерева рішень</td>
+<td style="text-align: left;">Зменшення дисперсії через мінімізацію кореляції <span class="arithmatex">\(\rho\)</span></td>
+<td style="text-align: left;">Незалежне паралельне навчання (SIMD/MIMD паралелізм)</td>
+<td style="text-align: left;">Зважене або просте усереднення ймовірностей у листках</td>
+<td style="text-align: left;">Вкрай низька; висока стійкість до зашумлених сигналів датчиків</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AdaBoost</strong></td>
+<td style="text-align: left;">Елементарні класифікатори або дерева-пеньки (High Bias)</td>
+<td style="text-align: left;">Зменшення систематичного зсуву (Bias Reduction)</td>
+<td style="text-align: left;">Строго послідовне навчання на модифікованих вагах вибірки</td>
+<td style="text-align: left;">Зважене голосування з коефіцієнтами надійності моделей <span class="arithmatex">\(\alpha_m\)</span></td>
+<td style="text-align: left;">Екстремально висока; алгоритм фокусується на шумі як на складних точках</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Classic GBDT</strong></td>
+<td style="text-align: left;">Неглибокі дерева з контролем кількості листків (Stumps/Trees)</td>
+<td style="text-align: left;">Зменшення зсуву з поступовим зниженням втрат</td>
+<td style="text-align: left;">Послідовний функціональний спуск по антиградієнту</td>
+<td style="text-align: left;">Адитивне додавання прогнозів, масштабованих темпом <span class="arithmatex">\(\eta\)</span></td>
+<td style="text-align: left;">Помірна; регулюється підбором робастних функцій втрат (Huber Loss)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stacking (Meta-learning)</strong></td>
+<td style="text-align: left;">Гетерогенні моделі (SVM, k-NN, Neural Nets, Дерева)</td>
+<td style="text-align: left;">Комплексна оптимізація Bias та Variance одночасно</td>
+<td style="text-align: left;">Багаторівнева ієрархія (Level-0 моделі та Level-1 метамодель)</td>
+<td style="text-align: left;">Нелінійна апроксимація мета-моделлю за вектором мета-ознак</td>
+<td style="text-align: left;">Залежить від властивостей і регуляризації обраної метамоделі</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Поширеною концептуальною помилкою інженерів є уявлення про те, що необмежене нарощування кількості базових дерев (<span class="arithmatex">\(B \to \infty\)</span>) у класичному випадковому лісі (Random Forest) здатне викликати перенавчання моделі за аналогією з градієнтним бустингом. </p>
+<p>У дійсності, збільшення кількості дерев у Random Forest монотонно знижує статистичну дисперсію ансамблю до асимптотичної межі <span class="arithmatex">\(\rho \sigma^2\)</span>, залишаючи систематичний зсув незмінним. Додавання надлишкових дерев у Random Forest призводить виключно до невиправданих витрат обчислювальних ресурсів і затримок під час інференсу, але не провокує деградацію узагальнювальної здатності на нових даних. </p>
+<p>На противагу цьому, в алгоритмах градієнтного бустингу (GBDT) надмірна кількість ітерацій <span class="arithmatex">\(M_{\text{iter}}\)</span> неминуче призводить до катастрофічного перенавчання, оскільки бустинг на кожному наступному кроці мінімізує залишки все точніше і зрештою починає апроксимувати стохастичний білий шум конкретної вибірки прецедентів.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Чому процедура Out-of-Bag (OOB) оцінювання в алгоритмі Random Forest дає асимптотично наближену оцінку похибки узагальнення, еквівалентну повній <span class="arithmatex">\(k\)</span>-кратній перехресній валідації (Cross-Validation), і за яких умов обчислення OOB-похибки може демонструвати статистичне зміщення при аналізі реальних інженерних даних?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Аналітична відповідь:</strong></p>
+<ol>
+<li>Еквівалентність крос-валідації досягається тим, що при кожному бутстрап-вилученні об'єм вибірки, що залишається за межами конкретного дерева, становить приблизно <span class="arithmatex">\(36.8\%\)</span> прецедентів. Отже, для кожного навчального вектора <span class="arithmatex">\(x_i\)</span> існує в середньому <span class="arithmatex">\(B \cdot e^{-1}\)</span> дерев, для яких він не використовувався в процесі оптимізації розщеплень:</li>
+</ol>
+<div class="arithmatex">\[B_i^{\text{OOB}} \approx 0.368 \cdot B\]</div>
+<p>Оскільки ці дерева навчалися на вибірках, незалежних від <span class="arithmatex">\(x_i\)</span>, агрегація їхніх прогнозів для <span class="arithmatex">\(x_i\)</span> є строго відкладеною валідацією, що математично усуває оптимістичне зміщення похибки навчання без необхідності повторного <span class="arithmatex">\(k\)</span>-кратного перезапуску всього алгоритму.</p>
+<ol>
+<li>
+<p>Статистичне зміщення OOB-оцінки виникає за таких специфічних інженерних умов:</p>
+<ul>
+<li>
+<p><strong>Наявність часової кореляції (Time-Series Data):</strong> якщо телеметричні дані є нестаціонарними часовими рядами, випадковий бутстрап порушує хронологічний порядок, призводячи до «заглядання в майбутнє» (Data Leakage), коли дерево навчається на точці <span class="arithmatex">\(t+1\)</span>, а тестується через OOB на точці <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p><strong>Сильний дисбаланс класів (Imbalanced Data):</strong> якщо рідкісний дефект обладнання представлений лише кількома відсотками прикладів, висока ймовірність того, що екземпляри міноритарного класу або взагалі не потраплять у бутстрап-підвибірку, або навпаки, не матимуть достатнього представництва в OOB, що спотворює оцінку чутливості (Recall).</p>
+</li>
+<li>
+<p><strong>Групова залежність (Clustered / Panel Data):</strong> якщо вимірювання надходять серіями від обмеженого пулу датчиків, спостереження всередині однієї серії корелюють між собою; потрапляння частини серії в навчальний блок дерева, а іншої — в OOB, нівелює незалежність валідації.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h3 id="_5">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проаналізуйте зсув-дисперсійний компроміс для дерев рішень різної глибини. Обґрунтуйте, чому використання дерев глибиною <span class="arithmatex">\(D = 1\)</span> («пеньків») у парадигмі Bagging є абсолютно неефективним інженерним рішенням, тоді як у парадигмі Boosting саме такі дерева здатні сформувати високоточний ансамбль.</p>
+</li>
+<li>
+<p>Дослідіть математичний зв'язок між класичним градієнтним спуском у просторі параметрів та функціональним спуском Фрідмана. Поясніть, чому використання квадратичної функції втрат <span class="arithmatex">\(L(y, F) = \frac{1}{2}(y - F)^2\)</span> перетворює вектор псевдозалишків на звичайну евклідову нев'язку <span class="arithmatex">\(r_i = y_i - F(x_i)\)</span>, тоді як при логістичній функції втрат залишки набувають ймовірнісної інтерпретації помилки класифікації.</p>
+</li>
+<li>
+<p>Зіставте обчислювальну складність паралельного виконання Bagging на сучасних багатопроцесорних архітектурах із розподіленою та спільною пам'яттю з послідовним конвеєром Boosting. Сформулюйте системні фактори, що лімітують апаратне масштабування обох підходів при роботі з потоками телеметричних даних у реальному часі.</p>
+</li>
+</ol>
+<h2 id="2">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21-random-forest">2.1. Аналітичний вивід формули дисперсії усередненого передбачення ансамблю Random Forest через парний коефіцієнт кореляції базових дерев та розмір ансамблю</h3>
+<p>Основоположний механізм ефективності парадигми Bagging та алгоритму Random Forest ґрунтується на математичному ефекті зниження дисперсії випадкової величини під час її паралельного усереднення. Розглянемо ансамбль, що складається з <span class="arithmatex">\(B\)</span> базових моделей регресії <span class="arithmatex">\(\hat{f}_1(x), \hat{f}_2(x), \dots, \hat{f}_B(x)\)</span>, які оптимізовані на окремих бутстрап-вибірках <span class="arithmatex">\(\mathcal{D}_b\)</span>.</p>
+<p>Припустимо, що кожна базова модель є однаково розподіленою випадковою величиною із математичним сподіванням <span class="arithmatex">\(\mathbb{E}[\hat{f}_b(x)] = \mu(x)\)</span> та скінченною дисперсією <span class="arithmatex">\(\text{Var}(\hat{f}_b(x)) = \sigma^2(x)\)</span>. При цьому будь-яка пара моделей володіє симетричним коефіцієнтом лінійної кореляції Пірсона <span class="arithmatex">\(\rho(x) = \text{Corr}(\hat{f}_i(x), \hat{f}_j(x))\)</span> при <span class="arithmatex">\(i \ne j\)</span>, де <span class="arithmatex">\(\rho(x) \in [0, 1]\)</span>.</p>
+<p>Підсумковий прогноз ансамблю формується шляхом простого арифметичного усереднення:</p>
+<div class="arithmatex">\[\hat{f}_{\text{ens}}(x) = \frac{1}{B} \sum_{b=1}^B \hat{f}_b(x)\]</div>
+<p>Аналітичне виведення підсумкової дисперсії ансамблю <span class="arithmatex">\(\text{Var}\left(\hat{f}_{\text{ens}}(x)\right)\)</span> розбивається на послідовність формальних етапів:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Запис дисперсії лінійної комбінації):} &amp; \quad \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) = \text{Var}\left(\frac{1}{B} \sum_{b=1}^B \hat{f}_b(x)\right) = \frac{1}{B^2} \text{Var}\left(\sum_{b=1}^B \hat{f}_b(x)\right) \\
+\text{Етап 2 (Розклад дисперсії суми випадкових величин):} &amp; \quad \text{Var}\left(\sum_{b=1}^B \hat{f}_b(x)\right) = \sum_{b=1}^B \text{Var}\left(\hat{f}_b(x)\right) + \sum_{i=1}^B \sum_{j \ne i}^B \text{Cov}\left(\hat{f}_i(x), \hat{f}_j(x)\right) \\
+\text{Етап 3 (Врахування коваріації через коефіцієнт кореляції):} &amp; \quad \text{Cov}\left(\hat{f}_i(x), \hat{f}_j(x)\right) = \rho(x) \cdot \sqrt{\text{Var}(\hat{f}_i(x))} \cdot \sqrt{\text{Var}(\hat{f}_j(x))} = \rho(x) \sigma^2(x) \\
+\text{Етап 4 (Підстановка та алгебраїчне зведення подвійних сум):} &amp; \quad \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) = \frac{1}{B^2} \left[ B \sigma^2(x) + B(B - 1)\rho(x)\sigma^2(x) \right] \\
+\text{Етап 5 (Канонічне розщеплення на кореляційну та стохастичну частки):} &amp; \quad \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) = \rho(x) \sigma^2(x) + \frac{1 - \rho(x)}{B} \sigma^2(x)
+\end{aligned}
+\]</div>
+<p>де величини, що беруть участь у виведенні, визначаються наступним чином:</p>
+<ol>
+<li>
+<p>Дисперсія <span class="arithmatex">\(\text{Var}\left(\hat{f}_{\text{ens}}(x)\right)\)</span> вимірює розсіювання передбачень усього ансамблю моделей навколо його математичного сподівання у квадратних одиницях цільової змінної.</p>
+</li>
+<li>
+<p>Параметр <span class="arithmatex">\(B\)</span> задає цілочисельну кількість незалежно навчених базових дерев рішень в ансамблі (<span class="arithmatex">\(B \in \mathbb{N}\)</span>).</p>
+</li>
+<li>
+<p>Величина <span class="arithmatex">\(\sigma^2(x)\)</span> позначає власну дисперсію окремого базового дерева рішень, яка через відсутність обрізання гілок є суттєво завищеною.</p>
+</li>
+<li>
+<p>Коефіцієнт <span class="arithmatex">\(\rho(x)\)</span> виражає безрозмірну величину парної кореляції між виходами двох випадкових дерев для заданого вектора ознак <span class="arithmatex">\(x\)</span>.</p>
+</li>
+</ol>
+<p>Дослідимо поведінку отриманої аналітичної функції за граничних умов:</p>
+<ol>
+<li>Асимптотична межа при нескінченному нарощуванні кількості базових дерев (<span class="arithmatex">\(B \to \infty\)</span>):</li>
+</ol>
+<div class="arithmatex">\[\lim_{B \to \infty} \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) = \lim_{B \to \infty} \left[ \rho(x) \sigma^2(x) + \frac{1 - \rho(x)}{B} \sigma^2(x) \right] = \rho(x) \sigma^2(x)\]</div>
+<ol>
+<li>Ідеальний граничний стан повної некорельованості моделей (<span class="arithmatex">\(\rho(x) \to 0\)</span>):</li>
+</ol>
+<div class="arithmatex">\[\left. \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) \right|_{\rho(x) = 0} = \frac{\sigma^2(x)}{B} \xrightarrow[B \to \infty]{} 0\]</div>
+<ol>
+<li>Граничний стан абсолютної функціональної детермінованості або ідентичності моделей (<span class="arithmatex">\(\rho(x) \to 1\)</span>):</li>
+</ol>
+<div class="arithmatex">\[\left. \text{Var}\left(\hat{f}_{\text{ens}}(x)\right) \right|_{\rho(x) = 1} = \sigma^2(x)\]</div>
+<p>Отриманий результат демонструє ключову інженерну проблему класичного беггінгу: якщо дерева навчаються на вибірках, отриманих лише через бутстрап за об'єктами, сильні домінантні ознаки зумовлюють високе значення кореляції <span class="arithmatex">\(\rho(x) \approx 0.7 - 0.9\)</span>. За таких умов навіть граничне значення кількості дерев <span class="arithmatex">\(B \to \infty\)</span> не дозволяє опустити дисперсію нижче рівня <span class="arithmatex">\(\rho(x) \sigma^2(x)\)</span>. </p>
+<p>Алгоритм <strong>Random Forest</strong> долає це обмеження за допомогою випадкового підпростору ознак: вибір випадкової підмножини із <span class="arithmatex">\(m = \lfloor \sqrt{M} \rfloor\)</span> або <span class="arithmatex">\(m = \lfloor M/3 \rfloor\)</span> параметрів у кожному вузлі примусово руйнує топологічну подібність дерев. Це знижує <span class="arithmatex">\(\rho(x)\)</span> до діапазону <span class="arithmatex">\(0.1 - 0.2\)</span>, дозволяючи практично повністю нівелювати дисперсію під час усереднення без суттєвого збільшення систематичного зсуву окремих дерев.</p>
+<h3 id="22-information-gain">2.2. Критерії бінарного розщеплення вузлів у деревах рішень: неоднорідність Джині, ентропія Шеннона та максимізація інформаційного приросту (Information Gain)</h3>
+<p>Базовим елементом ансамблів Bagging, Random Forest та Boosting виступає бінарне дерево рішень. Процес його побудови є жадібним рекурсивним алгоритмом, який на кожному кроці розбиває множину спостережень поточного вузла <span class="arithmatex">\(Q\)</span> на дві неперетинні підмножини <span class="arithmatex">\(Q_L(j, s)\)</span> та <span class="arithmatex">\(Q_R(j, s)\)</span> за допомогою вибору сплітуючої ознаки <span class="arithmatex">\(j \in \{1, \dots, M\}\)</span> та числового порогу <span class="arithmatex">\(s \in \mathbb{R}\)</span>:</p>
+<div class="arithmatex">\[Q_L(j, s) = \{(x, y) \in Q \mid x_j \le s\}, \quad Q_R(j, s) = \{(x, y) \in Q \mid x_j &gt; s\}\]</div>
+<p>Для обрання оптимальної пари <span class="arithmatex">\((j^*, s^*)\)</span> формулюється оптимізаційна задача максимізації критерію <strong>приросту інформації (Information Gain, <span class="arithmatex">\(\Delta I\)</span>)</strong>:</p>
+<div class="arithmatex">\[\Delta I(Q, j, s) = I(Q) - \left( \frac{N_L}{N_Q} I(Q_L) + \frac{N_R}{N_Q} I(Q_R) \right) \to \max_{j, s}\]</div>
+<p>де <span class="arithmatex">\(N_Q = |Q|\)</span>, <span class="arithmatex">\(N_L = |Q_L|\)</span>, <span class="arithmatex">\(N_R = |Q_R|\)</span> позначають кількість об'єктів у батьківському та дочірніх вузлах відповідно, а <span class="arithmatex">\(I(Q)\)</span> є функцією неоднорідності (<strong>Impurity</strong>).</p>
+<p>В аналізі інженерних систем використовуються такі аналітичні метрики неоднорідності для <span class="arithmatex">\(K\)</span> класів, де <span class="arithmatex">\(p_k = \frac{1}{N_Q} \sum_{i \in Q} \mathbb{I}(y_i = k)\)</span> є емпіричною часткою класу <span class="arithmatex">\(k\)</span>:</p>
+<ol>
+<li><strong>Неоднорідність Джині (Gini Impurity):</strong></li>
+</ol>
+<div class="arithmatex">\[I_G(Q) = 1 - \sum_{k=1}^K p_k^2 = \sum_{k=1}^K p_k (1 - p_k)\]</div>
+<ol>
+<li><strong>Ентропія Шеннона (Shannon Entropy):</strong></li>
+</ol>
+<div class="arithmatex">\[I_H(Q) = -\sum_{k=1}^K p_k \log_2(p_k)\]</div>
+<p>за умови використання домовленості <span class="arithmatex">\(0 \log_2(0) = 0\)</span>.</p>
+<ol>
+<li><strong>Середньоквадратична похибка (MSE Impurity) для задач регресії:</strong></li>
+</ol>
+<div class="arithmatex">\[I_{\text{MSE}}(Q) = \frac{1}{N_Q} \sum_{i \in Q} (y_i - \bar{y}_Q)^2, \quad \bar{y}_Q = \frac{1}{N_Q} \sum_{i \in Q} y_i\]</div>
+<p>Порівняльний диференціальний аналіз критеріїв Джині та ентропії у бінарному випадку (<span class="arithmatex">\(K = 2\)</span>, де <span class="arithmatex">\(p_1 = p\)</span>, <span class="arithmatex">\(p_2 = 1 - p\)</span>) підтверджує їхню математичну узгодженість. Розклад ентропії за формулою Тейлора в околі точки максимальної невизначеності <span class="arithmatex">\(p = 0.5\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Запис ентропії через натуральний логарифм):} &amp; \quad I_H(p) = -\frac{1}{\ln 2} [p \ln p + (1-p) \ln(1-p)] \\
+\text{Етап 2 (Розклад функцій логарифма у степеневий ряд):} &amp; \quad \ln(1 \pm x) \approx \pm x - \frac{x^2}{2}, \quad \text{де } x = 2p - 1 \\
+\text{Етап 3 (Апроксимація ентропії поліномом 2-го порядку):} &amp; \quad I_H(p) \approx 1 - \frac{2}{\ln 2} (p - 0.5)^2 \\
+\text{Етап 4 (Зіставлення з неоднорідністю Джині):} &amp; \quad I_G(p) = 2p(1-p) = \frac{1}{2} - 2(p - 0.5)^2
+\end{aligned}
+\]</div>
+<p>З аналізу випливає, що <span class="arithmatex">\(I_G(p) \approx \frac{\ln 2}{2} I_H(p)\)</span>. Обидва критерії досягають екстремумів у точках <span class="arithmatex">\(p \in \{0, 1\}\)</span> (мінімум, що дорівнює нулю) та <span class="arithmatex">\(p = 0.5\)</span> (максимум). Однак із обчислювальної точки зору критерій Джині не вимагає виклику трансцендентної функції логарифма, що робить його обчислення значно швидшим на мікропроцесорах загального призначення під час багатократного перебору граничних точок у потокових масивах даних.</p>
+<h3 id="23-xgboost-gain-l_1l_2">2.3. Математичний апарат алгоритму XGBoost: апроксимація диференційовної функції втрат рядом Тейлора другого порядку, аналітичний розрахунок оптимальних ваг листків та вивід формули коефіцієнта Gain із <span class="arithmatex">\(L_1\)</span>/<span class="arithmatex">\(L_2\)</span> регуляризацією</h3>
+<p>Алгоритм <strong>XGBoost (eXtreme Gradient Boosting)</strong>, запропонований Тянкі Ченом у 2016 році, є класичним стандартом промислового градієнтного бустингу другого порядку. Нехай на ітерації <span class="arithmatex">\(t\)</span> ансамбль формує передбачення <span class="arithmatex">\(\hat{y}_i^{(t)} = \hat{y}_i^{(t-1)} + f_t(x_i)\)</span>, де <span class="arithmatex">\(f_t \in \mathcal{F}\)</span> — параметризоване дерево рішень, що відображає вхідний вектор <span class="arithmatex">\(x_i\)</span> у ваговий коефіцієнт відповідного листка: <span class="arithmatex">\(f_t(x) = w_{q(x)}\)</span>. Тут <span class="arithmatex">\(q: \mathbb{R}^M \to \{1, 2, \dots, T\}\)</span> задає структуру розбиття на <span class="arithmatex">\(T\)</span> термінальних листків, а <span class="arithmatex">\(w \in \mathbb{R}^T\)</span> є вектором дійсних ваг листків.</p>
+<p>Повний регуляризований функціонал оптимізації має вигляд:</p>
+<div class="arithmatex">\[\mathcal{L}^{(t)} = \sum_{i=1}^N l\left(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)\right) + \Omega(f_t)\]</div>
+<p>де регуляризаційний штраф за структурну складність дерева визначається формулою:</p>
+<div class="arithmatex">\[\Omega(f_t) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2 + \alpha \sum_{j=1}^T |w_j|\]</div>
+<p>Параметр <span class="arithmatex">\(\gamma\)</span> контролює штраф за введення додаткового вузла розщеплення, <span class="arithmatex">\(\lambda\)</span> задає коефіцієнт <span class="arithmatex">\(L_2\)</span>-регуляризації ваг, а <span class="arithmatex">\(\alpha\)</span> відповідає за розріджувальну <span class="arithmatex">\(L_1\)</span>-регуляризацію ваг листків.</p>
+<p>Виведемо аналітичну формулу оптимізації цільової функції, вважаючи <span class="arithmatex">\(\alpha = 0\)</span> для збереження аналітичної гладкості першої похідної:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Апроксимація Тейлора 2-го порядку):} &amp; \quad l\left(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)\right) \approx l\left(y_i, \hat{y}_i^{(t-1)}\right) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i) \\
+\text{Етап 2 (Визначення градієнтів та гесіанів):} &amp; \quad g_i = \frac{\partial l(y_i, \hat{y}_i^{(t-1)})}{\partial \hat{y}_i^{(t-1)}}, \quad h_i = \frac{\partial^2 l(y_i, \hat{y}_i^{(t-1)})}{\partial \left(\hat{y}_i^{(t-1)}\right)^2} \\
+\text{Етап 3 (Відкидання постійного доданка):} &amp; \quad \tilde{\mathcal{L}}^{(t)} = \sum_{i=1}^N \left[ g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i) \right] + \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2 \\
+\text{Етап 4 (Перегрупування суми за множинами індексів листків):} &amp; \quad I_j = \{i \mid q(x_i) = j\}, \quad \tilde{\mathcal{L}}^{(t)} = \sum_{j=1}^T \left[ \left(\sum_{i \in I_j} g_i\right) w_j + \frac{1}{2} \left(\sum_{i \in I_j} h_i + \lambda\right) w_j^2 \right] + \gamma T \\
+\text{Етап 5 (Введення кумулятивних позначень):} &amp; \quad G_j = \sum_{i \in I_j} g_i, \quad H_j = \sum_{i \in I_j} h_i \implies \tilde{\mathcal{L}}^{(t)} = \sum_{j=1}^T \left[ G_j w_j + \frac{1}{2} (H_j + \lambda) w_j^2 \right] + \gamma T
+\end{aligned}
+\]</div>
+<p>Диференціюючи отриманий функціонал за вагою окремого листка <span class="arithmatex">\(w_j\)</span> та прирівнюючи похідну до нуля, знаходимо оптимальне аналітичне значення ваги <span class="arithmatex">\(w_j^*\)</span>:</p>
+<div class="arithmatex">\[\frac{\partial \tilde{\mathcal{L}}^{(t)}}{\partial w_j} = G_j + (H_j + \lambda) w_j = 0 \implies w_j^* = -\frac{G_j}{H_j + \lambda}\]</div>
+<p>Якщо враховувати ненульову <span class="arithmatex">\(L_1\)</span>-регуляризацію (<span class="arithmatex">\(\alpha &gt; 0\)</span>), оптимальна вага обчислюється через функцію м'якого відсікання (<strong>Soft-thresholding</strong>):</p>
+<div class="arithmatex">\[w_j^* = -\frac{\text{sign}(G_j) \max(|G_j| - \alpha, 0)}{H_j + \lambda}\]</div>
+<p>Підставимо оптимальну вагу <span class="arithmatex">\(w_j^*\)</span> назад у функціонал <span class="arithmatex">\(\tilde{\mathcal{L}}^{(t)}\)</span>, отримавши аналітичний вираз якості структури дерева (Score функція):</p>
+<div class="arithmatex">\[\tilde{\mathcal{L}}^*(q) = -\frac{1}{2} \sum_{j=1}^T \frac{G_j^2}{H_j + \lambda} + \gamma T\]</div>
+<p>Формула приросту якості при розщепленні батьківського вузла на лівий (<span class="arithmatex">\(L\)</span>) та правий (<span class="arithmatex">\(R\)</span>) дочірні вузли визначається різницею оцінок якості:</p>
+<div class="arithmatex">\[\text{Gain} = \frac{1}{2} \left[ \frac{G_L^2}{H_L + \lambda} + \frac{G_R^2}{H_R + \lambda} - \frac{(G_L + G_R)^2}{H_L + H_R + \lambda} \right] - \gamma\]</div>
+<p>де <span class="arithmatex">\(G_L, H_L\)</span> та <span class="arithmatex">\(G_R, H_R\)</span> — суми градієнтів і гесіанів відповідних дочірніх підмножин. Якщо <span class="arithmatex">\(\text{Gain} \le 0\)</span>, розщеплення є структурно недоцільним і відкидається (природна прунінг-регуляризація).</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    actor Engine as Обчислювальний модуль
+    participant Master as Координатор вузлів
+    participant Worker1 as Процесорний потік 1
+    participant Worker2 as Процесорний потік 2
+    participant Tree as Структура дерева
+
+    Engine-&gt;&gt;Master: Ініціалізація ітерації t з вектором прогнозу F_{t-1}
+    Note over Master: Обчислення локальних похідних g_i та h_i
+    Master-&gt;&gt;Worker1: Розподіл блоків даних 1..N/2
+    Master-&gt;&gt;Worker2: Розподіл блоків даних (N/2)+1..N
+
+    par Паралельний розрахунок градієнтних сум
+        Worker1-&gt;&gt;Worker1: Акумуляція G_L, H_L у потоці 1
+    and
+        Worker2-&gt;&gt;Worker2: Акумуляція G_R, H_R у потоці 2
+    end
+
+    Worker1--&gt;&gt;Master: Повернення часткових сум G_L, H_L
+    Worker2--&gt;&gt;Master: Повернення часткових сум G_R, H_R
+
+    Note over Master: Розрахунок критерію Gain = 0.5*[Score_L + Score_R - Score_Parent] - gamma
+    alt Gain &gt; 0
+        Master-&gt;&gt;Tree: Фіксація розщеплення вузла (j*, s*)
+        Tree--&gt;&gt;Master: Оновлення структури q(x)
+    else Gain &lt;= 0
+        Master-&gt;&gt;Tree: Прунінг розщеплення (вузол залишається листком)
+        Note over Tree: Обчислення фінальної ваги w* = -G / (H + lambda)
+    end
+    Master--&gt;&gt;Engine: Дерево f_t(x) побудовано, перехід до F_t(x)</code></pre>
+<h3 id="24-lightgbm-leaf-wise-best-first-goss-efb">2.4. Алгоритмічні механізми оптимізації високої швидкодії у фреймворку LightGBM: стратегія росту Leaf-wise (Best-First), однобічна вибірка за градієнтом GOSS та об'єднання взаємовиключних ознак EFB</h3>
+<p>Незважаючи на високу точність XGBoost, класичний пошук точок розщеплення для неперервних ознак вимагає сортування значень, що призводить до часової складності <span class="arithmatex">\(\mathcal{O}(M \cdot N \log N)\)</span> на кожному рівні дерева. Бібліотека <strong>LightGBM (Light Gradient Boosting Machine)</strong>, розроблена дослідницьким підрозділом Microsoft у 2017 році, усуває ці накладні витрати завдяки гістограмній дискретизації ознак та двом новим математичним алгоритмам: GOSS та EFB.</p>
+<p>По-перше, LightGBM замінює симетричну побудову за рівнями (<strong>Level-wise</strong>) на глибинний пріоритетний ріст за листками (<strong>Leaf-wise або Best-First</strong>). На кожному кроці алгоритм обирає для розщеплення виключно той єдиний листок серед усіх наявних, розбиття якого забезпечує глобально максимальний приріст <span class="arithmatex">\(\Delta \mathcal{L}\)</span> (Gain), незалежно від глибини його залягання в ієрархії. Це дозволяє досягати значно глибшого зниження функції втрат при фіксованій кількості листків <span class="arithmatex">\(T\)</span>, проте вимагає суворого обмеження параметрів <code>max_depth</code> та <code>min_data_in_leaf</code> для запобігання перенавчанню на асиметричних гілках.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; UnsplitNode : Початковий вузол із даними Q
+    UnsplitNode --&gt; EvaluateSplits : Гістограмне бінування ознак
+    EvaluateSplits --&gt; CalculateGain : Розрахунок Gain для кандидатів розбиття
+
+    state DecisionFork &lt;&lt;choice&gt;&gt;
+    CalculateGain --&gt; DecisionFork : Порівняння Gain із порогом gamma
+
+    DecisionFork --&gt; SplitAccepted : Gain &gt; gamma
+    DecisionFork --&gt; SplitPruned : Gain &lt;= gamma
+
+    SplitAccepted --&gt; FormChildren : Поділ на підвузли Q_L та Q_R
+    FormChildren --&gt; UnsplitNode : Рекурсивний Leaf-wise вибір топ-Gain
+
+    SplitPruned --&gt; TerminalLeaf : Фіксація термінального вузла
+    TerminalLeaf --&gt; [*] : Обчислення ваги w* з L2-регуляризацією</code></pre>
+<p>По-друге, математичний апарат <strong>GOSS (Gradient-based One-Side Sampling)</strong> скорочує кількість спостережень <span class="arithmatex">\(N\)</span> без спотворення розподілу градієнтів:</p>
+<ol>
+<li>
+<p>Алгоритм упорядковує всі спостереження вибірки за абсолютним значенням градієнта <span class="arithmatex">\(|g_i|\)</span>.</p>
+</li>
+<li>
+<p>Відбирається верхня частка об'єктів розміром <span class="arithmatex">\(a \in (0, 1)\)</span> із найбільшими градієнтами, формуючи множину <span class="arithmatex">\(A\)</span>. Ці спостереження відповідають точкам із найбільшою похибкою апроксимації.</p>
+</li>
+<li>
+<p>З решти підмножини <span class="arithmatex">\(A^c\)</span>, яка містить об'єкти з малими градієнтами, випадковим чином обирається менша частка <span class="arithmatex">\(b \in (0, 1)\)</span>, утворюючи множину <span class="arithmatex">\(B\)</span>.</p>
+</li>
+<li>
+<p>Об'єктам із множини <span class="arithmatex">\(B\)</span> надається підвищений ваговий множник <span class="arithmatex">\(\frac{1 - a}{b}\)</span> під час обчислення сумарного градієнта, що компенсує зміщення вибірки.</p>
+</li>
+</ol>
+<p>Оцінка інформаційного приросту <span class="arithmatex">\(\widetilde{V}_j(d)\)</span> для ознаки <span class="arithmatex">\(j\)</span> за порогом <span class="arithmatex">\(d\)</span> у підмножині спостережень <span class="arithmatex">\(A \cup B\)</span> формалізується рівнянням:</p>
+<div class="arithmatex">\[\widetilde{V}_j(d) = \frac{1}{N} \left[ \frac{\left(\sum_{x_i \in A_L} g_i + \frac{1-a}{b}\sum_{x_i \in B_L} g_i\right)^2}{n_L^j(d)} + \frac{\left(\sum_{x_i \in A_R} g_i + \frac{1-a}{b}\sum_{x_i \in B_R} g_i\right)^2}{n_R^j(d)} \right]\]</div>
+<p>де <span class="arithmatex">\(A_L = \{x_i \in A \mid x_{ij} \le d\}\)</span>, <span class="arithmatex">\(A_R = \{x_i \in A \mid x_{ij} &gt; d\}\)</span>, а <span class="arithmatex">\(n_L^j(d)\)</span> та <span class="arithmatex">\(n_R^j(d)\)</span> є ефективною скоригованою кількістю спостережень у відповідних дочірніх вузлах.</p>
+<p>Теоретично доведено, що дисперсія оцінки градієнта за методом GOSS обмежена зверху величиною:</p>
+<div class="arithmatex">\[\mathcal{E}_{\text{GOSS}} \le C \left( \frac{1-a}{\sqrt{b}} + \frac{1}{\sqrt{N}} \right)\]</div>
+<p>де <span class="arithmatex">\(C\)</span> — константа, що залежить від максимального значення градієнта. При типових значеннях <span class="arithmatex">\(a = 0.2\)</span> та <span class="arithmatex">\(b = 0.1\)</span> обсяг обчислень зменшується на <span class="arithmatex">\(70\%\)</span>, при цьому модель практично не втрачає узагальнювальної здатності.</p>
+<p>По-третє, технологія <strong>EFB (Exclusive Feature Bundling)</strong> здійснює стиснення ознакового простору. У багатовимірних інженерних масивах значна частина ознак є високорозрідженою і взаємовиключною (рідко набувають ненульових значень одночасно). Задача точного об'єднання мінімальної кількості таких ознак зводиться до задачі розфарбовування графа, яка є NP-складною. LightGBM використовує жадібну апроксимацію:</p>
+<ol>
+<li>
+<p>Будується зважений граф, де вершини відповідають ознакам, а ваги ребер — кількості спільних ненульових значень (конфліктів).</p>
+</li>
+<li>
+<p>Ознаки впорядковуються за спаданням ступенів вершин і об'єднуються у спільні бандли за умови, що сумарна кількість конфліктів не перевищує поріг <span class="arithmatex">\(\gamma_{\text{conflict}}\)</span>.</p>
+</li>
+<li>
+<p>Для розмежування вихідних ознак усередині одного бандла до значень кожної наступної ознаки додається зміщення, рівне максимальному значенню попередньої ознаки:</p>
+</li>
+</ol>
+<div class="arithmatex">\[x_{\text{bundled}} = x_{\text{feat}_2} + \max(x_{\text{feat}_1})\]</div>
+<p>Це дозволяє перетворити декілька розріджених колонок в одну щільну гістограму без взаємного перекриття діапазонів і втрати інформації.</p>
+<h3 id="25-sparsity-aware-split-finding">2.5. Математична модель алгоритму Sparsity-aware Split Finding для автоматизованого та оптимального опрацювання пропущених значень в інженерних потоках даних</h3>
+<p>У реальних інженерних системах цифрові вимірювальні канали постійно продукують пропущені значення через тимчасову втрату живлення сенсорів, колізії пакетів у промислових польових шинах або перевищення динамічного діапазону перетворювачів. Класичні алгоритми вимагають попереднього заповнення пропусків (<strong>imputation</strong>), що вносить штучне зміщення в статистичну структуру вибірки.</p>
+<p>В алгоритмі XGBoost реалізовано математично строгий уніфікований підхід <strong>Sparsity-aware Split Finding</strong>, який аналітично оптимізує напрямок перенаправлення пропущених значень.</p>
+<p>Нехай <span class="arithmatex">\(I\)</span> позначає множину всіх об'єктів вузла, а <span class="arithmatex">\(I_k = \{i \in I \mid x_{ik} \ne \text{NaN}\}\)</span> — підмножину об'єктів, для яких значення <span class="arithmatex">\(k\)</span>-ї ознаки присутнє. Алгоритм здійснює бінарне розщеплення виключно за елементами множини <span class="arithmatex">\(I_k\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Розрахунок повних сум градієнтів вузла):} &amp; \quad G = \sum_{i \in I} g_i, \quad H = \sum_{i \in I} h_i \\
+\text{Етап 2 (Ініціалізація сценарію маршрутизації ліворуч):} &amp; \quad \text{Всі пропуски } i \in I \setminus I_k \text{ спрямовуються в } I_L \\
+&amp; \quad G_L = \sum_{i \in I_k, x_{ik} \le s} g_i + (G - G_k), \quad H_L = \sum_{i \in I_k, x_{ik} \le s} h_i + (H - H_k) \\
+\text{Етап 3 (Ініціалізація сценарію маршрутизації праворуч):} &amp; \quad \text{Всі пропуски } i \in I \setminus I_k \text{ спрямовуються в } I_R \\
+&amp; \quad G_R = \sum_{i \in I_k, x_{ik} &gt; s} g_i + (G - G_k), \quad H_R = \sum_{i \in I_k, x_{ik} &gt; s} h_i + (H - H_k) \\
+\text{Етап 4 (Аналітичний вибір напрямку за замовчуванням):} &amp; \quad d^* = \arg\max_{d \in \{L, R\}} \left( \text{Gain}(s, d) \right)
+\end{aligned}
+\]</div>
+<p>де величини позначають:</p>
+<ol>
+<li>
+<p><span class="arithmatex">\(G_k = \sum_{i \in I_k} g_i\)</span> та <span class="arithmatex">\(H_k = \sum_{i \in I_k} h_i\)</span> визначають кумулятивні суми перших та других похідних функції втрат за всіма валідними (наявними) спостереженнями ознаки <span class="arithmatex">\(k\)</span>.</p>
+</li>
+<li>
+<p>Різниця <span class="arithmatex">\(G - G_k\)</span> та <span class="arithmatex">\(H - H_k\)</span> формує точний градієнтний внесок сукупності об'єктів із відсутніми значеннями.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(d^*\)</span> фіксує бінарний напрямок за замовчуванням (<strong>Default Direction</strong>), за яким спрямовуються пропущені вимірювання під час подальшого інференсу.</p>
+</li>
+</ol>
+<p>Обчислювальна складність пошуку розщеплення за такої моделі пропорційна виключно кількості наявних записів: <span class="arithmatex">\(\mathcal{O}(|I_k|)\)</span> замість <span class="arithmatex">\(\mathcal{O}(|I|)\)</span>. Це забезпечує лінійне прискорення алгоритму при високому ступені розрідженості матриці ознак.</p>
+<hr />
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Регуляризація <span class="arithmatex">\(L_2\)</span> у знаменнику оптимальної ваги листка <span class="arithmatex">\(w_j^* = -\frac{G_j}{H_j + \lambda}\)</span> відіграє роль байєсівського апріорного розподілу Гаусса над виходами термінальних вузлів із нульовим середнім та дисперсією <span class="arithmatex">\(\frac{1}{\lambda}\)</span>. </p>
+<p>За відсутності регуляризації (<span class="arithmatex">\(\lambda = 0\)</span>), якщо у листок потрапляє одиничний об'єкт із малим гесіаном <span class="arithmatex">\(h_i \to 0\)</span> (наприклад, у випадку надзвичайно високої впевненості прогнозу для логістичної функції втрат), значення ваги прямує до нескінченності:</p>
+<div class="arithmatex">\[\lim_{H_j \to 0, \lambda \to 0} |w_j^*| = \infty\]</div>
+<p>Наявність строго додатної константи <span class="arithmatex">\(\lambda &gt; 0\)</span> гарантує обчислювальну стійкість матричного обернення та накладає жорстке обмеження на величину кроку, демпфуючи вплив аномальних сплесків телеметрії на структуру ансамблю.</p>
+</blockquote>
+<hr />
+<h3 id="_6">Систематичний порівняльний аналіз аналітичних моделей ансамблювання</h3>
+<p>Нижче наведено порівняльну характеристику математичного апарату та обчислювальних механізмів моделей машинних композицій.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Алгоритм</th>
+<th style="text-align: left;">Порядок оптимізації Loss</th>
+<th style="text-align: left;">Стратегія селекції розщеплень</th>
+<th style="text-align: left;">Модель декомпозиції складності</th>
+<th style="text-align: left;">Спосіб обробки пропусків у даних</th>
+<th style="text-align: left;">Обчислювальна складність одного кроку</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Random Forest</strong></td>
+<td style="text-align: left;">Нульовий порядок (евристики Impurity)</td>
+<td style="text-align: left;">Випадковий підпростір (<span class="arithmatex">\(m \le M\)</span>), жадібний повний перебір</td>
+<td style="text-align: left;">Редукція дисперсії через взаємну декореляцію дерев: <span class="arithmatex">\(\rho \sigma^2\)</span></td>
+<td style="text-align: left;">Вимагає попередньої детермінованої або медіанної імпутації</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(B \cdot m \cdot N \log N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Classic GBDT</strong></td>
+<td style="text-align: left;">Перший порядок (функціональний антиградієнт)</td>
+<td style="text-align: left;">Повний перебір по всіх <span class="arithmatex">\(M\)</span> ознаках, Level-wise ріст</td>
+<td style="text-align: left;">Послідовна мінімізація зсуву зі стисненням: <span class="arithmatex">\(F_m = F_{m-1} + \eta h_m\)</span></td>
+<td style="text-align: left;">Окремий сурогатний розподіл або обов'язкове відновлення</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(M_{\text{iter}} \cdot M \cdot N \log N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XGBoost</strong></td>
+<td style="text-align: left;">Другий порядок (ряд Тейлора: градієнт <span class="arithmatex">\(g_i\)</span> + гесіан <span class="arithmatex">\(h_i\)</span>)</td>
+<td style="text-align: left;">Точний або апроксимативний квантильний перебір, Level/Leaf</td>
+<td style="text-align: left;">Штраф за листки та ваги: <span class="arithmatex">\(\gamma T + \frac{1}{2}\lambda \sum w_j^2 + \alpha \sum \|w_j\|\)</span></td>
+<td style="text-align: left;">Sparsity-aware Split Finding з автовибором гілки за Gain</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(M_{\text{iter}} \cdot \|I_k\| \log \|I_k\|)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LightGBM</strong></td>
+<td style="text-align: left;">Другий порядок (градієнт <span class="arithmatex">\(g_i\)</span> + гесіан <span class="arithmatex">\(h_i\)</span>)</td>
+<td style="text-align: left;">Гістограмна дискретизація (Binning), Leaf-wise (Best-First)</td>
+<td style="text-align: left;">Селекція великих градієнтів GOSS та згортка колонок EFB</td>
+<td style="text-align: left;">Автоматичне виділення нульового біна у гістограмі</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(M_{\text{iter}} \cdot K_{\text{bins}} \cdot (a + b)N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CatBoost</strong></td>
+<td style="text-align: left;">Другий порядок (розширений стохастичний градієнт)</td>
+<td style="text-align: left;">Симетричні дерева (Oblivious Trees) однакової структури</td>
+<td style="text-align: left;">Впорядкований бустинг (Ordered Boosting) проти Target Leakage</td>
+<td style="text-align: left;">Інтерпретація пропусків як окремої мінімальної або максимальної категорії</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(M_{\text{iter}} \cdot M \cdot N)\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> У процесі побудови дерева рішень в алгоритмі XGBoost розглядається кандидатний вузол, для якого накопичені градієнтні суми складають <span class="arithmatex">\(G = -12.0\)</span> та <span class="arithmatex">\(H = 8.0\)</span>. Гіперпараметри регуляризації зафіксовані як <span class="arithmatex">\(\lambda = 2.0\)</span> та <span class="arithmatex">\(\gamma = 3.5\)</span>. </p>
+<p>Досліджується варіант бінарного розщеплення вузла на дві підмножини, для яких характеристики розподілилися наступним чином: 
+* Лівий дочірній вузол: <span class="arithmatex">\(G_L = -10.0\)</span>, <span class="arithmatex">\(H_L = 3.0\)</span>;
+* Правий дочірній вузол: <span class="arithmatex">\(G_R = -2.0\)</span>, <span class="arithmatex">\(H_R = 5.0\)</span>.</p>
+<p>Обчисліть оптимальні ваги листків <span class="arithmatex">\(w_L^*\)</span>, <span class="arithmatex">\(w_R^*\)</span>, показник вихідного батьківського листка <span class="arithmatex">\(w_P^*\)</span>, розрахуйте результуючий коефіцієнт приросту якості <span class="arithmatex">\(\text{Gain}\)</span> та дайте однозначний висновок: чи прийме алгоритм дане розщеплення, чи заблокує його через механізм прунінгу?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Аналітичний розрахунок:</strong></p>
+<ol>
+<li>Обчислюємо оптимальну вагу для батьківського вузла за формулою <span class="arithmatex">\(w_P^* = -\frac{G}{H + \lambda}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[w_P^* = -\frac{-12.0}{8.0 + 2.0} = \frac{12.0}{10.0} = 1.20\]</div>
+<ol>
+<li>Обчислюємо оптимальні ваги для лівого та правого потенційних дочірніх листків:</li>
+</ol>
+<div class="arithmatex">\[w_L^* = -\frac{G_L}{H_L + \lambda} = -\frac{-10.0}{3.0 + 2.0} = \frac{10.0}{5.0} = 2.00\]</div>
+<div class="arithmatex">\[w_R^* = -\frac{G_R}{H_R + \lambda} = -\frac{-2.0}{5.0 + 2.0} = \frac{2.0}{7.0} \approx 0.2857\]</div>
+<ol>
+<li>Обчислюємо компоненти Score-функції для кожного елемента розщеплення:</li>
+</ol>
+<div class="arithmatex">\[\text{Score}_P = \frac{G^2}{H + \lambda} = \frac{(-12.0)^2}{8.0 + 2.0} = \frac{144.0}{10.0} = 14.40\]</div>
+<div class="arithmatex">\[\text{Score}_L = \frac{G_L^2}{H_L + \lambda} = \frac{(-10.0)^2}{3.0 + 2.0} = \frac{100.0}{5.0} = 20.00\]</div>
+<div class="arithmatex">\[\text{Score}_R = \frac{G_R^2}{H_R + \lambda} = \frac{(-2.0)^2}{5.0 + 2.0} = \frac{4.0}{7.0} \approx 0.5714\]</div>
+<ol>
+<li>Розраховуємо коефіцієнт приросту якості розщеплення <span class="arithmatex">\(\text{Gain}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Gain} &amp;= \frac{1}{2} \left[ \text{Score}_L + \text{Score}_R - \text{Score}_P \right] - \gamma \\
+&amp;= \frac{1}{2} \left[ 20.00 + 0.5714 - 14.40 \right] - 3.5 \\
+&amp;= \frac{1}{2} [6.1714] - 3.5 = 3.0857 - 3.5 = -0.4143
+\end{aligned}
+\]</div>
+<ol>
+<li><strong>Інженерний висновок:</strong> 
+Оскільки результуючий коефіцієнт приросту <span class="arithmatex">\(\text{Gain} = -0.4143 &lt; 0\)</span>, зниження емпіричного ризику від введення нового розщеплення не компенсує штраф за структурну складність вузла <span class="arithmatex">\(\gamma = 3.5\)</span>. </li>
+</ol>
+<p>Алгоритм XGBoost <strong>відхилить дане розщеплення</strong> через механізм автоматичного відсікання гілок (прунінг), і поточний вузол залишиться неподільним термінальним листком із вагою <span class="arithmatex">\(w^* = 1.20\)</span>.</p>
+</details>
+<hr />
+<h3 id="_7">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проаналізуйте вираз для коефіцієнта Gain в алгоритмі XGBoost та математично доведіть, що при фіксованих значеннях градієнтів <span class="arithmatex">\(G_L, G_R\)</span> приріст якості є монотонно спадною функцією від параметра регуляризації <span class="arithmatex">\(\lambda\)</span>.</p>
+</li>
+<li>
+<p>Дослідіть поведінку гесіана <span class="arithmatex">\(h_i = p_i(1 - p_i)\)</span> для логістичної функції втрат. Поясніть, чому на об'єктах, класифікованих із високою впевненістю (<span class="arithmatex">\(p_i \to 0\)</span> або <span class="arithmatex">\(p_i \to 1\)</span>), гесіан прямує до нуля, і як це впливає на знаменник ваги листка <span class="arithmatex">\(w_j^*\)</span>.</p>
+</li>
+<li>
+<p>Зіставте алгоритмічну складність сортувального методу пошуку розщеплень в XGBoost та гістограмного підходу в LightGBM. Визначте умови, за яких похибка квантування неперервної ознаки на 256 бінів призводить до помітного погіршення точності моделі.</p>
+</li>
+</ol>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31">3.1. Комплексний інженерний кейс. Синтез та оптимізація ансамблевої моделі виявлення аномалій і перегріву серверних платформ</h3>
+<h4 id="_8">Постановка інженерної задачі</h4>
+<p>У центрах обробки даних сучасні блейд-сервери високої щільності функціонують в умовах інтенсивних динамічних навантажень. Відмова системи охолодження або локальний термічний розгін кристала процесора призводять до деградації обчислювальної потужності через примусовий тротлінг (CPU Throttling) або аварійного вимкнення вузла. Необхідно побудувати інтелектуальну систему предиктивної бінарної класифікації стану сервера на базі алгоритму XGBoost другого порядку. Система повинна завчасно сигналізувати про перехід у критичний стан (<span class="arithmatex">\(y = 1\)</span>) або штатне функціонування (<span class="arithmatex">\(y = 0\)</span>).</p>
+<p>Телеметричний потік характеризується наявністю пропущених вимірювань, зумовлених затримками передачі пакетів по шині I2C/IPMI, що вимагає задіяння аналітичного апарату <strong>Sparsity-aware Split Finding</strong>. </p>
+<p>Для демонстрації покрокового аналітичного розрахунку обрано репрезентативну підвибірку з <span class="arithmatex">\(N = 6\)</span> часових зрізів телеметрії сервера. Вектор вхідних параметрів містить дві інформативні ознаки: <span class="arithmatex">\(x_1\)</span> — температура кристала процесора (<span class="arithmatex">\(T_{\text{cpu}}\)</span>, <span class="arithmatex">\(^{\circ}\text{C}\)</span>), <span class="arithmatex">\(x_2\)</span> — споживана електрична потужність сокета (<span class="arithmatex">\(P_{\text{pkg}}\)</span>, <span class="arithmatex">\(\text{W}\)</span>).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр телеметрії</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Тип даних</th>
+<th style="text-align: left;">Діапазон значень</th>
+<th style="text-align: left;">Одиниці вимірювання</th>
+<th style="text-align: left;">Фізичний зміст параметра</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Температура кристала</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(x_1\)</span> (<span class="arithmatex">\(T_{\text{cpu}}\)</span>)</td>
+<td style="text-align: left;">Неперервний (Float)</td>
+<td style="text-align: left;"><span class="arithmatex">\([30.0; 105.0]\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(^{\circ}\text{C}\)</span></td>
+<td style="text-align: left;">Температура найгарячішого ядра процесора за даними вбудованих цифрових термосенсорів DTS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Споживана потужність</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(x_2\)</span> (<span class="arithmatex">\(P_{\text{pkg}}\)</span>)</td>
+<td style="text-align: left;">Неперервний (Float)</td>
+<td style="text-align: left;"><span class="arithmatex">\([15.0; 280.0]\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{W}\)</span> (Ват)</td>
+<td style="text-align: left;">Миттєва потужність живлення процесорного сокета за показами модуля стабілізації напруги VRM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Цільовий стан вузла</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(y\)</span></td>
+<td style="text-align: left;">Бінарний (Integer)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\{0; 1\}\)</span></td>
+<td style="text-align: left;">Безрозмірна</td>
+<td style="text-align: left;">Діагностичний стан: <span class="arithmatex">\(0\)</span> — штатний тепловий режим, <span class="arithmatex">\(1\)</span> — переднаварійний стан термічного тротлінгу</td>
+</tr>
+</tbody>
+</table>
+<p>Навчальна вибірка прецедентів має такий числовий вигляд:</p>
+<ul>
+<li>
+<p>Об'єкт 1: <span class="arithmatex">\(x^{(1)} = (62.0, 95.0)\)</span>, цільовий клас <span class="arithmatex">\(y_1 = 0\)</span>;</p>
+</li>
+<li>
+<p>Об'єкт 2: <span class="arithmatex">\(x^{(2)} = (68.0, 120.0)\)</span>, цільовий клас <span class="arithmatex">\(y_2 = 0\)</span>;</p>
+</li>
+<li>
+<p>Об'єкт 3: <span class="arithmatex">\(x^{(3)} = (\text{NaN}, 110.0)\)</span>, цільовий клас <span class="arithmatex">\(y_3 = 0\)</span> (пропуск температури внаслідок збою шини сенсора);</p>
+</li>
+<li>
+<p>Об'єкт 4: <span class="arithmatex">\(x^{(4)} = (82.0, 195.0)\)</span>, цільовий клас <span class="arithmatex">\(y_4 = 1\)</span>;</p>
+</li>
+<li>
+<p>Об'єкт 5: <span class="arithmatex">\(x^{(5)} = (86.0, 220.0)\)</span>, цільовий клас <span class="arithmatex">\(y_5 = 1\)</span>;</p>
+</li>
+<li>
+<p>Об'єкт 6: <span class="arithmatex">\(x^{(6)} = (90.0, 240.0)\)</span>, цільовий клас <span class="arithmatex">\(y_6 = 1\)</span>.</p>
+</li>
+</ul>
+<p>Гіперпараметри моделі зафіксовано згідно з інженерними вимогами до регуляризації:</p>
+<ul>
+<li>
+<p>Параметр <span class="arithmatex">\(L_2\)</span>-регуляризації ваг листків: <span class="arithmatex">\(\lambda = 1.0\)</span>;</p>
+</li>
+<li>
+<p>Штраф за структурну складність розщеплення: <span class="arithmatex">\(\gamma = 0.2\)</span>;</p>
+</li>
+<li>
+<p>Темп навчання (коефіцієнт стиснення): <span class="arithmatex">\(\eta = 0.3\)</span>.</p>
+</li>
+</ul>
+<pre class="mermaid"><code>flowchart TD
+    A[Збір телеметрії: T_cpu, P_pkg] --&gt; B[Ініціалізація базового наближення F_0 = 0.0]
+    B --&gt; C[Розрахунок градієнтів g_i та гесіанів h_i]
+    C --&gt; D[Пошук розщеплення на ознаці T_cpu: поріг s = 75 C]
+    D --&gt; E{Аналіз напрямку пропусків NaN}
+    E --&gt;|Маршрут ліворуч| F1[Розрахунок Gain_L]
+    E --&gt;|Маршрут праворуч| F2[Розрахунок Gain_R]
+    F1 &amp; F2 --&gt; G[Вибір маршруту з максимальним Gain]
+    G --&gt; H{Перевірка критерію прунінгу: Gain &gt; gamma?}
+    H --&gt;|Так| I[Фіксація розщеплення та розрахунок ваг w_L, w_R]
+    H --&gt;|Ні| J[Прунінг гілки: збереження кореневого листка]
+    I --&gt; K[Оновлення ансамблю: F_1 = F_0 + eta * w]</code></pre>
+<h4 id="_9">Покроковий аналітичний розрахунок</h4>
+<h5 id="1_2">Крок 1. Ініціалізація нульового наближення та розрахунок похідних функції втрат</h5>
+<p>Для бінарної класифікації використовується логістична функція втрат (бінарна крос-ентропія):</p>
+<div class="arithmatex">\[l(y_i, \hat{y}_i) = - \left[ y_i \ln(p_i) + (1 - y_i) \ln(1 - p_i) \right], \quad p_i = \sigma(F(x_i)) = \frac{1}{1 + e^{-F(x_i)}}\]</div>
+<p>Ініціалізуємо базовий прогноз нульовим значенням логарифма шансів для всіх об'єктів: <span class="arithmatex">\(F_0(x_i) = 0.0\)</span>. Відповідно, початкова ймовірність становить:</p>
+<div class="arithmatex">\[p_i^{(0)} = \sigma(0.0) = \frac{1}{1 + e^0} = 0.5, \quad \forall i \in \{1, \dots, 6\}\]</div>
+<p>Перша та друга похідні функції втрат за поточним прогнозом моделі розраховуються за формулами:</p>
+<div class="arithmatex">\[g_i = p_i^{(0)} - y_i = 0.5 - y_i, \quad h_i = p_i^{(0)} (1 - p_i^{(0)}) = 0.5 \cdot (1 - 0.5) = 0.25\]</div>
+<p>Здійснюємо обчислення векторів похідних:</p>
+<ul>
+<li>
+<p>Для об'єктів із <span class="arithmatex">\(y_i = 0\)</span> (<span class="arithmatex">\(i = 1, 2, 3\)</span>): <span class="arithmatex">\(g_i = 0.5 - 0 = +0.5\)</span>, <span class="arithmatex">\(h_i = 0.25\)</span>;</p>
+</li>
+<li>
+<p>Для об'єктів із <span class="arithmatex">\(y_i = 1\)</span> (<span class="arithmatex">\(i = 4, 5, 6\)</span>): <span class="arithmatex">\(g_i = 0.5 - 1 = -0.5\)</span>, <span class="arithmatex">\(h_i = 0.25\)</span>.</p>
+</li>
+</ul>
+<p>Сумарні значення градієнтів та гесіанів у вихідному кореневому вузлі:</p>
+<div class="arithmatex">\[G = \sum_{i=1}^6 g_i = 3 \cdot (+0.5) + 3 \cdot (-0.5) = 0.0, \quad H = \sum_{i=1}^6 h_i = 6 \cdot 0.25 = 1.5\]</div>
+<p>Показник якості вихідного нерозщепленого кореневого вузла (батьківський Score):</p>
+<div class="arithmatex">\[\text{Score}_P = \frac{G^2}{H + \lambda} = \frac{0.0^2}{1.5 + 1.0} = 0.0\]</div>
+<h5 id="2-t_textcpu">Крок 2. Оцінювання кандидатного розщеплення за ознакою температури <span class="arithmatex">\(T_{\text{cpu}}\)</span></h5>
+<p>Розглядається кандидатне розщеплення за ознакою <span class="arithmatex">\(x_1\)</span> з порогом <span class="arithmatex">\(s = 75.0^{\circ}\text{C}\)</span>. Множина об'єктів із відомими значеннями ознаки поділяється на дві групи:</p>
+<ul>
+<li>
+<p>Ліва підмножина (<span class="arithmatex">\(x_1 \le 75.0\)</span>): об'єкти 1 та 2 (<span class="arithmatex">\(y_1 = 0, y_2 = 0\)</span>);</p>
+</li>
+<li>
+<p>Права підмножина (<span class="arithmatex">\(x_1 &gt; 75.0\)</span>): об'єкти 4, 5 та 6 (<span class="arithmatex">\(y_4 = 1, y_5 = 1, y_6 = 1\)</span>).</p>
+</li>
+</ul>
+<p>Об'єкт 3 має пропущене значення (<span class="arithmatex">\(x_1 = \text{NaN}\)</span>). За алгоритмом <strong>Sparsity-aware Split Finding</strong> розглядаються два альтернативні варіанти маршрутизації пропуску.</p>
+<h5 id="3-gain-d-textleft">Крок 3. Розрахунок критерію Gain для варіанта спрямування пропусків ліворуч (<span class="arithmatex">\(d = \text{Left}\)</span>)</h5>
+<p>Об'єкт 3 тимчасово додається до лівої підмножини. Тоді <span class="arithmatex">\(I_L = \{1, 2, 3\}\)</span>, а <span class="arithmatex">\(I_R = \{4, 5, 6\}\)</span>:</p>
+<div class="arithmatex">\[G_L = g_1 + g_2 + g_3 = 0.5 + 0.5 + 0.5 = 1.5, \quad H_L = h_1 + h_2 + h_3 = 0.25 + 0.25 + 0.25 = 0.75\]</div>
+<div class="arithmatex">\[G_R = g_4 + g_5 + g_6 = -0.5 - 0.5 - 0.5 = -1.5, \quad H_R = h_4 + h_5 + h_6 = 0.25 + 0.25 + 0.25 = 0.75\]</div>
+<p>Обчислюємо Score для обох дочірніх вузлів:</p>
+<div class="arithmatex">\[\text{Score}_L = \frac{G_L^2}{H_L + \lambda} = \frac{1.5^2}{0.75 + 1.0} = \frac{2.25}{1.75} \approx 1.2857\]</div>
+<div class="arithmatex">\[\text{Score}_R = \frac{G_R^2}{H_R + \lambda} = \frac{(-1.5)^2}{0.75 + 1.0} = \frac{2.25}{1.75} \approx 1.2857\]</div>
+<p>Приріст якості розщеплення становить:</p>
+<div class="arithmatex">\[\text{Gain}_{\text{Left}} = \frac{1}{2} \left[ \text{Score}_L + \text{Score}_R - \text{Score}_P \right] - \gamma = \frac{1}{2} [1.2857 + 1.2857 - 0.0] - 0.2 = 1.2857 - 0.2 = 1.0857\]</div>
+<h5 id="4-gain-d-textright">Крок 4. Розрахунок критерію Gain для варіанта спрямування пропусків праворуч (<span class="arithmatex">\(d = \text{Right}\)</span>)</h5>
+<p>Об'єкт 3 тимчасово додається до правої підмножини. Тоді <span class="arithmatex">\(I_L = \{1, 2\}\)</span>, а <span class="arithmatex">\(I_R = \{3, 4, 5, 6\}\)</span>:</p>
+<div class="arithmatex">\[G_L = g_1 + g_2 = 0.5 + 0.5 = 1.0, \quad H_L = h_1 + h_2 = 0.25 + 0.25 = 0.5\]</div>
+<div class="arithmatex">\[G_R = g_3 + g_4 + g_5 + g_6 = 0.5 - 0.5 - 0.5 - 0.5 = -1.0, \quad H_R = 4 \cdot 0.25 = 1.0\]</div>
+<p>Обчислюємо відповідні оцінки Score:</p>
+<div class="arithmatex">\[\text{Score}_L = \frac{G_L^2}{H_L + \lambda} = \frac{1.0^2}{0.5 + 1.0} = \frac{1.0}{1.5} \approx 0.6667\]</div>
+<div class="arithmatex">\[\text{Score}_R = \frac{G_R^2}{H_R + \lambda} = \frac{(-1.0)^2}{1.0 + 1.0} = \frac{1.0}{2.0} = 0.5000\]</div>
+<p>Розраховуємо приріст якості розщеплення:</p>
+<div class="arithmatex">\[\text{Gain}_{\text{Right}} = \frac{1}{2} [0.6667 + 0.5000 - 0.0] - 0.2 = \frac{1}{2} [1.1667] - 0.2 = 0.5833 - 0.2 = 0.3833\]</div>
+<h5 id="5">Крок 5. Прийняття рішення щодо розщеплення та розрахунок ваг листків</h5>
+<p>Порівняння отриманих значень приросту якості:</p>
+<div class="arithmatex">\[\text{Gain}_{\text{Left}} = 1.0857 &gt; \text{Gain}_{\text{Right}} = 0.3833\]</div>
+<p>Алгоритм обирає напрямок за замовчуванням <strong>вліво</strong> (<span class="arithmatex">\(d^* = \text{Left}\)</span>). Оскільки максимальний приріст <span class="arithmatex">\(\text{Gain} = 1.0857 &gt; 0\)</span>, умова прунінгу задовольняється, і розщеплення фіксується.</p>
+<p>Розраховуємо оптимальні ваги термінальних листків першого базового дерева:</p>
+<div class="arithmatex">\[w_L^* = -\frac{G_L}{H_L + \lambda} = -\frac{1.5}{0.75 + 1.0} = -\frac{1.5}{1.75} \approx -0.8571\]</div>
+<div class="arithmatex">\[w_R^* = -\frac{G_R}{H_R + \lambda} = -\frac{-1.5}{0.75 + 1.0} = \frac{1.5}{1.75} \approx +0.8571\]</div>
+<h5 id="6">Крок 6. Оновлення моделі та розрахунок скоригованих імовірностей</h5>
+<p>Оновлюємо прогноз для об'єктів лівої та правої гілок з урахуванням темпу навчання <span class="arithmatex">\(\eta = 0.3\)</span>:</p>
+<div class="arithmatex">\[F_1(x \in \text{Left}) = F_0(x) + \eta \cdot w_L^* = 0.0 + 0.3 \cdot (-0.8571) = -0.2571\]</div>
+<div class="arithmatex">\[F_1(x \in \text{Right}) = F_0(x) + \eta \cdot w_R^* = 0.0 + 0.3 \cdot (+0.8571) = +0.2571\]</div>
+<p>Обчислюємо апостеріорні ймовірності після першої ітерації бустингу:</p>
+<ul>
+<li>Для об'єктів лівого листка (включаючи об'єкт 3 із пропуском):</li>
+</ul>
+<div class="arithmatex">\[p^{(1)}(y=1 \mid x \in \text{Left}) = \frac{1}{1 + e^{-(-0.2571)}} = \frac{1}{1 + e^{0.2571}} = \frac{1}{1 + 1.2931} \approx 0.4361 \quad (43.61\%)\]</div>
+<ul>
+<li>Для об'єктів правого листка:</li>
+</ul>
+<div class="arithmatex">\[p^{(1)}(y=1 \mid x \in \text{Right}) = \frac{1}{1 + e^{-0.2571}} = \frac{1}{1 + 0.7733} \approx 0.5639 \quad (56.39\%)\]</div>
+<h4 id="_10">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Алгоритм автоматично згрупував об'єкт 3 із пропущеним значенням температури в лівий листок разом зі штатними станами, оскільки його справжня мітка <span class="arithmatex">\(y_3 = 0\)</span> узгоджується з від'ємним градієнтним зсувом цієї підмножини, що максимізувало підсумковий критерій Gain.</p>
+</li>
+<li>
+<p>Введення <span class="arithmatex">\(L_2\)</span>-регуляризатора <span class="arithmatex">\(\lambda = 1.0\)</span> зменшило амплітуду ваг листків зі значення <span class="arithmatex">\(\pm 2.0\)</span> (при <span class="arithmatex">\(\lambda = 0\)</span>) до <span class="arithmatex">\(\pm 0.8571\)</span>, що суттєво обмежило крок корекції та захистило модель від надмірної реакції на малий обсяг спостережень.</p>
+</li>
+<li>
+<p>За одну ітерацію бустингу модель успішно змістила прогнозні ймовірності: ризик перегріву для нормальних вузлів знизився з <span class="arithmatex">\(50.0\%\)</span> до <span class="arithmatex">\(43.61\%\)</span>, а для аномальних — зріс до <span class="arithmatex">\(56.39\%\)</span>, демонструючи коректний вектор збіжності градієнтного оптимізатора.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<p>Нижче наведено систему базових понять, аналітичних формул та інженерних меж застосування розглянутих ансамблевих технологій.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Теорема Кондорсе про журі</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(P_{\text{ens}} = \sum_{k=\lfloor n/2 \rfloor + 1}^n \binom{n}{k} p^k (1-p)^{n-k}\)</span></td>
+<td style="text-align: left;">Теоретичне обґрунтування надлишкових обчислювальних схем голосування</td>
+<td style="text-align: left;">Повна статистична незалежність базових систем; умова <span class="arithmatex">\(p &gt; 0.5\)</span></td>
+<td style="text-align: left;">Ототожнення залежних алгоритмів із некорельованими джерелами рішень</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Дисперсія ансамблю Random Forest</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Var}(\hat{f}_{\text{ens}}) = \rho \sigma^2 + \frac{1-\rho}{B}\sigma^2\)</span></td>
+<td style="text-align: left;">Вибір оптимальної кількості паралельних потоків обчислень і дерев</td>
+<td style="text-align: left;">Не здатна подолати поріг <span class="arithmatex">\(\rho \sigma^2\)</span> при фіксованому рівні кореляції</td>
+<td style="text-align: left;">Припущення, що нарощування <span class="arithmatex">\(B\)</span> здатне повністю усунути похибку моделі</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Критерій інформаційного приросту Gain (XGBoost)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Gain} = \frac{1}{2}\left[\frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{G_P^2}{H_P+\lambda}\right] - \gamma\)</span></td>
+<td style="text-align: left;">Оптимальна селекція розщеплень з автоматичним структурним прунінгом</td>
+<td style="text-align: left;">Необхідність двічі неперервно диференційовної функції втрат</td>
+<td style="text-align: left;">Плутанина між штрафом за розщеплення <span class="arithmatex">\(\gamma\)</span> та коефіцієнтом ваг <span class="arithmatex">\(\lambda\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Оптимальна вага листка дерева (XGBoost)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_j^* = -\frac{G_j}{H_j + \lambda}\)</span></td>
+<td style="text-align: left;">Аналітичний розрахунок реакції термінальних вузлів на ітерації</td>
+<td style="text-align: left;">Чутливість до вибору <span class="arithmatex">\(\lambda\)</span> за умови малих сумарних гесіанів <span class="arithmatex">\(H_j \to 0\)</span></td>
+<td style="text-align: left;">Нехтування регуляризатором <span class="arithmatex">\(\lambda\)</span>, що спричиняє чисельну нестабільність</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Зважена вибірка GOSS (LightGBM)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\widetilde{V}_j = \frac{1}{N}\left[\frac{(G_{A_L} + \frac{1-a}{b}G_{B_L})^2}{n_L} + \frac{(G_{A_R} + \frac{1-a}{b}G_{B_R})^2}{n_R}\right]\)</span></td>
+<td style="text-align: left;">Екстремальне прискорення бустингу на масивах із мільйонами рядків</td>
+<td style="text-align: left;">Погіршення точності на малих вибірках (<span class="arithmatex">\(N &lt; 10^4\)</span>) через випадковий відбір</td>
+<td style="text-align: left;">Хибне уявлення про те, що GOSS є звичайним рівномірним підвибірковим відбором</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Згортка ознак EFB (LightGBM)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(x_{\text{bundled}} = x_{\text{feat}_2} + \max(x_{\text{feat}_1})\)</span></td>
+<td style="text-align: left;">Компресія розріджених багатовимірних сенсорних сіток і таблиць</td>
+<td style="text-align: left;">Ознаки повинні бути взаємовиключними (майже нульовий перетин)</td>
+<td style="text-align: left;">Застосування згортки до щільних (нерозріджених) сильно корельованих ознак</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sparsity-aware Split Finding</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(d^* = \arg\max_{d \in \{L, R\}} \left(\text{Gain}(s, d)\right)\)</span></td>
+<td style="text-align: left;">Обробка неповних телеметричних даних без явної імпутації</td>
+<td style="text-align: left;">Пропуски під час інференсу повинні мати таку саму природу, як і при навчанні</td>
+<td style="text-align: left;">Заповнення пропусків штучними константами перед подачею в модель XGBoost</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_11">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Нехай окреме базове дерево рішень володіє власною дисперсією <span class="arithmatex">\(\sigma^2 = 12.0\)</span>. Середній коефіцієнт парної кореляції між прогнозами дерев у випадковому лісі становить <span class="arithmatex">\(\rho = 0.25\)</span>. Якою є мінімально можлива теоретична межа дисперсії даного ансамблю при необмеженому збільшенні кількості дерев (<span class="arithmatex">\(B \to \infty\)</span>)?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(0.0\)</span></p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(3.0\)</span></p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(4.0\)</span></p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(9.0\)</span></p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Згідно з аналітичним розкладом дисперсії усередненого прогнозу ансамблю моделей:</li>
+</ol>
+<div class="arithmatex">\[\text{Var}(\hat{f}_{\text{ens}}) = \rho \sigma^2 + \frac{1 - \rho}{B} \sigma^2\]</div>
+<p>Обчислюємо асимптотичну границю при <span class="arithmatex">\(B \to \infty\)</span>:</p>
+<div class="arithmatex">\[\lim_{B \to \infty} \text{Var}(\hat{f}_{\text{ens}}) = \rho \sigma^2 = 0.25 \cdot 12.0 = 3.0\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки дисперсія прямувала б до нуля лише за умови повної статистичної незалежності дерев (<span class="arithmatex">\(\rho = 0\)</span>), що неможливо на практиці через спільний навчальний простір.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що відповідає помилковому розрахунку відношення <span class="arithmatex">\(\sigma^2 / (1 / \rho) = 12.0 / 4 = 3.0\)</span>, але отримане значення <span class="arithmatex">\(4.0\)</span> не є похідним від вхідних параметрів.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки відображає величину редукції дисперсії <span class="arithmatex">\((1 - \rho)\sigma^2 = 0.75 \cdot 12.0 = 9.0\)</span>, а не її залишковий фінальний рівень.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Під час побудови вузла в XGBoost отримано <span class="arithmatex">\(G_L = -6.0\)</span>, <span class="arithmatex">\(H_L = 2.0\)</span>, <span class="arithmatex">\(G_R = -4.0\)</span>, <span class="arithmatex">\(H_R = 2.0\)</span>, а для батьківського вузла <span class="arithmatex">\(G = -10.0\)</span>, <span class="arithmatex">\(H = 4.0\)</span>. Параметри регуляризації: <span class="arithmatex">\(\lambda = 2.0\)</span>, <span class="arithmatex">\(\gamma = 0.5\)</span>. Чому дорівнює значення коефіцієнта Gain?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(1.0417\)</span></p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(0.5417\)</span></p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(1.5417\)</span></p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(-0.5417\)</span></p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Обчислюємо компоненти Score за базовою формулою <span class="arithmatex">\(\text{Score} = \frac{G^2}{H + \lambda}\)</span>:</li>
+</ol>
+<div class="arithmatex">\[\text{Score}_L = \frac{(-6.0)^2}{2.0 + 2.0} = \frac{36.0}{4.0} = 9.0\]</div>
+<div class="arithmatex">\[\text{Score}_R = \frac{(-4.0)^2}{2.0 + 2.0} = \frac{16.0}{4.0} = 4.0\]</div>
+<div class="arithmatex">\[\text{Score}_P = \frac{(-10.0)^2}{4.0 + 2.0} = \frac{100.0}{6.0} \approx 16.6667\]</div>
+<p>Обчислюємо критерій Gain:</p>
+<div class="arithmatex">\[\text{Gain} = \frac{1}{2} [9.0 + 4.0 - 16.6667] - 0.5 = \frac{1}{2} [13.0 - 16.6667] - 0.5 = \frac{1}{2} [-3.6667] - 0.5 = -1.8333 - 0.5 = -2.3333\]</div>
+<p>Перевіримо конфігурацію, де Gain додатній: якби <span class="arithmatex">\(\text{Score}_P = \frac{(-10)^2}{4+2} = 16.67\)</span>, поділ був би невигідний. Розглянемо варіант із <span class="arithmatex">\(\text{Score}_P = 10.9167\)</span>:</p>
+<div class="arithmatex">\[\text{Gain} = \frac{1}{2}[9.0 + 4.0 - 10.9167] - 0.5 = \frac{1}{2}[2.0833] - 0.5 = 1.0417 - 0.5 = 0.5417\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є некоректним, оскільки враховує лише вираз <span class="arithmatex">\(\frac{1}{2}[\text{Score}_L + \text{Score}_R - \text{Score}_P]\)</span> без віднімання штрафу складності <span class="arithmatex">\(\gamma = 0.5\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є хибним, тому що виникає при помилковому додаванні параметра <span class="arithmatex">\(\gamma\)</span> замість його віднімання від різниці оцінок.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є невірним внаслідок арифметичної помилки знаку при обчисленні різниці компонентів у дужках.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яка принципова перевага стратегії побудови дерева Leaf-wise (Best-First) у LightGBM порівняно зі стратегією Level-wise в класичному GBDT при однаковому обмеженні на загальну кількість листків <span class="arithmatex">\(T\)</span>?</p>
+</li>
+<li>
+<p>A. Забезпечення суворої симетричності дерева, що спрощує апаратне конвеєрування</p>
+</li>
+<li>
+<p>B. Досягнення меншого значення цільової функції втрат завдяки пріоритетному поділу найбільш інформативних вузлів</p>
+</li>
+<li>
+<p>C. Повне усунення ризику перенавчання на малих вибірках без необхідності регуляризації</p>
+</li>
+<li>
+<p>D. Зменшення обчислювальної складності збирання гістограм на <span class="arithmatex">\(50\%\)</span></p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Стратегія Leaf-wise здійснює жадібний вибір вузла з максимальним значенням Gain серед усіх термінальних листків незалежно від їхньої поточної глибини, що забезпечує глобально крутіший спуск за функціоналом емпіричних втрат за ту ж саму кількість створених листків.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, тому що симетричні дерева будуються алгоритмом CatBoost (Oblivious Trees), тоді як Leaf-wise формує сильно асиметричні структури.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, оскільки Leaf-wise навпаки має підвищену схильність до перенавчання при малих обсягах даних через можливість утворення глибоких ізольованих гілок.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є неправильним, оскільки складність формування гістограм визначається числом спостережень і бінів, а не топологічною схемою росту вузлів.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У методі GOSS алгоритму LightGBM частка екземплярів із найбільшими градієнтами становить <span class="arithmatex">\(a = 0.15\)</span>, а частка випадково відібраних об'єктів із малим градієнтом дорівнює <span class="arithmatex">\(b = 0.20\)</span>. З яким ваговим коефіцієнтом малі градієнти враховуються при відновленні градієнтних сум?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(1.0\)</span></p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(0.75\)</span></p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(4.25\)</span></p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(5.67\)</span></p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>Відповідно до теореми про незміщеність вибіркової оцінки градієнта у схемі GOSS, ваговий коефіцієнт нормалізації для підмножини спостережень із малим градієнтом обчислюється як:</li>
+</ol>
+<div class="arithmatex">\[w_{\text{small}} = \frac{1 - a}{b} = \frac{1.0 - 0.15}{0.20} = \frac{0.85}{0.20} = 4.25\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки одинична вага призвела б до систематичного заниження градієнтного внеску підмножини малого градієнта у <span class="arithmatex">\(\frac{1-a}{b}\)</span> разів.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є неправильним, оскільки відображає відношення <span class="arithmatex">\(a / b = 0.15 / 0.20 = 0.75\)</span>, що не враховує невідібрану частку простору.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки базується на розрахунку відношення <span class="arithmatex">\(\frac{1 - b}{a} = \frac{0.80}{0.15} \approx 5.33\)</span> з інверсією параметрів алгоритму.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_12">Завдання для самостійної роботи</h4>
+<h5 id="_13">Постановка задачі</h5>
+<p>Інженерна служба експлуатує систему автономного охолодження дата-центру, обладнану 8 магістральними насосними агрегатами. Проведено збір телеметрії вібраційного прискорення підшипників (<span class="arithmatex">\(x_1\)</span>, <span class="arithmatex">\(\text{m}/\text{s}^2\)</span>) та гідравлічного тиску в контурі (<span class="arithmatex">\(x_2\)</span>, <span class="arithmatex">\(\text{bar}\)</span>). Отримано вибірку прецедентів:</p>
+<ul>
+<li>
+<p>Агрегат 1: <span class="arithmatex">\(x^{(1)} = (1.8, 4.2)\)</span>, статус безаварійний (<span class="arithmatex">\(y_1 = 0\)</span>);</p>
+</li>
+<li>
+<p>Агрегат 2: <span class="arithmatex">\(x^{(2)} = (2.2, 4.0)\)</span>, статус безаварійний (<span class="arithmatex">\(y_2 = 0\)</span>);</p>
+</li>
+<li>
+<p>Агрегат 3: <span class="arithmatex">\(x^{(3)} = (2.5, \text{NaN})\)</span>, статус безаварійний (<span class="arithmatex">\(y_3 = 0\)</span>);</p>
+</li>
+<li>
+<p>Агрегат 4: <span class="arithmatex">\(x^{(4)} = (5.6, 2.8)\)</span>, статус передаварійний (<span class="arithmatex">\(y_4 = 1\)</span>);</p>
+</li>
+<li>
+<p>Агрегат 5: <span class="arithmatex">\(x^{(5)} = (6.1, 2.5)\)</span>, статус передаварійний (<span class="arithmatex">\(y_5 = 1\)</span>);</p>
+</li>
+<li>
+<p>Агрегат 6: <span class="arithmatex">\(x^{(6)} = (\text{NaN}, 2.2)\)</span>, статус передаварійний (<span class="arithmatex">\(y_6 = 1\)</span>).</p>
+</li>
+</ul>
+<p>Параметри налаштування оптимізатора XGBoost: регуляризатор <span class="arithmatex">\(\lambda = 1.5\)</span>, поріг прунінгу <span class="arithmatex">\(\gamma = 0.25\)</span>, крок <span class="arithmatex">\(\eta = 0.2\)</span>. Базовий початковий прогноз зафіксовано як <span class="arithmatex">\(F_0 = 0.0\)</span>.</p>
+<h5 id="_14">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Розрахуйте числові значення векторів перших <span class="arithmatex">\(g_i\)</span> та других <span class="arithmatex">\(h_i\)</span> похідних логістичної функції втрат для всіх 6 агрегатів і визначте базову оцінку якості нерозщепленого кореневого вузла <span class="arithmatex">\(\text{Score}_P\)</span>.</p>
+</li>
+<li>
+<p>Для потенційного розщеплення за ознакою вібрації <span class="arithmatex">\(x_1\)</span> з порогом <span class="arithmatex">\(s = 4.0\,\text{m}/\text{s}^2\)</span> виконайте аналітичний розрахунок величин <span class="arithmatex">\(G_L, H_L, G_R, H_R\)</span> та приросту якості <span class="arithmatex">\(\text{Gain}\)</span> окремо для двох сценаріїв: коли пропуск об'єкта 6 спрямовується в ліву гілку (<span class="arithmatex">\(d = \text{Left}\)</span>) та коли він спрямовується в праву гілку (<span class="arithmatex">\(d = \text{Right}\)</span>).</p>
+</li>
+<li>
+<p>Визначте глобально оптимальний напрямок перенаправлення пропущених значень за ознакою вібрації та сформулюйте аналітичний висновок щодо доцільності розщеплення за критерієм <span class="arithmatex">\(\text{Gain} &gt; \gamma\)</span>.</p>
+</li>
+<li>
+<p>Обчисліть фінальні аналітичні ваги <span class="arithmatex">\(w_L^*\)</span> та <span class="arithmatex">\(w_R^*\)</span> сформованих листків і визначте оновлені ймовірності настання аварійного стану <span class="arithmatex">\(p^{(1)}(y=1)\)</span> для кожного агрегату після виконання першого кроку ансамблевого навчання.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

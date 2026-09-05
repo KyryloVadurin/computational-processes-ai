@@ -1,0 +1,3528 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk7/">
+      
+      
+        <link rel="next" href="../lk9/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 8. Глибокі нейронні мережі та математика ШІ навчання - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#8" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні принципи та обчислювальний базис глибоких нейронних мереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Матрично-диференціальний апарат зворотного поширення та стійкість градієнтних потоків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Інженерні методи стабілізації навчання та наскрізний числовий розрахунок
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Еволюція обчислювальних моделей: від формального нейрона до концепції автоматичного вилучення ієрархічних ознак
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Математична структура штучного нейрона та геометрична інтерпретація розділювальних гіперплощин
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принцип нелінійності функцій активації, теорема про колапс лінійних мереж та універсальна апроксимація
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Організація трифазного обчислювального конвеєра навчання штучних нейронних мереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Векторно-матрична формалізація прямого ходу для пакетного режиму обробки даних
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичне виведення алгоритму зворотного поширення помилки на основі матричного ланцюгового правила
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-softmax-categorical-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Аналітичний вивід градієнта для зв'язки функцій Softmax та Categorical Cross-Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Спектральний та асимптотичний аналіз добутку матриць Якобі: згасання та вибух градієнтних потоків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні засади дисперсійного узгодження сигналів: ініціалізація Ксав'єра та Хе
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок і числове моделювання прямого та зворотного ходу в глибокій повнозв'язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок і числове моделювання прямого та зворотного ходу в глибокій повнозв&#39;язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-l-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Обчислення прямого ходу першого прихованого шару (\(l = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-l-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення прямого ходу другого прихованого шару (\(l = 2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-softmax-l-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Обчислення вихідного потенціалу та оператора Softmax (\(l = 3\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-categorical-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Оцінка функції втрат Categorical Cross-Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-l-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Обчислення градієнта помилки вихідного шару (\(l = 3\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-l-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Зворотне поширення помилки на другий прихований шар (\(l = 2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-l-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 7. Зворотне поширення помилки на перший прихований шар (\(l = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 8. Ітераційне оновлення синаптичних ваг мережі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні принципи та обчислювальний базис глибоких нейронних мереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Матрично-диференціальний апарат зворотного поширення та стійкість градієнтних потоків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Інженерні методи стабілізації навчання та наскрізний числовий розрахунок
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Еволюція обчислювальних моделей: від формального нейрона до концепції автоматичного вилучення ієрархічних ознак
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Математична структура штучного нейрона та геометрична інтерпретація розділювальних гіперплощин
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принцип нелінійності функцій активації, теорема про колапс лінійних мереж та універсальна апроксимація
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Організація трифазного обчислювального конвеєра навчання штучних нейронних мереж
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Векторно-матрична формалізація прямого ходу для пакетного режиму обробки даних
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичне виведення алгоритму зворотного поширення помилки на основі матричного ланцюгового правила
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-softmax-categorical-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Аналітичний вивід градієнта для зв'язки функцій Softmax та Categorical Cross-Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Спектральний та асимптотичний аналіз добутку матриць Якобі: згасання та вибух градієнтних потоків
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні засади дисперсійного узгодження сигналів: ініціалізація Ксав'єра та Хе
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок і числове моделювання прямого та зворотного ходу в глибокій повнозв'язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок і числове моделювання прямого та зворотного ходу в глибокій повнозв&#39;язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-l-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Обчислення прямого ходу першого прихованого шару (\(l = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-l-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення прямого ходу другого прихованого шару (\(l = 2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-softmax-l-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Обчислення вихідного потенціалу та оператора Softmax (\(l = 3\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-categorical-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Оцінка функції втрат Categorical Cross-Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-l-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 5. Обчислення градієнта помилки вихідного шару (\(l = 3\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-l-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 6. Зворотне поширення помилки на другий прихований шар (\(l = 2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-l-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 7. Зворотне поширення помилки на перший прихований шар (\(l = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 8. Ітераційне оновлення синаптичних ваг мережі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="8">Тема 8. Глибокі нейронні мережі та математика навчання: математична модель штучного нейрона, градієнтний спуск, алгоритм зворотного поширення помилки, вибух та загасання градієнтів</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Формування у майбутніх інженерів комп'ютерних систем цілісної системи фундаментальних теоретичних знань і практичних навичок проектування та оптимізації багатошарових нейромережевих архітектур на основі суворого апарату лінійної алгебри та матричного диференціального числення. Головна увага зосереджується на математичній формалізації обчислювальних процесів прямого та зворотного поширення помилки, аналітичному дослідженні стійкості градієнтних потоків у глибоких мережах, а також вивченні інженерних методів стабілізації навчання через вибір ненасичених функцій активації та узгоджену ініціалізацію вагових коефіцієнтів.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Студенти повинні демонструвати системне розуміння архітектурної організації глибоких штучних нейронних мереж, фізико-математичного змісту прямого та зворотного ходів, фундаментальної ролі нелінійних функцій активації для запобігання колапсації шарів, а також сутності теореми універсальної апроксимації як теоретичного підґрунтя виразної спроможності DNN.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти мають оволодіти навичками аналітичного виведення та алгоритмічної реалізації векторно-матричних операцій прямого ходу і співвідношень алгоритму зворотного поширення помилки (Backpropagation) із застосуванням ланцюгового правила диференціювання для довільних конфігурацій повнозв'язних шарів, а також виконувати розрахунок параметрів ініціалізації Ксав'єра (Glorot) і Хе (Kaiming).</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Студенти повинні вміти виконувати строгий спектральний аналіз матриць Якобі в ланцюгу поширення похибок, діагностувати виникнення патологій загасання (Vanishing) або вибуху (Exploding) градієнтів залежно від вибору функцій активації, глибини архітектури та спектрального радіуса матриць ваг, а також аналізувати ризики виникнення проблеми «відмирання нейронів» (Dying ReLU).</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Студенти мають навчитися критично оцінювати чисельну стійкість обчислювального графа мережі до помилок округлення та переповнення розрядної сітки, синтезувати комбіновані інженерні рішення для забезпечення стійкої збіжності оптимізаційного процесу на базі залишкових зв'язків (Residual Connections), регуляризаційних обмежень і динамічного кліпінгу градієнтів.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Архітектурні принципи та обчислювальний базис глибоких нейронних мереж</h3>
+<ul>
+<li>
+<p>1.1. Еволюція обчислювальних моделей від формального нейрона Мак-Каллока-Піттса до багатошарових глибоких архітектур (DNN) та концепція автоматичного вилучення ієрархічних ознак (Feature Extraction).</p>
+</li>
+<li>
+<p>1.2. Математична структура штучного нейрона: вектор вхідних сигналів, простір синаптичних ваг, операція зваженого підсумовування, вектор зсуву (Bias) та геометрична інтерпретація розділювальних гіперплощин.</p>
+</li>
+<li>
+<p>1.3. Принцип нелінійності функцій активації, математичне доведення еквівалентності багатошарової лінійної мережі одношаровому перетворенню та концептуальні положення теореми універсальної апроксимації.</p>
+</li>
+<li>
+<p>1.4. Структурна організація конвеєра навчання: фаза прямого поширення сигналу (Forward Pass), фаза зворотного поширення помилки (Backward Pass) та крок оптимізаційного оновлення параметрів.</p>
+</li>
+</ul>
+<h3 id="2-">2. Аналітичний модуль. Матрично-диференціальний апарат зворотного поширення та стійкість градієнтних потоків</h3>
+<ul>
+<li>
+<p>2.1. Векторно-матрична формалізація прямого ходу для пакетного режиму обробки даних (Mini-batch) та формування компонентних тензорів вхідних потенціалів і вихідних активацій.</p>
+</li>
+<li>
+<p>2.2. Строге математичне виведення алгоритму зворотного поширення помилки (Backpropagation) на основі матричного ланцюгового правила (Chain Rule) та оператора добутку Адамара.</p>
+</li>
+<li>
+<p>2.3. Аналітичний вивід градієнта помилки вихідного шару для комбінації функції активації Softmax та функції втрат категоріальної крос-ентропії (Categorical Cross-Entropy).</p>
+</li>
+<li>
+<p>2.4. Спектральний та асимптотичний аналіз добутку матриць Якобі: аналітичні причини експоненційного загасання (Vanishing) та вибуху (Exploding) градієнтних потоків.</p>
+</li>
+<li>
+<p>2.5. Математичні засади дисперсійного узгодження сигналів: статистичне обґрунтування та виведення формул ініціалізації ваг Ксав'єра/Глорота (Xavier) та Хе/Каймінга (He).</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Інженерні методи стабілізації навчання та наскрізний числовий розрахунок</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Аналітичний розрахунок і чисельне моделювання прямого та зворотного ходу в глибокій повнозв'язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів»</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11">1.1. Еволюція обчислювальних моделей: від формального нейрона до концепції автоматичного вилучення ієрархічних ознак</h3>
+<p>Історія розвитку методів штучного інтелекту та обчислювальних інтелектуальних систем базується на прагненні формалізувати принципи переробки інформації біологічними нейронними структурами. Фундаментом сучасних коннективістських моделей стала концепція, запропонована Ворреном Мак-Каллоком та Волтером Піттсом у 1943 році. Вони розробили модель спрощеного двійкового порогового елемента, у якому збудження або гальмування визначалося дискретною сумою зважених вхідних сигналів із подальшим порівнянням із фіксованим порогом спрацьовування. Подальшим еволюційним етапом стала розробка Френком Розенблаттом у 1958 році архітектури <strong>перцептрона (Perceptron)</strong>, що являла собою першу апаратно та програмно реалізовану систему, здатну до керованого навчання за рахунок ітеративного коригування синаптичних коефіцієнтів відповідно до теореми збіжності перцептрона.</p>
+<p>Проте бурхливий розвиток одношарових нейромережевих структур зазнав суттєвої кризи після виходу у 1969 році монографії Марвіна Мінського та Сеймура Пейперта, які строго довели фундаментальні топологічні обмеження одношарового перцептрона. Головним теоретичним бар'єром стала нездатність одношарової структури реалізувати елементарну нелінійну логічну функцію «виключного АБО» (<strong>XOR problem</strong>), оскільки точки простору станів для цієї функції є лінійно неподільними у вихідній розмірності. Для подолання цього бар'єра була потрібна концепція <strong>багатошарових нейронних мереж (Multilayer Perceptrons, MLP)</strong>, однак тривалий час був відсутній математично коректний та обчислювально ефективний апарат оптимізації вагових коефіцієнтів прихованих рівнів, де відсутній прямий доступ до цільового еталонного сигналу.</p>
+<p>Відродження та вихід на якісно новий рівень обчислювальної складності відбулися наприкінці 1980-х років із популяризацією узагальненого методу градієнтного спуску для багатошарових систем — алгоритму <strong>зворотного поширення помилки (Backpropagation)</strong>, систематизованого Девідом Румельхартом, Джеффрі Хінтоном та Рональдом Вільямсом. Перехід від неглибоких архітектур (із одним або двома прихованими шарами) до сучасних <strong>глибоких нейронних мереж (Deep Neural Networks, DNN)</strong> докорінно змінив парадигму інженерії даних:</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Classical_ML [Класична парадигма машинного навчання]
+        RawDataClassic[Низькорівневі вхідні дані: сирі сигнали, масиви пікселів] --&gt; ManualEngineering[Ручне проектування ознак Feature Engineering]
+        ManualEngineering --&gt; DomainExpert[Експертна оптимізація: SIFT, SURF, дескриптори]
+        DomainExpert --&gt; LinearClassifier[Неглибокий лінійний класифікатор або регресор]
+        LinearClassifier --&gt; FinalOutputClassic[Цільовий прогноз системи]
+    end
+
+    subgraph Deep_Learning [Парадигма глибокого навчання DNN]
+        RawDataDeep[Низькорівневі вхідні дані: сирі сигнали, масиви пікселів] --&gt; Layer1[Шар 1: Виділення елементарних геометричних примітивів, контурів]
+        Layer1 --&gt; Layer2[Шар 2: Формування текстурних комбінацій та локальних патернів]
+        Layer2 --&gt; LayerL[Шар L-1: Високорівневі семантичні представлення та інваріантні об'єкти]
+        LayerL --&gt; OutputLayer[Вихідний шар L: Нелінійне вирішальне правило]
+        OutputLayer --&gt; FinalOutputDeep[Цільовий прогноз системи]
+    end
+
+    style DomainExpert fill:#f9f0ff,stroke:#800080,stroke-width:1px
+    style LayerL fill:#e6f3ff,stroke:#0066cc,stroke-width:1px</code></pre>
+<p>У класичних схемах машинного навчання слабкою ланкою був етап <strong>ручного вилучення ознак (Manual Feature Engineering)</strong>, коли інженер-дослідник мусив емпірично синтезувати математичні фільтри (наприклад, фільтри Габора, перетворення Хаара, спектральні дескриптори) для перетворення вхідних даних у простір, де класи ставали лінійно роздільними. На відміну від цього підходу, глибокі нейронні мережі реалізують парадигму <strong>наскрізного навчання за представленнями (End-to-End Representation Learning)</strong>. Кожен наступний шар мережі виконує нелінійне перетворення простору попереднього шару, автоматично формуючи ієрархію абстракцій. Нижні шари фіксують локальні, високочастотні примітиви (границі, перепади градієнтів, фазові зсуви), тоді як глибокі шари синтезують стійкі до афінних деформацій інваріантні поняття, мінімізуючи втрату семантичної інформації.</p>
+<hr />
+<h3 id="12">1.2. Математична структура штучного нейрона та геометрична інтерпретація розділювальних гіперплощин</h3>
+<p>Елементарною функціональною ланкою, на основі якої формуються довільні конфігурації глибоких нейромережевих моделей, є <strong>штучний нейрон (Artificial Neuron)</strong>. Він здійснює суворе відображення множини вхідних сигналів векторного простору <span class="arithmatex">\(\mathbb{R}^n\)</span> у скалярне значення вихідного стану через дві послідовні математичні фази: афінне зважене перетворення та скалярну нелінійну фільтрацію.</p>
+<p>Нехай вектор <span class="arithmatex">\(\mathbf{x} = [x_1, x_2, \dots, x_n]^T \in \mathbb{R}^n\)</span> репрезентує вхідний сигнал, що надходить на вхідні синапси нейрона від сенсорів або попередніх компонентів обчислювальної системи. Кожен синаптичний зв'язок характеризується скалярним ваговим коефіцієнтом, сукупність яких утворює вектор синаптичних ваг <span class="arithmatex">\(\mathbf{w} = [w_1, w_2, \dots, w_n]^T \in \mathbb{R}^n\)</span>. Для забезпечення можливості паралельного зміщення гіперповерхні рішення відносно початку координат безпосередньо у внутрішнє ядро додається вільний параметр — <strong>скалярний зсув (Bias)</strong> <span class="arithmatex">\(b \in \mathbb{R}\)</span>.</p>
+<p>Обчислення лінійної комбінації вхідних сигналів нейрона — <strong>вхідного потенціалу (Net Input)</strong> <span class="arithmatex">\(z \in \mathbb{R}\)</span> — формалізується скалярним добутком у евклідовому просторі:</p>
+<div class="arithmatex">\[z = \mathbf{w}^T \mathbf{x} + b = \sum_{i=1}^{n} w_i x_i + b\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^{n \times 1}\)</span> — вектор вхідних параметрів нейрона (дійсні числа, безрозмірні нормовані коефіцієнти або дискретні квантовані значення);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{w} \in \mathbb{R}^{n \times 1}\)</span> — вектор вагових коефіцієнтів синаптичних зв'язків нейрона, що визначає чутливість нейрона до окремих компонентів вхідного вектора (дійсні параметри моделі);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(b \in \mathbb{R}\)</span> — скалярний параметр зсуву нейрона, який забезпечує пороговий рівень деполяризації або просторове зміщення площини активації (дійсне число);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(z \in \mathbb{R}\)</span> — результуючий зважений вхідний потенціал штучного нейрона до застосування нелінійної функції активації.</p>
+</li>
+</ul>
+<p>Підсумкове значення вихідної активації <span class="arithmatex">\(a \in \mathbb{R}\)</span> обчислюється шляхом накладання на вхідний потенціал нелінійного оператора — <strong>функції активації (Activation Function)</strong> <span class="arithmatex">\(g: \mathbb{R} \to \mathbb{R}\)</span>:</p>
+<div class="arithmatex">\[a = g(z) = g\left(\mathbf{w}^T \mathbf{x} + b\right)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(g(\cdot)\)</span> — скалярна нелінійна функція активації (диференційована або кусково-гладка дійсного аргументу);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(a \in \mathbb{R}\)</span> — результуючий вихідний сигнал штучного нейрона, що передається наступним топологічним рівням нейронної мережі.</p>
+</li>
+</ul>
+<p>З аналітико-геометричної точки зору, робота штучного нейрона в задачах бінарної класифікації еквівалентна розбиттю <span class="arithmatex">\(n\)</span>-вимірного простору ознак <span class="arithmatex">\(\mathbb{R}^n\)</span> на дві відкриті напівплощини за допомогою <strong>розділювальної гіперплощини (Separating Hyperplane)</strong> <span class="arithmatex">\(\mathcal{H}\)</span>. Рівняння цієї гіперплощини визначається умовою рівності вхідного потенціалу нулю:</p>
+<div class="arithmatex">\[\mathcal{H} = \left\{ \mathbf{x} \in \mathbb{R}^n \;\middle|\; \mathbf{w}^T \mathbf{x} + b = 0 \right\}\]</div>
+<p>Вектор синаптичних ваг <span class="arithmatex">\(\mathbf{w}\)</span> є вектором нормалі до гіперплощини <span class="arithmatex">\(\mathcal{H}\)</span>, який строго визначає її просторову орієнтацію (кути нахилу відносно координатних осей), тоді як зсув <span class="arithmatex">\(b\)</span> однозначно регулює ортогональну відстань від початку координат до площини:</p>
+<div class="arithmatex">\[d(0, \mathcal{H}) = \frac{|b|}{\|\mathbf{w}\|_2} = \frac{|b|}{\sqrt{\sum_{i=1}^n w_i^2}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(d(0, \mathcal{H})\)</span> — найкоротша евклідова відстань від початку системи координат до поверхні розділювальної гіперплощини, виражена у метриці простору ознак <span class="arithmatex">\(\mathbb{R}^n\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\|\mathbf{w}\|_2\)</span> — евклідова норма (довжина) вектора вагових коефіцієнтів нейрона.</p>
+</li>
+</ul>
+<p>Будь-яка точка простору ознак <span class="arithmatex">\(\mathbf{x}^*\)</span>, для якої скалярний добуток перевищує поріг (<span class="arithmatex">\(\mathbf{w}^T \mathbf{x}^* + b &gt; 0\)</span>), належить до позитивного напівпростору <span class="arithmatex">\(\mathcal{H}^+\)</span>, спричиняючи стан активації нейрона. Навпаки, значення <span class="arithmatex">\(\mathbf{w}^T \mathbf{x}^* + b &lt; 0\)</span> відносить точку до негативного напівпростору <span class="arithmatex">\(\mathcal{H}^-\)</span>, утримуючи нейрон у стані спокою або гальмування. Якщо множина даних не може бути розділена єдиною гіперплощиною, система є лінійно неподільною, що категорично вимагає переходу до багатошарових мереж.</p>
+<hr />
+<h3 id="13">1.3. Принцип нелінійності функцій активації, теорема про колапс лінійних мереж та універсальна апроксимація</h3>
+<p>Необхідність використання нелінійних функцій активації у прихованих шарах є фундаментальним математичним імперативом глибинного навчання. Для строгого аналітичного доведення цього факту сформулюємо твердження про еквівалентність багатошарової лінійної нейронної мережі одношаровому лінійному оператору (теорема про лінійний колапс).</p>
+<p>Розглянемо прямоспрямовану мережу глибиною <span class="arithmatex">\(L\)</span> шарів. Припустимо, що функція активації кожного прихованого та вихідного шару є строго лінійною або тотожною, тобто <span class="arithmatex">\(g^{[l]}(z) = c^{[l]} \cdot z\)</span>, де <span class="arithmatex">\(c^{[l]} \in \mathbb{R} \setminus \{0\}\)</span>. Без обмеження загальності покладемо <span class="arithmatex">\(c^{[l]} = 1\)</span>, отже, <span class="arithmatex">\(g^{[l]}(z) = z\)</span> для всіх <span class="arithmatex">\(l \in \{1, 2, \dots, L\}\)</span>. </p>
+<p>Для першого прихованого шару <span class="arithmatex">\(l = 1\)</span> за вхідного вектора <span class="arithmatex">\(\mathbf{x} = \mathbf{a}^{[0]}\)</span> вектор активацій набуває вигляду:</p>
+<div class="arithmatex">\[\mathbf{a}^{[1]} = \mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}\]</div>
+<p>Для другого шару <span class="arithmatex">\(l = 2\)</span> активація визначається рекурентним співвідношенням:</p>
+<div class="arithmatex">\[\mathbf{a}^{[2]} = \mathbf{W}^{[2]} \mathbf{a}^{[1]} + \mathbf{b}^{[2]}\]</div>
+<p>Підставивши вираз для <span class="arithmatex">\(\mathbf{a}^{[1]}\)</span> у формулу другого шару та застосувавши дистрибутивну властивість матричного множення відносно додавання, отримуємо:</p>
+<div class="arithmatex">\[\mathbf{a}^{[2]} = \mathbf{W}^{[2]} \left(\mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}\right) + \mathbf{b}^{[2]} = \left(\mathbf{W}^{[2]} \mathbf{W}^{[1]}\right) \mathbf{x} + \left(\mathbf{W}^{[2]} \mathbf{b}^{[1]} + \mathbf{b}^{[2]}\right)\]</div>
+<p>Застосовуючи математичну індукцію для довільного кінцевого шару <span class="arithmatex">\(L\)</span>, маємо повне розгортання вхідного сигналу у вихідний вектор <span class="arithmatex">\(\mathbf{a}^{[L]}\)</span>:</p>
+<div class="arithmatex">\[\mathbf{a}^{[L]} = \mathbf{W}^{[L]} \mathbf{a}^{[L-1]} + \mathbf{b}^{[L]} = \left( \prod_{l=L}^{1} \mathbf{W}^{[l]} \right) \mathbf{x} + \left( \mathbf{b}^{[L]} + \sum_{k=1}^{L-1} \left( \prod_{j=L}^{k+1} \mathbf{W}^{[j]} \right) \mathbf{b}^{[k]} \right)\]</div>
+<p>Визначимо ефективну матрицю ваг <span class="arithmatex">\(\mathbf{W}_{eff}\)</span> та ефективний вектор зсувів <span class="arithmatex">\(\mathbf{b}_{eff}\)</span> як композицію параметрів усіх шарів:</p>
+<div class="arithmatex">\[\mathbf{W}_{eff} = \prod_{l=L}^{1} \mathbf{W}^{[l]} = \mathbf{W}^{[L]} \mathbf{W}^{[L-1]} \dots \mathbf{W}^{[1]} \in \mathbb{R}^{n^{[L]} \times n^{[0]}}\]</div>
+<div class="arithmatex">\[\mathbf{b}_{eff} = \mathbf{b}^{[L]} + \sum_{k=1}^{L-1} \left( \prod_{j=L}^{k+1} \mathbf{W}^{[j]} \right) \mathbf{b}^{[k]} \in \mathbb{R}^{n^{[L]} \times 1}\]</div>
+<p>Внаслідок замкненості простору матриць відносно операцій множення та додавання, <span class="arithmatex">\(\mathbf{W}_{eff}\)</span> є єдиною матрицею лінійного відображення, а <span class="arithmatex">\(\mathbf{b}_{eff}\)</span> — єдиним результуючим вектором зсуву. Звідси випливає фундаментальний висновок:</p>
+<div class="arithmatex">\[\mathbf{a}^{[L]} = \mathbf{W}_{eff} \mathbf{x} + \mathbf{b}_{eff}\]</div>
+<p>Тобто будь-яка глибока нейронна мережа з лінійними функціями активації, що містить довільну кількість прихованих шарів та нейронів, тотожно колапсує до елементарного одношарового афінного перетворення. Така мережа принципово нездатна моделювати нелінійні взаємозв'язки або викривляти метричний простір даних для поділу складних багатовимірних топологій.</p>
+<p>Математичне обґрунтування того, чому введення нелінійності <span class="arithmatex">\(g(z)\)</span> надає нейронним мережам статус універсальних обчислювальних апроксиматорів, спирається на <strong>Теорему універсальної апроксимації (Universal Approximation Theorem)</strong>, доказану Джорджем Цибенком (1989 р.) для сигмоїдальних активацій і розширену Куртом Горніком (1991 р.) для довільних нелінійних функцій.</p>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Нехай <span class="arithmatex">\(I_n \subset \mathbb{R}^n\)</span> — компактна підмножина евклідового простору. Нехай <span class="arithmatex">\(C(I_n)\)</span> — простір усіх неперервних дійсних функцій на <span class="arithmatex">\(I_n\)</span>. Якщо функція активації <span class="arithmatex">\(g: \mathbb{R} \to \mathbb{R}\)</span> є неперервною, локально обмеженою та неполіноміальною, то лінійна комбінація функцій вигляду:</p>
+<div class="arithmatex">\[F(\mathbf{x}) = \sum_{i=1}^{N} \alpha_i \, g\left(\mathbf{w}_i^T \mathbf{x} + b_i\right)\]</div>
+<p>є скрізь щільною в просторі <span class="arithmatex">\(C(I_n)\)</span> відносно рівномірної норми. Це означає, що для будь-якої цільової неперервної функції <span class="arithmatex">\(f \in C(I_n)\)</span> та довільного як завгодно малого додатного параметра точності <span class="arithmatex">\(\varepsilon &gt; 0\)</span> існує таке скінченне число нейронів <span class="arithmatex">\(N \in \mathbb{N}\)</span> і такі значення параметрів <span class="arithmatex">\(\alpha_i, b_i \in \mathbb{R}, \mathbf{w}_i \in \mathbb{R}^n\)</span>, що виконується нерівність:</p>
+<div class="arithmatex">\[\sup_{\mathbf{x} \in I_n} \left| F(\mathbf{x}) - f(\mathbf{x}) \right| \lt  \varepsilon\]</div>
+</blockquote>
+<p>Теорема Цибенка-Горніка гарантує, що навіть мережа з одним прихованим шаром теоретично здатна апроксимувати довільну гладку залежність. Проте теорема є <strong>теоремою існування (non-constructive existence theorem)</strong>: вона не надає алгоритму знаходження параметрів, не враховує похибки оптимізації і, що найважливіше, може вимагати для складної цільової залежності експоненційної ширини шару (<span class="arithmatex">\(N \sim \mathcal{O}(2^n)\)</span>). Практичний сенс саме <em>глибоких</em> архітектур (DNN) полягає в тому, що за рахунок глибини мережі здійснюється композиційне повторне використання проміжних ознак, що знижує необхідну сумарну кількість параметрів від експоненційної до поліноміальної залежності <span class="arithmatex">\(\mathcal{O}(\text{poly}(n))\)</span>.</p>
+<hr />
+<h3 id="14">1.4. Організація трифазного обчислювального конвеєра навчання штучних нейронних мереж</h3>
+<p>Процес навчання глибокої нейронної мережі на сучасних апаратних прискорювачах (GPU, TPU) розгортається як ітераційний цикл проходження пакетів даних (<strong>mini-batches</strong>) через послідовні обчислювальні стадії. Навчальний процес розбивається на три чітко синхронізовані фази:</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Phase1 [Фаза 1: Прямий хід Forward Pass]
+        BatchIn[Завантаження Mini-Batch X, Y] --&gt; TensorMult[Обчислення потенціалів Z^l = W^l A^l-1 + b^l]
+        TensorMult --&gt; ActSave[Активація A^l = g Z^l та збереження в RAM]
+        ActSave --&gt; LossCalc[Розрахунок скалярної функції втрат L]
+    end
+
+    subgraph Phase2 [Фаза 2: Зворотний хід Backward Pass]
+        LossGrad[Диференціювання виходу dL / dA^L] --&gt; ChainRule[Поширення хвиль градієнтів delta^l через Chain Rule]
+        ChainRule --&gt; ParamGrad[Обчислення градієнтів dL/dW^l та dL/db^l]
+    end
+
+    subgraph Phase3 [Фаза 3: Оптимізаційне оновлення Update]
+        GradProcess[Кліпінг градієнтів та регуляризація L2] --&gt; OptimizerCalc[Розрахунок моментів AdamW / SGD]
+        OptimizerCalc --&gt; WeightApply[Оновлення вагових матриць W^l та b^l]
+        WeightApply --&gt; CacheClean[Звільнення проміжних буферів пам'яті]
+    end
+
+    Phase1 --&gt; Phase2
+    Phase2 --&gt; Phase3
+    Phase3 -.-&gt;|Наступна ітерація| Phase1
+
+    style Phase1 fill:#f5faff,stroke:#004080,stroke-width:1px
+    style Phase2 fill:#fff5f5,stroke:#800000,stroke-width:1px
+    style Phase3 fill:#f5fff5,stroke:#006600,stroke-width:1px</code></pre>
+<ol>
+<li>
+<p><strong>Прямий хід (Forward Pass).</strong> Дані пакують у батч розміром <span class="arithmatex">\(m\)</span>, після чого вони проходять через матричні помножувачі апаратних ядер. На кожному шарі <span class="arithmatex">\(l \in \{1, \dots, L\}\)</span> обчислюються матриці <span class="arithmatex">\(Z^{[l]}\)</span> та <span class="arithmatex">\(A^{[l]}\)</span>. Критично важливою особливістю цієї фази для комп'ютерного інженера є те, що всі проміжні матриці потенціалів <span class="arithmatex">\(Z^{[l]}\)</span> та активацій <span class="arithmatex">\(A^{[l-1]}\)</span> <strong>мусять бути збережені в пам'яті графічного прискорювача (VRAM)</strong>. Вони знадобляться на фазі зворотного ходу для обчислення похідних, що формує основне навантаження на підсистему локальної пам'яті обчислювального вузла.</p>
+</li>
+<li>
+<p><strong>Зворотний хід (Backward Pass / Backpropagation).</strong> Починається з диференціювання скалярної функції втрат <span class="arithmatex">\(\mathcal{L}\)</span> на виході мережі. Помилка у вигляді градієнтного сигналу <span class="arithmatex">\(\delta^{[L]}\)</span> послідовно проєктується від вихідного шару назад до першого шару через матричні операції транспонованого множення та ланцюгове правило диференціювання. На цій фазі генеруються тензори часткових похідних цільової функції за всіма матрицями ваг <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial W^{[l]}}\)</span> та векторами зсувів <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial b^{[l]}}\)</span>.</p>
+</li>
+<li>
+<p><strong>Оптимізаційне оновлення параметрів (Optimization Step).</strong> Отримані градієнти агрегуються та передаються в алгоритм оптимізації (наприклад, стохастичний градієнтний спуск <strong>SGD</strong> з моментом або адаптивний оптимізатор <strong>AdamW</strong>). На цьому етапі відбувається масштабування градієнтів за допомогою швидкості навчання (<strong>Learning Rate</strong>) <span class="arithmatex">\(\eta\)</span>, за потреби виконується обрізання норми градієнтів (<strong>Gradient Clipping</strong>) для захисту від чисельного вибуху, і оновлені значення ваг перезаписуються в пам'ять. Проміжні тензори активацій, зафіксовані під час прямого ходу, після обчислення градієнта відповідного шару вивільняються, звільняючи простір оперативної пам'яті для наступних пакетів.</p>
+</li>
+</ol>
+<p>Нижче наведено порівняльну систематизацію фундаментальних класів нейромережевих архітектур, що відображає еволюцію їхнього математичного та топологічного базису.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурний клас</th>
+<th style="text-align: left;">Базовий математичний оператор</th>
+<th style="text-align: left;">Механізм вилучення ознак</th>
+<th style="text-align: left;">Геометрія розділювальної поверхні</th>
+<th style="text-align: left;">Обчислювальна складність прямого ходу</th>
+<th style="text-align: left;">Основні апаратні обмеження</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Одношаровий перцептрон (Perceptron)</strong></td>
+<td style="text-align: left;">Зважене скалярне множення <span class="arithmatex">\(\mathbf{w}^T \mathbf{x} + b\)</span> з пороговим відсіканням</td>
+<td style="text-align: left;">Ручне формування вхідного вектора без прихованого перетворення</td>
+<td style="text-align: left;">Єдина гіперплощина <span class="arithmatex">\(\mathcal{H} \subset \mathbb{R}^n\)</span>, поділ на 2 напівпростори</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(n)\)</span>, де <span class="arithmatex">\(n\)</span> — розмірність входу</td>
+<td style="text-align: left;">Принципова нездатність виділяти нелінійно подільні класи</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Багатошаровий перцептрон (MLP / DNN)</strong></td>
+<td style="text-align: left;">Матричне множення <span class="arithmatex">\(\mathbf{W} \mathbf{a} + \mathbf{b}\)</span> з поелементною нелінійністю</td>
+<td style="text-align: left;">Автоматичне ієрархічне згортання та розгортання просторів ознак</td>
+<td style="text-align: left;">Кусково-лінійні або нелінійні складні замкнені гіперповерхні</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}\left(\sum_{l=1}^L n^{[l]} n^{[l-1]}\right)\)</span> для одного зразка</td>
+<td style="text-align: left;">Обмеження пропускної здатності шини пам'яті при зберіганні <span class="arithmatex">\(A^{[l]}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Згорткові мережі (CNN)</strong></td>
+<td style="text-align: left;">Дискретна двовимірна просторова згортка <span class="arithmatex">\(\mathbf{I} * \mathbf{K}\)</span> та пулінг</td>
+<td style="text-align: left;">Локальні інваріантні до зсуву фільтри з розділюваними вагами</td>
+<td style="text-align: left;">Композиція високорівневих просторових многовидів у <span class="arithmatex">\(\mathbb{R}^d\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}\left(\sum_l H_l W_l C_{in} C_{out} K_h K_w\right)\)</span></td>
+<td style="text-align: left;">Обчислювальна інтенсивність операцій зсуву та канальної агрегації</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Рекурентні мережі (RNN / LSTM)</strong></td>
+<td style="text-align: left;">Часово-послідовне матричне множення <span class="arithmatex">\(\mathbf{W}_{hh} \mathbf{h}_{t-1} + \mathbf{W}_{xh} \mathbf{x}_t\)</span></td>
+<td style="text-align: left;">Динамічне накопичення інформації у прихованому стані <span class="arithmatex">\(\mathbf{h}_t\)</span></td>
+<td style="text-align: left;">Динамічно змінювані в часі нелінійні траєкторії розділення</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(T \cdot H^2)\)</span>, де <span class="arithmatex">\(T\)</span> — довжина серії, <span class="arithmatex">\(H\)</span> — розмір стану</td>
+<td style="text-align: left;">Неможливість паралелізації за часовою віссю <span class="arithmatex">\(T\)</span> на прямому ході</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Трансформери (Transformer)</strong></td>
+<td style="text-align: left;">Масштабований матричний добуток скалярних добутків <span class="arithmatex">\(\text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}\)</span></td>
+<td style="text-align: left;">Глобальна багатозаголовкова увага (<strong>Multi-Head Self-Attention</strong>)</td>
+<td style="text-align: left;">Складні багатовимірні контекстно-залежні розділювальні простори</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{O}(T^2 \cdot d + T \cdot d^2)\)</span>, квадратична від довжини <span class="arithmatex">\(T\)</span></td>
+<td style="text-align: left;">Квадратичне зростання вимог до оперативної пам'яті <span class="arithmatex">\(\mathcal{O}(T^2)\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Поширеним хибним уявленням серед інженерів-початківців є думка, що збільшення глибини нейронної мережі шляхом нарощування кількості прихованих шарів автоматично гарантує пропорційне зростання виразної спроможності моделі незалежно від типу функцій активації. </p>
+<p>Як суворо доведено в підрозділі 1.3, якщо у прихованих шарах використовуються лінійні активаційні функції (або якщо функція активації вироджується в лінійну форму через невдалу ініціалізацію чи неправильну область значень), довільна кількість шарів аналітично колапсує до звичайного одношарового афінного перетворення <span class="arithmatex">\(\mathbf{W}_{eff} \mathbf{x} + \mathbf{b}_{eff}\)</span>. У такому випадку додавання нових шарів не тільки не розширює клас розв'язуваних задач, але й призводить до деградації обчислювальної системи через невиправдані витрати пам'яті та сповільнення зворотного ходу без будь-якого приросту точності.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Нехай спроєктовано багатошарову штучну нейронну мережу, що складається з 10 повнозв'язних прихованих шарів по 128 нейронів у кожному. У якості функцій активації всіх прихованих шарів розробник обрав функцію <span class="arithmatex">\(g(z) = 3z + 5\)</span>. Чи здатна дана нейронна мережа успішно вирішити задачу нелінійної класифікації для виявлення логічної структури XOR, і який вигляд матиме еквівалентне матричне перетворення вихідного сигналу через вхідний вектор?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Правильна відповідь:</strong> Дана нейронна мережа принципово <strong>не здатна</strong> розв'язати задачу нелінійної класифікації (зокрема проблему XOR), оскільки функція <span class="arithmatex">\(g(z) = 3z + 5\)</span> є афінною (лінійною зі зсувом). Будь-яка композиція афінних відображень залишається строго афінним відображенням, що не дозволяє викривляти метричний простір для забезпечення лінійної подільності класів.</p>
+<ol>
+<li>
+<p><strong>Математичне обґрунтування лінійного колапсу:</strong></p>
+<p>Розглянемо шар <span class="arithmatex">\(l\)</span>, де обчислюється вектор потенціалів:</p>
+<div class="arithmatex">\[\mathbf{z}^{[l]} = \mathbf{W}^{[l]} \mathbf{a}^{[l-1]} + \mathbf{b}^{[l]}\]</div>
+<p>Застосування функції активації <span class="arithmatex">\(g(z) = 3z + 5\)</span> у векторно-матричній формі записується як:</p>
+<div class="arithmatex">\[\mathbf{a}^{[l]} = 3 \mathbf{z}^{[l]} + 5 \cdot \mathbf{1} = 3 \left(\mathbf{W}^{[l]} \mathbf{a}^{[l-1]} + \mathbf{b}^{[l]}\right) + 5 \cdot \mathbf{1} = \left(3 \mathbf{W}^{[l]}\right) \mathbf{a}^{[l-1]} + \left(3 \mathbf{b}^{[l]} + 5 \cdot \mathbf{1}\right)\]</div>
+<p>Позначимо модифіковані матриці ваг та векторів зсуву шару <span class="arithmatex">\(l\)</span>:</p>
+<div class="arithmatex">\[\widetilde{\mathbf{W}}^{[l]} = 3 \mathbf{W}^{[l]}, \quad \widetilde{\mathbf{b}}^{[l]} = 3 \mathbf{b}^{[l]} + 5 \cdot \mathbf{1}\]</div>
+<p>Тоді рекурентне співвідношення для всього ланцюга шарів набуває стандартного лінійного вигляду <span class="arithmatex">\(\mathbf{a}^{[l]} = \widetilde{\mathbf{W}}^{[l]} \mathbf{a}^{[l-1]} + \widetilde{\mathbf{b}}^{[l]}\)</span>. Відповідно до теореми про лінійний колапс, композиція десяти таких шарів згортається у єдине еквівалентне лінійне рівняння:</p>
+<div class="arithmatex">\[\mathbf{a}^{[10]} = \mathbf{W}_{eff} \mathbf{x} + \mathbf{b}_{eff}\]</div>
+<p>де ефективна матриця та вектор визначаються добутками:</p>
+<div class="arithmatex">\[\mathbf{W}_{eff} = \prod_{l=10}^{1} \widetilde{\mathbf{W}}^{[l]} = 3^{10} \prod_{l=10}^{1} \mathbf{W}^{[l]}\]</div>
+<div class="arithmatex">\[\mathbf{b}_{eff} = \widetilde{\mathbf{b}}^{[10]} + \sum_{k=1}^{9} \left( \prod_{j=10}^{k+1} \widetilde{\mathbf{W}}^{[j]} \right) \widetilde{\mathbf{b}}^{[k]}\]</div>
+</li>
+<li>
+<p><strong>Аналіз геометричних наслідків:</strong></p>
+<ul>
+<li>
+<p>Отримана функція <span class="arithmatex">\(\mathbf{a}^{[10]}(\mathbf{x})\)</span> описує виключно лінійну розділювальну гіперплощину в просторі вхідних параметрів.</p>
+</li>
+<li>
+<p>Оскільки логічна функція XOR вимагає мінімум двох перетинних розділювальних прямих на площині ознак для коректного відокремлення точок <span class="arithmatex">\((0, 1)\)</span> та <span class="arithmatex">\((1, 0)\)</span> від точок <span class="arithmatex">\((0, 0)\)</span> та <span class="arithmatex">\((1, 1)\)</span>, єдина площина, породжена згорнутою системою, гарантовано дає помилку класифікації не менше 25%.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h3 id="_4">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Дослідіть закономірності формування компромісу між шириною шару (кількістю паралельних нейронів) та глибиною мережі (кількістю послідовних шарів). Проаналізуйте, чому з точки зору теорії інформації та обчислювальної ємності схем експоненційна кількість параметрів у широкій неглибокій мережі поступається поліноміальній ємності глибоких мереж при представленні складної логіки композиції ознак.</p>
+</li>
+<li>
+<p>Проаналізуйте зв'язок між метричною розмірністю вхідного простору ознак <span class="arithmatex">\(\mathbb{R}^n\)</span> та кількістю розділювальних гіперплощин, необхідних для формування замкнених опуклих багатогранників рішень. Зіставте це з кількістю нейронів у першому та другому прихованих шарах багатошарового перцептрона для довільної кусочно-неперервної поверхні класифікації.</p>
+</li>
+<li>
+<p>Оцініть наслідки масштабування обчислень при переході від поодинокої обробки векторів <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^n\)</span> до пакетної обробки тензорів <span class="arithmatex">\(\mathbf{X} \in \mathbb{R}^{m \times n}\)</span>. Зверніть увагу на зміну вимог до кеш-пам'яті першого та другого рівнів обчислювальних процесорів та визначте причини, чому ефективність утилізації апаратних ядер GPU зростає зі збільшенням розміру пакета <span class="arithmatex">\(m\)</span>.</p>
+</li>
+</ol>
+<h2 id="2">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21-">2.1. Векторно-матрична формалізація прямого ходу для пакетного режиму обробки даних</h3>
+<p>Обчислювальний процес прямого поширення сигналу в сучасних глибоких нейронних мережах оптимізовано під векторно-конвеєрні та матричні обчислювальні прискорювачі шляхом групування окремих векторів вхідних ознак у пакетні матричні структури (<strong>Mini-batch tensors</strong>). Це дозволяє трансформувати дискретні операції над векторами у високопродуктивні процедури множення матриць загального вигляду (<strong>GEMM — General Matrix Multiply</strong>), максимізуючи утилізацію обчислювальних ядер і зменшуючи кількість звернень до глобальної пам'яті.</p>
+<p>Нехай навчальна вибірка розбита на пакети обсягом <span class="arithmatex">\(m \in \mathbb{N}\)</span> незалежних прикладів. Множина вхідних сигналів першого шару формалізується матрицею вихідних активацій <span class="arithmatex">\(\mathbf{A}^{[0]} \in \mathbb{R}^{n^{[0]} \times m}\)</span>, де кожен стовпчик є окремим <span class="arithmatex">\(n^{[0]}\)</span>-вимірним вектором ознак:</p>
+<div class="arithmatex">\[\mathbf{A}^{[0]} = \begin{bmatrix} \mathbf{x}^{(1)} &amp; \mathbf{x}^{(2)} &amp; \dots &amp; \mathbf{x}^{(m)} \end{bmatrix} = \begin{bmatrix} x_{1}^{(1)} &amp; x_{1}^{(2)} &amp; \dots &amp; x_{1}^{(m)} \\ x_{2}^{(1)} &amp; x_{2}^{(2)} &amp; \dots &amp; x_{2}^{(m)} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_{n^{[0]}}^{(1)} &amp; x_{n^{[0]}}^{(2)} &amp; \dots &amp; x_{n^{[0]}}^{(m)} \end{bmatrix}\]</div>
+<p>Для довільного прихованого або вихідного шару <span class="arithmatex">\(l \in \{1, 2, \dots, L\}\)</span> обчислювальний процес прямого ходу у метричному просторі формується системою аналітичних матричних рівнянь:</p>
+<div class="arithmatex">\[\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]} \mathbf{1}_m^T\]</div>
+<div class="arithmatex">\[\mathbf{A}^{[l]} = g^{[l]}\left(\mathbf{Z}^{[l]}\right)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathbf{W}^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}\)</span> — матриця вагових коефіцієнтів між шарами <span class="arithmatex">\(l-1\)</span> та <span class="arithmatex">\(l\)</span>, елемент <span class="arithmatex">\(w_{ij}^{[l]}\)</span> якої визначає силу синаптичного зв'язку від <span class="arithmatex">\(j\)</span>-го нейрона попереднього шару до <span class="arithmatex">\(i\)</span>-го нейрона поточного шару (тип даних — дійсні числа одинарної FP32 або половинної FP16/BF16 точності);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{A}^{[l-1]} \in \mathbb{R}^{n^{[l-1]} \times m}\)</span> — матриця вихідних активацій шару <span class="arithmatex">\(l-1\)</span>, яка транслюється на вхід шару <span class="arithmatex">\(l\)</span> (для вхідного рівня <span class="arithmatex">\(\mathbf{A}^{[0]} = \mathbf{X}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}\)</span> — вектор-стовпчик зсувів шару <span class="arithmatex">\(l\)</span>, що задає порогові константи для кожного з <span class="arithmatex">\(n^{[l]}\)</span> нейронів;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{1}_m = [1, 1, \dots, 1]^T \in \mathbb{R}^{m \times 1}\)</span> — одиничний вектор розмірності <span class="arithmatex">\(m\)</span>, векторний добуток якого на транспонований вектор зсуву <span class="arithmatex">\(\mathbf{b}^{[l]} \mathbf{1}_m^T\)</span> здійснює операцію широкомовного копіювання (<strong>broadcasting</strong>) зсувів на всі <span class="arithmatex">\(m\)</span> прикладів батчу;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{Z}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}\)</span> — матриця сумарних лінійних потенціалів шару <span class="arithmatex">\(l\)</span>, обчислена для всіх елементів пакета;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(g^{[l]}(\cdot)\)</span> — нелінійна скалярна функція активації шару <span class="arithmatex">\(l\)</span>, що застосовується поелементно до кожного компонента матриці <span class="arithmatex">\(\mathbf{Z}^{[l]}\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{A}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}\)</span> — підсумкова матриця активацій шару <span class="arithmatex">\(l\)</span>, стовпці якої є вхідними векторами для наступного шару або фінальними прогнозами системи.</p>
+</li>
+</ul>
+<p>Обчислювальні накладні витрати на виконання прямого ходу для всього конвеєра з <span class="arithmatex">\(L\)</span> шарів визначаються сумарною кількістю операцій із рухомою комою (FLOPs). Оскільки матричне множення розмірностей <span class="arithmatex">\((n^{[l]} \times n^{[l-1]}) \times (n^{[l-1]} \times m)\)</span> потребує <span class="arithmatex">\(2 \cdot m \cdot n^{[l]} \cdot n^{[l-1]}\)</span> операцій множення та додавання (FMA-інструкцій), сумарна обчислювальна складність <span class="arithmatex">\(T_{FP}\)</span> прямого ходу оцінюється співвідношенням:</p>
+<div class="arithmatex">\[T_{FP} = 2m \sum_{l=1}^{L} n^{[l]} n^{[l-1]} + m \sum_{l=1}^{L} n^{[l]} c_{act}\]</div>
+<p>де <span class="arithmatex">\(c_{act}\)</span> — скалярна кількість операцій, необхідна для обчислення обраної функції активації <span class="arithmatex">\(g^{[l]}(\cdot)\)</span> для одного елемента.</p>
+<p>Апаратна місткість оперативної пам'яті графічного прискорювача <span class="arithmatex">\(\mathcal{M}_{act}\)</span>, необхідна для кешування проміжних тензорів активацій з метою подальшого забезпечення збіжності зворотного ходу, формалізується виразом:</p>
+<div class="arithmatex">\[\mathcal{M}_{act} = s_p \cdot m \sum_{l=0}^{L} n^{[l]}\]</div>
+<p>де <span class="arithmatex">\(s_p\)</span> — розмір комірки пам'яті в байтах для обраного числового формату представлення ваг (наприклад, <span class="arithmatex">\(s_p = 4\)</span> байти для стандарту IEEE 754 FP32, <span class="arithmatex">\(s_p = 2\)</span> байти для FP16 або <span class="arithmatex">\(s_p = 1\)</span> байт для цілочисельного квантування INT8).</p>
+<hr />
+<h3 id="22">2.2. Математичне виведення алгоритму зворотного поширення помилки на основі матричного ланцюгового правила</h3>
+<p>Алгоритм зворотного поширення помилки (<strong>Backpropagation</strong>) базується на строгому застосуванні ланцюгового правила диференціювання функцій багатьох змінних (<strong>Chain Rule</strong>) у просторі матриць та векторів. Розглянемо загальну цільову функцію втрат <span class="arithmatex">\(\mathcal{L}\left(\mathbf{A}^{[L]}, \mathbf{Y}\right) \in \mathbb{R}\)</span>, обчислену як середнє значення скалярних функцій втрат <span class="arithmatex">\(\ell\left(\mathbf{a}^{(i)[L]}, \mathbf{y}^{(i)}\right)\)</span> для <span class="arithmatex">\(m\)</span> об'єктів вибірки:</p>
+<div class="arithmatex">\[\mathcal{L} = \frac{1}{m} \sum_{i=1}^{m} \ell\left(\mathbf{a}^{(i)[L]}, \mathbf{y}^{(i)}\right)\]</div>
+<p>Для довільного шару <span class="arithmatex">\(l\)</span> визначимо матрицю помилки (градієнт вхідного лінійного потенціалу) <span class="arithmatex">\(\boldsymbol{\delta}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}\)</span> як повну часткову похідну цільового функціонала за матрицею <span class="arithmatex">\(\mathbf{Z}^{[l]}\)</span>:</p>
+<div class="arithmatex">\[\boldsymbol{\delta}^{[l]} = \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}}\]</div>
+<p>Покроковий процес виведення рекурентної залежності зворотного поширення градієнтів та оновлення параметрів має такий вигляд:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Ланцюгова декомпозиція):} &amp; \quad \boldsymbol{\delta}^{[l]} = \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \left( \frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}} \right) \cdot \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} = \left( \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} \right) \odot g'^{[l]}\left(\mathbf{Z}^{[l]}\right) \\
+\text{Етап 2 (Зворотне проєктування):} &amp; \quad \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l-1]}} = \left( \frac{\partial \mathbf{Z}^{[l]}}{\partial \mathbf{A}^{[l-1]}} \right)^T \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \left(\mathbf{W}^{[l]}\right)^T \boldsymbol{\delta}^{[l]} \\
+\text{Етап 3 (Міжшарова рекурсія):} &amp; \quad \boldsymbol{\delta}^{[l-1]} = \left[ \left(\mathbf{W}^{[l]}\right)^T \boldsymbol{\delta}^{[l]} \right] \odot g'^{[l-1]}\left(\mathbf{Z}^{[l-1]}\right) \\
+\text{Етап 4 (Градієнт за ваговими матрицями):} &amp; \quad \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \frac{1}{m} \sum_{i=1}^m \boldsymbol{\delta}^{(i)[l]} \left(\mathbf{a}^{(i)[l-1]}\right)^T = \frac{1}{m} \boldsymbol{\delta}^{[l]} \left(\mathbf{A}^{[l-1]}\right)^T \\
+\text{Етап 5 (Градієнт за векторами зсувів):} &amp; \quad \frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} = \frac{1}{m} \sum_{i=1}^m \boldsymbol{\delta}^{(i)[l]} = \frac{1}{m} \boldsymbol{\delta}^{[l]} \mathbf{1}_m
+\end{aligned}
+\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\odot\)</span> — бінарний оператор добутку Адамара (поелементне множення матриць або векторів однакової розмірності);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(g'^{[l]}\left(\mathbf{Z}^{[l]}\right) \in \mathbb{R}^{n^{[l]} \times m}\)</span> — матриця перших похідних скалярної функції активації, обчислених у точках лінійних потенціалів відповідного шару;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\left(\mathbf{W}^{[l]}\right)^T \in \mathbb{R}^{n^{[l-1]} \times n^{[l]}}\)</span> — транспонована матриця синаптичних ваг, що забезпечує коректне лінійне проєктування вектора помилки назад у розмірність шару <span class="arithmatex">\(l-1\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}\)</span> — тензор градієнтів цільової функції за вагами шару <span class="arithmatex">\(l\)</span>, усереднений за розміром пакета <span class="arithmatex">\(m\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} \in \mathbb{R}^{n^{[l]} \times 1}\)</span> — вектор градієнтів цільової функції за зсувами шару <span class="arithmatex">\(l\)</span>, отриманий сумуванням стовпців матриці помилки <span class="arithmatex">\(\boldsymbol{\delta}^{[l]}\)</span> уздовж пакетної осі.</p>
+</li>
+</ul>
+<hr />
+<h3 id="23-softmax-categorical-cross-entropy">2.3. Аналітичний вивід градієнта для зв'язки функцій Softmax та Categorical Cross-Entropy</h3>
+<p>Для задач багатокласової класифікації з кількістю взаємовиключних класів <span class="arithmatex">\(C \in \mathbb{N}\)</span> вихідний шар <span class="arithmatex">\(L\)</span> (<span class="arithmatex">\(n^{[L]} = C\)</span>) використовує нормалізуючу функцію <strong>Softmax</strong>, а функціонал оптимізації формується на основі <strong>категоріальної крос-ентропії (Categorical Cross-Entropy)</strong>.</p>
+<p>Для довільного одиночного вектора потенціалів вихідного шару <span class="arithmatex">\(\mathbf{z} = [z_1, z_2, \dots, z_C]^T\)</span> функція Softmax визначає ймовірнісний розподіл прогнозу <span class="arithmatex">\(\mathbf{a} = [a_1, a_2, \dots, a_C]^T\)</span>:</p>
+<div class="arithmatex">\[a_i = \frac{e^{z_i}}{\sum_{k=1}^C e^{z_k}}, \quad \forall i \in \{1, 2, \dots, C\}\]</div>
+<p>Функція втрат крос-ентропії для вектора істинних міток <span class="arithmatex">\(\mathbf{y} = [y_1, y_2, \dots, y_C]^T \in \{0, 1\}^C\)</span> у форматі One-Hot Encoding має вигляд:</p>
+<div class="arithmatex">\[\ell(\mathbf{a}, \mathbf{y}) = - \sum_{j=1}^C y_j \ln(a_j)\]</div>
+<p>Аналітичне диференціювання цільової функції за вхідним потенціалом <span class="arithmatex">\(z_k\)</span> містить поетапний розрахунок матриці Якобі для оператора Softmax з подальшим скалярним згортанням:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Якобіан Softmax при } i = k\text{):} &amp; \quad \frac{\partial a_k}{\partial z_k} = \frac{e^{z_k} \sum_{j=1}^C e^{z_j} - (e^{z_k})^2}{\left(\sum_{j=1}^C e^{z_j}\right)^2} = a_k - a_k^2 = a_k(1 - a_k) \\
+\text{Етап 2 (Якобіан Softmax при } i \neq k\text{):} &amp; \quad \frac{\partial a_i}{\partial z_k} = \frac{0 - e^{z_i} e^{z_k}}{\left(\sum_{j=1}^C e^{z_j}\right)^2} = -a_i a_k \\
+\text{Етап 3 (Диференціювання втрат):} &amp; \quad \frac{\partial \ell}{\partial a_i} = - \frac{y_i}{a_i} \\
+\text{Етап 4 (Згортка за правилом ланцюга):} &amp; \quad \delta_k = \frac{\partial \ell}{\partial z_k} = \sum_{i=1}^C \frac{\partial \ell}{\partial a_i} \frac{\partial a_i}{\partial z_k} = - \frac{y_k}{a_k} \left[a_k(1 - a_k)\right] - \sum_{i \neq k}^C \frac{y_i}{a_i} \left[- a_i a_k\right] \\
+\text{Етап 5 (Алгебраїчна редукція):} &amp; \quad \delta_k = - y_k(1 - a_k) + \sum_{i \neq k}^C y_i a_k = - y_k + y_k a_k + a_k \sum_{i \neq k}^C y_i
+\end{aligned}
+\]</div>
+<p>Оскільки для унітарного кодування <span class="arithmatex">\(\sum_{i=1}^C y_i = y_k + \sum_{i \neq k}^C y_i = 1\)</span>, згрупований вираз зводиться до:</p>
+<div class="arithmatex">\[\delta_k = -y_k + a_k \left( y_k + \sum_{i \neq k}^C y_i \right) = -y_k + a_k (1) = a_k - y_k\]</div>
+<p>Узагальнюючи результат на весь пакет <span class="arithmatex">\(m\)</span> у векторно-матричній формі, отримуємо точний аналітичний вираз:</p>
+<div class="arithmatex">\[\boldsymbol{\delta}^{[L]} = \mathbf{A}^{[L]} - \mathbf{Y}\]</div>
+<p>Аналіз граничної поведінки отриманого співвідношення показує високу стійкість:</p>
+<ol>
+<li>
+<p>Якщо модель повністю впевнена в істинному класі (<span class="arithmatex">\(k\)</span>-й клас, <span class="arithmatex">\(y_k = 1\)</span>), то за умови <span class="arithmatex">\(z_k \gg z_{j \neq k}\)</span> маємо:
+   $<span class="arithmatex">\(\lim_{z_k \to +\infty} a_k = 1 \implies \lim_{z_k \to +\infty} \delta_k = 1 - 1 = 0\)</span>$
+   У цьому стані градієнт прямує до нуля, сигналізуючи про відсутність потреби в зміні параметрів.</p>
+</li>
+<li>
+<p>Якщо ж модель видає хибну відповідь з абсолютною впевненістю (<span class="arithmatex">\(a_k \to 0\)</span> при <span class="arithmatex">\(y_k = 1\)</span>), градієнт досягає свого абсолютного максимуму:
+   $<span class="arithmatex">\(\lim_{a_k \to 0} \delta_k = 0 - 1 = -1\)</span>$
+   Це забезпечує максимальну коригувальну дію оптимізатора без виникнення чисельної невизначеності.</p>
+</li>
+</ol>
+<hr />
+<h3 id="24">2.4. Спектральний та асимптотичний аналіз добутку матриць Якобі: згасання та вибух градієнтних потоків</h3>
+<p>Розгорнемо рекурентний вираз для вектора похибки <span class="arithmatex">\(\boldsymbol{\delta}^{[1]}\)</span> першого прихованого шару через градієнтний сигнал вихідного шару <span class="arithmatex">\(\boldsymbol{\delta}^{[L]}\)</span> для окремого вектора даних. Застосовуючи послідовне розкриття співвідношень зворотного ходу, маємо:</p>
+<div class="arithmatex">\[\boldsymbol{\delta}^{[1]} = \left[ \prod_{l=1}^{L-1} \left( \mathbf{W}^{[l+1]} \right)^T \mathbf{D}^{[l]} \right] \boldsymbol{\delta}^{[L]}\]</div>
+<p>де <span class="arithmatex">\(\mathbf{D}^{[l]} = \text{diag}\left(g'^{[l]}\left(\mathbf{z}^{[l]}\right)\right) \in \mathbb{R}^{n^{[l]} \times n^{[l]}}\)</span> — діагональна матриця Якобі локальних похідних функцій активації шару <span class="arithmatex">\(l\)</span>.</p>
+<p>Оцінимо евклідову норму вектора градієнта <span class="arithmatex">\(\|\boldsymbol{\delta}^{[1]}\|_2\)</span> за допомогою субординованої спектральної матричної норми <span class="arithmatex">\(\|\cdot\|_2\)</span>:</p>
+<div class="arithmatex">\[\|\boldsymbol{\delta}^{[1]}\|_2 \le \|\boldsymbol{\delta}^{[L]}\|_2 \prod_{l=1}^{L-1} \left\| \left(\mathbf{W}^{[l+1]}\right)^T \right\|_2 \left\| \mathbf{D}^{[l]} \right\|_2\]</div>
+<p>Для матриці похідних норма строго обмежена супремумом похідної функції активації: <span class="arithmatex">\(\|\mathbf{D}^{[l]}\|_2 = \max_{j} \left|g'^{[l]}(z_j^{[l]})\right| \le \gamma\)</span>. Спектральна норма вагової матриці дорівнює її максимальному сингулярному числу: <span class="arithmatex">\(\|\mathbf{W}^{[l+1]}\|_2 = \sigma_{\max}\left(\mathbf{W}^{[l+1]}\right)\)</span>. Якщо припустити середню оцінку спектральної норми матриць ваг <span class="arithmatex">\(\|\mathbf{W}\|_2 \approx \omega\)</span>, то градієнтна норма обмежується експоненційною функцією від глибини мережі <span class="arithmatex">\(L\)</span>:</p>
+<div class="arithmatex">\[\|\boldsymbol{\delta}^{[1]}\|_2 \le \|\boldsymbol{\delta}^{[L]}\|_2 \cdot (\omega \cdot \gamma)^{L-1}\]</div>
+<p>Аналіз граничної поведінки при зростанні глибини мережі (<span class="arithmatex">\(L \to \infty\)</span>) виявляє дві біфуркаційні патології:</p>
+<ol>
+<li>
+<p><strong>Експоненційне загасання градієнтів (Vanishing Gradient Problem):</strong>
+   $$
+   \begin{aligned}
+   \text{Умова виникнення:} &amp; \quad \omega \cdot \gamma \lt  1 \
+   \text{Асимптотична межа:} &amp; \quad \lim_{L \to \infty} |\boldsymbol{\delta}^{[1]}|<em L="L" _infty="\infty" _to="\to">2 = |\boldsymbol{\delta}^{[L]}|_2 \cdot \lim</em> = 0
+   \end{aligned}
+   $$
+   Якщо у прихованих шарах застосовано функцію } (\omega \cdot \gamma)^{L-1<strong>Sigmoid</strong>, максимальне значення її похідної <span class="arithmatex">\(g'(z) = \sigma(z)(1 - \sigma(z))\)</span> досягається при <span class="arithmatex">\(z = 0\)</span> і становить <span class="arithmatex">\(\gamma = 0.25\)</span>. Навіть за умови одиничної спектральної норми ваг (<span class="arithmatex">\(\omega = 1\)</span>) добуток становить <span class="arithmatex">\(0.25^{L-1}\)</span>. Для глибини всього в <span class="arithmatex">\(L = 16\)</span> шарів амплітуда градієнта послаблюється в <span class="arithmatex">\(0.25^{15} \approx 9.31 \times 10^{-10}\)</span> разів. Похідні по вагах перших шарів стають меншими за машинний нуль підсистеми плаваючої коми, і процес оптимізації початкових рівнів зупиняється.</p>
+</li>
+<li>
+<p><strong>Експоненційний вибух градієнтів (Exploding Gradient Problem):</strong>
+   $$
+   \begin{aligned}
+   \text{Умова виникнення:} &amp; \quad \omega \cdot \gamma &gt; 1 \
+   \text{Асимптотична межа:} &amp; \quad \lim_{L \to \infty} |\boldsymbol{\delta}^{[1]}|<em L="L" _infty="\infty" _to="\to">2 = |\boldsymbol{\delta}^{[L]}|_2 \cdot \lim</em> = +\infty
+   \end{aligned}
+   $$
+   Якщо спектральний радіус ваг перевищує поріг стабільності (} (\omega \cdot \gamma)^{L-1<span class="arithmatex">\(\omega &gt; 1\)</span>) при ненасичених функціях активації (для ReLU <span class="arithmatex">\(\gamma = 1\)</span> в додатній області), добуток матриць експоненційно зростає. Це породжує арифметичне переповнення розрядної сітки (<strong>Overflow</strong>), генерацію нечислових значень <code>NaN</code> та дестабілізацію навчання.</p>
+</li>
+</ol>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Uninitialized: Виділення пам'яті під граф DNN
+    Uninitialized --&gt; Initialized: Ініціалізація ваг (He / Xavier)
+    Initialized --&gt; Training_Epoch: Старт епохи навчання
+
+    state Training_Epoch {
+        [*] --&gt; Forward_Pass: Завантаження Mini-batch
+        Forward_Pass --&gt; Activation_Caching: Обчислення Z_l та A_l
+        Activation_Caching --&gt; Loss_Evaluation: Оцінка функціоналу втрат L
+        Loss_Evaluation --&gt; Backward_Pass: Формування базової похибки delta_L
+
+        Backward_Pass --&gt; Gradient_Flow: Запуск зворотного ходу
+
+        state Gradient_Flow {
+            [*] --&gt; Gradient_Check: Обчислення ланцюга Якобіанів
+            Gradient_Check --&gt; Vanishing_Detected: Норма менша за epsilon
+            Gradient_Check --&gt; Exploding_Detected: Норма більша за threshold
+            Gradient_Check --&gt; Stable_Gradients: Норма в допустимих межах
+
+            Vanishing_Detected --&gt; Dynamic_Recovery: Застосування Skip-Connection
+            Exploding_Detected --&gt; Clip_Operation: Нормалізація Gradient Clipping
+            Clip_Operation --&gt; Stable_Gradients
+            Dynamic_Recovery --&gt; Stable_Gradients
+            Stable_Gradients --&gt; [*]
+        }
+
+        Gradient_Flow --&gt; Parameter_Update: Градієнти стабілізовано
+        Parameter_Update --&gt; Cache_Eviction: Оновлення W_l та b_l (SGD / AdamW)
+        Cache_Eviction --&gt; Batch_Decision: Звільнення проміжних буферів
+
+        Batch_Decision --&gt; Forward_Pass: Наступний Mini-batch
+        Batch_Decision --&gt; [*]: Епоху завершено
+    }
+
+    Training_Epoch --&gt; Convergence_Check: Перевірка критерію зупинки
+    Convergence_Check --&gt; Training_Epoch: Втрати вищі за толерантність
+    Convergence_Check --&gt; Convergence_Reached: Втрати менші або рівні толерантності
+    Convergence_Reached --&gt; [*]: Збереження оптимізованих ваг</code></pre>
+<hr />
+<h3 id="25">2.5. Математичні засади дисперсійного узгодження сигналів: ініціалізація Ксав'єра та Хе</h3>
+<p>Для запобігання експоненційному загасанню або вибуху градієнтів необхідно забезпечити збереження статистичної дисперсії сигналу впродовж проходження всіх шарів як на прямому, так і на зворотному ході:</p>
+<div class="arithmatex">\[\text{Var}\left(a_i^{[l]}\right) \approx \text{Var}\left(a_j^{[l-1]}\right) \quad \text{та} \quad \text{Var}\left(\delta_i^{[l-1]}\right) \approx \text{Var}\left(\delta_j^{[l]}\right)\]</div>
+<p>Припустимо, що компоненти ваг <span class="arithmatex">\(w_{ij}^{[l]}\)</span> та входів <span class="arithmatex">\(a_j^{[l-1]}\)</span> є взаємно незалежними випадковими величинами з нульовими математичними сподіваннями: <span class="arithmatex">\(\mathbb{E}[w_{ij}^{[l]}] = 0\)</span>, <span class="arithmatex">\(\mathbb{E}[a_j^{[l-1]}] = 0\)</span>.</p>
+<p>Розглянемо виведення дисперсії лінійного потенціалу <span class="arithmatex">\(z_i^{[l]} = \sum_{j=1}^{n^{[l-1]}} w_{ij}^{[l]} a_j^{[l-1]} + b_i^{[l]}\)</span> (поклавши <span class="arithmatex">\(b_i^{[l]} = 0\)</span>):</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Розклад дисперсії):} &amp; \quad \text{Var}\left(z_i^{[l]}\right) = \text{Var}\left( \sum_{j=1}^{n^{[l-1]}} w_{ij}^{[l]} a_j^{[l-1]} \right) = \sum_{j=1}^{n^{[l-1]}} \text{Var}\left(w_{ij}^{[l]} a_j^{[l-1]}\right) \\
+\text{Етап 2 (Добуток незалежних величин):} &amp; \quad \text{Var}(w \cdot a) = \mathbb{E}[w]^2 \text{Var}(a) + \mathbb{E}[a]^2 \text{Var}(w) + \text{Var}(w)\text{Var}(a) = \text{Var}(w)\text{Var}(a) \\
+\text{Етап 3 (Сумарна пряма дисперсія):} &amp; \quad \text{Var}\left(z_i^{[l]}\right) = n^{[l-1]} \text{Var}\left(W^{[l]}\right) \text{Var}\left(A^{[l-1]}\right) \\
+\text{Етап 4 (Аналогічний зворотний розклад):} &amp; \quad \text{Var}\left(\delta_j^{[l-1]}\right) = n^{[l]} \text{Var}\left(W^{[l]}\right) \text{Var}\left(\delta^{[l]}\right)
+\end{aligned}
+\]</div>
+<p><strong>1. Ініціалізація Ксав'єра / Глорота (Xavier / Glorot Initialization):</strong><br />
+Призначена для симетричних функцій активації (Tanh, лінійні апроксимації поблизу нуля), де <span class="arithmatex">\(g'(0) \approx 1\)</span>, отже, <span class="arithmatex">\(\text{Var}(A^{[l]}) \approx \text{Var}(Z^{[l]})\)</span>. Для збереження масштабу сигналів на прямому ході необхідно виконання умови <span class="arithmatex">\(n^{[l-1]} \text{Var}(W^{[l]}) = 1\)</span>, а на зворотному — <span class="arithmatex">\(n^{[l]} \text{Var}(W^{[l]}) = 1\)</span>. Оскільки одночасно задовольнити обидві умови при різній ширині шарів неможливо, обирається компромісне гармонійне середнє:</p>
+<div class="arithmatex">\[\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]} + n^{[l]}} \implies W_{ij}^{[l]} \sim \mathcal{N}\left(0, \;\sigma^2 = \frac{2}{n^{[l-1]} + n^{[l]}}\right)\]</div>
+<p><strong>2. Ініціалізація Хе / Каймінга (He / Kaiming Initialization):</strong><br />
+Розроблена спеціально для кусково-лінійних функцій типу <strong>ReLU</strong> (<span class="arithmatex">\(g(z) = \max(0, z)\)</span>). Функція ReLU повністю обнуляє від'ємну область значень, що при симетричному розподілі <span class="arithmatex">\(z_i^{[l]}\)</span> навколо нуля зменшує дисперсію вихідного сигналу рівно вдвічі:</p>
+<div class="arithmatex">\[\text{Var}\left(a_i^{[l]}\right) = \mathbb{E}\left[\left(a_i^{[l]}\right)^2\right] = \int_{-\infty}^{+\infty} \max(0, z)^2 p(z) dz = \int_{0}^{+\infty} z^2 p(z) dz = \frac{1}{2} \text{Var}\left(z_i^{[l]}\right)\]</div>
+<p>Підставивши цей вираз у балансове рівняння прямого ходу, маємо:</p>
+<div class="arithmatex">\[\text{Var}\left(z_i^{[l]}\right) = n^{[l-1]} \text{Var}\left(W^{[l]}\right) \cdot \left[\frac{1}{2}\text{Var}\left(z_j^{[l-1]}\right)\right] = \left( \frac{1}{2} n^{[l-1]} \text{Var}\left(W^{[l]}\right) \right) \text{Var}\left(z_j^{[l-1]}\right)\]</div>
+<p>Для виконання інваріанта рівності дисперсій <span class="arithmatex">\(\text{Var}\left(z_i^{[l]}\right) = \text{Var}\left(z_j^{[l-1]}\right)\)</span> масштабний коефіцієнт повинен дорівнювати одиниці: <span class="arithmatex">\(\frac{1}{2} n^{[l-1]} \text{Var}\left(W^{[l]}\right) = 1\)</span>. Звідси отримуємо теоретичну дисперсію Хе:</p>
+<div class="arithmatex">\[\text{Var}\left(W^{[l]}\right) = \frac{2}{n^{[l-1]}} \implies W_{ij}^{[l]} \sim \mathcal{N}\left(0, \;\sigma^2 = \frac{2}{n^{[l-1]}}\right)\]</div>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Host as Host CPU (Пакети даних)
+    participant GPU_RAM as Global VRAM
+    participant TensorCore as Tensor Processing Cores
+    participant Optimizer as Апаратний Оптимізатор
+
+    Host-&gt;&gt;GPU_RAM: Передача пакетів X, Y (DMA Transfer via PCIe)
+
+    Note over GPU_RAM,TensorCore: Фаза 1. Прямий хід (Forward Pass)
+    GPU_RAM-&gt;&gt;TensorCore: Завантаження ваг W^[l], b^[l] та входів A^[l-1]
+    TensorCore-&gt;&gt;TensorCore: GEMM операція: Z^[l] = W^[l] * A^[l-1] + b^[l]
+    TensorCore-&gt;&gt;TensorCore: Поелементна нелінійність: A^[l] = g(Z^[l])
+    TensorCore-&gt;&gt;GPU_RAM: Кешування активацій A^[l] для Backward Pass
+    TensorCore-&gt;&gt;TensorCore: Обчислення Softmax та втрат Cross-Entropy L
+
+    Note over GPU_RAM,TensorCore: Фаза 2. Зворотний хід (Backward Pass)
+    TensorCore-&gt;&gt;TensorCore: Базовий вихідний градієнт: delta^[L] = A^[L] - Y
+
+    par Паралельне обчислення градієнтів за параметрами та активаціями
+        TensorCore-&gt;&gt;TensorCore: dL/dW^[l] = (1/m) * delta^[l] * (A^[l-1])^T
+        TensorCore-&gt;&gt;TensorCore: delta^[l-1] = ((W^[l])^T * delta^[l]) .* g'(Z^[l-1])
+    end
+
+    TensorCore-&gt;&gt;GPU_RAM: Запис матриць градієнтів dW^[l], db^[l]
+
+    Note over GPU_RAM,Optimizer: Фаза 3. Оновлення вагових коефіцієнтів
+    GPU_RAM-&gt;&gt;Optimizer: Завантаження dW^[l], db^[l] та поточних параметрів W^[l]
+    Optimizer-&gt;&gt;Optimizer: Розрахунок моментів першого і другого порядків (AdamW)
+    Optimizer-&gt;&gt;GPU_RAM: Перезапис оновлених матриць ваг W^[l]
+    GPU_RAM--&gt;&gt;Host: Сигнал готовності та скалярне значення Loss</code></pre>
+<hr />
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Фундаментальним інваріантом чисельної стійкості алгоритму зворотного поширення помилки є збереження спектрального радіуса добутку матриць зворотного переносу:</p>
+<div class="arithmatex">\[\rho\left( \prod_{l=1}^{L-1} (\mathbf{W}^{[l+1]})^T \mathbf{D}^{[l]} \right) \approx 1\]</div>
+<p>Порушення цієї рівноваги в менший бік призводить до експоненційного згасання градієнтів із швидкістю <span class="arithmatex">\(\mathcal{O}\left(e^{-c L}\right)\)</span>, у більший бік — до вибуху розрядної сітки з формуванням значень <code>NaN</code>.</p>
+</blockquote>
+<hr />
+<p>Нижче наведено порівняльну аналітичну матрицю сучасних математичних методів стабілізації градієнтних потоків у глибоких моделях.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Метод стабілізації</th>
+<th style="text-align: left;">Математичний інваріант / Формальне рівняння</th>
+<th style="text-align: left;">Цільовий клас функцій активації</th>
+<th style="text-align: left;">Вплив на дисперсію градієнта</th>
+<th style="text-align: left;">Накладні витрати пам'яті та обчислень</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Ініціалізація Ксав'єра (Glorot Normal)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Var}(W) = \frac{2}{n_{in} + n_{out}}\)</span></td>
+<td style="text-align: left;">Симетричні, насичені (Tanh, Sigmoid)</td>
+<td style="text-align: left;">Усуває дисбаланс енергії сигналу між входом і виходом</td>
+<td style="text-align: left;">Мінімальні: одноразовий розрахунок на етапі ініціалізації <span class="arithmatex">\(\mathcal{O}(N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ініціалізація Хе (He Normal)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Var}(W) = \frac{2}{n_{in}}\)</span></td>
+<td style="text-align: left;">Кусково-лінійні, ненасичені (ReLU, Leaky ReLU)</td>
+<td style="text-align: left;">Компенсує обнулення від'ємної півплощини розподілу</td>
+<td style="text-align: left;">Мінімальні: одноразовий розрахунок перед навчанням <span class="arithmatex">\(\mathcal{O}(N)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Пакетна нормалізація (Batch Normalization)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\hat{x} = \frac{x - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}, \quad y = \gamma \hat{x} + \beta\)</span></td>
+<td style="text-align: left;">Універсальний (будь-які типи активацій)</td>
+<td style="text-align: left;">Фіксує <span class="arithmatex">\(\mathbb{E}[z]=0\)</span> та <span class="arithmatex">\(\text{Var}(z)=1\)</span> для кожного мікропакета</td>
+<td style="text-align: left;">Потребує збереження статистик батчу <span class="arithmatex">\(\mu_B, \sigma_B^2\)</span>, сповільнює крок на 15–20%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Залишкові зв'язки (Residual Connections)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{a}^{[l+1]} = g\left(\mathbf{z}^{[l+1]} + \mathbf{a}^{[l]}\right)\)</span></td>
+<td style="text-align: left;">Повнозв'язні та згорткові глибокі архітектури</td>
+<td style="text-align: left;">Забезпечує прямий канал переносу градієнта: <span class="arithmatex">\(\frac{\partial \mathbf{a}^{[l+1]}}{\partial \mathbf{a}^{[l]}} = \mathbf{I} + \dots\)</span></td>
+<td style="text-align: left;">Додаткове копіювання тензорів та операція сумування в пам'яті <span class="arithmatex">\(\mathcal{O}(m \cdot n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кліпінг градієнтів (Gradient Clipping)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{g} \leftarrow \mathbf{g} \cdot \min\left(1, \frac{\theta}{\|\mathbf{g}\|_2}\right)\)</span></td>
+<td style="text-align: left;">Будь-які глибокі моделі, особливо RNN/LSTM</td>
+<td style="text-align: left;">Жорстко обмежує евклідову норму зверху порогом <span class="arithmatex">\(\theta\)</span></td>
+<td style="text-align: left;">Додаткова редукція суми квадратів по всіх параметрах <span class="arithmatex">\(\mathcal{O}(N_{params})\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Розглядається повнозв'язна нейронна мережа глибиною <span class="arithmatex">\(L = 20\)</span> однакових шарів із розмірністю <span class="arithmatex">\(n^{[l]} = 100\)</span> нейронів для всіх <span class="arithmatex">\(l \in \{0, \dots, 20\}\)</span>. У прихованих шарах застосовано функцію активації <span class="arithmatex">\(g(z) = \tanh(z)\)</span>. Вагові матриці ініціалізовано нормально розподіленими значеннями з дисперсією <span class="arithmatex">\(\text{Var}(W) = 0.0025\)</span>. Визначте аналітично, як зміниться норма градієнта похибки на першому прихованому шарі <span class="arithmatex">\(\|\boldsymbol{\delta}^{[1]}\|_2\)</span> відносно початкового градієнта вихідного шару <span class="arithmatex">\(\|\boldsymbol{\delta}^{[L]}\|_2\)</span>, припускаючи, що функція працює в лінеаризованій зоні поблизу нуля.</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Відповідь:</strong> Норма градієнта зменшиться у <span class="arithmatex">\(2^{19} = 524\,288\)</span> разів (тобто <span class="arithmatex">\(\|\boldsymbol{\delta}^{[1]}\|_2 \approx 1.907 \times 10^{-6} \|\boldsymbol{\delta}^{[L]}\|_2\)</span>).</p>
+<ol>
+<li>
+<p><strong>Аналітичний розрахунок:</strong></p>
+<p>Для функції активації <span class="arithmatex">\(g(z) = \tanh(z)\)</span> похідна визначається як <span class="arithmatex">\(g'(z) = 1 - \tanh^2(z)\)</span>. У лінеаризованій зоні поблизу нуля (<span class="arithmatex">\(z \approx 0\)</span>) значення похідної досягає свого максимуму:</p>
+<div class="arithmatex">\[g'(0) = 1 - 0 = 1 \implies \mathbf{D}^{[l]} = \mathbf{I}_{100}\]</div>
+<p>Оцінимо спектральну норму випадкової матриці ваг <span class="arithmatex">\(\mathbf{W} \in \mathbb{R}^{100 \times 100}\)</span>, елементи якої мають дисперсію <span class="arithmatex">\(\sigma^2 = 0.0025\)</span>. З теорії випадкових матриць (закон кругового закону Гінібре-Жирка та межа Марченка-Пастура) спектральний радіус випадкової матриці розмірності <span class="arithmatex">\(n \times n\)</span> з незалежними елементами з нульовим середнім та дисперсією <span class="arithmatex">\(\sigma^2\)</span> оцінюється як:</p>
+<div class="arithmatex">\[\|\mathbf{W}\|_2 \approx \sigma \sqrt{n} = \sqrt{0.0025} \cdot \sqrt{100} = 0.05 \cdot 10 = 0.5\]</div>
+</li>
+<li>
+<p><strong>Оцінка поширення градієнта через ланцюг шарів:</strong></p>
+<p>Спираючись на загальну аналітичну формулу розгортання градієнтного сигналу:</p>
+<div class="arithmatex">\[\boldsymbol{\delta}^{[1]} = \left[ \prod_{l=1}^{19} (\mathbf{W}^{[l+1]})^T \mathbf{D}^{[l]} \right] \boldsymbol{\delta}^{[20]}\]</div>
+<p>Підставимо отримані спектральні оцінки:</p>
+<div class="arithmatex">\[\|\boldsymbol{\delta}^{[1]}\|_2 \le \|\boldsymbol{\delta}^{[20]}\|_2 \cdot \prod_{l=1}^{19} \|\mathbf{W}^{[l+1]}\|_2 \cdot \|\mathbf{D}^{[l]}\|_2 = \|\boldsymbol{\delta}^{[20]}\|_2 \cdot (0.5 \cdot 1.0)^{19} = \|\boldsymbol{\delta}^{[20]}\|_2 \cdot (0.5)^{19}\]</div>
+<div class="arithmatex">\[0.5^{19} = \frac{1}{2^{19}} = \frac{1}{524288} \approx 1.9073 \times 10^{-6}\]</div>
+</li>
+<li>
+<p><strong>Висновки:</strong></p>
+<ul>
+<li>
+<p>Градієнтний сигнал на шляху від 20-го до 1-го шару згасає більш ніж на п'ять порядків виключно через те, що спектральна норма матриці ваг <span class="arithmatex">\(\sigma\sqrt{n} = 0.5 &lt; 1\)</span>.</p>
+</li>
+<li>
+<p>Для усунення цього ефекту за формулою ініціалізації Ксав'єра необхідно було задати дисперсію:
+  $<span class="arithmatex">\(\text{Var}(W) = \frac{2}{n_{in} + n_{out}} = \frac{2}{100 + 100} = \frac{2}{200} = 0.01\)</span>$
+  що дало б <span class="arithmatex">\(\|\mathbf{W}\|_2 \approx \sqrt{0.01} \cdot 10 = 1.0\)</span>, забезпечуючи стабільну передачу норми сигналу без затухання: <span class="arithmatex">\((1.0)^{19} = 1\)</span>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31">3.1. Комплексний інженерний кейс. Аналітичний розрахунок і числове моделювання прямого та зворотного ходу в глибокій повнозв'язній нейронній мережі для діагностики відмов обчислювальних вузлів кластера з подоланням проблеми згасання градієнтів</h3>
+<h4 id="_5">Постановка інженерної задачі</h4>
+<p>У розподілених обчислювальних кластерах моніторинг апаратного стану серверних вузлів є критичною задачею системного адміністрування. Для завчасного виявлення аномалій та запобігання аварійному відключенню вузлів розгортається діагностична повнозв'язна нейронна мережа. Мережа аналізує вектор нормалізованих метрик телеметрії вхідного вузла та здійснює бінарну класифікацію стану: клас <span class="arithmatex">\(C_1\)</span> — штатне функціонування вузла, клас <span class="arithmatex">\(C_2\)</span> — передаварійний стан (деградація вузла через температурний перегрів чи витік пам'яті).</p>
+<p>Розглядається глибока архітектура прямого поширення з трьома повнозв'язними шарами (<span class="arithmatex">\(L = 3\)</span>): двома прихованими рівнями з функціями активації <strong>ReLU</strong> (що мінімізує ефект загасання градієнтного сигналу) та вихідним рівнем із функцією <strong>Softmax</strong>, зв'язаною з функцією втрат <strong>Categorical Cross-Entropy</strong>. Для забезпечення детермінованого числового аналізу розрахунок проводиться для одного нормалізованого телеметричного вектора (<span class="arithmatex">\(m = 1\)</span>).</p>
+<p>Параметри обчислювальної системи, конфігурація шарів, початкові синаптичні ваги та вхідні дані наведені в таблиці 3.1.</p>
+<p><em>Таблиця 3.1 — Вхідні параметри та початкові вагові матриці діагностичної нейронної мережі</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр моделі</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Розмірність</th>
+<th style="text-align: left;">Числове значення / Матриця</th>
+<th style="text-align: left;">Одиниці вимірювання / Тип даних</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Вхідний вектор метрик</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{x} = \mathbf{A}^{[0]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.80, \; 0.60]^T\)</span></td>
+<td style="text-align: left;">Нормовані коефіцієнти (від 0 до 1), FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Істинний вектор стану</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{y}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.00, \; 1.00]^T\)</span> (Клас <span class="arithmatex">\(C_2\)</span>)</td>
+<td style="text-align: left;">Унітарний код (One-Hot), дискретний</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Матриця ваг шару 1</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{W}^{[1]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\begin{bmatrix} 0.50 &amp; -0.20 \\ 0.40 &amp; 0.70 \end{bmatrix}\)</span></td>
+<td style="text-align: left;">Безрозмірні синаптичні коефіцієнти, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Вектор зсувів шару 1</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{b}^{[1]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.10, \; -0.10]^T\)</span></td>
+<td style="text-align: left;">Потенціал зміщення, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Матриця ваг шару 2</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{W}^{[2]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\begin{bmatrix} 0.60 &amp; 0.30 \\ -0.50 &amp; 0.80 \end{bmatrix}\)</span></td>
+<td style="text-align: left;">Безрозмірні синаптичні коефіцієнти, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Вектор зсувів шару 2</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{b}^{[2]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.20, \; 0.10]^T\)</span></td>
+<td style="text-align: left;">Потенціал зміщення, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Матриця ваг шару 3</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{W}^{[3]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\begin{bmatrix} 0.70 &amp; -0.40 \\ 0.20 &amp; 0.90 \end{bmatrix}\)</span></td>
+<td style="text-align: left;">Безрозмірні синаптичні коефіцієнти, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Вектор зсувів шару 3</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{b}^{[3]}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}^{2 \times 1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.00, \; 0.10]^T\)</span></td>
+<td style="text-align: left;">Потенціал зміщення, FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Швидкість навчання</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\eta\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbb{R}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.10\)</span></td>
+<td style="text-align: left;">Безрозмірний скаляр оптимізатора</td>
+</tr>
+</tbody>
+</table>
+<p>Послідовність виконання числового розрахунку та взаємозв'язок між етапами прямого і зворотного поширення подано на блок-схемі:</p>
+<pre class="mermaid"><code>flowchart TD
+    Step1[Крок 1: Прямий хід шару 1 Z^1 = W^1 x + b^1, A^1 = ReLU Z^1] --&gt; Step2[Крок 2: Прямий хід шару 2 Z^2 = W^2 A^1 + b^2, A^2 = ReLU Z^2]
+    Step2 --&gt; Step3[Крок 3: Вихідний шар Z^3 = W^3 A^2 + b^3, A^3 = Softmax Z^3]
+    Step3 --&gt; Step4[Крок 4: Розрахунок скалярних втрат крос-ентропії Loss L]
+    Step4 --&gt; Step5[Крок 5: Зворотний градієнт виходу delta^3 = A^3 - Y]
+    Step5 --&gt; Step6[Крок 6: Зворотне поширення на шар 2 delta^2 та градієнти dW^3, db^3]
+    Step6 --&gt; Step7[Крок 7: Зворотне поширення на шар 1 delta^1 та градієнти dW^2, db^2]
+    Step7 --&gt; Step8[Крок 8: Оновлення матриць ваг W^l = W^l - eta * dW^l]
+
+    style Step1 fill:#f5faff,stroke:#004080,stroke-width:1px
+    style Step4 fill:#fff5f5,stroke:#800000,stroke-width:1px
+    style Step8 fill:#f5fff5,stroke:#006600,stroke-width:1px</code></pre>
+<hr />
+<h4 id="_6">Покроковий аналітичний розрахунок</h4>
+<h5 id="1-l-1">Крок 1. Обчислення прямого ходу першого прихованого шару (<span class="arithmatex">\(l = 1\)</span>)</h5>
+<p>Розрахуємо лінійний вхідний потенціал <span class="arithmatex">\(\mathbf{z}^{[1]} = \mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{z}^{[1]} = \begin{bmatrix} 0.50 &amp; -0.20 \\ 0.40 &amp; 0.70 \end{bmatrix} \begin{bmatrix} 0.80 \\ 0.60 \end{bmatrix} + \begin{bmatrix} 0.10 \\ -0.10 \end{bmatrix} = \begin{bmatrix} (0.50 \cdot 0.80 - 0.20 \cdot 0.60) + 0.10 \\ (0.40 \cdot 0.80 + 0.70 \cdot 0.60) - 0.10 \end{bmatrix} = \begin{bmatrix} 0.3800 \\ 0.6400 \end{bmatrix}
+\]</div>
+<p>Застосуємо поелементну нелінійну функцію активації <span class="arithmatex">\(\text{ReLU}(z) = \max(0, z)\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{a}^{[1]} = \begin{bmatrix} \max(0, \; 0.3800) \\ \max(0, \; 0.6400) \end{bmatrix} = \begin{bmatrix} 0.3800 \\ 0.6400 \end{bmatrix}
+\]</div>
+<p>Оскільки обидва потенціали перевищують нуль, активації дорівнюють вхідним значенням, а локальні похідні становлять <span class="arithmatex">\(g'^{[1]}(\mathbf{z}^{[1]}) = [1.00, \; 1.00]^T\)</span>.</p>
+<h5 id="2-l-2">Крок 2. Обчислення прямого ходу другого прихованого шару (<span class="arithmatex">\(l = 2\)</span>)</h5>
+<p>Визначимо вхідний потенціал <span class="arithmatex">\(\mathbf{z}^{[2]} = \mathbf{W}^{[2]} \mathbf{a}^{[1]} + \mathbf{b}^{[2]}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{z}^{[2]} = \begin{bmatrix} 0.60 &amp; 0.30 \\ -0.50 &amp; 0.80 \end{bmatrix} \begin{bmatrix} 0.3800 \\ 0.6400 \end{bmatrix} + \begin{bmatrix} 0.20 \\ 0.10 \end{bmatrix} = \begin{bmatrix} (0.60 \cdot 0.3800 + 0.30 \cdot 0.6400) + 0.20 \\ (-0.50 \cdot 0.3800 + 0.80 \cdot 0.6400) + 0.10 \end{bmatrix} = \begin{bmatrix} 0.6200 \\ 0.4220 \end{bmatrix}
+\]</div>
+<p>Обчислимо вектор вихідних активацій другого шару за допомогою функції ReLU:</p>
+<div class="arithmatex">\[
+\mathbf{a}^{[2]} = \begin{bmatrix} \max(0, \; 0.6200) \\ \max(0, \; 0.4220) \end{bmatrix} = \begin{bmatrix} 0.6200 \\ 0.4220 \end{bmatrix}
+\]</div>
+<p>Обидва нейрони перебувають в активному стані (<span class="arithmatex">\(z_i^{[2]} &gt; 0\)</span>), вектор локальних похідних дорівнює <span class="arithmatex">\(g'^{[2]}(\mathbf{z}^{[2]}) = [1.00, \; 1.00]^T\)</span>.</p>
+<h5 id="3-softmax-l-3">Крок 3. Обчислення вихідного потенціалу та оператора Softmax (<span class="arithmatex">\(l = 3\)</span>)</h5>
+<p>Розрахуємо лінійний потенціал вихідного шару <span class="arithmatex">\(\mathbf{z}^{[3]} = \mathbf{W}^{[3]} \mathbf{a}^{[2]} + \mathbf{b}^{[3]}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{z}^{[3]} = \begin{bmatrix} 0.70 &amp; -0.40 \\ 0.20 &amp; 0.90 \end{bmatrix} \begin{bmatrix} 0.6200 \\ 0.4220 \end{bmatrix} + \begin{bmatrix} 0.00 \\ 0.10 \end{bmatrix} = \begin{bmatrix} (0.70 \cdot 0.6200 - 0.40 \cdot 0.4220) + 0.00 \\ (0.20 \cdot 0.6200 + 0.90 \cdot 0.4220) + 0.10 \end{bmatrix} = \begin{bmatrix} 0.2652 \\ 0.6038 \end{bmatrix}
+\]</div>
+<p>Застосуємо оператор Softmax для отримання ймовірнісного розподілу виходу:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+e^{z_1^{[3]}} &amp;= e^{0.2652} \approx 1.30369 \\
+e^{z_2^{[3]}} &amp;= e^{0.6038} \approx 1.82905 \\
+\sum_{k=1}^2 e^{z_k^{[3]}} &amp;= 1.30369 + 1.82905 = 3.13274
+\end{aligned}
+\]</div>
+<p>Підсумковий вектор активацій вихідного шару <span class="arithmatex">\(\mathbf{a}^{[3]}\)</span> дорівнює:</p>
+<div class="arithmatex">\[
+\mathbf{a}^{[3]} = \begin{bmatrix} \frac{1.30369}{3.13274} \\ \frac{1.82905}{3.13274} \end{bmatrix} = \begin{bmatrix} 0.41615 \\ 0.58385 \end{bmatrix}
+\]</div>
+<h5 id="4-categorical-cross-entropy">Крок 4. Оцінка функції втрат Categorical Cross-Entropy</h5>
+<p>Для істинного вектора міток <span class="arithmatex">\(\mathbf{y} = [0, \; 1]^T\)</span> розрахуємо скалярне значення цільової функції втрат:</p>
+<div class="arithmatex">\[
+\mathcal{L} = - \sum_{k=1}^2 y_k \ln\left(a_k^{[3]}\right) = - \left(0 \cdot \ln(0.41615) + 1 \cdot \ln(0.58385)\right) = - \ln(0.58385) \approx 0.53811
+\]</div>
+<h5 id="5-l-3">Крок 5. Обчислення градієнта помилки вихідного шару (<span class="arithmatex">\(l = 3\)</span>)</h5>
+<p>Спираючись на аналітичне спрощення для зв'язки Softmax і крос-ентропії, обчислимо вектор помилки <span class="arithmatex">\(\boldsymbol{\delta}^{[3]}\)</span>:</p>
+<div class="arithmatex">\[
+\boldsymbol{\delta}^{[3]} = \mathbf{a}^{[3]} - \mathbf{y} = \begin{bmatrix} 0.41615 \\ 0.58385 \end{bmatrix} - \begin{bmatrix} 0.00000 \\ 1.00000 \end{bmatrix} = \begin{bmatrix} 0.41615 \\ -0.41615 \end{bmatrix}
+\]</div>
+<p>Визначимо матрицю градієнтів за вагами <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[3]}} = \boldsymbol{\delta}^{[3]} (\mathbf{a}^{[2]})^T\)</span> та вектор градієнтів за зсувами <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[3]}} = \boldsymbol{\delta}^{[3]}\)</span>:</p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[3]}} = \begin{bmatrix} 0.41615 \\ -0.41615 \end{bmatrix} \begin{bmatrix} 0.6200 &amp; 0.4220 \end{bmatrix} = \begin{bmatrix} 0.25801 &amp; 0.17562 \\ -0.25801 &amp; -0.17562 \end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[3]}} = \begin{bmatrix} 0.41615 \\ -0.41615 \end{bmatrix}
+\]</div>
+<h5 id="6-l-2">Крок 6. Зворотне поширення помилки на другий прихований шар (<span class="arithmatex">\(l = 2\)</span>)</h5>
+<p>Транслюємо вектор помилки через матрицю <span class="arithmatex">\(\left(\mathbf{W}^{[3]}\right)^T\)</span> та множимо на вектор локальних похідних активацій <span class="arithmatex">\(g'^{[2]}(\mathbf{z}^{[2]}) = [1.00, \; 1.00]^T\)</span>:</p>
+<div class="arithmatex">\[
+\left(\mathbf{W}^{[3]}\right)^T \boldsymbol{\delta}^{[3]} = \begin{bmatrix} 0.70 &amp; 0.20 \\ -0.40 &amp; 0.90 \end{bmatrix} \begin{bmatrix} 0.41615 \\ -0.41615 \end{bmatrix} = \begin{bmatrix} 0.70 \cdot 0.41615 - 0.20 \cdot 0.41615 \\ -0.40 \cdot 0.41615 - 0.90 \cdot 0.41615 \end{bmatrix} = \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\boldsymbol{\delta}^{[2]} = \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix} \odot \begin{bmatrix} 1.00 \\ 1.00 \end{bmatrix} = \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix}
+\]</div>
+<p>Розрахуємо градієнти параметрів другого шару <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}} = \boldsymbol{\delta}^{[2]} (\mathbf{a}^{[1]})^T\)</span> та <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[2]}} = \boldsymbol{\delta}^{[2]}\)</span>:</p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}} = \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix} \begin{bmatrix} 0.3800 &amp; 0.6400 \end{bmatrix} = \begin{bmatrix} 0.07907 &amp; 0.13317 \\ -0.20558 &amp; -0.34624 \end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[2]}} = \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix}
+\]</div>
+<h5 id="7-l-1">Крок 7. Зворотне поширення помилки на перший прихований шар (<span class="arithmatex">\(l = 1\)</span>)</h5>
+<p>Поширимо градієнтний сигнал на перший шар через зв'язок <span class="arithmatex">\(\left(\mathbf{W}^{[2]}\right)^T\)</span>:</p>
+<div class="arithmatex">\[
+\left(\mathbf{W}^{[2]}\right)^T \boldsymbol{\delta}^{[2]} = \begin{bmatrix} 0.60 &amp; -0.50 \\ 0.30 &amp; 0.80 \end{bmatrix} \begin{bmatrix} 0.20808 \\ -0.54100 \end{bmatrix} = \begin{bmatrix} 0.60 \cdot 0.20808 - 0.50 \cdot (-0.54100) \\ 0.30 \cdot 0.20808 + 0.80 \cdot (-0.54100) \end{bmatrix} = \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix}
+\]</div>
+<p>Враховуючи, що для обох нейронів першого шару <span class="arithmatex">\(z_i^{[1]} &gt; 0\)</span>, похідні дорівнюють <span class="arithmatex">\(g'^{[1]}(\mathbf{z}^{[1]}) = [1.00, \; 1.00]^T\)</span>:</p>
+<div class="arithmatex">\[
+\boldsymbol{\delta}^{[1]} = \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix} \odot \begin{bmatrix} 1.00 \\ 1.00 \end{bmatrix} = \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix}
+\]</div>
+<p>Градієнти параметрів першого шару <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \boldsymbol{\delta}^{[1]} \mathbf{x}^T\)</span> та <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[1]}} = \boldsymbol{\delta}^{[1]}\)</span> мають вигляд:</p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix} \begin{bmatrix} 0.80 &amp; 0.60 \end{bmatrix} = \begin{bmatrix} 0.31628 &amp; 0.23721 \\ -0.29630 &amp; -0.22223 \end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[1]}} = \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix}
+\]</div>
+<h5 id="8_1">Крок 8. Ітераційне оновлення синаптичних ваг мережі</h5>
+<p>Застосуємо крок алгоритму градієнтного спуску <span class="arithmatex">\(\mathbf{W}^{[l]}_{new} = \mathbf{W}^{[l]} - \eta \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}}\)</span> зі швидкістю навчання <span class="arithmatex">\(\eta = 0.10\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{W}^{[1]}_{new} = \begin{bmatrix} 0.50 &amp; -0.20 \\ 0.40 &amp; 0.70 \end{bmatrix} - 0.10 \begin{bmatrix} 0.31628 &amp; 0.23721 \\ -0.29630 &amp; -0.22223 \end{bmatrix} = \begin{bmatrix} 0.46837 &amp; -0.22372 \\ 0.42963 &amp; 0.72222 \end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+\mathbf{b}^{[1]}_{new} = \begin{bmatrix} 0.10 \\ -0.10 \end{bmatrix} - 0.10 \begin{bmatrix} 0.39535 \\ -0.37038 \end{bmatrix} = \begin{bmatrix} 0.06046 \\ -0.06296 \end{bmatrix}
+\]</div>
+<hr />
+<h4 id="_7">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Застосування функції активації ReLU забезпечило збереження амплітуди вектора помилки на всіх рівнях: евклідова норма похибки вихідного шару становила <span class="arithmatex">\(\|\boldsymbol{\delta}^{[3]}\|_2 \approx 0.5885\)</span>, на другому рівні <span class="arithmatex">\(\|\boldsymbol{\delta}^{[2]}\|_2 \approx 0.5796\)</span>, а на першому рівні склала <span class="arithmatex">\(\|\boldsymbol{\delta}^{[1]}\|_2 \approx 0.5417\)</span>. Це підтверджує повну відсутність явища загасання градієнта завдяки одиничній похідній <span class="arithmatex">\(g'(z) = 1\)</span> на робочих інтервалах.</p>
+</li>
+<li>
+<p>Розрахований вектор градієнта синаптичних ваг першого шару <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}}\)</span> має значні ненульові компоненти (порядку <span class="arithmatex">\(10^{-1}\)</span>), що гарантує активне навчання початкових рівнів екстракції ознак уже з першої ітерації оптимізатора.</p>
+</li>
+<li>
+<p>Оновлення ваг другого нейрона вихідного шару (який відповідає за істинний клас відмови <span class="arithmatex">\(C_2\)</span>) має від'ємний градієнт, завдяки чому після віднімання в оптимізаторі синаптична вага <span class="arithmatex">\(w_{22}^{[3]}\)</span> зростає від <span class="arithmatex">\(0.90\)</span> до <span class="arithmatex">\(0.90 - 0.10 \cdot (-0.17562) = 0.91756\)</span>, збільшуючи ймовірність передбачення правильного класу на наступному прямому ході.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<p>Нижче наведено зведену матрицю ключових понять, аналітичних виразів, сфер інженерного використання та характерних помилок проектування глибоких нейромережевих систем.</p>
+<p><em>Таблиця 3.2 — Фундаментальні поняття та моделі теорії глибоких нейронних мереж</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Штучний нейрон</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(a = g\left(\mathbf{w}^T \mathbf{x} + b\right)\)</span></td>
+<td style="text-align: left;">Базовий елемент усіх типів штучних нейромереж (MLP, CNN, RNN)</td>
+<td style="text-align: left;">Реалізує локально лише одну лінійну розділювальну гіперплощину</td>
+<td style="text-align: left;">Ототожнення біологічного та штучного нейронів; ігнорування зміщення <span class="arithmatex">\(b\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Зворотне поширення помилки (Backprop)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\boldsymbol{\delta}^{[l]} = \left[(\mathbf{W}^{[l+1]})^T \boldsymbol{\delta}^{[l+1]}\right] \odot g'^{[l]}(\mathbf{Z}^{[l]})\)</span></td>
+<td style="text-align: left;">Автоматичне обчислення градієнтів у повнозв'язних та згорткових мережах</td>
+<td style="text-align: left;">Вимагає збереження всіх проміжних активацій у пам'яті VRAM під час Forward Pass</td>
+<td style="text-align: left;">Вважання Backprop самостійним методом оптимізації, а не способом знаходження похідних</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Функція активації ReLU</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(g(z) = \max(0, z), \quad g'(z) = \begin{cases} 1, &amp; z &gt; 0 \\ 0, &amp; z \le 0 \end{cases}\)</span></td>
+<td style="text-align: left;">Приховані шари глибоких нейронних мереж (DNN, CNN, MLP)</td>
+<td style="text-align: left;">Недиференційовність у точці <span class="arithmatex">\(z=0\)</span>; блокування градієнта при <span class="arithmatex">\(z \le 0\)</span> (Dying ReLU)</td>
+<td style="text-align: left;">Використання ReLU на вихідному шарі для задач класифікації чи нормалізації ймовірностей</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ініціалізація Хе (He Normal)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Var}(W) = \frac{2}{n_{in}}, \quad W \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n_{in}}}\right)\)</span></td>
+<td style="text-align: left;">Конфігурування початкових ваг перед навчанням мереж із ReLU-активаціями</td>
+<td style="text-align: left;">Розрахована строго на активації з обнуленням половини розподілу</td>
+<td style="text-align: left;">Застосування дисперсії Хе для симетричних функцій Tanh/Sigmoid, що веде до вибуху ваг</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Залишкові зв'язки (Residual Connections)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{a}^{[l+1]} = g\left(\mathbf{z}^{[l+1]} + \mathbf{a}^{[l]}\right)\)</span></td>
+<td style="text-align: left;">Архітектури надвисокої глибини (ResNet, Transformer, ConvNeXt)</td>
+<td style="text-align: left;">Вимагає суворої рівності розмірностей вхідного та вихідного тензорів</td>
+<td style="text-align: left;">Сприйняття зв'язку як збільшення кількості параметрів мережі (це суто операція додавання)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кліпінг градієнтів (Gradient Clipping)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{g} \leftarrow \mathbf{g} \cdot \min\left(1, \frac{\theta}{\|\mathbf{g}\|_2}\right)\)</span></td>
+<td style="text-align: left;">Навчання рекурентних мереж (RNN/LSTM) та великих мовних моделей</td>
+<td style="text-align: left;">Не усуває причину вибуху градієнтів, лише штучно обмежує їх максимальну норму</td>
+<td style="text-align: left;">Обрізання окремих компонентів градієнта замість глобального масштабування всього вектора</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_8">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>За якої умови штучна нейронна мережа глибиною <span class="arithmatex">\(L = 5\)</span> шарів аналітично колапсує до еквівалентної одношарової лінійної моделі, навіть якщо в ній використовуються нелінійні функції активації?</p>
+</li>
+<li>
+<p>A. Якщо всі вагові коефіцієнти синапсів ініціалізовані відповідно до закону Хе.</p>
+</li>
+<li>
+<p>B. Якщо вхідні сигнали нейронів перебувають у вузькому діапазоні, де функція активації є лінійною або афінною.</p>
+</li>
+<li>
+<p>C. Якщо функція втрат є строго опуклою квадратичною функцією помилки.</p>
+</li>
+<li>
+<p>D. Якщо розмір навчального міні-пакета <span class="arithmatex">\(m\)</span> строго дорівнює одиниці.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Якщо значення аргументів <span class="arithmatex">\(z_i^{[l]}\)</span> для всіх нейронів потрапляють у зону, де функція активації <span class="arithmatex">\(g(z)\)</span> поводиться лінійно (наприклад, для Leaky ReLU на інтервалі <span class="arithmatex">\(z &gt; 0\)</span> функція тотожна <span class="arithmatex">\(g(z) = z\)</span>, або для Sigmoid на інтервалі <span class="arithmatex">\(z \in [-0.1, 0.1]\)</span>, де <span class="arithmatex">\(\sigma(z) \approx 0.5 + 0.25z\)</span>), нелінійне перетворення вироджується в афінне. Відповідно до теореми про лінійний колапс:</li>
+</ol>
+<p>$<span class="arithmatex">\(\mathbf{A}^{[L]} = \mathbf{W}_{eff} \mathbf{x} + \mathbf{b}_{eff}\)</span>$</p>
+<p>композиція довільної кількості лінійних операторів дає лінійний оператор, тому виразна здатність мережі звужується до можливостей одношарової моделі.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки ініціалізація Хе лише задає початкову дисперсію ваг для усунення загасання дисперсії, але сама по собі не лінеаризує поведінку нелінійних функцій.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, оскільки тип функції втрат впливає виключно на форму ландшафту оптимізації на виході, але не змінює топологічну здатність прихованих шарів викривляти простір ознак.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки розмір пакета <span class="arithmatex">\(m = 1\)</span> визначає лише режим стохастичності оцінки градієнта, не змінюючи функціональної структури операторів прямого ходу.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Чому використання функції активації Sigmoid у прихованих шарах 50-шарової повнозв'язної мережі гарантовано призводить до зупинки навчання початкових шарів?</p>
+</li>
+<li>
+<p>A. Похідна функції Sigmoid набуває значень більше одиниці, що викликає чисельне переповнення розрядної сітки.</p>
+</li>
+<li>
+<p>B. Максимальне значення похідної функції Sigmoid обмежене величиною <span class="arithmatex">\(0.25\)</span>, що викликає експоненційне згасання градієнтного добутку.</p>
+</li>
+<li>
+<p>C. Функція Sigmoid обнуляє всі від'ємні значення, спричиняючи масове вимирання нейронів за принципом Dying ReLU.</p>
+</li>
+<li>
+<p>D. Матриця Якобі для функції Sigmoid завжди є кососиметричною, що порушує збіжність градієнтного спуску.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Формула похідної логістичної функції має вигляд <span class="arithmatex">\(g'(z) = \sigma(z)(1 - \sigma(z))\)</span>. Свого абсолютного максимуму ця функція досягає у точці <span class="arithmatex">\(z = 0\)</span>, де <span class="arithmatex">\(\sigma(0) = 0.5\)</span>:</li>
+</ol>
+<p>$<span class="arithmatex">\(\max_{z} g'(z) = 0.5 \cdot (1 - 0.5) = 0.25\)</span>$</p>
+<p>Під час зворотного поширення помилки через <span class="arithmatex">\(L-1 = 49\)</span> прихованих шарів добуток локальних похідних зменшує амплітуду градієнта мінімум у <span class="arithmatex">\(0.25^{49} \approx 3.15 \times 10^{-30}\)</span> разів. Це значення виходить за межі точності представлення чисел нормалізованого діапазону стандарту FP32, перетворюючи градієнти перших шарів на машинний нуль.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки похідна функції Sigmoid строго обмежена інтервалом <span class="arithmatex">\((0, \; 0.25]\)</span> і ніколи не перевищує одиниці.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що Sigmoid відображає всю дійсну вісь на інтервал <span class="arithmatex">\((0, 1)\)</span> і принципово не обнуляє значення, на відміну від ReLU.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки локальна матриця похідних <span class="arithmatex">\(\mathbf{D}^{[l]}\)</span> для поелементної функції активації є строго діагональною з невід'ємними дійсними числами на діагоналі, а не кососиметричною.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яким чином метод ініціалізації Хе (He Normal) враховує геометричну специфіку функції активації ReLU для запобігання деградації дисперсії?</p>
+</li>
+<li>
+<p>A. Подвоює початкову дисперсію ваг до <span class="arithmatex">\(\frac{2}{n_{in}}\)</span> для компенсації анулювання від'ємної половини розподілу активацій.</p>
+</li>
+<li>
+<p>B. Встановлює всі початкові ваги у строго додатні константи для уникнення потрапляння в область нульового градієнта.</p>
+</li>
+<li>
+<p>C. Ділить початкову дисперсію ваг на гармонійне середнє <span class="arithmatex">\(\frac{2}{n_{in} + n_{out}}\)</span> для збалансування прямого та зворотного ходів.</p>
+</li>
+<li>
+<p>D. Включає вектор регуляризації L1 безпосередньо у вираз розрахунку випадкової дисперсії.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: A.</strong></p>
+<ol>
+<li>Оскільки симетричний відносно нуля розподіл лінійного потенціалу <span class="arithmatex">\(z \sim \mathcal{N}(0, \sigma_z^2)\)</span> обтинається функцією <span class="arithmatex">\(\text{ReLU}(z) = \max(0, z)\)</span>, рівно половина значень обнуляється. Внаслідок цього математичне сподівання квадрата активацій зменшується вдвічі:</li>
+</ol>
+<p>$<span class="arithmatex">\(\mathbb{E}[a^2] = \int_0^{+\infty} z^2 p(z) dz = \frac{1}{2} \text{Var}(z)\)</span>$</p>
+<p>Щоб зберегти масштаб дисперсії між шарами (<span class="arithmatex">\(\text{Var}(z^{[l]}) = \text{Var}(z^{[l-1]})\)</span>), необхідно компенсувати втрату множником 2, що дає формулу дисперсії ваг <span class="arithmatex">\(\text{Var}(W) = \frac{2}{n_{in}}\)</span>.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант B</strong> є грубою помилкою проектування, оскільки однакові додатні значення ваг призводять до проблеми симетрії (symmetry problem), коли всі нейрони шару навчаються абсолютно однаково.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> описує формулу ініціалізації Ксав'єра/Глорота, яка розрахована на гладкі симетричні функції Tanh/Sigmoid і не враховує дворазове падіння дисперсії в ReLU.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є некоректним, оскільки регуляризація L1 є модифікацією цільової функції втрат під час навчання і не має відношення до первинної статистичної генерації ваг.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У чому полягає математична причина того, що залишкові зв'язки (Residual Connections) виду <span class="arithmatex">\(\mathbf{a}^{[l+1]} = \mathbf{a}^{[l]} + \mathcal{F}(\mathbf{a}^{[l]})\)</span> усувають проблему згасання градієнтів?</p>
+</li>
+<li>
+<p>A. Залишковий блок повністю замінює матричне множення векторним додаванням, знижуючи обчислювальну складність до нуля.</p>
+</li>
+<li>
+<p>B. Оператор похідної залишкового блоку містить одиничну матрицю <span class="arithmatex">\(\mathbf{I}\)</span>, яка забезпечує безперешкодний прямий потік градієнта незалежно від глибини.</p>
+</li>
+<li>
+<p>C. Залишковий зв'язок автоматично нормалізує власні числа матриці ваг до нульового значення.</p>
+</li>
+<li>
+<p>D. Додавання вхідного вектора штучно обнуляє похибку апроксимації цільової функції втрат.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Обчислимо повну часткову похідну вихідного сигналу залишкового блока за його вхідним сигналом:</li>
+</ol>
+<p>$<span class="arithmatex">\(\frac{\partial \mathbf{a}^{[l+1]}}{\partial \mathbf{a}^{[l]}} = \frac{\partial}{\partial \mathbf{a}^{[l]}} \left( \mathbf{a}^{[l]} + \mathcal{F}(\mathbf{a}^{[l]}) \right) = \mathbf{I} + \frac{\partial \mathcal{F}(\mathbf{a}^{[l]})}{\partial \mathbf{a}^{[l]}}\)</span>$</p>
+<p>Під час поширення градієнта через ланцюг таких блоків повний градієнт розгортається у вираз, що містить доданок <span class="arithmatex">\(\mathbf{I} \cdot \boldsymbol{\delta}\)</span>. Навіть якщо похідні внутрішніх зважених шарів <span class="arithmatex">\(\frac{\partial \mathcal{F}}{\partial \mathbf{a}}\)</span> прямують до нуля через затухання, загальний градієнт не зникає, оскільки одинична матриця <span class="arithmatex">\(\mathbf{I}\)</span> транслює градієнтний сигнал безпосередньо від глибоких шарів до початкових без згасання.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки всередині функції <span class="arithmatex">\(\mathcal{F}\)</span> залишаються стандартні повнозв'язні чи згорткові шари з матричним множенням.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що залишкові зв'язки не змінюють власних чисел матриць ваг, а додають паралельний шлях протікання сигналу в обчислювальному графі.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки додавання входу не може обнулити похибку оптимізації, а лише спрощує навчання функції збурення <span class="arithmatex">\(\mathcal{F}(\mathbf{x}) = \mathcal{H}(\mathbf{x}) - \mathbf{x}\)</span>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_9">Завдання для самостійної роботи</h4>
+<h5 id="_10">Постановка задачі</h5>
+<p>Інженерна група розробляє розподілену систему прогнозування пікового навантаження на канали зв'язку між процесорними вузлами суперкомп'ютера. Спроєктовано штучну нейронну мережу з архітектурою <span class="arithmatex">\(n^{[0]} = 3\)</span> вхідних параметри (інтенсивність запитів до пам'яті, утилізація інтерфейсу InfiniBand, черга DMA-транзакцій), одним прихованим шаром із <span class="arithmatex">\(n^{[1]} = 2\)</span> нейронами з функцією активації Leaky ReLU (<span class="arithmatex">\(\alpha = 0.01\)</span>) та вихідним шаром із <span class="arithmatex">\(n^{[2]} = 1\)</span> нейроном із лінійною активацією для вирішення задачі регресії (прогнозування часу затримки передачі пакетів у мікросекундах). Як функцію втрат обрано квадратичну помилку <span class="arithmatex">\(\mathcal{L} = \frac{1}{2}(a^{[2]} - y)^2\)</span>.</p>
+<p>Вхідний тестовий зразок має значення <span class="arithmatex">\(\mathbf{x} = [1.0, \; 2.0, \; -1.0]^T\)</span>, істинне значення затримки становить <span class="arithmatex">\(y = 3.50\)</span> мкс.</p>
+<p>Початкові параметри мережі:</p>
+<div class="arithmatex">\[\mathbf{W}^{[1]} = \begin{bmatrix} 0.20 &amp; -0.10 &amp; 0.40 \\ -0.30 &amp; 0.50 &amp; 0.10 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0.10 \\ -0.20 \end{bmatrix}\]</div>
+<div class="arithmatex">\[\mathbf{W}^{[2]} = \begin{bmatrix} 0.80 &amp; -0.50 \end{bmatrix}, \quad b^{[2]} = 0.30\]</div>
+<p>Швидкість навчання зафіксовано на рівні <span class="arithmatex">\(\eta = 0.05\)</span>.</p>
+<h5 id="_11">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Виконайте аналітичний розрахунок прямого ходу нейронної мережі: послідовно визначте вектори лінійних потенціалів <span class="arithmatex">\(\mathbf{z}^{[1]}\)</span>, вихідних активацій <span class="arithmatex">\(\mathbf{a}^{[1]}\)</span>, вихідний потенціал <span class="arithmatex">\(z^{[2]}\)</span> та фінальний прогноз <span class="arithmatex">\(a^{[2]}\)</span>, обчисливши результуючу скалярну похибку <span class="arithmatex">\(\mathcal{L}\)</span>.</p>
+</li>
+<li>
+<p>Спираючись на формули зворотного поширення помилки, обчисліть скалярний вихідний градієнт <span class="arithmatex">\(\delta^{[2]} = \frac{\partial \mathcal{L}}{\partial z^{[2]}}\)</span> та аналітично визначте градієнти цільової функції за параметрами вихідного шару <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}}\)</span> і <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial b^{[2]}}\)</span>.</p>
+</li>
+<li>
+<p>Розрахуйте двовимірний вектор помилки прихованого рівня <span class="arithmatex">\(\boldsymbol{\delta}^{[1]}\)</span>, врахувавши кусково-лінійну похідну функції Leaky ReLU для кожного компонента, та знайдіть повні матричні градієнти <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}}\)</span> і вектор <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[1]}}\)</span>.</p>
+</li>
+<li>
+<p>Здійсніть один крок градієнтного оновлення параметрів першого шару за правилом стохастичного градієнтного спуску та порівняйте абсолютну величину отриманих оновлень для активного нейрона (<span class="arithmatex">\(z &gt; 0\)</span>) та нейрона, що потрапив у зону від'ємних потенціалів (<span class="arithmatex">\(z \le 0\)</span>).</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3372 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk5/">
+      
+      
+        <link rel="next" href="../lk7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 6. Машинне навчання: концепції, оптимізація та регуляризація - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-supervisedunsupervisedrl-l1l2" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Концептуальний базис машинного навчання та проблема узагальнення
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичний апарат функцій втрат, методів градієнтної оптимізації та регуляризації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Оптимізація та регуляризація класифікаційної моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Еволюція парадигм: від класичного детермінованого програмування до дата-центричного машинного навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Формалізація навчання з учителем: регресійний та класифікаційний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принципи навчання без учителя та навчання з підкріпленням
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Проблема перенавчання, недонавчання та компроміс зсуву і дисперсії (Bias-Variance Decomposition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітична формалізація функцій втрат: принципи правдоподібності та теорія інформації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат градієнтного спуску та його стохастичних модифікацій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-momentum-rmsprop-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Адаптивні алгоритми оптимізації першого та другого порядків (Momentum, RMSprop, Adam)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-l1-l2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Геометрична та байєсівська теорія регуляризації: порівняльний аналіз L1 і L2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-decoupled-weight-decay-adamw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Модель відокремленого затухання ваг (Decoupled Weight Decay) в алгоритмі AdamW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для класифікації сигнатур мережевого трафіку
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для класифікації сигнатур мережевого трафіку">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-forward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок лінійних комбінацій та сигмоїдних активацій (Forward Pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення значення повної регуляризованої функції втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Аналітичний розрахунок градієнтів за параметрами моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Ітераційне оновлення ваг моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Концептуальний базис машинного навчання та проблема узагальнення
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичний апарат функцій втрат, методів градієнтної оптимізації та регуляризації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Оптимізація та регуляризація класифікаційної моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Еволюція парадигм: від класичного детермінованого програмування до дата-центричного машинного навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Формалізація навчання з учителем: регресійний та класифікаційний аналіз
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Принципи навчання без учителя та навчання з підкріпленням
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Проблема перенавчання, недонавчання та компроміс зсуву і дисперсії (Bias-Variance Decomposition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Аналітична формалізація функцій втрат: принципи правдоподібності та теорія інформації
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат градієнтного спуску та його стохастичних модифікацій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-momentum-rmsprop-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Адаптивні алгоритми оптимізації першого та другого порядків (Momentum, RMSprop, Adam)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-l1-l2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Геометрична та байєсівська теорія регуляризації: порівняльний аналіз L1 і L2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-decoupled-weight-decay-adamw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Модель відокремленого затухання ваг (Decoupled Weight Decay) в алгоритмі AdamW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для класифікації сигнатур мережевого трафіку
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для класифікації сигнатур мережевого трафіку">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-forward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок лінійних комбінацій та сигмоїдних активацій (Forward Pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення значення повної регуляризованої функції втрат
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Аналітичний розрахунок градієнтів за параметрами моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Ітераційне оновлення ваг моделі
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="6-supervisedunsupervisedrl-l1l2">Тема 6. Машинне навчання: концепції, оптимізація та регуляризація. Постановка задач Supervised/Unsupervised/RL, функції втрат, градієнтний спуск, L1/L2 регуляризація</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекції є формування у здобувачів вищої освіти спеціальності «Комп'ютерна інженерія» фундаментальної системи знань щодо теоретичних засад, аналітичних моделей оптимізації та методів регуляризації в машинному навчанні. У межах заняття розглядаються математичні постановки базових парадигм навчання, досліджуються диференційовні функції втрат, а також розбираються чисельні алгоритми градієнтної оптимізації в просторах параметрів обчислювальних систем. Окрему увагу приділено аналізу компромісу між зсувом і дисперсією та математичному апарату подолання явища перенавчання за допомогою штрафних обмежень <span class="arithmatex">\(L_1\)</span> та <span class="arithmatex">\(L_2\)</span>.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Здобувачі вищої освіти повинні засвоїти математичні формулювання парадигм навчання з учителем, без учителя та з підкріпленням, розуміти структуру емпіричного ризику та усвідомлювати причини виникнення ефекту перенавчання за високої розмірності простору ознак.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти мають уміти коректно обирати й аналітично розраховувати функції втрат для задач регресії та класифікації, обчислювати їхні векторні градієнти, а також формулювати ітераційні кроки методів оптимізації першого порядку.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Слухачі курсу повинні вміти критично досліджувати компроміс між зсувом та дисперсією (Bias-Variance Tradeoff), зіставляти поведінку класичних і адаптивних оптимізаторів на неідеальних ландшафтах цільових функцій, а також аналізувати геометричні та байєсівські відмінності між <span class="arithmatex">\(L_1\)</span>- і <span class="arithmatex">\(L_2\)</span>-регуляризацією.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Здобувачі мають набути здатності обґрунтовано проектувати алгоритми навчання з механізмами стабілізації збіжності, самостійно обирати силу регуляризаційного впливу відповідно до складності моделі та синтезувати відмовостійкі обчислювальні конвеєри машинного навчання для завдань комп'ютерної інженерії.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Концептуальний базис машинного навчання та проблема узагальнення</h3>
+<ul>
+<li>
+<p>1.1. Парадигма машинного навчання реалізує дата-центричний підхід, замінюючи жорстко детерміноване алгоритмічне проектування процесом автоматичного виявлення прихованих закономірностей на основі емпіричних прецедентів.</p>
+</li>
+<li>
+<p>1.2. Постановка задачі навчання з учителем формалізується як пошук відображення простору вхідних векторів ознак у неперервний простір відгуків для регресії або дискретний набір міток для класифікації.</p>
+</li>
+<li>
+<p>1.3. Специфіка навчання без учителя та навчання з підкріпленням полягає у відсутності явної розмітки даних, що вимагає виявлення внутрішньої топологічної структури вибірки або максимізації кумулятивної винагороди агента під час динамічної взаємодії із середовищем.</p>
+</li>
+<li>
+<p>1.4. Феномен перенавчання та узагальнююча здатність алгоритмів описуються через фундаментальну декомпозицію очікуваної помилки на компоненти зсуву, дисперсії та незвідного шуму спостережень.</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичний апарат функцій втрат, методів градієнтної оптимізації та регуляризації</h3>
+<ul>
+<li>
+<p>2.1. Формалізація функцій втрат для регресії та класифікації спирається на принципи максимізації правдоподібності гаусівських і бернуллівських розподілів, а також мінімізацію дивергенції Кульбака-Лейблера.</p>
+</li>
+<li>
+<p>2.2. Математична схема градієнтного спуску та його стохастичних модифікацій описує оновлення вектора параметрів моделі в напрямку антиградієнта функції втрат.</p>
+</li>
+<li>
+<p>2.3. Адаптивні алгоритми оптимізації акумулюють перші та другі моменти градієнтів для динамічної зміни кроку навчання вздовж кожного координатного напрямку та подолання ярів цільової функції.</p>
+</li>
+<li>
+<p>2.4. Геометричний та байєсівський аналіз <span class="arithmatex">\(L_1\)</span>- і <span class="arithmatex">\(L_2\)</span>-регуляризації демонструє механізм утворення розріджених векторів параметрів у методі Lasso та пропорційного стиснення амплітуди ваг у гребеневій регресії.</p>
+</li>
+<li>
+<p>2.5. Модель відокремленого затухання ваг в алгоритмі AdamW усуває деформацію регуляризаційного штрафу, що спричинена масштабуванням градієнта на другий момент у класичному підході Adam.</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Оптимізація та регуляризація класифікаційної моделі</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для високошвидкісної класифікації сигнатур мережевого трафіку у вбудованих обчислювальних вузлах»</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-">1.1. Еволюція парадигм: від класичного детермінованого програмування до дата-центричного машинного навчання</h3>
+<p>Розвиток обчислювальної техніки та прикладної математики протягом десятиліть базувався на парадигмі класичного детермінованого програмування, сформованій у межах архітектури фон Неймана. У цій традиційній парадигмі інженер-дослідник володіє вичерпним аналітичним або феноменологічним описом досліджуваної предметної області. Він самостійно формулює строгий детермінований алгоритм, транслюючи математичну модель у послідовність машинних інструкцій. Подібний підхід демонструє граничну ефективність у задачах із чітко формалізованою аксіоматикою — таких як чисельне інтегрування диференціальних рівнянь, лінійна алгебра чи структурні симуляції фізичних систем.</p>
+<p>Проте під час розв'язання задач перцептивного характеру, опрацювання мультимедійних потоків, ідентифікації складних стохастичних залежностей та аналізу багатовимірних сенсорних даних у реальних комп'ютерних комплексах детермінована модель натрапляє на нездоланні труднощі. Головною причиною є так званий бар'єр комбінаторної складності, за якого кількість нелінійних зв'язків та варіантів стану системи перевищує можливості їхнього ручного алгоритмічного опису. У таких умовах виникає необхідність заміни класичного алгоритмічного підходу на <strong>машинне навчання (Machine Learning)</strong>, що реалізує індуктивну, дата-центричну концепцію проектування обчислювальних процесів.</p>
+<p>Фундаментальне формальне визначення процесу комп'ютерного навчання запропонував Том Мітчелл: комп'ютерна програма навчається на основі отриманого досвіду <span class="arithmatex">\(E\)</span> стосовно деякого класу задач <span class="arithmatex">\(T\)</span> та критерію ефективності <span class="arithmatex">\(P\)</span>, якщо якість розв'язання задач із множини <span class="arithmatex">\(T\)</span>, оцінена за метрикою <span class="arithmatex">\(P\)</span>, монотонно зростає зі збільшенням обсягу накопиченого досвіду <span class="arithmatex">\(E\)</span>. </p>
+<p>У термінах теорії ймовірностей та обчислювальної статистики задача машинного навчання формалізується через припущення про існування фіксованого, але невідомого спільного розподілу ймовірностей <span class="arithmatex">\(\mathcal{D}\)</span> над простором вхідних об'єктів <span class="arithmatex">\(\mathcal{X}\)</span> та цільових значень <span class="arithmatex">\(\mathcal{Y}\)</span>. Навчальна вибірка формується як набір незалежних однаково розподілених спостережень, отриманих із цього розподілу:</p>
+<div class="arithmatex">\[S = \left\{ (x_i, y_i) \right\}_{i=1}^N \sim \mathcal{D}^{N}, \quad x_i \in \mathcal{X} \subseteq \mathbb{R}^d, \quad y_i \in \mathcal{Y}\]</div>
+<p>У наведеній математичній моделі використовуються такі аналітичні змінні:</p>
+<ul>
+<li>
+<p>Змінна <span class="arithmatex">\(S\)</span> позначає скінченну навчальну вибірку емпіричних спостережень, яка має тип структурного масиву пар векторів та цільових значень.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(N\)</span> визначає цілочисельний розмір емпіричної вибірки, тобто сумарну кількість доступних прецедентів для підбору внутрішніх параметрів системи.</p>
+</li>
+<li>
+<p>Символ <span class="arithmatex">\(\mathcal{D}^{N}\)</span> позначає <span class="arithmatex">\(N\)</span>-кратний добуток істинного генерального розподілу ймовірностей над простором прецедентів, з якого незалежно генерується кожне спостереження.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(x_i\)</span> являє собою <span class="arithmatex">\(d\)</span>-вимірний вектор числових або закодованих ознак <span class="arithmatex">\(i\)</span>-го об'єкта, що належить підпростору дійсних чисел <span class="arithmatex">\(\mathbb{R}^d\)</span>.</p>
+</li>
+<li>
+<p>Символ <span class="arithmatex">\(y_i\)</span> репрезентує скалярне або векторне еталонне цільове значення, що зіставлене <span class="arithmatex">\(i\)</span>-му об'єкту у вихідному просторі відгуків <span class="arithmatex">\(\mathcal{Y}\)</span>.</p>
+</li>
+</ul>
+<p>Перехід до дата-центричної схеми докорінно трансформує інформаційний потік в архітектурі обчислювальної системи, що схематично відображено на рисунку нижче:</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Classical_Approach [Класична детермінована парадигма]
+        A1[Вхідні дані: Масиви X] --&gt; B1[Обчислювальний процесор]
+        A2[Алгоритм: Сформульовані правила] --&gt; B1
+        B1 --&gt; C1[Цільовий результат: Відгук Y]
+    end
+
+    subgraph ML_Approach [Дата-центрична парадигма машинного навчання]
+        D1[Вхідні дані: Масиви X] --&gt; E1[Алгоритм оптимізації моделі]
+        D2[Емпіричний досвід: Цільові відгуки Y] --&gt; E1
+        E1 --&gt; F1[Синтезована модель: Функція відображення h]
+    end</code></pre>
+<h3 id="12">1.2. Формалізація навчання з учителем: регресійний та класифікаційний аналіз</h3>
+<p>Парадигма <strong>навчання з учителем (Supervised Learning)</strong> є найбільш строгим і аналітично опрацьованим класом методів штучного інтелекту. Її головна відмінність полягає в тому, що кожному прецеденту вхідного простору ознак однозначно зіставлено істинний еталонний маркер (supervisor feedback), наданий зовнішнім джерелом або експертною системою. Метою процесу є відшукання серед заданого параметричного сімейства гіпотез <span class="arithmatex">\(\mathcal{H}\)</span> функції відображення <span class="arithmatex">\(h(x; w): \mathcal{X} \to \mathcal{Y}\)</span>, яка мінімізує відхилення від істинного значення не лише на навчальній множині, але й на всій генеральній сукупності <span class="arithmatex">\(\mathcal{D}\)</span>.</p>
+<p>Залежно від топології та алгебраїчної природи множини відгуків <span class="arithmatex">\(\mathcal{Y}\)</span>, задачі навчання з учителем поділяються на дві магістральні категорії:</p>
+<ol>
+<li>
+<p><strong>Задачі регресійного аналізу (Regression Analysis).</strong> Простір вихідних значень є неперервною множиною дійсних чисел <span class="arithmatex">\(\mathcal{Y} \subseteq \mathbb{R}^k\)</span>. У задачах комп'ютерної інженерії регресія моделює такі фізичні величини, як затримки передачі сигналів у лініях комутації, температуру кристалів багатоядерних процесорів, енергоспоживання вузлів кластера або неперервні амплітуди оброблюваних сигналів.</p>
+</li>
+<li>
+<p><strong>Задачі класифікаційного аналізу (Classification Analysis).</strong> Простір вихідних значень є дискретною скінченною множиною взаємовиключних категорійних міток <span class="arithmatex">\(\mathcal{Y} = \{1, 2, \dots, C\}\)</span>. У бінарній класифікації (<span class="arithmatex">\(C = 2\)</span>) відгук інтерпретується як булева ідентифікація наявності чи відсутності ознаки (наприклад, детекція аномальних пакетів у мережевому трафіку). У випадку багатокласової задачі (<span class="arithmatex">\(C &gt; 2\)</span>) цільовий простір часто перетворюється у ймовірнісний симплекс <span class="arithmatex">\(\Delta^{C-1}\)</span>, де координати вихідного вектора моделі відображають апостеріорні ймовірності належності об'єкта до кожного окремого класу.</p>
+</li>
+</ol>
+<p>Для кількісної оцінки якості обраної гіпотези вводиться <strong>функція втрат (Loss Function)</strong> <span class="arithmatex">\(L(h(x; w), y): \mathcal{Y} \times \mathcal{Y} \to \mathbb{R}_{\ge 0}\)</span>, яка зіставляє парі «прогноз — еталон» невід'ємне штрафне значення. Тоді <strong>істинний (генералізаційний) ризик (True Risk)</strong> моделі визначається як математичне сподівання функції втрат за генеральним розподілом <span class="arithmatex">\(\mathcal{D}\)</span>:</p>
+<div class="arithmatex">\[R(w) = \mathbb{E}_{(x, y) \sim \mathcal{D}} \left[ L(h(x; w), y) \right] = \int_{\mathcal{X} \times \mathcal{Y}} L(h(x; w), y) \, dP(x, y)\]</div>
+<p>У цій інтегральній рівності використовуються такі математичні позначення:</p>
+<ul>
+<li>
+<p>Величина <span class="arithmatex">\(R(w)\)</span> визначає істинний інтегральний функціонал ризику моделі як скалярну безрозмірну міру помилки на всій генеральній сукупності.</p>
+</li>
+<li>
+<p>Символ <span class="arithmatex">\(\mathbb{E}_{(x, y) \sim \mathcal{D}}\)</span> позначає оператор математичного сподівання за невідомим спільним розподілом ймовірностей спостережень і міток.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(L(h(x; w), y)\)</span> являє собою конкретну метричну функцію втрат, що повертає невід'ємне дійсне число за допущене моделлю розходження.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(w \in \mathbb{R}^p\)</span> містить параметри (ваги) моделі розмірності <span class="arithmatex">\(p\)</span>, конфігурація яких однозначно задає обрану гіпотезу із простору <span class="arithmatex">\(\mathcal{H}\)</span>.</p>
+</li>
+<li>
+<p>Міра <span class="arithmatex">\(dP(x, y)\)</span> визначає елементарну ймовірнісну міру над декартовим добутком просторів ознак та цільових значень <span class="arithmatex">\(\mathcal{X} \times \mathcal{Y}\)</span>.</p>
+</li>
+</ul>
+<p>Оскільки спільний розподіл <span class="arithmatex">\(P(x, y)\)</span> у реальних прикладних задачах апріорі невідомий, пряме обчислення істинного ризику <span class="arithmatex">\(R(w)\)</span> є неможливим. Замість нього застосовують принцип <strong>мінімізації емпіричного ризику (Empirical Risk Minimization, ERM)</strong>, що обчислює середнє арифметичне значення штрафів на скінченній навчальній вибірці:</p>
+<div class="arithmatex">\[R_{\text{emp}}(w) = \frac{1}{N} \sum_{i=1}^N L(h(x_i; w), y_i)\]</div>
+<p>Згідно із законом великих чисел, при прямуванні обсягу вибірки до нескінченності (<span class="arithmatex">\(N \to \infty\)</span>) емпіричний ризик збігається за ймовірністю до істинного ризику. Проте на скінченних вибірках необмежена мінімізація <span class="arithmatex">\(R_{\text{emp}}(w)\)</span> створює загрозу виродження моделі, коли мінімум емпіричного ризику супроводжується різким зростанням істинного ризику <span class="arithmatex">\(R(w)\)</span>.</p>
+<h3 id="13">1.3. Принципи навчання без учителя та навчання з підкріпленням</h3>
+<p>На відміну від задач із зовнішнім навчальним сигналом, <strong>навчання без учителя (Unsupervised Learning)</strong> оперує нерозміченими масивами даних <span class="arithmatex">\(\mathcal{D}_X = \{x_i\}_{i=1}^N\)</span>, де цільові маркери <span class="arithmatex">\(y_i\)</span> повністю відсутні. Головною метою цієї парадигми є вивчення внутрішньої структури розподілу даних <span class="arithmatex">\(p(x)\)</span>, знаходження прихованих зв'язків та вилучення компактних представлень інформації. </p>
+<p>В обчислювальній практиці задачі навчання без учителя формалізуються за такими напрямками:</p>
+<ol>
+<li>
+<p><strong>Кластеризація (Clustering).</strong> Поділ вхідного простору векторів на <span class="arithmatex">\(K\)</span> неперетинних або м'яких кластерів <span class="arithmatex">\(\{C_1, C_2, \dots, C_K\}\)</span>, де об'єкти всередині одного кластера мають мінімальну попарну відстань у заданій метриці, а відстані між різними кластерами є максимальними.</p>
+</li>
+<li>
+<p><strong>Зниження розмірності (Dimensionality Reduction).</strong> Побудова проекційного оператора <span class="arithmatex">\(\psi: \mathbb{R}^D \to \mathbb{R}^d\)</span>, де <span class="arithmatex">\(d \ll D\)</span>, зі збереженням максимального рівня дисперсії вхідного сигналу або топологічної структури вкладеного многовиду (manifold learning). Це критично важливо для стиснення даних, усунення колізій та візуалізації станів багатовимірних систем.</p>
+</li>
+<li>
+<p><strong>Оцінювання щільності (Density Estimation).</strong> Ідентифікація функції густини ймовірності <span class="arithmatex">\(p(x)\)</span>, що дає змогу виявляти аномалії в роботі апаратних компонентів системи через фіксацію прецедентів з низькою ймовірністю генерації.</p>
+</li>
+</ol>
+<p>Принципово іншу архітектуру взаємодії репрезентує <strong>навчання з підкріпленням (Reinforcement Learning, RL)</strong>. Тут навчальний суб'єкт розглядається як активний автономний <strong>агент (Agent)</strong>, занурений у динамічне стохастичне <strong>середовище (Environment)</strong>. Процес взаємодії моделюється як <strong>марковський процес прийняття рішень (Markov Decision Process, MDP)</strong>, що формалізується кортежем:</p>
+<div class="arithmatex">\[\mathcal{M} = \langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle\]</div>
+<p>У зазначеному формальному кортежі елементи мають таку математичну сутність:</p>
+<ul>
+<li>
+<p>Множина <span class="arithmatex">\(\mathcal{S}\)</span> позначає повний простір можливих дискретних або неперервних станів динамічного середовища, у якому перебуває агент.</p>
+</li>
+<li>
+<p>Множина <span class="arithmatex">\(\mathcal{A}\)</span> репрезентує простір дій, доступних агенту для виконання в довільний дискретний момент часу.</p>
+</li>
+<li>
+<p>Тензор <span class="arithmatex">\(\mathcal{P}(s' \mid s, a) = \mathbb{P}(S_{t+1} = s' \mid S_t = s, A_t = a)\)</span> визначає ймовірність переходу системи в новий стан <span class="arithmatex">\(s'\)</span> за умови виконання дії <span class="arithmatex">\(a\)</span> у стані <span class="arithmatex">\(s\)</span>.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(\mathcal{R}(s, a, s')\)</span> являє собою скалярну детерміновану або стохастичну функцію винагороди, що повертає числову реакцію середовища на перехід.</p>
+</li>
+<li>
+<p>Коефіцієнт <span class="arithmatex">\(\gamma \in [0, 1)\)</span> позначає коефіцієнт дисконтування, що математично задає пріоритет миттєвих винагород над віддаленими в часі виграшами.</p>
+</li>
+</ul>
+<p>Агент керується внутрішньою <strong>стратегією (Policy)</strong> <span class="arithmatex">\(\pi(a \mid s) = \mathbb{P}(A_t = a \mid S_t = s)\)</span>, оптимізуючи її з метою максимізації математичного сподівання кумулятивного дисконтованого виграшу на часовому горизонті функціонування:</p>
+<div class="arithmatex">\[G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\]</div>
+<p>Де змінна <span class="arithmatex">\(G_t\)</span> позначає сумарну дисконтовану віддачу агента починаючи з моменту часу <span class="arithmatex">\(t\)</span>, а <span class="arithmatex">\(R_{t+k+1}\)</span> — значення скалярної винагороди, отриманої на кроці <span class="arithmatex">\(t+k+1\)</span>.</p>
+<p>Архітектурні зв'язки між усіма базовими класами систем штучного інтелекту унаочнює наведена класифікаційна діаграма:</p>
+<pre class="mermaid"><code>flowchart TD
+    ML["Парадигми машинного навчання"] --&gt; SL["Навчання з учителем (Supervised)"]
+    ML --&gt; UL["Навчання без учителя (Unsupervised)"]
+    ML --&gt; RL["Навчання з підкріпленням (RL)"]
+
+    SL --&gt; SL_Reg["Регресія (Неперервний відгук)"]
+    SL --&gt; SL_Clas["Класифікація (Дискретний клас)"]
+
+    UL --&gt; UL_Clust["Кластеризація (K-Means, DBSCAN)"]
+    UL --&gt; UL_Dim["Зниження розмірності (PCA, t-SNE)"]
+    UL --&gt; UL_Dens["Оцінка щільності та аномалій"]
+
+    RL --&gt; RL_Value["Value-Based методи (Q-Learning)"]
+    RL --&gt; RL_Policy["Policy-Based методи (REINFORCE)"]
+    RL --&gt; RL_Actor["Actor-Critic гібридні архітектури"]</code></pre>
+<p>Для чіткої систематизації відмінностей між зазначеними парадигмами їхні характеристики зведено в порівняльну таблицю:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Парадигма навчання</th>
+<th style="text-align: left;">Вхідна інформаційна структура</th>
+<th style="text-align: left;">Характер зворотного зв'язку</th>
+<th style="text-align: left;">Критерій цільової оптимізації</th>
+<th style="text-align: left;">Типові інженерні задачі в галузі</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Supervised Learning</strong></td>
+<td style="text-align: left;">Вектори ознак із явними цільовими мітками <span class="arithmatex">\((x_i, y_i)\)</span></td>
+<td style="text-align: left;">Безпосередня похибка між виходом <span class="arithmatex">\(h(x)\)</span> та істинним <span class="arithmatex">\(y\)</span></td>
+<td style="text-align: left;">Мінімізація емпіричного ризику на заданій вибірці</td>
+<td style="text-align: left;">Прогнозування тепловиділення, розпізнавання образів, бінарна діагностика вузлів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unsupervised Learning</strong></td>
+<td style="text-align: left;">Неструктуровані масиви спостережень без міток <span class="arithmatex">\(\{x_i\}\)</span></td>
+<td style="text-align: left;">Повністю відсутній; самоорганізація за метрикою</td>
+<td style="text-align: left;">Максимізація правдоподібності або мінімізація втрат стиснення</td>
+<td style="text-align: left;">Компресія даних у шинах пам'яті, сегментація абонентів, детекція зламів систем</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reinforcement Learning</strong></td>
+<td style="text-align: left;">Стани динамічного фізичного або цифрового середовища <span class="arithmatex">\(S_t\)</span></td>
+<td style="text-align: left;">Затриманий у часі скалярний сигнал винагороди чи штрафу <span class="arithmatex">\(R_t\)</span></td>
+<td style="text-align: left;">Максимізація інтегральної дисконтованої віддачі <span class="arithmatex">\(G_t\)</span></td>
+<td style="text-align: left;">Адаптивне динамічне керування маршрутизацією, оптимізація частоти ядер процесорів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Semi-Supervised Learning</strong></td>
+<td style="text-align: left;">Великий обсяг нерозмічених даних і мала розмічена підмножина</td>
+<td style="text-align: left;">Частковий зворотний зв'язок на окремих прецедентах</td>
+<td style="text-align: left;">Узгодження розділювальної межі з геометрією щільності</td>
+<td style="text-align: left;">Медична діагностика, аудит безпеки великих сховищ інформації</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Self-Supervised Learning</strong></td>
+<td style="text-align: left;">Нерозмічені сирі послідовності (текст, код, телеметрія)</td>
+<td style="text-align: left;">Псевдомітки, сгенеровані із контексту самих вхідних даних</td>
+<td style="text-align: left;">Мінімізація втрат передбачення прихованих фрагментів</td>
+<td style="text-align: left;">Попереднє тренування великих мовних моделей, аналіз черг комп'ютерних шин</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-bias-variance-decomposition">1.4. Проблема перенавчання, недонавчання та компроміс зсуву і дисперсії (Bias-Variance Decomposition)</h3>
+<p>Центральною проблемою теорії навчання машин є досягнення високої <strong>узагальнюючої здатності (Generalization Ability)</strong> алгоритму, тобто збереження низького рівня помилки на нових наборах тестових даних, які не входили до навчального датасету <span class="arithmatex">\(S\)</span>. У процесі оптимізації моделі параметричний простір може демонструвати два граничні патологічні стани:</p>
+<ol>
+<li>
+<p><strong>Недонавчання (Underfitting).</strong> Стан, за якого обране сімейство гіпотез <span class="arithmatex">\(\mathcal{H}\)</span> є занадто простим (має малу ємність або структурну потужність), через що модель неспроможна виявити навіть домінуючі регулярні патерни у навчальних даних. У цьому разі спостерігається високий рівень похибки як на навчальному, так і на валідаційному наборах даних.</p>
+</li>
+<li>
+<p><strong>Перенавчання (Overfitting).</strong> Стан, за якого надмірно складна модель із надлишковим числом вільних параметрів повністю підлаштовується під випадкові стохастичні шуми та специфічні артефакти навчальної вибірки. У цій ситуації емпіричний ризик <span class="arithmatex">\(R_{\text{emp}}(w)\)</span> наближається до нуля, проте істинний ризик <span class="arithmatex">\(R(w)\)</span> катастрофічно зростає, роблячи модель абсолютно непридатною для практичної експлуатації.</p>
+</li>
+</ol>
+<p>Аналітичну природу цього явища розкриває класична <strong>теорема про декомпозицію зсуву та дисперсії (Bias-Variance Decomposition)</strong>. Нехай залежність у даних описується істинною функцією <span class="arithmatex">\(f(x)\)</span> за наявності адитивного стохастичного шуму спостереження:</p>
+<div class="arithmatex">\[y = f(x) + \epsilon, \quad \mathbb{E}[\epsilon] = 0, \quad \text{Var}(\epsilon) = \sigma^2\]</div>
+<p>Тут величина <span class="arithmatex">\(\epsilon\)</span> є випадковою величиною стохастичного шуму з нульовим середнім, а параметр <span class="arithmatex">\(\sigma^2\)</span> визначає незвідну дисперсію помилки вимірювань. </p>
+<p>Припустимо, що за допомогою обраного алгоритму на базі випадкової навчальної вибірки <span class="arithmatex">\(S\)</span> отримано оцінку <span class="arithmatex">\(\hat{f}(x; S)\)</span>. Розглянемо очікувану середньоквадратичну похибку моделі в довільній фіксованій точці <span class="arithmatex">\(x\)</span> за всіма можливими навчальними підвибірками <span class="arithmatex">\(S\)</span>:</p>
+<div class="arithmatex">\[\mathbb{E}_{S, \epsilon} \left[ (y - \hat{f}(x; S))^2 \right] = \text{Bias}^2(\hat{f}(x)) + \text{Var}(\hat{f}(x)) + \sigma^2\]</div>
+<p>Аналітичне розгортання даної рівності демонструє її внутрішню структуру:</p>
+<div class="arithmatex">\[\mathbb{E}_{S, \epsilon} \left[ (y - \hat{f}(x; S))^2 \right] = \left( f(x) - \mathbb{E}_S[\hat{f}(x; S)] \right)^2 + \mathbb{E}_S \left[ \left( \hat{f}(x; S) - \mathbb{E}_S[\hat{f}(x; S)] \right)^2 \right] + \sigma^2\]</div>
+<p>Складові елементи отриманого розкладу інтерпретуються наступним чином:</p>
+<ul>
+<li>
+<p>Доданок <span class="arithmatex">\(\text{Bias}^2(\hat{f}(x)) = \left( f(x) - \mathbb{E}_S[\hat{f}(x; S)] \right)^2\)</span> позначає <strong>зсув (Bias)</strong> моделі, тобто різницю між істинною цільовою функцією та середнім прогнозом гіпотези, усередненим за всіма можливими навчальними вибірками однакового розміру. Високий зсув є індикатором недонавчання через структурну невідповідність моделі.</p>
+</li>
+<li>
+<p>Доданок <span class="arithmatex">\(\text{Var}(\hat{f}(x)) = \mathbb{E}_S \left[ \left( \hat{f}(x; S) - \mathbb{E}_S[\hat{f}(x; S)] \right)^2 \right]\)</span> позначає <strong>дисперсію (Variance)</strong> моделі, що кількісно оцінює чутливість прогнозу до випадкових флуктуацій навчальної вибірки <span class="arithmatex">\(S\)</span>. Висока дисперсія свідчить про надмірну лабільність системи і слугує маркером перенавчання.</p>
+</li>
+<li>
+<p>Доданок <span class="arithmatex">\(\sigma^2\)</span> репрезентує <strong>незвідну похибку (Irreducible Error)</strong>, викликану фундаментальною ентропією самого фізичного процесу або шумом сенсорів, зменшити яку в межах обраного простору ознак математично неможливо.</p>
+</li>
+</ul>
+<p>Компроміс між зсувом та дисперсією демонструє обернену взаємодію: спроби знизити зсув шляхом ускладнення параметричної архітектури моделі неминуче призводять до зростання її дисперсії, і навпаки. Оптимальна обчислювальна схема моделі повинна досягати балансу, мінімізуючи сумарну похибку, що зображено на діаграмі життєвого циклу навчання:</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Model_Capacity [Зростання структурної складності моделі]
+        dir[Кількість параметрів / Епохи оптимізації]
+    end
+
+    subgraph State_Evolution [Еволюція стану узагальнення]
+        Underfit["Зона недонавчання&lt;br&gt;(Underfitting)&lt;br&gt;Високий зсув (High Bias)&lt;br&gt;Низька дисперсія (Low Var)"]
+        Optimal["Оптимальна зона&lt;br&gt;(Generalization Sweet Spot)&lt;br&gt;Мінімум повної похибки"]
+        Overfit["Зона перенавчання&lt;br&gt;(Overfitting)&lt;br&gt;Низький зсув (Low Bias)&lt;br&gt;Висока дисперсія (High Var)"]
+
+        Underfit --&gt; Optimal
+        Optimal --&gt; Overfit
+    end</code></pre>
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Серед інженерів-початківців поширена омана, що досягнення нульової похибки моделі на навчальній вибірці (<span class="arithmatex">\(R_{\text{emp}}(w) = 0\)</span>) є показником ідеальної якості побудованої системи штучного інтелекту. Насправді рівність емпіричного ризику нулю у складних багатопараметричних моделях майже завжди вказує на деструктивне перенавчання (Overfitting). У цьому стані модель не здійснює індуктивного узагальнення знань, а просто запам'ятовує координати об'єктів разом зі стохастичним шумом вибірки, що призводить до повної втрати працездатності системи на нових реальних даних.</p>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Чому при фіксованому обсязі навчальної вибірки <span class="arithmatex">\(N\)</span> необмежене розширення простору ознак шляхом генерації поліноміальних взаємодій високого порядку веде спочатку до зменшення похибки апроксимації, а потім до катастрофічного зростання похибки прогнозу на тестових даних?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p>Описаний ефект пояснюється теоремою про декомпозицію зсуву та дисперсії, а також фундаментальним феноменом «прокляття розмірності» (Curse of Dimensionality). </p>
+<ol>
+<li>Формальне обґрунтування через ємність моделі:</li>
+</ol>
+<div class="arithmatex">\[E_{\text{total}} = \text{Bias}^2(\hat{f}) + \text{Var}(\hat{f}) + \sigma^2\]</div>
+<p>При додаванні поліноміальних ознак зростає ємність простору гіпотез <span class="arithmatex">\(\mathcal{H}\)</span> (що формально оцінюється розмірністю Вапніка-Червоненкіса <span class="arithmatex">\(\text{VC}(\mathcal{H})\)</span>). Це дозволяє моделі формувати складні нелінійні розділювальні поверхні, знижуючи системний зсув <span class="arithmatex">\(\text{Bias}^2(\hat{f}) \to 0\)</span>. Проте об'єм високовимірного простору зростає експоненційно відносно кількості ознак, внаслідок чого фіксована вибірка з <span class="arithmatex">\(N\)</span> прецедентів стає вкрай розрідженою.</p>
+<ol>
+<li>
+<p>Аналіз складових похибки:</p>
+<ul>
+<li>
+<p>Зсув моделі зменшується, оскільки поліноміальний базис високого степеня теоретично здатний наблизити довільну неперервну функцію з будь-якою наперед заданою точністю.</p>
+</li>
+<li>
+<p>Дисперсія <span class="arithmatex">\(\text{Var}(\hat{f})\)</span> різко зростає через надлишкову чутливість моделі до вибіркових варіацій, коли незначна зміна одного прецеденту в навчальному наборі зумовлює суттєву осциляцію розрахункових вагових коефіцієнтів.</p>
+</li>
+<li>
+<p>Повна очікувана помилка на нових даних, будучи сумою квадрата зсуву і дисперсії, починає домінуватися експоненційно зростаючою дисперсією, що й формує параболоподібну криву генералізаційної втрати.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<h3 id="_4">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Порівняльний аналіз парадигми мінімізації емпіричного ризику (ERM) та принципу мінімізації структурного ризику (SRM) демонструє, що накладання апріорних обмежень на топологічну місткість класу гіпотез є математичною необхідністю для забезпечення стійкості узагальнення.</p>
+</li>
+<li>
+<p>Дослідження поведінки агентів у марковських процесах прийняття рішень вимагає чіткого усвідомлення ролі коефіцієнта дисконтування <span class="arithmatex">\(\gamma\)</span>, оскільки його значення безпосередньо балансує локальну вигоду найближчого кроку та глобальну стратегічну стабільність поведінки системи.</p>
+</li>
+<li>
+<p>Осмислення декомпозиції похибки спонукає інженера комп'ютерних систем розглядати процес регуляризації не просто як евристичне згладжування ваг, а як цілеспрямоване внесення керованого малого зсуву для радикального пригнічення нестабільної дисперсії моделі.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21">2.1. Аналітична формалізація функцій втрат: принципи правдоподібності та теорія інформації</h3>
+<p>Вибір функції втрат у машинному навчанні не є евристичним рішенням, а базується на фундаментальних положеннях теорії ймовірностей та математичної статистики. Базовим аналітичним інструментом для виведення цільових функцій є метод <strong>максимальної правдоподібності (Maximum Likelihood Estimation, MLE)</strong>. Відповідно до принципу MLE, оптимальний вектор параметрів моделі <span class="arithmatex">\(w^*\)</span> максимізує ймовірність генерації спостережуваної вибірки даних <span class="arithmatex">\(S = \{(x_i, y_i)\}_{i=1}^N\)</span>. За умови незалежності та однакової розподіленості прецедентів спільна функція правдоподібності факторизується в добуток умовних щільностей розподілу:</p>
+<div class="arithmatex">\[L(w) = \prod_{i=1}^N p(y_i \mid x_i; w)\]</div>
+<p>Для спрощення аналітичних викладок та усунення проблеми зникнення порядку чисел при обчисленнях на комп'ютерних системах переходять до мінімізації від'ємного логарифма правдоподібності (Negative Log-Likelihood, NLL), що перетворює операцію множення на суму:</p>
+<div class="arithmatex">\[\mathcal{L}_{\text{NLL}}(w) = -\ln L(w) = -\sum_{i=1}^N \ln p(y_i \mid x_i; w)\]</div>
+<p>Розглянемо аналітичне виведення <strong>середньоквадратичної помилки (Mean Squared Error, MSE)</strong> для задач регресійного аналізу в умовах наявності адитивного гаусівського шуму.</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Формулювання щільності ймовірності):} &amp; \quad p(y_i \mid x_i; w) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(y_i - h(x_i; w))^2}{2\sigma^2} \right) \\
+\text{Етап 2 (Логарифмування функції правдоподібності):} &amp; \quad \ln L(w) = -\frac{N}{2} \ln(2\pi\sigma^2) - \frac{1}{2\sigma^2} \sum_{i=1}^N (y_i - h(x_i; w))^2 \\
+\text{Етап 3 (Інверсія знака та редукція констант):} &amp; \quad \arg\min_w \mathcal{L}_{\text{NLL}}(w) = \arg\min_w \left[ \frac{1}{N} \sum_{i=1}^N (y_i - h(x_i; w))^2 \right] = \mathcal{L}_{\text{MSE}}(w)
+\end{aligned}
+\]</div>
+<p>У наведеному аналітичному виведенні використовуються такі математичні величини:</p>
+<ul>
+<li>
+<p>Величина <span class="arithmatex">\(p(y_i \mid x_i; w)\)</span> визначає умовну щільність ймовірності отримання неперервного значення відгуку <span class="arithmatex">\(y_i\)</span> за заданого вектора ознак <span class="arithmatex">\(x_i\)</span> та параметрів моделі <span class="arithmatex">\(w\)</span>.</p>
+</li>
+<li>
+<p>Символ <span class="arithmatex">\(\sigma^2\)</span> репрезентує дисперсію нормального розподілу стохастичного шуму вимірювань, виражену в одиницях квадрата цільової змінної.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(h(x_i; w)\)</span> задає детермінований прогноз моделі для <span class="arithmatex">\(i\)</span>-го спостереження, який формується у просторі дійсних чисел <span class="arithmatex">\(\mathbb{R}\)</span>.</p>
+</li>
+<li>
+<p>Функціонал <span class="arithmatex">\(\mathcal{L}_{\text{MSE}}(w)\)</span> визначає середньоквадратичну функцію втрат, що вимірюється у квадратичних одиницях цільової величини.</p>
+</li>
+</ul>
+<p>Для задач бінарної класифікації цільова змінна приймає значення <span class="arithmatex">\(y_i \in \{0, 1\}\)</span> і підпорядковується розподілу Бернуллі з параметром <span class="arithmatex">\(\hat{y}_i = \sigma(z_i) = (1 + e^{-z_i})^{-1}\)</span>, де <span class="arithmatex">\(z_i = h(x_i; w)\)</span>. Імовірнісна щільність окремого спостереження записується як:</p>
+<div class="arithmatex">\[p(y_i \mid x_i; w) = \hat{y}_i^{y_i} (1 - \hat{y}_i)^{1 - y_i}\]</div>
+<p>Логарифмування та зміна знака формують <strong>бінарну крос-ентропію (Binary Cross-Entropy, BCE)</strong>:</p>
+<div class="arithmatex">\[\mathcal{L}_{\text{BCE}}(w) = -\frac{1}{N} \sum_{i=1}^N \left[ y_i \ln(\hat{y}_i) + (1 - y_i) \ln(1 - \hat{y}_i) \right]\]</div>
+<p>У цьому виразі використовуються такі змінні:</p>
+<ul>
+<li>
+<p>Параметр <span class="arithmatex">\(y_i \in \{0, 1\}\)</span> є цілочисельним індикатором істинного класу об'єкта.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(\hat{y}_i \in (0, 1)\)</span> являє собою безрозмірну ймовірність належності до додатного класу, згенеровану логістичною сигмоїдою.</p>
+</li>
+<li>
+<p>Значення <span class="arithmatex">\(\mathcal{L}_{\text{BCE}}(w)\)</span> визначає ентропійні втрати класифікації, виражені в натах або бітах.</p>
+</li>
+</ul>
+<p>В умовах багатокласової класифікації на <span class="arithmatex">\(C\)</span> категорій розподіл виходів моделі формується оператором Softmax:</p>
+<div class="arithmatex">\[\hat{y}_{i,c} = \frac{\exp(z_{i,c})}{\sum_{k=1}^C \exp(z_{i,k})}\]</div>
+<p>Мінімізація <strong>категоріальної крос-ентропії (Categorical Cross-Entropy, CCE)</strong> має прямий зв'язок із теорією інформації через <strong>дивергенцію Кульбака-Лейблера (Kullback-Leibler Divergence, <span class="arithmatex">\(D_{\text{KL}}\)</span>)</strong>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Визначення дивергенції):} &amp; \quad D_{\text{KL}}(P_i \parallel Q_i) = \sum_{c=1}^C y_{i,c} \ln\left( \frac{y_{i,c}}{\hat{y}_{i,c}} \right) \\
+\text{Етап 2 (Декомпозиція на ентропії):} &amp; \quad D_{\text{KL}}(P_i \parallel Q_i) = \sum_{c=1}^C y_{i,c} \ln(y_{i,c}) - \sum_{c=1}^C y_{i,c} \ln(\hat{y}_{i,c}) = -H(P_i) + H(P_i, Q_i) \\
+\text{Етап 3 (Гранична поведінка та оптимізація):} &amp; \quad \lim_{\hat{y}_{i,c} \to y_{i,c}} D_{\text{KL}}(P_i \parallel Q_i) = 0 \implies \arg\min_w D_{\text{KL}} = \arg\min_w H(P_i, Q_i) = \mathcal{L}_{\text{CCE}}(w)
+\end{aligned}
+\]</div>
+<p>У наведених рівняннях фігурують такі компоненти:</p>
+<ul>
+<li>
+<p>Величина <span class="arithmatex">\(D_{\text{KL}}(P_i \parallel Q_i)\)</span> задає квазіметричну відстань між істинним розподілом <span class="arithmatex">\(P_i\)</span> та прогнозним розподілом <span class="arithmatex">\(Q_i\)</span>.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(y_{i,c} \in \{0, 1\}\)</span> позначає елемент унітарного One-Hot вектора, який дорівнює одиниці лише для істинного класу <span class="arithmatex">\(c\)</span>.</p>
+</li>
+<li>
+<p>Компонента <span class="arithmatex">\(\hat{y}_{i,c}\)</span> являє собою розраховану моделлю ймовірність приналежності об'єкта до класу <span class="arithmatex">\(c\)</span>.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(H(P_i)\)</span> є власною ентропією Шеннона апріорного розподілу, яка є незмінною константою щодо параметрів <span class="arithmatex">\(w\)</span>.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(H(P_i, Q_i)\)</span> визначає перехресну ентропію розподілів, мінімізація якої гарантує збіжність модельного розподілу до емпіричного.</p>
+</li>
+</ul>
+<hr />
+<h3 id="22">2.2. Математичний апарат градієнтного спуску та його стохастичних модифікацій</h3>
+<p>Мінімізація диференційовного емпіричного ризику <span class="arithmatex">\(\mathcal{L}(w)\)</span> в евклідовому просторі параметрів <span class="arithmatex">\(\mathbb{R}^p\)</span> здійснюється за допомогою методів локальної лінійної апроксимації. Класичний <strong>градієнтний спуск (Gradient Descent, GD)</strong> базується на ітераційному зміщенні вздовж вектора антиградієнта:</p>
+<div class="arithmatex">\[w_{t+1} = w_t - \eta \nabla_w \mathcal{L}(w_t)\]</div>
+<p>Де вектор <span class="arithmatex">\(w_t \in \mathbb{R}^p\)</span> визначає просторові координати ваг на кроці <span class="arithmatex">\(t\)</span>, скаляр <span class="arithmatex">\(\eta &gt; 0\)</span> задає швидкість навчання (Learning Rate), а <span class="arithmatex">\(\nabla_w \mathcal{L}(w_t)\)</span> є вектором часткових похідних функції втрат.</p>
+<p>Дослідимо аналітичну збіжність градієнтного спуску для класу <span class="arithmatex">\(L\)</span>-гладких та <span class="arithmatex">\(\mu\)</span>-сильно опуклих функцій. Функція <span class="arithmatex">\(\mathcal{L}(w)\)</span> задовольняє умову <span class="arithmatex">\(L\)</span>-гладкості (Ліпшицева неперервність градієнта), якщо для довільних <span class="arithmatex">\(u, v \in \mathbb{R}^p\)</span> виконується нерівність:</p>
+<div class="arithmatex">\[\|\nabla \mathcal{L}(u) - \nabla \mathcal{L}(v)\| \le L \|u - v\| \implies \mathcal{L}(v) \le \mathcal{L}(u) + \langle \nabla \mathcal{L}(u), v - u \rangle + \frac{L}{2} \|v - u\|^2\]</div>
+<p>Підставимо формулу ітераційного кроку градієнтного спуску <span class="arithmatex">\(w_{t+1} - w_t = -\eta \nabla \mathcal{L}(w_t)\)</span> у квадратичну мажоранту Ліпшиця:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Підстановка кроку оптимізатора):} &amp; \quad \mathcal{L}(w_{t+1}) \le \mathcal{L}(w_t) - \eta \|\nabla \mathcal{L}(w_t)\|^2 + \frac{\eta^2 L}{2} \|\nabla \mathcal{L}(w_t)\|^2 \\
+\text{Етап 2 (Факторизація градієнтного множника):} &amp; \quad \mathcal{L}(w_{t+1}) \le \mathcal{L}(w_t) - \eta \left( 1 - \frac{\eta L}{2} \right) \|\nabla \mathcal{L}(w_t)\|^2 \\
+\text{Етап 3 (Оптимізація довжини кроку):} &amp; \quad \frac{d}{d\eta} \left( \eta - \frac{\eta^2 L}{2} \right) = 1 - \eta L = 0 \implies \eta_{\text{opt}} = \frac{1}{L}
+\end{aligned}
+\]</div>
+<p>При виборі <span class="arithmatex">\(\eta = \frac{1}{L}\)</span> гарантується монотонне монополічне спадання функції втрат на кожній ітерації:</p>
+<div class="arithmatex">\[\mathcal{L}(w_{t+1}) \le \mathcal{L}(w_t) - \frac{1}{2L} \|\nabla \mathcal{L}(w_t)\|^2\]</div>
+<p>Для <span class="arithmatex">\(\mu\)</span>-сильно опуклої функції (де виконується умова <span class="arithmatex">\(\mathcal{L}(v) \ge \mathcal{L}(u) + \langle \nabla \mathcal{L}(u), v - u \rangle + \frac{\mu}{2} \|v - u\|^2\)</span>) градієнтний спуск зі швидкістю <span class="arithmatex">\(\eta = \frac{2}{L + \mu}\)</span> демонструє лінійну швидкість збіжності за геометричною прогресією:</p>
+<div class="arithmatex">\[\|w_t - w^*\| \le \left( \frac{\kappa - 1}{\kappa + 1} \right)^t \|w_0 - w^*\|, \quad \kappa = \frac{L}{\mu}\]</div>
+<p>Де безрозмірна величина <span class="arithmatex">\(\kappa \ge 1\)</span> є числом обумовленості матриці Гессе в околі екстремуму. </p>
+<p>Аналітичний розрахунок граничної поведінки показує:</p>
+<div class="arithmatex">\[\lim_{t \to \infty} \left( \frac{\kappa - 1}{\kappa + 1} \right)^t = 0 \quad \text{при } \kappa \lt  \infty\]</div>
+<p>Однак при <span class="arithmatex">\(\kappa \gg 1\)</span> (наявність сильно витягнутих долин з анізотропною кривизною) знаменник наближається до чисельника, що викликає різке уповільнення збіжності та паразитні поперечні осциляції траєкторії.</p>
+<p>Для подолання обчислювальної складності повнопакетного розрахунку на вибірках розміру <span class="arithmatex">\(N\)</span> застосовують <strong>стохастичний градієнтний спуск (Stochastic Gradient Descent, SGD)</strong> та його пакетну модифікацію (<strong>Mini-batch SGD</strong>), де оцінка градієнта здійснюється на випадковій підмножині <span class="arithmatex">\(\mathcal{B}_t \subset S\)</span> потужністю <span class="arithmatex">\(B = |\mathcal{B}_t|\)</span>:</p>
+<div class="arithmatex">\[g_t = \nabla_w \mathcal{L}_{\mathcal{B}_t}(w_t) = \frac{1}{B} \sum_{i \in \mathcal{B}_t} \nabla_w L(h(x_i; w_t), y_i)\]</div>
+<p>Оцінка <span class="arithmatex">\(g_t\)</span> є незсуненою (<span class="arithmatex">\(\mathbb{E}_{\mathcal{B}_t}[g_t] = \nabla \mathcal{L}(w_t)\)</span>), але володіє залишковою коваріацією шуму, дисперсія якої зворотно пропорційна обсягу підпакета:</p>
+<div class="arithmatex">\[\text{Var}(g_t) = \mathbb{E}\left[ \|g_t - \nabla \mathcal{L}(w_t)\|^2 \right] \le \frac{\sigma_{\text{batch}}^2}{B}\]</div>
+<p>Зниження дисперсії стохастичного шуму вимагає поступового зменшення швидкості навчання відповідно до класичних умов Роббінса-Монро:</p>
+<div class="arithmatex">\[\sum_{t=1}^\infty \eta_t = \infty \quad \text{та} \quad \sum_{t=1}^\infty \eta_t^2 \lt  \infty\]</div>
+<hr />
+<h3 id="23-momentum-rmsprop-adam">2.3. Адаптивні алгоритми оптимізації першого та другого порядків (Momentum, RMSprop, Adam)</h3>
+<p>Для демпфування стохастичних осциляцій та прискорення руху вздовж пологих ділянок цільового ландшафту класичну схему оптимізації доповнюють механізмами акумуляції фізичного моменту та координатної адаптації кроку.</p>
+<p><strong>SGD з інерційним моментом Поляка (Polyak Momentum)</strong> емулює рух масивної частки у в'язкому середовищі:</p>
+<div class="arithmatex">\[v_{t+1} = \beta v_t + g_t, \quad w_{t+1} = w_t - \eta v_{t+1}\]</div>
+<p>Де <span class="arithmatex">\(v_t \in \mathbb{R}^p\)</span> позначає вектор швидкості накопичення імпульсу, а <span class="arithmatex">\(\beta \in [0, 1)\)</span> є коефіцієнтом числового згасання інерції.</p>
+<p>Алгоритм <strong>RMSprop</strong> вирішує проблему неоднакового масштабу компонент градієнта шляхом нормування кроку на корінь з експоненційного ковзного середнього квадратів похідних:</p>
+<div class="arithmatex">\[s_{t+1} = \beta_2 s_t + (1 - \beta_2) g_t^2, \quad w_{t+1} = w_t - \frac{\eta}{\sqrt{s_{t+1}} + \epsilon} \odot g_t\]</div>
+<p>Де вектор <span class="arithmatex">\(s_t \in \mathbb{R}^p\)</span> містить накопичені другі нецентровані моменти градієнта вздовж кожного координатного виміру, символ <span class="arithmatex">\(\odot\)</span> позначає поелементний добуток Адамара, а константа <span class="arithmatex">\(\epsilon \approx 10^{-8}\)</span> гарантує стійкість операції ділення.</p>
+<p>Алгоритм <strong>Adam (Adaptive Moment Estimation)</strong> об'єднує властивості накопичення імпульсу першого порядку та адаптивного масштабування другого порядку. Розглянемо аналітичне виведення поправок на зсув (<strong>Bias Correction</strong>) для алгоритму Adam. Оскільки вектори моментів ініціалізуються нулями (<span class="arithmatex">\(m_0 = \vec{0}, v_0 = \vec{0}\)</span>), їхні початкові оцінки виявляються суттєво зміщеними в бік нуля.</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Аналітичне розгортання рекурентності):} &amp; \quad m_t = (1 - \beta_1) \sum_{i=1}^t \beta_1^{t-i} g_i \\
+\text{Етап 2 (Взяття математичного сподівання):} &amp; \quad \mathbb{E}[m_t] = \mathbb{E}\left[ (1 - \beta_1) \sum_{i=1}^t \beta_1^{t-i} g_i \right] \approx \mathbb{E}[g_t] (1 - \beta_1) \sum_{i=1}^t \beta_1^{t-i} \\
+\text{Етап 3 (Розрахунок суми геометричної прогресії):} &amp; \quad \sum_{i=1}^t \beta_1^{t-i} = \frac{1 - \beta_1^t}{1 - \beta_1} \implies \mathbb{E}[m_t] = \mathbb{E}[g_t](1 - \beta_1^t) \\
+\text{Етап 4 (Формування незсуненої оцінки):} &amp; \quad \hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \text{аналогічно} \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\end{aligned}
+\]</div>
+<p>Аналіз асимптотичної поведінки коригувальних коефіцієнтів показує:</p>
+<div class="arithmatex">\[\lim_{t \to \infty} (1 - \beta_1^t) = 1, \quad \lim_{t \to \infty} (1 - \beta_2^t) = 1\]</div>
+<p>Це доводить, що на пізніх етапах навчання поправка природно вироджується в одиницю і перестає впливати на динаміку оновлення ваг.</p>
+<p>Фінальне правило оновлення параметрів в Adam записується як:</p>
+<div class="arithmatex">\[w_{t+1} = w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t\]</div>
+<p>Динаміку синхронної взаємодії компонентів у процесі обчислення кроку оптимізатора Adam наведено на наступній діаграмі:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Engine as Обчислювальний конвеєр
+    participant Grad as Блок диференціювання
+    participant Opt as Оптимізатор Adam
+    participant Param as Регістри параметрів w
+
+    Engine-&gt;&gt;Grad: Передача вибірки батчу B_t
+    Grad-&gt;&gt;Opt: Вектор стохастичного градієнта g_t
+    Note over Opt: Оновлення першого моменту: m_t = beta1*m_t-1 + (1-beta1)*g_t
+    Note over Opt: Оновлення другого моменту: v_t = beta2*v_t-1 + (1-beta2)*g_t^2
+    par Коригування зміщень нульової ініціалізації
+        Opt-&gt;&gt;Opt: Розрахунок m_hat = m_t / (1 - beta1^t)
+    and
+        Opt-&gt;&gt;Opt: Розрахунок v_hat = v_t / (1 - beta2^t)
+    end
+    Note over Opt: Синтез адаптивного градієнтного вектора delta_w
+    Opt-&gt;&gt;Param: Оновлення стану: w_t+1 = w_t - eta * delta_w
+    Param--&gt;&gt;Engine: Підтвердження готовності до наступної ітерації</code></pre>
+<hr />
+<h3 id="24-l1-l2">2.4. Геометрична та байєсівська теорія регуляризації: порівняльний аналіз L1 і L2</h3>
+<p>Проблема перенавчання аналітично вирішується за допомогою обмеження норми вектора параметрів. У термінах математичного програмування регуляризована оптимізація формулюється як задача на умовний екстремум із нерівністю-обмеженням:</p>
+<div class="arithmatex">\[\min_{w} \mathcal{L}(w) \quad \text{при умові} \quad \|w\|_p^p \le C\]</div>
+<p>Де параметр <span class="arithmatex">\(C &gt; 0\)</span> визначає допустимий радіус ізотропної кулі в метриці <span class="arithmatex">\(L_p\)</span>. Згідно з теоремою Куна-Таккера (Karush-Kuhn-Tucker, KKT), у точці умовного мінімуму <span class="arithmatex">\(w^*\)</span> градієнт цільової функції втрат колінеарний градієнту активного обмеження:</p>
+<div class="arithmatex">\[-\nabla_w \mathcal{L}(w^*) = \lambda \nabla_w (\|w^*\|_p^p), \quad \lambda \ge 0, \quad \lambda (\|w^*\|_p^p - C) = 0\]</div>
+<p>Перехід до безумовної форми через множники Лагранжа формує функціонал регуляризованого ризику:</p>
+<div class="arithmatex">\[\mathcal{J}(w) = \mathcal{L}(w) + \lambda \mathcal{R}(w)\]</div>
+<ol>
+<li>
+<p><strong>Регуляризація Тихонова (<span class="arithmatex">\(L_2\)</span>-штраф, Ridge):</strong> <span class="arithmatex">\(\mathcal{R}_{L_2}(w) = \frac{1}{2} \|w\|_2^2 = \frac{1}{2} \sum_{j=1}^p w_j^2\)</span>. Градієнт штрафу дорівнює <span class="arithmatex">\(\nabla \mathcal{R}_{L_2}(w) = w\)</span>. На кожному кроці вага множиться на стискаючий фактор <span class="arithmatex">\((1 - \eta \lambda) &lt; 1\)</span>.</p>
+</li>
+<li>
+<p><strong>Регуляризація Лассо (<span class="arithmatex">\(L_1\)</span>-штраф, Lasso):</strong> <span class="arithmatex">\(\mathcal{R}_{L_1}(w) = \|w\|_1 = \sum_{j=1}^p |w_j|\)</span>. Субградієнт штрафу задається як <span class="arithmatex">\(\partial |w_j| = \text{sign}(w_j)\)</span> при <span class="arithmatex">\(w_j \neq 0\)</span> та <span class="arithmatex">\(\partial |w_j| \in [-1, 1]\)</span> при <span class="arithmatex">\(w_j = 0\)</span>.</p>
+</li>
+</ol>
+<p>Геометрична відмінність між <span class="arithmatex">\(L_1\)</span> та <span class="arithmatex">\(L_2\)</span> полягає в топології ліній рівня їхніх куль обмежень у просторі параметрів <span class="arithmatex">\(\mathbb{R}^p\)</span>. Поверхня <span class="arithmatex">\(L_2\)</span>-кулі є гладким гіперсфероїдом, до якого концентричні еліпсоїди ліній рівня функції втрат <span class="arithmatex">\(\mathcal{L}(w)\)</span> майже завжди дотикаються в гладких точках простору, де жодна з координат <span class="arithmatex">\(w_j\)</span> не дорівнює нулю. </p>
+<p>Натомість одинична куля <span class="arithmatex">\(L_1\)</span>-норми є гостроверхим гіпероктаедром (політопом). Його кутові вершини розташовані строго на осях координат, де частина компонент вектора <span class="arithmatex">\(w\)</span> дорівнює нулю. Оскільки лінії рівня втрат найчастіше контактують з октаедром саме в його вершинах (наявність сингулярності похідної), розв'язок задачі набуває <strong>розрідженого (sparse)</strong> вигляду. Цей математичний механізм реалізує автоматичний відбір найбільш значущих інформаційних ознак (Feature Selection).</p>
+<p>З погляду байєсівської теорії ймовірностей мінімізація регуляризованого функціоналу є пошуком <strong>максимуму апостеріорної оцінки (Maximum A Posteriori, MAP)</strong>:</p>
+<div class="arithmatex">\[w_{\text{MAP}} = \arg\max_w p(w \mid S) = \arg\max_w \left[ \ln p(S \mid w) + \ln p(w) \right]\]</div>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Введення нормального апріорного розподілу):} &amp; \quad p(w) = \prod_{j=1}^p \frac{1}{\sqrt{2\pi\sigma_0^2}} \exp\left( -\frac{w_j^2}{2\sigma_0^2} \right) \implies \ln p(w) = -\frac{1}{2\sigma_0^2} \|w\|_2^2 + \text{const} \\
+\text{Етап 2 (Введення апріорного розподілу Лапласа):} &amp; \quad p(w) = \prod_{j=1}^p \frac{1}{2b} \exp\left( -\frac{|w_j|}{b} \right) \implies \ln p(w) = -\frac{1}{b} \|w\|_1 + \text{const} \\
+\text{Етап 3 (Зіставлення з множником Лагранжа):} &amp; \quad \lambda_{L_2} = \frac{\sigma^2}{\sigma_0^2}, \quad \lambda_{L_1} = \frac{\sigma^2}{b}
+\end{aligned}
+\]</div>
+<p>Таким чином, <span class="arithmatex">\(L_2\)</span>-регуляризація строго еквівалентна припущенню про нормальний апріорний розподіл ваг Гаусса з нульовим середнім, а <span class="arithmatex">\(L_1\)</span>-регуляризація — апріорному розподілу Лапласа з гострим піком у нулі.</p>
+<p>Еволюцію просторового стану параметрів при зміні сили регуляризаційного впливу відображено на діаграмі переходів станів системи:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Необмежене_навчання: Ініціалізація ваг w_0
+
+    Необмежене_навчання --&gt; Перенавчання: lambda = 0 (Ємність надлишкова)
+    Необмежене_навчання --&gt; L2_Стиснення: Включення L2-норми (Гаусс)
+    Необмежене_навчання --&gt; L1_Розрідження: Включення L1-норми (Лаплас)
+
+    L2_Стиснення --&gt; Оптимальний_стан: Підбір збалансованого lambda
+    L1_Розрідження --&gt; Відбір_ознак: Обнулення неінформативних ваг
+
+    Перенавчання --&gt; Катастрофічна_дисперсія: Зростання тестової похибки
+    Оптимальний_стан --&gt; [*]: Висока узагальнююча здатність
+    Відбір_ознак --&gt; [*]: Компактна стійка архітектура</code></pre>
+<hr />
+<h3 id="25-decoupled-weight-decay-adamw">2.5. Модель відокремленого затухання ваг (Decoupled Weight Decay) в алгоритмі AdamW</h3>
+<p>Протягом тривалого часу в інженерній практиці помилково ототожнювали концепцію <span class="arithmatex">\(L_2\)</span>-регуляризації та механізм <strong>затухання ваг (Weight Decay)</strong>. У класичному алгоритмі SGD з додаванням <span class="arithmatex">\(L_2\)</span>-штрафу до функції втрат ці концепції дійсно математично еквівалентні:</p>
+<div class="arithmatex">\[\nabla_w \mathcal{J}(w) = \nabla_w \mathcal{L}(w) + \lambda w \implies w_{t+1} = w_t - \eta \nabla \mathcal{L}(w_t) - \eta \lambda w_t = (1 - \eta \lambda) w_t - \eta \nabla \mathcal{L}(w_t)\]</div>
+<p>Проте в адаптивних оптимізаторах сімейства Adam пряме додавання <span class="arithmatex">\(\lambda w\)</span> до градієнта спотворює фізику регуляризації. Розглянемо модифікований градієнт <span class="arithmatex">\(\tilde{g}_t = g_t + \lambda w_t\)</span>. У цьому випадку оновлення моментів набуває вигляду:</p>
+<div class="arithmatex">\[m_t = \beta_1 m_{t-1} + (1 - \beta_1)(g_t + \lambda w_t), \quad v_t = \beta_2 v_{t-1} + (1 - \beta_2)(g_t + \lambda w_t)^2\]</div>
+<p>Оновлення параметрів у класичному Adam з <span class="arithmatex">\(L_2\)</span>-регуляризацією аналітично записується як:</p>
+<div class="arithmatex">\[w_{t+1} = w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \left( \frac{m_t(g_t)}{1 - \beta_1^t} + \frac{\lambda m_t(w_t)}{1 - \beta_1^t} \right)\]</div>
+<p>З отриманого виразу випливає деструктивний математичний ефект: штраф за величину ваги масштабується обернено пропорційно величині <span class="arithmatex">\(\sqrt{\hat{v}_t}\)</span>. Якщо певний параметр має велику історичну дисперсію градієнтів (<span class="arithmatex">\(\hat{v}_{t, j} \gg 1\)</span>), його ефективний регуляризаційний коефіцієнт штучно зменшується:</p>
+<div class="arithmatex">\[\lambda_{\text{eff}} \sim \frac{\lambda}{\sqrt{\hat{v}_{t, j}}}\]</div>
+<p>І навпаки, для ваг із рідкісними та малими градієнтами регуляризаційний штраф стає надмірно агресивним. Це призводить до спотворення відносної ваги ознак та погіршення генералізації в глибоких нейромережевих моделях (зокрема у трансформерах).</p>
+<p>Алгоритм <strong>AdamW (Loshchilov &amp; Hutter)</strong> усуває цю проблему за допомогою <strong>відокремленого затухання ваг (Decoupled Weight Decay)</strong>, виключаючи регуляризаційний член з обчислення адаптивних моментів <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Розрахунок чистих моментів):} &amp; \quad m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t, \quad v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2 \\
+\text{Етап 2 (Незсунена нормалізація):} &amp; \quad \hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t} \\
+\text{Етап 3 (Відокремлене оновлення ваг):} &amp; \quad w_{t+1} = w_t - \eta \lambda w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t = (1 - \eta \lambda) w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t
+\end{aligned}
+\]</div>
+<p>У такій постановці кожна вага пропорційно стискається на множник <span class="arithmatex">\((1 - \eta \lambda)\)</span> незалежно від амплітуди її градієнта, що відновлює первинний зміст регуляризації Тихонова в нелінійних адаптивних оптимізаторах.</p>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> В адаптивних методах оптимізації першого порядку класична <span class="arithmatex">\(L_2\)</span>-регуляризація шляхом додавання штрафу до функції втрат (<span class="arithmatex">\(\mathcal{L} + \frac{\lambda}{2}\|w\|^2\)</span>) не є еквівалентною затуханню ваг (Weight Decay). Адаптивне масштабування знаменника <span class="arithmatex">\(\sqrt{\hat{v}_t}\)</span> пригнічує регуляризацію для часто оновлюваних ваг і гіпертрофує її для рідкісних ознак, тому для збереження інваріантності штрафу необхідно застосовувати алгоритм AdamW із відокремленим затуханням ваг.</p>
+</blockquote>
+<p>Для порівняльного зіставлення базових оптимізаційних алгоритмів нижче наведено аналітичну матрицю їхніх структурних характеристик:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Алгоритм оптимізації</th>
+<th style="text-align: left;">Математична схема оновлення параметрів</th>
+<th style="text-align: left;">Адаптація швидкості <span class="arithmatex">\(\eta\)</span></th>
+<th style="text-align: left;">Механізм регуляризації <span class="arithmatex">\(L_2\)</span></th>
+<th style="text-align: left;">Витрати пам'яті на стан (тензори)</th>
+<th style="text-align: left;">Сфера домінуючої ефективності</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Batch GD</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = w_t - \eta \nabla \mathcal{L}(w_t)\)</span></td>
+<td style="text-align: left;">Відсутня (глобальний <span class="arithmatex">\(\eta\)</span>)</td>
+<td style="text-align: left;">Класичний градієнтний доданок</td>
+<td style="text-align: left;">0 (лише поточний вектор <span class="arithmatex">\(w\)</span>)</td>
+<td style="text-align: left;">Малі аналітичні задачі, опуклий аналіз</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SGD + Momentum</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(v_{t+1} = \beta v_t + g_t\)</span>; <span class="arithmatex">\(w_{t+1} = w_t - \eta v_{t+1}\)</span></td>
+<td style="text-align: left;">Інерційна екстраполяція</td>
+<td style="text-align: left;">Еквівалентний Weight Decay</td>
+<td style="text-align: left;"><span class="arithmatex">\(1 \times p\)</span> (вектор швидкості <span class="arithmatex">\(v\)</span>)</td>
+<td style="text-align: left;">Згорткові мережі комп'ютерного зору (CNN)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AdaGrad</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = w_t - \frac{\eta}{\sqrt{\sum g_\tau^2} + \epsilon} \odot g_t\)</span></td>
+<td style="text-align: left;">Монотонне згасання за історією</td>
+<td style="text-align: left;">Вбудований у градієнт</td>
+<td style="text-align: left;"><span class="arithmatex">\(1 \times p\)</span> (сума квадратів <span class="arithmatex">\(G\)</span>)</td>
+<td style="text-align: left;">Розріджені текстові ознаки (NLP)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RMSprop</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = w_t - \frac{\eta}{\sqrt{\text{EMA}(g^2)} + \epsilon} \odot g_t\)</span></td>
+<td style="text-align: left;">Координатна експоненційна</td>
+<td style="text-align: left;">Вбудований у градієнт</td>
+<td style="text-align: left;"><span class="arithmatex">\(1 \times p\)</span> (експоненційне середнє <span class="arithmatex">\(s\)</span>)</td>
+<td style="text-align: left;">Рекурентні архітектури (RNN, LSTM)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Adam</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t\)</span></td>
+<td style="text-align: left;">Покоординатна (1-й і 2-й моменти)</td>
+<td style="text-align: left;">Спотворений масштабуванням <span class="arithmatex">\(\sqrt{\hat{v}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \times p\)</span> (вектори <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span>)</td>
+<td style="text-align: left;">Generative Adversarial Networks (GAN)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AdamW</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = (1 - \eta \lambda) w_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \odot \hat{m}_t\)</span></td>
+<td style="text-align: left;">Покоординатна (відокремлена)</td>
+<td style="text-align: left;">Справжній Decoupled Weight Decay</td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \times p\)</span> (вектори <span class="arithmatex">\(m_t\)</span> та <span class="arithmatex">\(v_t\)</span>)</td>
+<td style="text-align: left;">Великі мовні моделі (LLM), Transformers</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Нехай одновимірна квадратична функція втрат має вигляд <span class="arithmatex">\(\mathcal{L}(w) = \frac{1}{2} a w^2\)</span>, де параметр крутизни дорівнює <span class="arithmatex">\(a = 10\)</span>. Дослідіть поведінку одновимірного градієнтного спуску <span class="arithmatex">\(w_{t+1} = w_t - \eta \nabla \mathcal{L}(w_t)\)</span> при значеннях кроку навчання <span class="arithmatex">\(\eta_1 = 0.05\)</span>, <span class="arithmatex">\(\eta_2 = 0.2\)</span> та <span class="arithmatex">\(\eta_3 = 0.25\)</span>. Визначте границю <span class="arithmatex">\(\lim_{t \to \infty} w_t\)</span> для кожного випадку за умови <span class="arithmatex">\(w_0 = 1\)</span>.</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p>Для розв'язання обчислимо аналітичний вираз градієнта та запишемо різницеве рівняння динаміки оптимізатора.</p>
+<ol>
+<li>Аналітичний вивід різницевого рівняння:</li>
+</ol>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Градієнт функції втрат:} &amp; \quad \nabla \mathcal{L}(w) = \frac{d}{dw}\left(\frac{1}{2} a w^2\right) = a w \\
+\text{Ітераційний крок:} &amp; \quad w_{t+1} = w_t - \eta (a w_t) = (1 - \eta a) w_t \\
+\text{Загальний розв'язок рекурентності:} &amp; \quad w_t = (1 - \eta a)^t w_0
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Аналітичне дослідження випадків для <span class="arithmatex">\(a = 10\)</span> та <span class="arithmatex">\(w_0 = 1\)</span>:</p>
+<ul>
+<li>
+<p><strong>Варіант <span class="arithmatex">\(\eta_1 = 0.05\)</span>:</strong> Знаменник геометричної прогресії дорівнює <span class="arithmatex">\(q = 1 - 0.05 \cdot 10 = 1 - 0.5 = 0.5\)</span>. Оскільки <span class="arithmatex">\(|q| &lt; 1\)</span>, процес монотонно збігається до нуля: <span class="arithmatex">\(\lim_{t \to \infty} w_t = \lim_{t \to \infty} (0.5)^t \cdot 1 = 0\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант <span class="arithmatex">\(\eta_2 = 0.2\)</span>:</strong> Знаменник прогресії становить <span class="arithmatex">\(q = 1 - 0.2 \cdot 10 = 1 - 2.0 = -1.0\)</span>. Отримуємо гармонічні незгасаючі осциляції між двома станами: <span class="arithmatex">\(w_t = (-1)^t\)</span>, отже границя послідовності не існує (процес не збігається).</p>
+</li>
+<li>
+<p><strong>Варіант <span class="arithmatex">\(\eta_3 = 0.25\)</span>:</strong> Знаменник прогресії дорівнює <span class="arithmatex">\(q = 1 - 0.25 \cdot 10 = 1 - 2.5 = -1.5\)</span>. Оскільки <span class="arithmatex">\(|q| &gt; 1\)</span>, амплітуда коливань експоненційно зростає: <span class="arithmatex">\(\lim_{t \to \infty} |w_t| = \lim_{t \to \infty} (1.5)^t = \infty\)</span>, що демонструє чисельну розбіжність градієнтного спуску через перевищення критичного порогу <span class="arithmatex">\(\eta_{\text{crit}} = \frac{2}{L} = \frac{2}{10} = 0.2\)</span>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31">3.1. Комплексний інженерний кейс. Синтез та розрахунок параметричної збіжності регуляризованої логістичної регресії для класифікації сигнатур мережевого трафіку</h3>
+<h4 id="_5">Постановка інженерної задачі</h4>
+<p>У вбудованих мережевих шлюзах інтернету речей (IoT Edge Gateways) виникає критична потреба автономного виявлення аномальних сплесків трафіку (DoS/DDoS-атак типу SYN-Flood) в умовах обмежених обчислювальних ресурсів оперативної пам'яті та енергоспоживання мікроконтролера. Задача зводиться до швидкісної бінарної класифікації поточних зрізів мережевих пакетів: клас <span class="arithmatex">\(y = 1\)</span> відповідає сигнатурі аномального (шкідливого) трафіку, а клас <span class="arithmatex">\(y = 0\)</span> — штатному режиму передачі даних. </p>
+<p>Для реалізації на кристалі без використання важких нейромережевих бібліотек обрано лінійну модель логістичної регресії з <span class="arithmatex">\(L_2\)</span>-регуляризацією (Ridge penalty), що запобігає розходженню вагових коефіцієнтів при виявленні мультиколінеарних ознак у каналах зв'язку. Вхідний простір сформовано двома нормалізованими метриками: <span class="arithmatex">\(x_1\)</span> — питома інтенсивність надходження TCP SYN-пакетів за квант часу <span class="arithmatex">\(\Delta t\)</span>, <span class="arithmatex">\(x_2\)</span> — нормалізована ентропія розподілу портів призначення.</p>
+<p>Вхідні параметри мікропакета даних, початкові ваги та гіперпараметри алгоритму наведено в таблиці нижче:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниці вимірювання / Тип</th>
+<th style="text-align: left;">Опис інженерної сутності</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Спостереження 1 (Атака)</td>
+<td style="text-align: left;"><span class="arithmatex">\((x^{(1)}, y^{(1)})\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(([1.0, 0.5]^T, 1)\)</span></td>
+<td style="text-align: left;">Безрозмірний вектор / Клас</td>
+<td style="text-align: left;">Висока інтенсивність SYN, аномальна концентрація портів</td>
+</tr>
+<tr>
+<td style="text-align: left;">Спостереження 2 (Штатний)</td>
+<td style="text-align: left;"><span class="arithmatex">\((x^{(2)}, y^{(2)})\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(([-0.5, 1.0]^T, 0)\)</span></td>
+<td style="text-align: left;">Безрозмірний вектор / Клас</td>
+<td style="text-align: left;">Помірна інтенсивність трафіку, рівномірний розподіл</td>
+</tr>
+<tr>
+<td style="text-align: left;">Початкові ваги моделі</td>
+<td style="text-align: left;"><span class="arithmatex">\(w^{(0)} = [w_1^{(0)}, w_2^{(0)}]^T\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\([0.20, -0.40]^T\)</span></td>
+<td style="text-align: left;">Вектор дійсних чисел</td>
+<td style="text-align: left;">Апріорні коефіцієнти чутливості за вхідними каналами</td>
+</tr>
+<tr>
+<td style="text-align: left;">Початковий зсув (bias)</td>
+<td style="text-align: left;"><span class="arithmatex">\(b^{(0)}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.10\)</span></td>
+<td style="text-align: left;">Дійсне число</td>
+<td style="text-align: left;">Зсув розділювальної гіперплощини від початку координат</td>
+</tr>
+<tr>
+<td style="text-align: left;">Швидкість навчання</td>
+<td style="text-align: left;"><span class="arithmatex">\(\eta\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.10\)</span></td>
+<td style="text-align: left;">Безрозмірний скаляр</td>
+<td style="text-align: left;">Крок ітераційного оновлення вагових параметрів</td>
+</tr>
+<tr>
+<td style="text-align: left;">Параметр регуляризації</td>
+<td style="text-align: left;"><span class="arithmatex">\(\lambda\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.05\)</span></td>
+<td style="text-align: left;">Безрозмірний коефіцієнт</td>
+<td style="text-align: left;">Сила штрафу <span class="arithmatex">\(L_2\)</span>-норми за амплітуду ваг</td>
+</tr>
+<tr>
+<td style="text-align: left;">Обсяг оброблюваного батчу</td>
+<td style="text-align: left;"><span class="arithmatex">\(N\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;">Ціле число</td>
+<td style="text-align: left;">Кількість пакетних сигнатур в одному такті обробки</td>
+</tr>
+</tbody>
+</table>
+<p>Процедура виконання одного ітераційного кроку наведена на блок-схемі:</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Початок такту t] --&gt; B[Зчитування сигнатур x_i та міток y_i]
+    B --&gt; C[Розрахунок лінійного збудження z_i = w^T x_i + b]
+    C --&gt; D[Обчислення прогнозної ймовірності y_hat = sigma z_i]
+    D --&gt; E[Розрахунок помилки апроксимації e_i = y_hat - y_i]
+    E --&gt; F[Обчислення градієнтів функції втрат dL/dw та dL/db]
+    F --&gt; G[Додавання L2-регуляризаційного штрафу lambda * w]
+    G --&gt; H[Ітераційне оновлення параметрів w_t+1 та b_t+1]
+    H --&gt; I[Запис оновлених ваг у регістри пам'яті]</code></pre>
+<h4 id="_6">Покроковий аналітичний розрахунок</h4>
+<h5 id="1-forward-pass">Крок 1. Розрахунок лінійних комбінацій та сигмоїдних активацій (Forward Pass)</h5>
+<p>Для кожного з прецедентів навчального мікробатчу обчислюється скалярний потенціал активації <span class="arithmatex">\(z^{(i)} = w_1 x_1^{(i)} + w_2 x_2^{(i)} + b\)</span> та відповідне значення логістичної функції <span class="arithmatex">\(\hat{y}^{(i)} = \sigma(z^{(i)}) = \frac{1}{1 + \exp(-z^{(i)})}\)</span>.</p>
+<p>Для першого вектора <span class="arithmatex">\(x^{(1)} = [1.0, 0.5]^T\)</span>:</p>
+<div class="arithmatex">\[z^{(1)} = 0.20 \cdot 1.0 + (-0.40) \cdot 0.5 + 0.10 = 0.20 - 0.20 + 0.10 = 0.10\]</div>
+<div class="arithmatex">\[\hat{y}^{(1)} = \sigma(0.10) = \frac{1}{1 + \exp(-0.10)} \approx \frac{1}{1 + 0.904837} \approx 0.524979\]</div>
+<p>Для другого вектора <span class="arithmatex">\(x^{(2)} = [-0.5, 1.0]^T\)</span>:</p>
+<div class="arithmatex">\[z^{(2)} = 0.20 \cdot (-0.5) + (-0.40) \cdot 1.0 + 0.10 = -0.10 - 0.40 + 0.10 = -0.40\]</div>
+<div class="arithmatex">\[\hat{y}^{(2)} = \sigma(-0.40) = \frac{1}{1 + \exp(0.40)} \approx \frac{1}{1 + 1.491825} \approx 0.401312\]</div>
+<p>У наведених розрахунках використовуються такі змінні:</p>
+<ul>
+<li>
+<p>Скаляри <span class="arithmatex">\(z^{(1)}\)</span> та <span class="arithmatex">\(z^{(2)}\)</span> позначають проміжні значення лінійного збудження класифікатора, що вимірюються в умовних одиницях лінійного простору.</p>
+</li>
+<li>
+<p>Величини <span class="arithmatex">\(\hat{y}^{(1)}\)</span> та <span class="arithmatex">\(\hat{y}^{(2)}\)</span> задають апостеріорні ймовірності належності досліджуваних сигнатур до класу аномального мережевого трафіку.</p>
+</li>
+</ul>
+<h5 id="2_2">Крок 2. Обчислення значення повної регуляризованої функції втрат</h5>
+<p>Цільова функція складається з бінарної крос-ентропії <span class="arithmatex">\(\mathcal{L}_{\text{BCE}}\)</span> та <span class="arithmatex">\(L_2\)</span>-штрафу за амплітуду вагових коефіцієнтів:</p>
+<div class="arithmatex">\[\mathcal{J}(w, b) = -\frac{1}{N} \sum_{i=1}^N \left[ y^{(i)} \ln \hat{y}^{(i)} + (1 - y^{(i)}) \ln(1 - \hat{y}^{(i)}) \right] + \frac{\lambda}{2} \left( w_1^2 + w_2^2 \right)\]</div>
+<p>Розрахуємо внесок емпіричних втрат для кожного прецеденту:</p>
+<div class="arithmatex">\[\ell^{(1)} = -\left[ 1 \cdot \ln(0.524979) + 0 \right] = -(-0.644437) = 0.644437\]</div>
+<div class="arithmatex">\[\ell^{(2)} = -\left[ 0 + 1 \cdot \ln(1 - 0.401312) \right] = -\ln(0.598688) = -(-0.513013) = 0.513013\]</div>
+<p>Середня бінарна крос-ентропія на батчі:</p>
+<div class="arithmatex">\[\mathcal{L}_{\text{BCE}} = \frac{0.644437 + 0.513013}{2} = 0.578725\]</div>
+<p>Регуляризаційний штраф Тихонова (<span class="arithmatex">\(L_2\)</span>):</p>
+<div class="arithmatex">\[\mathcal{R}_{L_2} = \frac{0.05}{2} \left( 0.20^2 + (-0.40)^2 \right) = 0.025 \cdot (0.04 + 0.16) = 0.025 \cdot 0.20 = 0.005000\]</div>
+<p>Сумарне значення регуляризованого функціонала:</p>
+<div class="arithmatex">\[\mathcal{J}(w, b) = 0.578725 + 0.005000 = 0.583725\]</div>
+<h5 id="3">Крок 3. Аналітичний розрахунок градієнтів за параметрами моделі</h5>
+<p>Вектор нев'язок між модельним прогнозом та еталоном для кожного спостереження становить <span class="arithmatex">\(e^{(i)} = \hat{y}^{(i)} - y^{(i)}\)</span>:</p>
+<div class="arithmatex">\[e^{(1)} = 0.524979 - 1.0 = -0.475021\]</div>
+<div class="arithmatex">\[e^{(2)} = 0.401312 - 0.0 = 0.401312\]</div>
+<p>Аналітичні вирази для компонент градієнта повної цільової функції набувають вигляду:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{J}}{\partial w_j} = \frac{1}{N} \sum_{i=1}^N e^{(i)} x_j^{(i)} + \lambda w_j, \quad \frac{\partial \mathcal{J}}{\partial b} = \frac{1}{N} \sum_{i=1}^N e^{(i)}\]</div>
+<p>Обчислимо градієнт за параметром <span class="arithmatex">\(w_1\)</span>:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}_{\text{BCE}}}{\partial w_1} = \frac{1}{2} \left[ (-0.475021) \cdot 1.0 + 0.401312 \cdot (-0.5) \right] = \frac{-0.475021 - 0.200656}{2} = \frac{-0.675677}{2} = -0.337839\]</div>
+<div class="arithmatex">\[\frac{\partial \mathcal{J}}{\partial w_1} = -0.337839 + 0.05 \cdot 0.20 = -0.337839 + 0.010000 = -0.327839\]</div>
+<p>Обчислимо градієнт за параметром <span class="arithmatex">\(w_2\)</span>:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}_{\text{BCE}}}{\partial w_2} = \frac{1}{2} \left[ (-0.475021) \cdot 0.5 + 0.401312 \cdot 1.0 \right] = \frac{-0.237511 + 0.401312}{2} = \frac{0.163801}{2} = 0.081901\]</div>
+<div class="arithmatex">\[\frac{\partial \mathcal{J}}{\partial w_2} = 0.081901 + 0.05 \cdot (-0.40) = 0.081901 - 0.020000 = 0.061901\]</div>
+<p>Обчислимо градієнт за вільним членом <span class="arithmatex">\(b\)</span> (зсув не підлягає штрафу регуляризації для збереження інваріантності положення поверхні):</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{J}}{\partial b} = \frac{-0.475021 + 0.401312}{2} = \frac{-0.073709}{2} = -0.036855\]</div>
+<h5 id="4">Крок 4. Ітераційне оновлення ваг моделі</h5>
+<p>Оновлення здійснюється за правилом стохастичного градієнтного спуску з кроком <span class="arithmatex">\(\eta = 0.10\)</span>:</p>
+<div class="arithmatex">\[w_1^{(1)} = w_1^{(0)} - \eta \frac{\partial \mathcal{J}}{\partial w_1} = 0.20 - 0.10 \cdot (-0.327839) = 0.20 + 0.032784 = 0.232784\]</div>
+<div class="arithmatex">\[w_2^{(1)} = w_2^{(0)} - \eta \frac{\partial \mathcal{J}}{\partial w_2} = -0.40 - 0.10 \cdot (0.061901) = -0.40 - 0.006190 = -0.406190\]</div>
+<div class="arithmatex">\[b^{(1)} = b^{(0)} - \eta \frac{\partial \mathcal{J}}{\partial b} = 0.10 - 0.10 \cdot (-0.036855) = 0.10 + 0.003686 = 0.103686\]</div>
+<h4 id="_7">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Збільшення ваги першої ознаки з <span class="arithmatex">\(w_1^{(0)} = 0.20\)</span> до <span class="arithmatex">\(w_1^{(1)} = 0.232784\)</span> свідчить про те, що оптимізатор підвищив чутливість моделі до фактора інтенсивності надходження пакетів SYN-Flood, оскільки високе значення цієї ознаки корелює з цільовим класом <span class="arithmatex">\(y = 1\)</span>.</p>
+</li>
+<li>
+<p>Вплив <span class="arithmatex">\(L_2\)</span>-регуляризації зменшив абсолютну швидкість нарощування коефіцієнтів, оскільки член <span class="arithmatex">\(\lambda w_j\)</span> протидіє необмеженому збільшенню ваг у напрямку зменшення помилки на одиничному спостереженні.</p>
+</li>
+<li>
+<p>Вільний член <span class="arithmatex">\(b\)</span> зазнав незначного додатного зміщення, компенсуючи середній дисбаланс похибок мікробатчу для вирівнювання положення розділювальної площини.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Емпіричний ризик (ERM)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{\text{emp}}(w) = \frac{1}{N}\sum_{i=1}^N L(h(x_i), y_i)\)</span></td>
+<td style="text-align: left;">Базова оптимізація моделей регресії та класифікації</td>
+<td style="text-align: left;">Не гарантує узагальнення при скінченному <span class="arithmatex">\(N\)</span></td>
+<td style="text-align: left;">Ототожнення мінімуму на вибірці з якістю на реальних даних</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Бінарна крос-ентропія</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{L}_{\text{BCE}} = -\frac{1}{N}\sum [y\ln\hat{y} + (1-y)\ln(1-\hat{y})]\)</span></td>
+<td style="text-align: left;">Бінарна класифікація, сигмоїдні вихідні нейрони</td>
+<td style="text-align: left;">Нестійкість при <span class="arithmatex">\(\hat{y} \to 0\)</span> або <span class="arithmatex">\(\hat{y} \to 1\)</span></td>
+<td style="text-align: left;">Використання безпосередньо для багатокласових взаємовиключних задач</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Умова Ліпшицевої гладкості</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\|\nabla \mathcal{L}(u) - \nabla \mathcal{L}(v)\| \le L \|u - v\|\)</span></td>
+<td style="text-align: left;">Доведення збіжності градієнтних методів, вибір <span class="arithmatex">\(\eta\)</span></td>
+<td style="text-align: left;">Не виконується для функцій з розривами градієнта</td>
+<td style="text-align: left;">Припущення про стабільність за кроку навчання <span class="arithmatex">\(\eta &gt; \frac{2}{L}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Імпульс Поляка (Momentum)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(v_{t+1} = \beta v_t + g_t; \quad w_{t+1} = w_t - \eta v_{t+1}\)</span></td>
+<td style="text-align: left;">Прискорення оптимізації в ярах цільових поверхонь</td>
+<td style="text-align: left;">Можливе виникнення перерегулювання (overshooting)</td>
+<td style="text-align: left;">Сприйняття моменту як заміни адаптивного масштабування координат</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Оптимізатор AdamW</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{t+1} = (1 - \eta\lambda)w_t - \frac{\eta}{\sqrt{\hat{v}_t}+\epsilon}\hat{m}_t\)</span></td>
+<td style="text-align: left;">Навчання трансформерів, глибоких мереж, LLM</td>
+<td style="text-align: left;">Вищі вимоги до пам'яті (зберігання двох моментів)</td>
+<td style="text-align: left;">Трактування AdamW як повного еквівалента класичного Adam з <span class="arithmatex">\(L_2\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><span class="arithmatex">\(L_1\)</span>-регуляризація (Lasso)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{J} = \mathcal{L} + \lambda \|w\|_1\)</span></td>
+<td style="text-align: left;">Відбір інформативних ознак, стиснення моделей</td>
+<td style="text-align: left;">Недиференційовність у нулі, нестабільність при колінеарності</td>
+<td style="text-align: left;">Очікування збереження однакових ваг для сильно корельованих ознак</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><span class="arithmatex">\(L_2\)</span>-регуляризація (Ridge)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathcal{J} = \mathcal{L} + \frac{\lambda}{2} \|w\|_2^2\)</span></td>
+<td style="text-align: left;">Запобігання перенавчанню, боротьба з мультиколінеарністю</td>
+<td style="text-align: left;">Не забезпечує розрідження (ваги не занулюються строго)</td>
+<td style="text-align: left;">Включення параметра вільного члена <span class="arithmatex">\(b\)</span> до сфери дії штрафу</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_8">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Розглядається задача мінімізації двічі диференційовної опуклої функції втрат <span class="arithmatex">\(\mathcal{L}(w)\)</span>, для якої константа Ліпшиця градієнта становить <span class="arithmatex">\(L = 20\)</span>, а параметр сильної опуклості дорівнює <span class="arithmatex">\(\mu = 4\)</span>. Яке максимальне теоретичне значення швидкості навчання <span class="arithmatex">\(\eta\)</span> гарантує строгу монотонну збіжність класичного градієнтного спуску до точки глобального мінімуму з будь-якого початкового наближення?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(\eta &lt; 0.05\)</span></p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(\eta &lt; 0.10\)</span></p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(\eta &lt; 0.25\)</span></p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(\eta &lt; 0.50\)</span></p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Відповідно до теореми про збіжність градієнтного спуску для <span class="arithmatex">\(L\)</span>-гладких функцій, монотонне спадання значення функції на кожному кроці гарантується за умови виконання нерівності <span class="arithmatex">\(\eta &lt; \frac{2}{L}\)</span>. Для заданого значення константи Ліпшиця:</li>
+</ol>
+<div class="arithmatex">\[\eta_{\text{max}} = \frac{2}{L} = \frac{2}{20} = 0.10\]</div>
+<p>Якщо швидкість навчання задовольняє умову <span class="arithmatex">\(0 &lt; \eta &lt; 0.10\)</span>, оператор градієнтного кроку є стискаючим, а при оптимальному виборі <span class="arithmatex">\(\eta_{\text{opt}} = \frac{2}{L + \mu} = \frac{2}{24} \approx 0.0833\)</span> досягається максимальна швидкість збіжності за нормою.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є надмірно консервативним обмеженням, яке забезпечує збіжність, але не є максимально допустимою теоретичною межею.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є хибним, оскільки при <span class="arithmatex">\(\eta = 0.25\)</span> знаменник прогресії перевищує одиницю за модулем, що призводить до розбіжності траєкторії.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є некоректним, тому що крок <span class="arithmatex">\(\eta = 0.50\)</span> значно перевищує критичну точку стійкості різницевої схеми.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Чому використання регуляризації Лассо (<span class="arithmatex">\(L_1\)</span>) призводить до формування розрідженого вектора ваг із точними нулями, тоді як гребенева регуляризація (<span class="arithmatex">\(L_2\)</span>) лише асимптотично наближає ваги до нуля?</p>
+</li>
+<li>
+<p>A. Через використання нормального апріорного розподілу параметрів у методі <span class="arithmatex">\(L_1\)</span>.</p>
+</li>
+<li>
+<p>B. Через недиференційовність <span class="arithmatex">\(L_1\)</span>-норми в точці нуля та постійну за модулем величину субградієнта поза нулем.</p>
+</li>
+<li>
+<p>C. Через наявність квадратичного затухання швидкості навчання в алгоритмах оптимізації <span class="arithmatex">\(L_2\)</span>.</p>
+</li>
+<li>
+<p>D. Через те, що константа регуляризації <span class="arithmatex">\(\lambda\)</span> для <span class="arithmatex">\(L_1\)</span> завжди обирається більшою за одиницю.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Математична похідна штрафу <span class="arithmatex">\(L_1\)</span> має вигляд <span class="arithmatex">\(\frac{\partial}{\partial w_j} |w_j| = \text{sign}(w_j)\)</span>, що формує постійну силу притягання до нуля навіть для нескінченно малих значень ваги:</li>
+</ol>
+<div class="arithmatex">\[w_{t+1} = w_t - \eta \lambda \cdot \text{sign}(w_t)\]</div>
+<p>Унаслідок цього значення ваги перетинає нульову позначку і фіксується в нулі оператором м'якого порогу (Soft-Thresholding). Для <span class="arithmatex">\(L_2\)</span>-штрафу похідна дорівнює <span class="arithmatex">\(\lambda w_j\)</span>, тобто швидкість зменшення ваги пропорційна самій вазі (<span class="arithmatex">\(w_{t+1} = w_t(1 - \eta\lambda)\)</span>), що призводить лише до експоненційного асимптотичного наближення до нуля без його досягнення за скінченну кількість ітерацій.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки нормальний апріорний розподіл відповідає <span class="arithmatex">\(L_2\)</span>-регуляризації, тоді як <span class="arithmatex">\(L_1\)</span> спирається на розподіл Лапласа.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що швидкість навчання регулюється планувальником кроку незалежно від типу регуляризатора.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим твердженням, оскільки гіперпараметр <span class="arithmatex">\(\lambda\)</span> є довільним додатним дійсним числом і часто набуває значень значно менших за одиницю.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У чому полягає математична причина того, що в глибоких моделях нейронних мереж оптимізатор AdamW забезпечує кращу узагальнюючу здатність порівняно з класичною реалізацією Adam із додаванням <span class="arithmatex">\(L_2\)</span>-штрафу до функції втрат?</p>
+</li>
+<li>
+<p>A. AdamW повністю відключає обчислення других моментів градієнта для прискорення обчислень на графічних процесорах.</p>
+</li>
+<li>
+<p>B. Класичний Adam зменшує ефективну регуляризацію для ваг з великими градієнтами через ділення на корінь із другого моменту.</p>
+</li>
+<li>
+<p>C. AdamW використовує виключно стохастичні вибірки розміру <span class="arithmatex">\(B = 1\)</span>, що створює оптимальний регуляризаційний шум.</p>
+</li>
+<li>
+<p>D. В алгоритмі AdamW градієнт функції втрат обчислюється аналітично без використання методу зворотного поширення помилки.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Якщо додати <span class="arithmatex">\(L_2\)</span>-штраф до функції втрат у стандартному Adam, градієнт модифікується як <span class="arithmatex">\(\tilde{g}_t = g_t + \lambda w_t\)</span>. Другий момент <span class="arithmatex">\(v_t\)</span> починає накопичувати квадрати зміненого градієнта, а крок оновлення ваги набуває вигляду:</li>
+</ol>
+<div class="arithmatex">\[\Delta w_t \propto \frac{g_t + \lambda w_t}{\sqrt{v_t} + \epsilon}\]</div>
+<p>Для параметрів, які мають високу дисперсію та великі історичні градієнти (<span class="arithmatex">\(v_t \gg 1\)</span>), фактичний коефіцієнт штрафу масштабується як <span class="arithmatex">\(\frac{\lambda}{\sqrt{v_t}}\)</span>, тобто регуляризаційний вплив практично повністю нівелюється. Натомість AdamW реалізує відокремлене затухання ваг <span class="arithmatex">\(w_{t+1} = (1 - \eta\lambda)w_t - \dots\)</span>, забезпечуючи однаковий відносний штраф для всіх параметрів незалежно від амплітуди їхніх градієнтів.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки AdamW зберігає повноцінне обчислення як першого, так і другого моментів градієнта.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що розмір пакета в AdamW визначається інженером і зазвичай становить від десятків до тисяч елементів.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є абсурдним, оскільки диференціювання в усіх градієнтних методах для складних мереж спирається на зворотне поширення помилки.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>За якого співвідношення між емпіричною коваріаційною матрицею ознак <span class="arithmatex">\(X^T X\)</span> та коефіцієнтом <span class="arithmatex">\(L_2\)</span>-регуляризації <span class="arithmatex">\(\lambda\)</span> задача аналітичного оцінювання ваг лінійної регресії методом найменших квадратів <span class="arithmatex">\(w = (X^T X + \lambda I)^{-1} X^T y\)</span> гарантовано стає коректно поставленою за Адамаром?</p>
+</li>
+<li>
+<p>A. Лише за умови повної відсутності шуму у векторі цільових відгуків <span class="arithmatex">\(y\)</span>.</p>
+</li>
+<li>
+<p>B. При будь-якому строго додатному значенні <span class="arithmatex">\(\lambda &gt; 0\)</span>, незалежно від можливого виродження матриці <span class="arithmatex">\(X^T X\)</span>.</p>
+</li>
+<li>
+<p>C. Тільки якщо розмірність простору ознак <span class="arithmatex">\(d\)</span> строго менша за кількість спостережень <span class="arithmatex">\(N\)</span>.</p>
+</li>
+<li>
+<p>D. За умови, що власні числа матриці <span class="arithmatex">\(X^T X\)</span> є від'ємними дійсними числами.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Матриця Грама <span class="arithmatex">\(X^T X\)</span> для довільної вибірки <span class="arithmatex">\(X \in \mathbb{R}^{N \times d}\)</span> є симетричною та напіввизначеною додатно, тобто її власні числа задовольняють умову <span class="arithmatex">\(\sigma_i(X^T X) \ge 0\)</span>. Додавання скалярної матриці <span class="arithmatex">\(\lambda I\)</span> за умови <span class="arithmatex">\(\lambda &gt; 0\)</span> зсуває спектр власних чисел:</li>
+</ol>
+<div class="arithmatex">\[\sigma_i(X^T X + \lambda I) = \sigma_i(X^T X) + \lambda \ge \lambda &gt; 0\]</div>
+<p>Оскільки всі власні числа результуючої матриці стають строго додатними, матриця є строго додатно визначеною, її визначник <span class="arithmatex">\(\det(X^T X + \lambda I) \ge \lambda^d &gt; 0\)</span>, а обернена матриця завжди існує та має скінченну норму. Це гарантує єдиність та стійкість розв'язку навіть за умов <span class="arithmatex">\(d &gt; N\)</span> або повної лінійної залежності вхідних стовпців.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки шум у векторі <span class="arithmatex">\(y\)</span> впливає на зміщення розв'язку, але не порушує невиродженість оборотної матриці оператора.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що техніка регуляризації Тихонова розроблена саме для подолання проблеми виродженості у надвисоковимірних просторах, коли <span class="arithmatex">\(d &gt; N\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> суперечить фундаментальним властивостям матриці Грама, оскільки <span class="arithmatex">\(X^T X\)</span> ніколи не може мати від'ємних власних чисел.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<h4 id="_9">Завдання для самостійної роботи</h4>
+<h5 id="_10">Постановка задачі</h5>
+<p>У системі моніторингу інтелектуальної енергетичної мережі (Smart Grid) задіяно мікроконтролерний модуль для класифікації стабільності шини живлення. Вектор стану формується за двома показниками: відхилення напруги від номіналу <span class="arithmatex">\(\Delta U\)</span> (ознака <span class="arithmatex">\(x_1\)</span>) та швидкість зміни частоти струму <span class="arithmatex">\(df/dt\)</span> (ознака <span class="arithmatex">\(x_2\)</span>). Доступна вибірка з чотирьох спостережень нормалізованих сигналів:</p>
+<div class="arithmatex">\[S = \left\{ ([0.8, -0.2]^T, 1), ([0.4, 0.6]^T, 1), ([-0.7, 0.1]^T, 0), ([-0.3, -0.8]^T, 0) \right\}\]</div>
+<p>Початковий стан моделі логістичної регресії задано вектором ваг <span class="arithmatex">\(w^{(0)} = [0.10, 0.10]^T\)</span> та нульовим зсувом <span class="arithmatex">\(b^{(0)} = 0.00\)</span>. Застосовується <span class="arithmatex">\(L_2\)</span>-регуляризація з коефіцієнтом <span class="arithmatex">\(\lambda = 0.04\)</span>, а швидкість навчання фіксована на рівні <span class="arithmatex">\(\eta = 0.20\)</span>.</p>
+<h5 id="_11">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Виконати аналітичний розрахунок прямого проходу (Forward Pass) для всіх чотирьох прецедентів навчальної вибірки, визначивши значення лінійного відгуку <span class="arithmatex">\(z^{(i)}\)</span> та відповідної ймовірності <span class="arithmatex">\(\hat{y}^{(i)}\)</span> за допомогою логістичної функції.</p>
+</li>
+<li>
+<p>Розрахувати числове значення емпіричної бінарної крос-ентропії <span class="arithmatex">\(\mathcal{L}_{\text{BCE}}\)</span> на заданому пакеті та обчислити сумарні втрати з урахуванням квадратичного регуляризаційного доданка Тихонова.</p>
+</li>
+<li>
+<p>Аналітично визначити числові значення компонентів вектора повного градієнта <span class="arithmatex">\(\nabla_w \mathcal{J}\)</span> та <span class="arithmatex">\(\frac{\partial \mathcal{J}}{\partial b}\)</span>, деталізуючи внесок кожного спостереження у вектор нев'язки.</p>
+</li>
+<li>
+<p>Здійснити розрахунок оновлених вагових коефіцієнтів <span class="arithmatex">\(w_1^{(1)}, w_2^{(1)}\)</span> та зсуву <span class="arithmatex">\(b^{(1)}\)</span> за формулою градієнтного спуску та зробити аргументований висновок щодо напрямку зміщення розділювальної межі класифікатора.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

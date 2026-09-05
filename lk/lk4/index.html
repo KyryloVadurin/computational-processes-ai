@@ -1,0 +1,3522 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk3/">
+      
+      
+        <link rel="next" href="../lk5/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-etl-ai-distributed-data-parallel" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні принципи розподілених пайплайнів та паралелізму даних у штучному інтелекті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі конвеєризації, колективних комунікацій та оптимізації ресурсів пам'яті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Комплексний інженерний розрахунок параметрів розподіленого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-etl-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Системний дисбаланс дискових операцій і тензорних обчислювачів: архітектурна концепція конвеєризації та ETL-процеси для AI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dma-pinned-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Апаратні механізми прямого доступу до пам'яті DMA: організація Pinned Memory та асинхронні черги
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-dataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Класифікація парадигм розподіленого тренування нейронних мереж та системні обмеження DataParallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Архітектура DistributedDataParallel: багатопроцесна ізоляція, бакетизація та перекриття комунікацій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз архітектур розподіленої обробки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-etl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формалізація багатостадійного конвеєра обробки даних (ETL): аналіз критичного шляху та асимптотичної продуктивності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-distributed-data-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математична модель стохастичної оптимізації у парадигмі Distributed Data Parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-ring-allreduce-logp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Аналітичне моделювання комунікаційної трудомісткості операцій Ring-AllReduce за моделями Гокні та LogP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математична формалізація перекриття обчислень і комунікацій: аналітика бакетизації та модель прихованої затримки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-vram-zero-1-zero-2-zero-3-fsdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні моделі декомпозиції пам'яті VRAM у парадигмах ZeRO-1, ZeRO-2, ZeRO-3 та FSDP при змішаній точності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематичний порівняльний аналіз моделей та алгоритмів розподіленої обробки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-allreduce-zero-3-10-16-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам'яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам&#39;яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-etl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок параметрів конвеєра даних (ETL) та аналіз критичного шляху
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Розрахунок комунікаційної трудомісткості операцій AllReduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Оцінка часу перекриття у DDP та залишкової відкритої латентності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок та оптимізація споживання статичної відеопам'яті (VRAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні принципи розподілених пайплайнів та паралелізму даних у штучному інтелекті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі конвеєризації, колективних комунікацій та оптимізації ресурсів пам'яті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Комплексний інженерний розрахунок параметрів розподіленого навчання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-etl-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Системний дисбаланс дискових операцій і тензорних обчислювачів: архітектурна концепція конвеєризації та ETL-процеси для AI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dma-pinned-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Апаратні механізми прямого доступу до пам'яті DMA: організація Pinned Memory та асинхронні черги
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-dataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Класифікація парадигм розподіленого тренування нейронних мереж та системні обмеження DataParallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Архітектура DistributedDataParallel: багатопроцесна ізоляція, бакетизація та перекриття комунікацій
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз архітектур розподіленої обробки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-etl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формалізація багатостадійного конвеєра обробки даних (ETL): аналіз критичного шляху та асимптотичної продуктивності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-distributed-data-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математична модель стохастичної оптимізації у парадигмі Distributed Data Parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-ring-allreduce-logp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Аналітичне моделювання комунікаційної трудомісткості операцій Ring-AllReduce за моделями Гокні та LogP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математична формалізація перекриття обчислень і комунікацій: аналітика бакетизації та модель прихованої затримки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-vram-zero-1-zero-2-zero-3-fsdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні моделі декомпозиції пам'яті VRAM у парадигмах ZeRO-1, ZeRO-2, ZeRO-3 та FSDP при змішаній точності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематичний порівняльний аналіз моделей та алгоритмів розподіленої обробки
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-allreduce-zero-3-10-16-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам'яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам&#39;яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-etl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок параметрів конвеєра даних (ETL) та аналіз критичного шляху
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-allreduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Розрахунок комунікаційної трудомісткості операцій AllReduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Оцінка часу перекриття у DDP та залишкової відкритої латентності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок та оптимізація споживання статичної відеопам'яті (VRAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="4-etl-ai-distributed-data-parallel">Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах. Конвеєризація обчислень, ETL-процеси для AI, Distributed Data Parallel підходи</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекції є формування у здобувачів вищої освіти системних теоретичних знань і прикладних інженерних компетентностей щодо проектування високопродуктивних розподілених конвеєрів обробки даних та оптимізації процесів паралельного тренування великомасштабних моделей штучного інтелекту. У ході заняття розглядаються апаратні та програмні механізми усунення вузьких місць введення-виведення за рахунок асинхронної конвеєризації етапів вилучення, трансформації та завантаження даних, використання сторінково-зафіксованої пам'яті й прямого доступу DMA. Особлива увага приділяється формальному математичному моделюванню розподілених обчислень, порівняльному аналізу парадигм паралелізму за даними (зокрема модулів DataParallel і DistributedDataParallel), дослідженню алгоритмів просторово-часового суміщення комунікацій і математичних розрахунків, а також технологіям шардингу стану моделі сімейства Zero Redundancy Optimizer.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Здобувачі вищої освіти повинні засвоїти фундаментальні принципи функціонування розподілених конвеєрів обробки інформації, архітектурні відмінності між однопроцесними та багатопроцесними підходами до паралелізму за даними, механізми усунення впливу глобального блокування інтерпретатора Python, а також фізичну сутність роботи апаратно-фіксованої пам'яті Pinned Memory та алгоритмів кільцевої редукції Ring-AllReduce.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти повинні набути навичок аналітичного розрахунку параметрів асинхронних конвеєрів підготовки даних, конфігурування завантажувачів тензорів для ліквідації станів простою обчислювальних ядер, а також розробки програмно-алгоритмічних схем розподіленого масштабування штучного інтелекту з використанням градієнтної бакетизації та паралельних комунікаційних потоків.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Здобувачі мають навчитися диференціювати затримки обчислювального процесу на складові дискового введення-виведення, шинної передачі Host-to-Device та міжвузлового мережевого обміну, аналізувати критичні шляхи виконання конвеєрів для визначення умов досягнення режиму Compute-Bound, а також досліджувати вплив топології комунікаційної мережі на масштабованість розподілених систем.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Студенти повинні вміти критично оцінювати компроміси між обчислювальною потужністю та комунікаційними накладними витратами кластера, обирати оптимальну стратегію розподілу пам'яті між підходами DDP, Pipeline Parallelism та етапами шардингу ZeRO-1/2/3 або Fully Sharded Data Parallel для ефективного навчання моделей надвисокої розмірності за наявних апаратних обмежень.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Архітектурні принципи розподілених пайплайнів та паралелізму даних у штучному інтелекті</h3>
+<ul>
+<li>
+<p>1.1. Системний дисбаланс дискових операцій і тензорних обчислювачів: архітектурна концепція конвеєризації та стадії спеціалізованих ETL-процесів для моделей штучного інтелекту.</p>
+</li>
+<li>
+<p>1.2. Апаратні механізми прямого доступу до пам'яті DMA: організація сторінково-зафіксованої пам'яті (Pinned Memory) та асинхронне копіювання через інтерфейс PCI Express за допомогою незалежних апаратних черг і потоків.</p>
+</li>
+<li>
+<p>1.3. Класифікація парадигм розподіленого тренування нейронних мереж: порівняння паралелізму за даними, тензорного паралелізму та конвеєрного паралелізму; системні обмеження моделі DataParallel, пов'язані з конкуренцією за пам'ять та блокуванням GIL.</p>
+</li>
+<li>
+<p>1.4. Архітектура DistributedDataParallel (DDP): багатопроцесна ізоляція контекстів, розбиття градієнтного простору на бакети (Bucketing) та організація асинхронного перекриття комунікацій обчисленнями зворотного проходу.</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичні моделі конвеєризації, колективних комунікацій та оптимізації ресурсів пам'яті</h3>
+<ul>
+<li>
+<p>2.1. Формалізація багаторівневого обчислювального конвеєра: виведення співвідношень для загального часу виконання, аналіз критичного шляху та критерії переходу в режим обмеження обчисленнями (Compute-Bound).</p>
+</li>
+<li>
+<p>2.2. Математична модель стохастичної оптимізації в середовищі DDP: формальний опис локального розрахунку градієнтів, колективного усереднення та синхронного кроку оптимізатора.</p>
+</li>
+<li>
+<p>2.3. Комунікаційна складність та аналітична оцінка часових затримок колективної операції Ring-AllReduce за моделями Гокні та LogP залежно від розміру градієнтного бакета й топології мережі.</p>
+</li>
+<li>
+<p>2.4. Математичне моделювання споживання пам'яті VRAM у режимі змішаної точності FP16/FP32: аналітичні формули фрагментації станів оптимізатора, градієнтів і параметрів моделі за технологією ZeRO (етапи 1, 2, 3) та FSDP.</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Комплексний інженерний розрахунок параметрів розподіленого навчання</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам'яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері».</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-etl-ai">1.1. Системний дисбаланс дискових операцій і тензорних обчислювачів: архітектурна концепція конвеєризації та ETL-процеси для AI</h3>
+<p>Еволюція високопродуктивних обчислювальних систем у сфері штучного інтелекту характеризується експоненційним зростанням пікової швидкодії апаратних прискорювачів — графічних процесорів (<strong>Graphics Processing Unit, GPU</strong>) та нейропроцесорів (<strong>Neural Processing Unit, NPU</strong>). Архітектури сучасних обчислювальних ядер, таких як тензорні ядра (<strong>Tensor Cores</strong>) або систолічні матричні процесори, оптимізовані для виконання операцій узагальненого матричного множення (<strong>General Matrix Multiply, GEMM</strong>) у форматах низької та змішаної точності (FP16, BF16, FP8, INT8). Проте практична продуктивність розподілених систем глибокого навчання детермінується не лише піковим флопсом обчислювальних модулів, а й загальною пропускною здатністю підсистеми введення-виведення (<strong>I/O Subsystem</strong>), що здійснює доставку вхідних даних від накопичувачів до обчислювальних блоків.</p>
+<p>У процесі тренування моделей глибокого навчання на масштабних наборах даних виникає критичний системний дисбаланс, відомий як <strong>голодування обчислювача (Compute Starvation)</strong>. Цей стан настає тоді, коли апаратні тензорні ядра переходять у режим простою (<strong>GPU Idle</strong>) внаслідок відсутності готових до обробки тензорів у локальній графічній пам'яті (<strong>Video Random Access Memory, VRAM</strong>). Подібна ситуація переводить обчислювальний процес із бажаного стану обмеження обчисленнями (<strong>Compute-Bound</strong>) у вкрай неефективний стан обмеження введенням-виведенням (<strong>I/O-Bound</strong>) або пам'яттю (<strong>Memory-Bound</strong>).</p>
+<p>Для нейтралізації описаного дисбалансу цикл підготовки даних структурується у вигляді спеціалізованого конвеєра <strong>ETL (Extract, Transform, Load)</strong>, оптимізованого під задачі машинного навчання:</p>
+<ol>
+<li>
+<p><strong>Фаза Extract (Вилучення).</strong> Передбачає асинхронне читання неструктурованих даних (зображень, фрагментів аудіо, нестиснених бінарних послідовностей, токенізованого тексту) із локальних накопичувачів NVMe SSD або розподілених об'єктних і файлових сховищ (Ceph, Lustre, NFS, Amazon S3). Головною проблемою цього етапу є накладні витрати операційної системи на операції позиціонування та системні виклики файлового дескриптора при читанні мільйонів дрібних файлів, що вимагає переходу до монолітних контейнерних форматів (TFRecord, WebDataset, HDF5).</p>
+</li>
+<li>
+<p><strong>Фаза Transform (Трансформація).</strong> Охоплює централізовану або розподілену декомпресію сирих даних (наприклад, десеріалізація та декодування JPEG/PNG), числову нормалізацію, приведення до цільових просторових розмірів, векторну токенізацію, а також стохастичну аугментацію даних (випадкові зсуви, обертання, колірні збурення, маскування токенів). Оскільки ці операції історично виконуються центральним процесором (<strong>CPU</strong>) з використанням векторних розширень (AVX-512, NEON), висока дисперсія часу трансформації кожного окремого зразка створює часовий джиттер, що блокує формування пакетів даних.</p>
+</li>
+<li>
+<p><strong>Фаза Load (Завантаження).</strong> Здійснює безпосередню серіалізацію трансформованих об'єктів у багатовимірні тензори заданого розміру батчу <span class="arithmatex">\(B\)</span>, їх упакування у нерозривні блоки системної оперативної пам'яті та подальшу трансляцію через системну шину PCI Express у глобальну пам'ять VRAM прискорювача.</p>
+</li>
+</ol>
+<p>Формально умова безперервного завантаження обчислювального вузла виражається через баланс швидкості генерації даних конвеєром підготовки та швидкості їх утилізації тензорним прискорювачем. Нехай <span class="arithmatex">\(B\)</span> позначає розмір міні-батчу (кількість зразків у пакеті), а <span class="arithmatex">\(S_{\text{sample}}\)</span> — середній інформаційний розмір одного зразка після трансформації (вимірюється у байтах, <span class="arithmatex">\(\text{Б}\)</span>). Тоді швидкість надходження інформації <span class="arithmatex">\(\Phi_{\text{ingest}}\)</span> (байт за секунду, <span class="arithmatex">\(\text{Б/с}\)</span>) визначається співвідношенням:</p>
+<div class="arithmatex">\[\Phi_{\text{ingest}} = \frac{B \cdot S_{\text{sample}}}{T_{\text{extract}} + T_{\text{transform}} + T_{\text{load}}}\]</div>
+<p>де <span class="arithmatex">\(T_{\text{extract}}\)</span> позначає фізичний час зчитування <span class="arithmatex">\(B\)</span> зразків із накопичувача (вимірюється у секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(T_{\text{transform}}\)</span> позначає сумарний процесорний час виконання декодування та аугментації для <span class="arithmatex">\(B\)</span> зразків (<span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(T_{\text{load}}\)</span> позначає часову затримку безпосередньої передачі сформованого тензора батчу в пам'ять VRAM через системну шину (<span class="arithmatex">\(\text{с}\)</span>).</p>
+<p>Своєю чергою, пропускна здатність етапу обчислень <span class="arithmatex">\(\Phi_{\text{compute}}\)</span> (<span class="arithmatex">\(\text{Б/с}\)</span>) визначається тривалістю виконання прямого (<strong>Forward Pass</strong>) та зворотного (<strong>Backward Pass</strong>) проходів нейронної мережі:</p>
+<div class="arithmatex">\[\Phi_{\text{compute}} = \frac{B \cdot S_{\text{sample}}}{T_{\text{compute}}}\]</div>
+<p>де <span class="arithmatex">\(T_{\text{compute}}\)</span> позначає фізичний час виконання обчислень на GPU для даного батчу (<span class="arithmatex">\(\text{с}\)</span>).</p>
+<p>Для запобігання деградації продуктивності системи та виникнення простоїв обчислювальних ядер необхідно забезпечити виконання фундаментальної нерівності пропускної здатності конвеєра:</p>
+<div class="arithmatex">\[\Phi_{\text{ingest}} \ge \Phi_{\text{compute}} \iff T_{\text{compute}} \ge T_{\text{extract}} + T_{\text{transform}} + T_{\text{load}}\]</div>
+<p>У разі послідовного синхронного виконання всіх операцій дана умова практично ніколи не виконується для складних моделей даних, що зумовлює необхідність використання концепції <strong>асинхронного конвеєра обчислень</strong>. Конвеєризація передбачає просторово-часове рознесення фаз: доки GPU обчислює крок навчання для батчу з індексом <span class="arithmatex">\(k\)</span>, ресурси CPU виконують трансформацію батчу <span class="arithmatex">\(k+1\)</span>, підсистема введення-виведення вилучає з накопичувача батч <span class="arithmatex">\(k+2\)</span>, а незалежні канали шини передають попередньо підготовлений батч в пам'ять графічного адаптера.</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Storage_Layer [Рівень персистентного зберігання]
+        DS1[Розподілене сховище / NVMe масив]
+    end
+
+    subgraph Host_CPU_Pipeline [Хост-процесор: Багатопотоковий ETL-конвеєр]
+        W1[Worker Process 1: Читання та декодування]
+        W2[Worker Process 2: Читання та декодування]
+        W3[Worker Process N: Читання та декодування]
+        AUG[Векторизована аугментація CPU/DALI]
+        PIN[Буферизація у сторінково-зафіксованій пам'яті]
+    end
+
+    subgraph Bus_Subsystem [Підсистема комутації]
+        DMA[Контролер прямого доступу DMA через PCIe/NVLink]
+    end
+
+    subgraph Device_VRAM_Execution [Графічний прискорювач GPU]
+        DB[Подвійний вхідний буфер VRAM]
+        FWD[Прямий прохід / Forward Pass]
+        BWD[Зворотний прохід / Backward Pass]
+        OPT[Оновлення параметрів / Optimizer Step]
+    end
+
+    DS1 --&gt;|Асинхронний I/O потік| W1
+    DS1 --&gt;|Асинхронний I/O потік| W2
+    DS1 --&gt;|Асинхронний I/O потік| W3
+    W1 --&gt; AUG
+    W2 --&gt; AUG
+    W3 --&gt; AUG
+    AUG --&gt;|Формування пакетів| PIN
+    PIN --&gt;|Асинхронний трансфер| DMA
+    DMA --&gt;|CUDA Stream копіювання| DB
+    DB --&gt; FWD
+    FWD --&gt; BWD
+    BWD --&gt; OPT</code></pre>
+<h3 id="12-dma-pinned-memory">1.2. Апаратні механізми прямого доступу до пам'яті DMA: організація Pinned Memory та асинхронні черги</h3>
+<p>Фізична трансляція даних між системною пам'яттю хоста (<strong>Host RAM</strong>) та локальною пам'яттю прискорювача (<strong>Device VRAM</strong>) є суттєвим латентним фактором. За замовчуванням операційна система виділяє віртуальну пам'ять у режимі сторінкової організації зі змінним розміщенням (<strong>Pageable Memory</strong>). Фізичні сторінки такої пам'яті можуть бути в будь-який момент переміщені підсистемою керування пам'яттю ядра операційної системи, скинуті на системний накопичувач у swap-простір або дефрагментовані. </p>
+<p>Через це контролер прискорювача GPU не може безпосередньо взаємодіяти з адресами сторінкової пам'яті, оскільки фізична адреса масиву під час трансляції може раптово змінитись. У разі запиту на передачу стандартного буфера драйвер GPU змушений спочатку виділити внутрішній службовий буфер у фізично заблокованій пам'яті, виконати синхронне процесорне копіювання даних із користувацького простору в службовий, і лише після цього ініціювати трансляцію шиною. Це призводить до подвійного копіювання даних та непродуктивних втрат циклів CPU.</p>
+<p>Для вирішення цієї проблеми застосовується <strong>сторінково-зафіксована пам'ять (Pinned / Page-locked Memory)</strong>. Програмний виклик (наприклад, <code>cudaHostAlloc</code> або параметр <code>pin_memory=True</code> у високорівневих завантажувачах) інструктує диспетчер віртуальної пам'яті ядра операційної системи про фіксацію відповідного діапазону віртуальних адрес за конкретними фізичними сторінками оперативної пам'яті із прямою забороною їх вивантаження у файл підкачки на весь час існування дескриптора.</p>
+<p>Фіксація сторінок уможливлює використання апаратного контролера <strong>прямого доступу до пам'яті (Direct Memory Access, DMA)</strong>. Контролер DMA інтегрований у периферійний пристрій або кореневий комплекс шини <strong>PCI Express (PCIe Root Complex)</strong>. Отримавши фізичний дескриптор сторінок, контролер DMA бере на себе повне керування транзакціями передачі блоків даних через шину PCIe, вивільняючи центральний процесор для паралельного виконання завдань трансформації наступних порцій даних.</p>
+<p>Час безпосередньої апаратної передачі тензора через шину PCIe за допомогою DMA описується лінійною залежністю:</p>
+<div class="arithmatex">\[T_{\text{DMA}} = \alpha_{\text{PCIe}} + \frac{M_{\text{tensor}}}{\beta_{\text{PCIe}}}\]</div>
+<p>де <span class="arithmatex">\(\alpha_{\text{PCIe}}\)</span> позначає латентність ініціалізації транзакції контролером DMA (вимірюється у секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(M_{\text{tensor}}\)</span> позначає фізичний обсяг переданого тензора (байти, <span class="arithmatex">\(\text{Б}\)</span>); <span class="arithmatex">\(\beta_{\text{PCIe}}\)</span> позначає реальну пропускну здатність шини інтерфейсу PCIe обраного покоління та конфігурації смуг (байт за секунду, <span class="arithmatex">\(\text{Б/с}\)</span>).</p>
+<p>На апаратному рівні сучасні прискорювачі мають окремі фізичні рушії копіювання (<strong>Copy Engines / DMA Engines</strong>) та обчислювальні рушії (<strong>Compute Engines</strong>), здатні функціонувати одночасно та незалежно. Програмна координація цих ресурсів реалізується через механізм незалежних апаратних черг команд — <strong>CUDA-потоків (CUDA Streams)</strong>. Запуск операції передачі пам'яті у неблокуючому асинхронному режимі (<code>cudaMemcpyAsync</code>) в окремому комунікаційному потоці дозволяє повністю сховати час <span class="arithmatex">\(T_{\text{DMA}}\)</span> за часом виконання обчислювальних ядер у паралельному обчислювальному потоці.</p>
+<p>Для безперебійного живлення цього механізму застосовується системна технологія <strong>подвійної або потрійної буферизації (Double/Triple Buffering)</strong>. У графічній пам'яті виділяються два циклічні буфери: доки перший буфер <span class="arithmatex">\(\text{Buf}_A\)</span> бере участь у розрахунках прямого проходу ядра, у другий буфер <span class="arithmatex">\(\text{Buf}_B\)</span> контролер DMA здійснює фонове завантаження наступного міні-батчу. На наступному кроці ітерації вказівники на буфери атомарно міняються місцями без виклику блокуючих бар'єрів синхронізації.</p>
+<pre class="mermaid"><code>gantt
+    dateFormat X
+    axisFormat %s
+    title Часова діаграма конвеєра обробки даних (Подвійна буферизація та DMA)
+
+    section CPU Workers
+    Генерація Батчу 1 (Extract+Transform) :active, c1, 0, 10
+    Генерація Батчу 2 (Extract+Transform) :active, c2, 10, 20
+    Генерація Батчу 3 (Extract+Transform) :active, c3, 20, 30
+    Генерація Батчу 4 (Extract+Transform) :active, c4, 30, 40
+
+    section DMA Transfer (PCIe)
+    Трансфер Батчу 1 (H2D)                :crit, d1, 10, 14
+    Трансфер Батчу 2 (H2D)                :crit, d2, 20, 24
+    Трансфер Батчу 3 (H2D)                :crit, d3, 30, 34
+
+    section GPU Compute Engine
+    Обчислення Батчу 1 (Forward+Backward) :done, g1, 14, 25
+    Обчислення Батчу 2 (Forward+Backward) :done, g2, 25, 36
+    Обчислення Батчу 3 (Forward+Backward) :done, g3, 36, 47</code></pre>
+<h3 id="13-dataparallel">1.3. Класифікація парадигм розподіленого тренування нейронних мереж та системні обмеження DataParallel</h3>
+<p>Зі збільшенням обсягів навчальних вибірок та переходом до моделей архітектури трансформерів із мільярдами параметрів обчислювальні вимоги перевищують ресурсні ліміти будь-якого автономного сервера. Це обумовлює необхідність декомпозиції обчислювального процесу між багатьма вузлами кластера. </p>
+<p>У системній архітектурі штучного інтелекту виокремлюють три фундаментальні парадигми розподіленого навчання:</p>
+<ol>
+<li>
+<p><strong>Паралелізм за даними (Data Parallelism).</strong> Модель повністю реплікується на кожному доступному обчислювальному вузлі (або прискорювачі). Кожна репліка одночасно обробляє неперетинну частину загального міні-батчу (так званий локальний підбатч). Для забезпечення математичної еквівалентності класичному навчанню локальні градієнти моделі усереднюються за всіма вузлами перед виконанням коригувального кроку оптимізатора.</p>
+</li>
+<li>
+<p><strong>Паралелізм за моделлю / Тензорний паралелізм (Model / Tensor Parallelism).</strong> Застосовується у випадках, коли параметри окремого шару нейромережі або внутрішні матриці ваг (наприклад, проекції механізму Self-Attention) перевищують фізичний обсяг VRAM одного прискорювача. У цьому випадку окремі вагові матриці розщеплюються за рядками чи стовпчиками між різними GPU, що потребує частих колективних обмінів проміжними активаціями безпосередньо всередині кожного шару мережі.</p>
+</li>
+<li>
+<p><strong>Конвеєрний паралелізм (Pipeline Parallelism).</strong> Передбачає розбиття послідовності шарів нейронної мережі на окремі вертикальні функціональні сегменти (стадії), кожен із яких закріплюється за окремим фізичним вузлом. Міні-батч розбивається на послідовність дрібніших мікро-батчів, які просуваються конвеєром прискорювачів крок за кроком, мінімізуючи простої устаткування (бульбашки конвеєра, <strong>Pipeline Bubbles</strong>).</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    Paradigms["Парадигми розподіленого навчання AI"]
+
+    DP["Паралелізм за даними (Data Parallelism)"]
+    MP["Паралелізм за моделлю (Model Parallelism)"]
+
+    DP_Classic["Класичний Data Parallel"]
+    DP_Sharded["Шардований Data Parallel (ZeRO/FSDP)"]
+
+    MP_Tensor["Тензорний паралелізм (Intra-layer / Megatron-LM)"]
+    MP_Pipeline["Конвеєрний паралелізм (Inter-layer / GPipe)"]
+
+    Paradigms --&gt; DP
+    Paradigms --&gt; MP
+
+    DP --&gt; DP_Classic
+    DP --&gt; DP_Sharded
+
+    MP --&gt; MP_Tensor
+    MP --&gt; MP_Pipeline</code></pre>
+<p>Історично першим підходом до паралелізму за даними у фреймворку PyTorch була реалізація модуля <code>torch.nn.DataParallel</code> (<strong>DP</strong>). Проте архітектура DP володіє критичними системними вадами, через які вона вважається застарілою і непридатною для високопродуктивних середовищ:</p>
+<ul>
+<li>
+<p><strong>Однопроцесна багатопотокова модель.</strong> Модуль DP функціонує в межах одного процесу операційної системи, породжуючи окремі потоки виконання для кожного GPU. Через наявність у стандартному інтерпретаторі CPython механізму <strong>Global Interpreter Lock (GIL)</strong>, лише один потік може виконувати байткод у будь-який момент часу. Це викликає жорстку системну конкуренцію потоків, знецінюючи багатоядерну структуру хоста та створюючи серйозні затримки при диспетчеризації команд у графічні драйвери.</p>
+</li>
+<li>
+<p><strong>Асиметричне навантаження майстер-вузла (Master GPU Bottleneck).</strong> У схемі DP один із прискорювачів призначається головним (<strong>Master Device</strong>). Цей прискорювач змушений самостійно приймати весь початковий міні-батч, нарізати його на підбатчі, здійснювати явне копіювання фрагментів на решту GPU через шину PCIe, а на зворотному проході — приймати всі локальні градієнти, виконувати операцію централізованої редукції, модифікувати глобальні ваги моделі та повторно розсилати оновлені ваги (<strong>Broadcast</strong>) всім іншим пристроям. </p>
+</li>
+<li>
+<p><strong>Нерівномірне споживання пам'яті.</strong> Через необхідність акумуляції градієнтів та активацій від усіх інших прискорювачів майстер-GPU використовує значно більший обсяг VRAM, ніж інші пристрої. Оскільки граничний розмір батчу обмежений пристроєм із найменшим доступним залишком пам'яті, значна частина ресурсів інших GPU залишається недовантаженою.</p>
+</li>
+<li>
+<p><strong>Неможливість міжвузлового масштабування.</strong> Структура <code>DataParallel</code> фундаментально прив'язана до адресного простору одного вузла і не підтримує кластерні мережеві комунікації через стандартизовані мережеві інтерфейси InfiniBand або RoCE.</p>
+</li>
+</ul>
+<h3 id="14-distributeddataparallel">1.4. Архітектура DistributedDataParallel: багатопроцесна ізоляція, бакетизація та перекриття комунікацій</h3>
+<p>Сучасним стандартом масштабування паралелізму за даними є підхід <strong>DistributedDataParallel (DDP)</strong>. Архітектура DDP базується на парадигмі <strong>SPMP (Single Program Multiple Processes)</strong>: на кожному доступному графічному прискорювачі запускається окремий, повністю ізольований процес операційної системи, який володіє власним локальним інтерпретатором Python та виділеним адресним простором.</p>
+<p>Такий підхід фундаментально усуває вплив Global Interpreter Lock, оскільки кожен процес взаємодіє зі своїм прискорювачем паралельно та без блокувань з боку сусідніх процесів. Кожен процес містить ідентичну копію параметрів нейромережі та локальний оптимізатор. Для підтримки повної математичної синхронності ваг у часі процеси повинні гарантувати абсолютно однаковий початковий стан ваг <span class="arithmatex">\(\theta^{(0)}\)</span> та ідентичність градієнтів після виконання зворотного проходу.</p>
+<p>Для масштабованого обміну градієнтами DDP використовує операцію кільцевої редукції <strong>Ring-AllReduce</strong>, реалізовану на базі високооптимізованих комунікаційних бібліотек (наприклад, NVIDIA Collective Communications Library, <strong>NCCL</strong>). Проте наївна реалізація, за якої для градієнта кожного тензора параметрів ініціюється окремий мережевий виклик, є неефективною: для сучасних мереж із сотнями або тисячами шарів час ініціалізації та латентність мережевих інтерфейсів призводять до катастрофічного простою каналу зв'язку.</p>
+<p>DDP вирішує цю проблему за допомогою механізму <strong>бакетизації градієнтів (Gradient Bucketing)</strong>. Усі параметри моделі реєструються у зворотному порядку їхнього проходження під час Backward Pass. У системній пам'яті формуються неперервні монолітні буфери — <strong>бакети (Buckets)</strong> фіксованого розміру (типово 25 МБ). </p>
+<p>Коли процес обчислює локальні градієнти певного шару, вони копіюються у відповідний бакет. Щойно сумарний розмір градієнтів у бакеті досягає ліміту, DDP негайно ініціює асинхронну операцію <code>AllReduce</code> для всього бакета через мережеву карту за допомогою технології <strong>GPUDirect RDMA</strong> (прямий обмін між графічними картами в обхід пам'яті хоста).</p>
+<pre class="mermaid"><code>gantt
+    dateFormat X
+    axisFormat %s
+    title Асинхронне перекриття обчислень та комунікацій у DDP
+
+    section Обчислення на GPU (Backward Pass)
+    Градієнти Шару N (Бакет 2)   :active, b1, 0, 10
+    Градієнти Шару N-1 (Бакет 1) :active, b2, 10, 20
+    Градієнти Шару 1 (Бакет 1)   :active, b3, 20, 28
+
+    section Мережеві комунікації NCCL
+    AllReduce Бакет 2 (Шар N)    :crit, c1, 10, 22
+    AllReduce Бакет 1 (Шари N-1..1):crit, c2, 28, 40
+
+    section Оновлення ваг (Optimizer)
+    Крок оптимізатора            :done, op, 40, 46</code></pre>
+<p>Головна архітектурна перевага бакетизації полягає в <strong>асинхронному суміщенні (Overlapping)</strong> обчислень і передачі: операція мережевого усереднення градієнтів бакета <span class="arithmatex">\(k\)</span> виконується паралельно з обчисленням градієнтів для попередніх шарів мережі, що наповнюють бакет <span class="arithmatex">\(k-1\)</span>. Завдяки цьому комунікаційні витрати практично повністю приховуються, що забезпечує лінійний коефіцієнт прискорення процесу навчання у великих кластерних системах.</p>
+<hr />
+<h3 id="_4">Систематизація та порівняльний аналіз архітектур розподіленої обробки</h3>
+<p>Для вибору оптимального інженерного рішення нижче наведено структуроване порівняння сучасних методів і технологій розпаралелювання моделей штучного інтелекту.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурна технологія</th>
+<th style="text-align: left;">Модель виконання процесів</th>
+<th style="text-align: left;">Механізм синхронізації станів</th>
+<th style="text-align: left;">Витрати пам'яті VRAM на вузол</th>
+<th style="text-align: left;">Масштабованість за вузлами кластера</th>
+<th style="text-align: left;">Вплив Global Interpreter Lock (GIL)</th>
+<th style="text-align: left;">Перекриття обчислень і зв'язку</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PyTorch DataParallel (DP)</strong></td>
+<td style="text-align: left;">Однопроцесна, багатопотокова</td>
+<td style="text-align: left;">Централізована редукція на майстер-GPU</td>
+<td style="text-align: left;">Високі: повне дублювання ваг і оптимізатора плюс буфери редукції</td>
+<td style="text-align: left;">Неможлива (суворо один вузол)</td>
+<td style="text-align: left;">Критичний: жорстка серіалізація потоків</td>
+<td style="text-align: left;">Відсутнє: виконання є повністю синхронним і послідовним</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Distributed Data Parallel (DDP)</strong></td>
+<td style="text-align: left;">Багатопроцесна (SPMP, процес на кожен GPU)</td>
+<td style="text-align: left;">Кільцева редукція <code>Ring-AllReduce</code> через бакети</td>
+<td style="text-align: left;">Середні: повне дублювання ваг, градієнтів та станів оптимізатора (<span class="arithmatex">\(16\vert\Psi\vert\)</span>)</td>
+<td style="text-align: left;">Висока: практично лінійне масштабування на сотні GPU</td>
+<td style="text-align: left;">Відсутній: процеси володіють ізольованими просторами</td>
+<td style="text-align: left;">Максимальне: комунікація бакетів прихована за зворотним проходом</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ZeRO-Stage 1</strong></td>
+<td style="text-align: left;">Багатопроцесна із шардингом станів</td>
+<td style="text-align: left;">Кільцева редукція градієнтів, трансляція оновлень</td>
+<td style="text-align: left;">Помірні: параметри і градієнти дубльовані, стан оптимізатора розбито на <span class="arithmatex">\(P\)</span> частин</td>
+<td style="text-align: left;">Висока: стабільна підтримка масштабних кластерів</td>
+<td style="text-align: left;">Відсутній: повна ізоляція середовищ</td>
+<td style="text-align: left;">Високе: суміщення редукції градієнтів із наступними кроками</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ZeRO-Stage 2</strong></td>
+<td style="text-align: left;">Багатопроцесна із шардингом градієнтів</td>
+<td style="text-align: left;">Операція <code>Reduce-Scatter</code> для градієнтів</td>
+<td style="text-align: left;">Низькі: параметри дубльовані, градієнти та оптимізатор шардовані на <span class="arithmatex">\(P\)</span> вузлів</td>
+<td style="text-align: left;">Дуже висока: значне вивільнення VRAM для збільшення батчу</td>
+<td style="text-align: left;">Відсутній: ізольовані системні процеси</td>
+<td style="text-align: left;">Високе: асинхронна агрегація градієнтів через бакети</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ZeRO-Stage 3 / FSDP</strong></td>
+<td style="text-align: left;">Багатопроцесна з повною декомпозицією</td>
+<td style="text-align: left;"><code>All-Gather</code> перед прямим/зворотним проходом, <code>Reduce-Scatter</code> після</td>
+<td style="text-align: left;">Мінімальні: повне шардування ваг, градієнтів та оптимізатора (<span class="arithmatex">\(16\vert\Psi\vert/P\)</span>)</td>
+<td style="text-align: left;">Екстремальна: дозволяє навчати моделі з сотнями мільярдів параметрів</td>
+<td style="text-align: left;">Відсутній: повна ізоляція процесів</td>
+<td style="text-align: left;">Середнє/Високе: вимагає випереджального отримання ваг (Prefetch)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pipeline Parallelism</strong></td>
+<td style="text-align: left;">Багатопроцесна з конвеєризацією шарів</td>
+<td style="text-align: left;">Точкові передачі активацій і градієнтів (P2P)</td>
+<td style="text-align: left;">Дуже низькі: вузол зберігає ваги лише призначених йому шарів</td>
+<td style="text-align: left;">Висока: утилізує кластери зі специфічними повільними інтерконектами</td>
+<td style="text-align: left;">Відсутній: автономні процеси на стадіях</td>
+<td style="text-align: left;">Залежить від кількості мікро-батчів у конвеєрі</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> 
+Поширеним хибним судженням серед інженерів-початківців є переконання, що виділення більшої кількості потоків завантажувача даних (наприклад, встановлення екстремально високих значень параметра <code>num_workers</code> у середовищі PyTorch — 32, 64 або більше) гарантовано ліквідує простій графічного прискорювача. </p>
+<p>На практиці кожен додатковий процес-воркер є окремим форком основного процесу в операційній системі Linux. Надмірне збільшення кількості воркерів призводить до вибухового зростання накладних витрат ядра ОС на перемикання контексту (<strong>Context Switching</strong>), деградації продуктивності дискової підсистеми через виникнення конкуренції за випадкове читання (<strong>Disk Thrashing</strong>) та вичерпання дескрипторів розділюваної пам'яті (<strong>Shared Memory <code>/dev/shm</code></strong>). Якщо час затримки при міжпроцесній передачі тензора через чергу IPC починає перевищувати корисний час його генерації, спостерігається парадоксальний ефект: загальна пропускна здатність конвеєра різко падає, а графічний процесор простоює значно довше, ніж при помірній кількості воркерів (яка зазвичай має дорівнювати кількості фізичних ядер CPU, виділених на один GPU).</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> 
+При побудові розподіленого пайплайна на базі підходу DDP для тренування моделі розмірністю <span class="arithmatex">\(|\Psi| = 10^9\)</span> параметрів у режимі половинної точності FP16 інженер встановив розмір градієнтного бакета, що дорівнює сумарному розміру всієї моделі (тобто весь градієнтний масив зливається в один гігантський бакет). Як це системне рішення вплине на час ітерації навчання та ефективність утилізації ресурсів мережевого адаптера і GPU?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p>Встановлення розміру бакета, що дорівнює повному обсягу градієнтів усієї моделі, повністю нівелює головну архітектурну перевагу підходу DistributedDataParallel — <strong>асинхронне просторово-часове перекриття обчислень та мережевих комунікацій</strong>.</p>
+<ol>
+<li><strong>Аналітичне обґрунтування.</strong> У режимі FP16 кожен параметр займає <span class="arithmatex">\(2\text{ байти}\)</span>. Таким чином, сумарний розмір градієнтного вектора становить:</li>
+</ol>
+<p><span class="arithmatex">\(M_{\text{grad}} = 10^9 \cdot 2\text{ байти} = 2 \cdot 10^9\text{ байтів} \approx 2\text{ ГБ}\)</span></p>
+<p>За стандартної бакетизації (розмір бакета <span class="arithmatex">\(B_{\text{size}} \approx 25\text{ МБ}\)</span>) загальний градієнтний простір розбивається приблизно на 80 незалежних блоків. Як тільки обчислюються градієнти останніх шарів нейромережі (які у зворотному проході обраховуються першими), перший бакет розміром 25 МБ негайно передається контролеру мережі для виконання операції <code>Ring-AllReduce</code>. Поки мережа утилізує комунікаційні канали, тензорні ядра GPU продовжують обчислювати градієнти для попередніх шарів.</p>
+<ol>
+<li>
+<p><strong>Наслідки об'єднання в один бакет:</strong></p>
+</li>
+<li>
+<p>Операція синхронізації градієнтів взагалі не зможе розпочатися доти, доки зворотний прохід не досягне найпершого шару вхідних даних і не завершить розрахунок абсолютно всіх градієнтів мережі.</p>
+</li>
+<li>
+<p>Графічний процесор після закінчення Backward Pass буде повністю заблокований і простоюватиме протягом усього часу, необхідного мережевому інтерфейсу для виконання редукції масиву обсягом 2 ГБ.</p>
+</li>
+<li>
+<p>Виникає часова серіалізація: загальний час фази зворотного проходу збільшиться з <span class="arithmatex">\(\max(T_{\text{backward}}, T_{\text{comm}})\)</span> до суми <span class="arithmatex">\(T_{\text{backward}} + T_{\text{comm}}\)</span>, що спричинить значне уповільнення кожної ітерації навчання.</p>
+</li>
+<li>
+<p><strong>Аналіз вибору розміру бакета:</strong></p>
+</li>
+<li>
+<p>Надмірно великий бакет веде до повної втрати перекриття обчислень і комунікацій.</p>
+</li>
+<li>
+<p>Надмірно малий бакет (наприклад, окремо під кожен дрібний шар вагою у кілька кілобайт) веде до високих накладних витрат драйвера на ініціалізацію численних операцій передачі, через що пропускна здатність мережі не досягатиме стану насичення. Оптимальним є компромісне значення в діапазоні <span class="arithmatex">\(25\text{--}50\text{ МБ}\)</span>.</p>
+</li>
+</ol>
+</details>
+<hr />
+<h3 id="_5">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проаналізуйте системні компроміси між використанням оперативної пам'яті хоста та фізичним лімітом пам'яті графічного адаптера при роботі з великими масивами даних. Дослідіть, чому механізм сторінкової фіксації Pinned Memory, оптимізуючи швидкість шинного обміну через механізми прямого доступу DMA, за умови надмірного виділення може призвести до дестабілізації підсистем операційної системи внаслідок дефіциту вільної кеш-пам'яті сторінок.</p>
+</li>
+<li>
+<p>Порівняйте поведінку комунікаційного середовища при масштабуванні класичного DistributedDataParallel та Fully Sharded Data Parallel (ZeRO-3). Зверніть увагу на те, що повне усунення дублювання станів моделі у FSDP вивільняє ресурси VRAM ціною збільшення сумарного комунікаційного трафіку рівно у півтора рази внаслідок необхідності регулярної збірки параметрів (<code>All-Gather</code>) перед виконанням прямого та зворотного проходів.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21-etl">2.1. Формалізація багатостадійного конвеєра обробки даних (ETL): аналіз критичного шляху та асимптотичної продуктивності</h3>
+<p>Для формального опису динаміки проходження інформаційних масивів крізь розподілений конвеєр підготовки даних та навчання моделей штучного інтелекту введемо дискретний метричний простір стадій обробки. Нехай навчальна вибірка загальним обсягом <span class="arithmatex">\(N\)</span> екземплярів квантується на множину з <span class="arithmatex">\(N_b\)</span> міні-батчів фіксованого розміру <span class="arithmatex">\(B\)</span>:</p>
+<div class="arithmatex">\[N_b = \left\lceil \frac{N}{B} \right\rceil\]</div>
+<p>де <span class="arithmatex">\(N\)</span> позначає загальну кількість елементів у вибірці даних (ціле додатне число, безрозмірна величина); <span class="arithmatex">\(B\)</span> позначає розмір міні-батчу, тобто кількість окремих зразків, що формують один узгоджений пакет для ітерації оптимізації (ціле додатне число, безрозмірна величина); <span class="arithmatex">\(N_b\)</span> позначає загальну кількість дискретних пакетів, необхідних для завершення однієї епохи навчання (ціле додатне число, безрозмірна величина).</p>
+<p>Розглянемо класичну послідовну реалізацію циклу завантаження та виконання, у якій кожна ітерація розпадається на <span class="arithmatex">\(S = 4\)</span> послідовні фази: вилучення даних зі сховища (<span class="arithmatex">\(\text{Extract}\)</span>, стадія <span class="arithmatex">\(s_1\)</span>), виконання процесорних аугментацій та перетворень (<span class="arithmatex">\(\text{Transform}\)</span>, стадія <span class="arithmatex">\(s_2\)</span>), асинхронне копіювання тензорів через системну шину з оперативної пам'яті хоста до відеопам'яті (<span class="arithmatex">\(\text{H2D / Load}\)</span>, стадія <span class="arithmatex">\(s_3\)</span>) та безпосередній прямий і зворотний прохід нейромережі на тензорних ядрах прискорювача (<span class="arithmatex">\(\text{Compute}\)</span>, стадія <span class="arithmatex">\(s_4\)</span>). </p>
+<p>Загальний час послідовного виконання <span class="arithmatex">\(T_{\text{seq}}\)</span> обчислюється як сума тривалостей усіх фаз для кожного міні-батчу:</p>
+<div class="arithmatex">\[T_{\text{seq}} = \sum_{k=1}^{N_b} \left( \tau_{\text{ext}}^{(k)} + \tau_{\text{trans}}^{(k)} + \tau_{\text{h2d}}^{(k)} + \tau_{\text{comp}}^{(k)} \right)\]</div>
+<p>де <span class="arithmatex">\(\tau_{\text{ext}}^{(k)}\)</span> позначає фізичний час зчитування <span class="arithmatex">\(k\)</span>-го міні-батчу з дискового або мережевого масиву (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(\tau_{\text{trans}}^{(k)}\)</span> позначає тривалість програмного декодування, нормалізації та аугментації зразків <span class="arithmatex">\(k\)</span>-го батчу на центральному процесорі (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(\tau_{\text{h2d}}^{(k)}\)</span> позначає затримку фізичного передавання даних через шину PCI Express від пам'яті хоста до VRAM прискорювача (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(\tau_{\text{comp}}^{(k)}\)</span> позначає сумарну тривалість обчислення прямого та зворотного проходів для <span class="arithmatex">\(k\)</span>-го батчу безпосередньо на прискорювачі (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>).</p>
+<p>При переході до конвеєрної схеми з глибиною буферизації, еквівалентною кількості стадій <span class="arithmatex">\(S\)</span>, стадії виконуються паралельно для різних послідовних міні-батчів. Виведемо аналітичну модель тривалості конвеєрного виконання <span class="arithmatex">\(T_{\text{pipe}}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Визначення латентності заповнення):} &amp; \quad T_{\text{fill}} = \sum_{i=1}^{S-1} \tau_i = \tau_{\text{ext}} + \tau_{\text{trans}} + \tau_{\text{h2d}} \\
+\text{Етап 2 (Фаза стаціонарної роботи конвеєра):} &amp; \quad T_{\text{steady}} = (N_b - 1) \cdot \tau_{\max} = (N_b - 1) \cdot \max_{1 \le i \le S} \{\tau_i\} \\
+\text{Етап 3 (Фаза спустошення конвеєра):} &amp; \quad T_{\text{drain}} = \tau_S = \tau_{\text{comp}} \\
+\text{Етап 4 (Повна тривалість конвеєрного циклу):} &amp; \quad T_{\text{pipe}} = T_{\text{fill}} + T_{\text{steady}} + T_{\text{drain}}
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(\tau_{\max} = \max(\tau_{\text{ext}}, \tau_{\text{trans}}, \tau_{\text{h2d}}, \tau_{\text{comp}})\)</span> визначає тривалість критичного шляху конвеєра, тобто затримку найповільнішої стадії (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>).</p>
+<p>Коефіцієнт прискорення конвеєризації <span class="arithmatex">\(S_{\text{pipe}}(N_b)\)</span> визначається відношенням послідовного часу виконання до конвеєрного:</p>
+<div class="arithmatex">\[S_{\text{pipe}}(N_b) = \frac{T_{\text{seq}}}{T_{\text{pipe}}} = \frac{N_b \sum_{i=1}^S \tau_i}{\sum_{i=1}^{S-1} \tau_i + (N_b - 1) \cdot \tau_{\max} + \tau_S}\]</div>
+<p>Дослідимо асимптотичну поведінку функції прискорення при необмеженому збільшенні розміру навчальної вибірки (<span class="arithmatex">\(N_b \to \infty\)</span>):</p>
+<div class="arithmatex">\[\lim_{N_b \to \infty} S_{\text{pipe}}(N_b) = \lim_{N_b \to \infty} \frac{\sum_{i=1}^S \tau_i}{\frac{1}{N_b}\sum_{i=1}^{S-1} \tau_i + \frac{N_b - 1}{N_b} \tau_{\max} + \frac{1}{N_b}\tau_S} = \frac{\tau_{\text{ext}} + \tau_{\text{trans}} + \tau_{\text{h2d}} + \tau_{\text{comp}}}{\max(\tau_{\text{ext}}, \tau_{\text{trans}}, \tau_{\text{h2d}}, \tau_{\text{comp}})}\]</div>
+<p>Критерій переходу обчислювальної системи в режим повного насичення тензорних ядер (<strong>Compute-Bound</strong>) формулюється як мінімізація простоїв стадії <span class="arithmatex">\(s_4\)</span>:</p>
+<div class="arithmatex">\[\tau_{\text{comp}} \ge \max(\tau_{\text{ext}}, \tau_{\text{trans}}, \tau_{\text{h2d}})\]</div>
+<p>Якщо дана нерівність виконується, то <span class="arithmatex">\(\tau_{\max} = \tau_{\text{comp}}\)</span>. У такому випадку апаратні потужності GPU утилізуються на <span class="arithmatex">\(100\%\)</span>, оскільки корисні обчислення перекривають усі накладні витрати передавання та підготовки даних.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; ReadStorage: Ініціалізація батчу k
+    ReadStorage --&gt; TransformCPU: Зчитування завершено (tau_ext)
+    TransformCPU --&gt; PinnedHostMem: Аугментація виконана (tau_trans)
+    PinnedHostMem --&gt; DMAQueue: Сторінки пам'яті зафіксовано
+    DMAQueue --&gt; VRAMBuffer: H2D передача через PCIe (tau_h2d)
+
+    state GPU_Execution {
+        [*] --&gt; ForwardPass
+        ForwardPass --&gt; BackwardPass: Розрахунок активацій
+        BackwardPass --&gt; ReadyToOptimize: Розрахунок локальних grad
+    }
+
+    VRAMBuffer --&gt; GPU_Execution: Буфер міні-батчу заповнено
+    ReadyToOptimize --&gt; [*]: Крок оновлення параметрів (tau_comp)</code></pre>
+<h3 id="22-distributed-data-parallel">2.2. Математична модель стохастичної оптимізації у парадигмі Distributed Data Parallel</h3>
+<p>Розглянемо математичну модель паралелізму за даними, розгорнуту на множині з <span class="arithmatex">\(P\)</span> фізичних обчислювальних вузлів (процесів). Нехай параметри нейронної мережі описуються вектором ваг <span class="arithmatex">\(\theta \in \mathbb{R}^{|\Psi|}\)</span>, де <span class="arithmatex">\(|\Psi|\)</span> позначає загальну кількість скалярних параметрів моделі. Загальний масив даних <span class="arithmatex">\(\mathcal{D}\)</span> розбивається на <span class="arithmatex">\(P\)</span> взаємно неперетинних підмножин <span class="arithmatex">\(\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{D}_P\)</span>, таких що:</p>
+<div class="arithmatex">\[\bigcup_{p=1}^P \mathcal{D}_p = \mathcal{D}, \quad \text{при цьому} \quad \mathcal{D}_i \cap \mathcal{D}_j = \emptyset \quad \forall i \ne j\]</div>
+<p>На кожній дискретній ітерації оптимізації <span class="arithmatex">\(t \in \{0, 1, 2, \dots\}\)</span> кожен вузол <span class="arithmatex">\(p \in \{1, \dots, P\}\)</span> формує свій локальний міні-батч <span class="arithmatex">\(\mathcal{B}_p^{(t)} \subset \mathcal{D}_p\)</span> розмірністю <span class="arithmatex">\(|\mathcal{B}_p^{(t)}| = B\)</span>. Сукупний глобальний батч системи становить <span class="arithmatex">\(\mathcal{B}_{\text{glob}}^{(t)} = \bigcup_{p=1}^P \mathcal{B}_p^{(t)}\)</span>, а його потужність дорівнює:</p>
+<div class="arithmatex">\[B_{\text{glob}} = P \cdot B\]</div>
+<p>Кожен процес <span class="arithmatex">\(p\)</span> паралельно та автономно здійснює диференціювання емпіричного ризику на своєму локальному піднаборі:</p>
+<div class="arithmatex">\[g_p^{(t)}(\theta^{(t)}) = \nabla_{\theta} \mathcal{L}_p\left(\theta^{(t)}; \mathcal{B}_p^{(t)}\right) = \frac{1}{B} \sum_{x \in \mathcal{B}_p^{(t)}} \nabla_{\theta} \ell\left(x; \theta^{(t)}\right)\]</div>
+<p>де <span class="arithmatex">\(\ell(x; \theta^{(t)})\)</span> позначає значення функції втрат на окремому вхідному зразку <span class="arithmatex">\(x\)</span> (вимірюється в умовних одиницях функції втрат, дійсне число); <span class="arithmatex">\(\mathcal{L}_p\)</span> позначає середнє значення функції втрат на локальному міні-батчі процесу <span class="arithmatex">\(p\)</span> (дійсне число); <span class="arithmatex">\(g_p^{(t)}(\theta^{(t)}) \in \mathbb{R}^{|\Psi|}\)</span> позначає локальний градієнтний вектор, обчислений вузлом <span class="arithmatex">\(p\)</span> на ітерації <span class="arithmatex">\(t\)</span>.</p>
+<p>Математична еквівалентність розподіленого паралелізму послідовному навчанню на єдиному суперкомп'ютері вимагає точного узгодження глобального градієнта <span class="arithmatex">\(\bar{g}^{(t)}(\theta^{(t)})\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Формулювання локальних оцінок):} &amp; \quad g_p^{(t)} = \frac{1}{B} \sum_{x \in \mathcal{B}_p^{(t)}} \nabla_{\theta} \ell(x; \theta^{(t)}) \\
+\text{Етап 2 (Колективна редукція середнього):} &amp; \quad \bar{g}^{(t)} = \frac{1}{P} \sum_{p=1}^P g_p^{(t)} = \frac{1}{P \cdot B} \sum_{p=1}^P \sum_{x \in \mathcal{B}_p^{(t)}} \nabla_{\theta} \ell(x; \theta^{(t)}) \\
+\text{Етап 3 (Акумуляція імпульсу / моменту):} &amp; \quad v^{(t+1)} = \gamma \cdot v^{(t)} + \eta_t \cdot \left( \bar{g}^{(t)} + \lambda \theta^{(t)} \right) \\
+\text{Етап 4 (Синхронне оновлення ваг):} &amp; \quad \theta^{(t+1)} = \theta^{(t)} - v^{(t+1)}
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(v^{(t)} \in \mathbb{R}^{|\Psi|}\)</span> позначає вектор швидкості оптимізатора стохастичного градієнтного спуску з моментом на кроці <span class="arithmatex">\(t\)</span> (розмірність збігається з простором параметрів); <span class="arithmatex">\(\gamma \in [0, 1)\)</span> позначає коефіцієнт згасання імпульсу (безрозмірний гіперпараметр); <span class="arithmatex">\(\eta_t &gt; 0\)</span> позначає швидкість навчання на кроці <span class="arithmatex">\(t\)</span> (дійсне число); <span class="arithmatex">\(\lambda \ge 0\)</span> позначає коефіцієнт вагової регуляризації (<strong>Weight Decay</strong>, безрозмірний скаляр).</p>
+<p>Дисперсія розподіленого оцінювача градієнта <span class="arithmatex">\(\bar{g}^{(t)}\)</span> зменшується обернено пропорційно кількості задіяних обчислювальних вузлів <span class="arithmatex">\(P\)</span>:</p>
+<div class="arithmatex">\[\mathbb{E}\left[ \left\| \bar{g}^{(t)} - \nabla_{\theta} \mathcal{L}_{\text{global}}(\theta^{(t)}) \right\|_2^2 \right] = \frac{\sigma^2}{P \cdot B}\]</div>
+<p>де <span class="arithmatex">\(\sigma^2\)</span> позначає внутрішню дисперсію градієнта окремого випадкового зразка. Це аналітично обґрунтовує правило лінійного масштабування швидкості навчання (<strong>Linear Scaling Rule</strong>): при зростанні розміру кластера у <span class="arithmatex">\(P\)</span> разів швидкість навчання повинна бути пропорційно збільшена <span class="arithmatex">\(\eta_{\text{scaled}} = P \cdot \eta_{\text{base}}\)</span> для збереження однакової амплітуди кроку оновлення параметрів у просторі оптимізації.</p>
+<h3 id="23-ring-allreduce-logp">2.3. Аналітичне моделювання комунікаційної трудомісткості операцій Ring-AllReduce за моделями Гокні та LogP</h3>
+<p>Синхронізація градієнтних векторів розмірністю <span class="arithmatex">\(|\Psi|\)</span> між <span class="arithmatex">\(P\)</span> обчислювальними вузлами кластера становить основну комунікаційну фазу DDP. У класичній моделі комунікацій Гокні (<strong>Hockney model</strong>) час передачі повідомлення розміром <span class="arithmatex">\(M\)</span> байтів між двома суміжними вузлами мережі описується виразом:</p>
+<div class="arithmatex">\[T_{\text{Hockney}}(M) = \alpha_{\text{net}} + \frac{M}{\beta_{\text{net}}}\]</div>
+<p>де <span class="arithmatex">\(\alpha_{\text{net}}\)</span> позначає латентність мережевого інтерфейсу, що включає накладні витрати стека протоколів та апаратного комутатора (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(M\)</span> позначає обсяг переданого повідомлення в байтах (<span class="arithmatex">\(\text{Б}\)</span>); <span class="arithmatex">\(\beta_{\text{net}}\)</span> позначає фізичну пропускну здатність дуплексного мережевого каналу (байт за секунду, <span class="arithmatex">\(\text{Б/с}\)</span>).</p>
+<p>Алгоритм <strong>Ring-AllReduce</strong> об'єднує <span class="arithmatex">\(P\)</span> вузлів у логічне кільце, де кожен процесор <span class="arithmatex">\(p\)</span> має виділений канал передачі до вузла <span class="arithmatex">\((p+1) \pmod P\)</span> та канал прийому від <span class="arithmatex">\((p-1) \pmod P\)</span>. Вхідний вектор даних розміром <span class="arithmatex">\(M\)</span> байтів розщеплюється на <span class="arithmatex">\(P\)</span> рівних сегментів розміром <span class="arithmatex">\(\frac{M}{P}\)</span> байтів. Операція реалізується двома послідовними фазами:</p>
+<ol>
+<li>
+<p><strong>Фаза Scatter-Reduce.</strong> Виконується протягом <span class="arithmatex">\(P-1\)</span> комунікаційних тактів. На кожному такті кожен вузол передає сусідові в кільці один сегмент даних і одночасно приймає сегмент від попереднього вузла, виконуючи локальне покомпонентне додавання прийнятих градієнтів. Після <span class="arithmatex">\(P-1\)</span> кроків кожен із <span class="arithmatex">\(P\)</span> вузлів містить повністю редукований (підсумований) стан рівно одного унікального сегмента.</p>
+</li>
+<li>
+<p><strong>Фаза Allgather.</strong> Повністю підсумовані значення сегментів транслюються кільцем також протягом <span class="arithmatex">\(P-1\)</span> тактів, але вже без виконання операцій додавання, забезпечуючи оновлення всіх сегментів на кожному вузлі до фінального середнього значення.</p>
+</li>
+</ol>
+<p>Виведемо сумарні часові витрати на виконання алгоритму Ring-AllReduce:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Час фази Scatter-Reduce):} &amp; \quad T_{\text{SR}} = (P - 1) \cdot \alpha_{\text{net}} + (P - 1) \cdot \frac{M}{P \cdot \beta_{\text{net}}} + (P - 1) \cdot \frac{M}{P} \cdot \gamma_{\text{comp}} \\
+\text{Етап 2 (Час фази Allgather):} &amp; \quad T_{\text{AG}} = (P - 1) \cdot \alpha_{\text{net}} + (P - 1) \cdot \frac{M}{P \cdot \beta_{\text{net}}} \\
+\text{Етап 3 (Сумарна тривалість редукції):} &amp; \quad T_{\text{Ring}}(M, P) = T_{\text{SR}} + T_{\text{AG}} \\
+\text{Етап 4 (Зведення подібних членів):} &amp; \quad T_{\text{Ring}}(M, P) = 2(P - 1)\alpha_{\text{net}} + 2\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}} + \left(\frac{P - 1}{P}\right) M \gamma_{\text{comp}}
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(\gamma_{\text{comp}}\)</span> позначає питомий час обчислення операції додавання двох чисел із плаваючою комою на векторному прискорювачі (вимірюється в секундах на байт, <span class="arithmatex">\(\text{с/Б}\)</span>).</p>
+<p>Проаналізуємо асимптотичну залежність обсягу пропускної здатності від кількості процесорів <span class="arithmatex">\(P\)</span>:</p>
+<div class="arithmatex">\[\lim_{P \to \infty} 2\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}} = \frac{2M}{\beta_{\text{net}}}\]</div>
+<div class="arithmatex">\[\lim_{P \to \infty} 2(P - 1)\alpha_{\text{net}} = \infty\]</div>
+<p>З наведеного граничного переходу випливає фундаментальний закон: при великих розмірах повідомлень (<span class="arithmatex">\(M \gg 10^7\text{ Б}\)</span>) складова пропускної здатності <span class="arithmatex">\(\frac{2M}{\beta_{\text{net}}}\)</span> є строго інваріантною до кількості вузлів у кластері <span class="arithmatex">\(P\)</span>. Загальний трафік, переданий кожним окремим вузлом, асимптотично прямує до подвоєного розміру моделі <span class="arithmatex">\(2M\)</span>, незалежно від того, скільки сотень прискорювачів бере участь у паралельній редукції.</p>
+<h3 id="24">2.4. Математична формалізація перекриття обчислень і комунікацій: аналітика бакетизації та модель прихованої затримки</h3>
+<p>Якщо операція редукції запускається єдиним блоком після повного обчислення градієнтів усіх шарів нейронної мережі, час зворотного проходу стає строго послідовним:</p>
+<div class="arithmatex">\[T_{\text{bwd, non-overlapped}} = T_{\text{bwd\_comp}} + T_{\text{Ring}}(M_{\text{grad}}, P)\]</div>
+<p>де <span class="arithmatex">\(M_{\text{grad}} = |\Psi| \cdot S_{\text{param}}\)</span> позначає сумарний розмір градієнтного тензора моделі в байтах; <span class="arithmatex">\(S_{\text{param}}\)</span> позначає розмір представлення одного параметра в пам'яті (для FP16 <span class="arithmatex">\(S_{\text{param}} = 2\text{ Б}\)</span>, для FP32 <span class="arithmatex">\(S_{\text{param}} = 4\text{ Б}\)</span>).</p>
+<p>Підхід DistributedDataParallel розбиває множину з <span class="arithmatex">\(L\)</span> шарів моделі на <span class="arithmatex">\(K\)</span> дискретних бакетів <span class="arithmatex">\(\mathcal{K}_1, \mathcal{K}_2, \dots, \mathcal{K}_K\)</span>, кожен з яких має обмежену ємність <span class="arithmatex">\(C_{\text{bucket}}\)</span> байтів:</p>
+<div class="arithmatex">\[K = \left\lceil \frac{|\Psi| \cdot S_{\text{param}}}{C_{\text{bucket}}} \right\rceil\]</div>
+<p>Оскільки обчислення градієнтів під час зворотного проходу відбувається у зворотному хронологічному порядку (від шару <span class="arithmatex">\(L\)</span> до шару <span class="arithmatex">\(1\)</span>), бакети заповнюються послідовно: спочатку наповнюється бакет <span class="arithmatex">\(\mathcal{K}_K\)</span>, потім <span class="arithmatex">\(\mathcal{K}_{K-1}\)</span> і так далі до <span class="arithmatex">\(\mathcal{K}_1\)</span>.</p>
+<p>Виведемо математичну модель конвеєрного суміщення обчислень і зв'язку під час зворотного проходу:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Латентність наповнення першого бакета):} &amp; \quad T_{\text{init\_bucket}} = T_{\text{comp}}(\mathcal{K}_K) \\
+\text{Етап 2 (Ітеративне суміщення в конвеєрі):} &amp; \quad T_{\text{overlap}}(k) = \max\left( T_{\text{comp}}(\mathcal{K}_k), T_{\text{comm}}(\mathcal{K}_{k+1}) \right), \quad k = K-1, \dots, 1 \\
+\text{Етап 3 (Завершення редукції останнього бакета):} &amp; \quad T_{\text{tail}} = T_{\text{comm}}(\mathcal{K}_1) \\
+\text{Етап 4 (Повний час зворотного проходу):} &amp; \quad T_{\text{bwd, overlapped}} = T_{\text{comp}}(\mathcal{K}_K) + \sum_{k=1}^{K-1} \max\left( T_{\text{comp}}(\mathcal{K}_k), T_{\text{comm}}(\mathcal{K}_{k+1}) \right) + T_{\text{comm}}(\mathcal{K}_1)
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(T_{\text{comp}}(\mathcal{K}_k)\)</span> позначає тривалість зворотного проходу GPU для шарів, що входять до бакета <span class="arithmatex">\(\mathcal{K}_k\)</span> (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>); <span class="arithmatex">\(T_{\text{comm}}(\mathcal{K}_{k+1}) = T_{\text{Ring}}(C_{\text{bucket}}, P)\)</span> позначає час виконання кільцевої редукції для градієнтів бакета <span class="arithmatex">\(\mathcal{K}_{k+1}\)</span> у паралельному мережевому потоці (вимірюється в секундах, <span class="arithmatex">\(\text{с}\)</span>).</p>
+<p>Комунікаційні затримки є <strong>повністю прихованими (Zero Exposed Latency)</strong> за умови виконання системи нерівностей:</p>
+<div class="arithmatex">\[T_{\text{comp}}(\mathcal{K}_k) \ge T_{\text{comm}}(\mathcal{K}_{k+1}) \quad \forall k \in \{1, \dots, K-1\}\]</div>
+<p>У цьому ідеальному випадку загальна тривалість зворотного проходу становить:</p>
+<div class="arithmatex">\[T_{\text{bwd, ideal}} = \sum_{k=1}^K T_{\text{comp}}(\mathcal{K}_k) + T_{\text{comm}}(\mathcal{K}_1) = T_{\text{bwd\_comp}} + T_{\text{Ring}}(C_{\text{bucket}}, P)\]</div>
+<p>Накладні витрати мережі скорочуються від часу передачі всієї моделі <span class="arithmatex">\(T_{\text{Ring}}(M_{\text{grad}}, P)\)</span> до часу передачі лише одного фінального бакета <span class="arithmatex">\(T_{\text{Ring}}(C_{\text{bucket}}, P)\)</span>.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant GPU as Тензорні ядра GPU (Compute Stream)
+    participant Hook as DDP Autograd Hook
+    participant Net as NCCL Комунікаційний потік (Comm Stream)
+    participant Interconnect as Мережева фабрика кластера
+
+    Note over GPU: Обчислення шару L..L-m
+    GPU-&gt;&gt;Hook: Градієнти шару L..L-m обчислені
+    Hook-&gt;&gt;Hook: Додавання в Бакет K
+    Note over Hook: Бакет K заповнено (25 МБ)
+    Hook-&gt;&gt;Net: Асинхронний тригер Ring-AllReduce(Бакет K)
+
+    par Суміщення обчислень та передачі
+        GPU-&gt;&gt;GPU: Обчислення шару L-m-1..L-2m (Бакет K-1)
+    and
+        Net-&gt;&gt;Interconnect: Передача сегментів кільцем (Scatter-Reduce)
+        Interconnect--&gt;&gt;Net: Обмін даними та редукція
+        Net-&gt;&gt;Interconnect: Трансляція оновлених часток (Allgather)
+        Interconnect--&gt;&gt;Net: Бакет K повністю синхронізовано
+    end
+
+    GPU-&gt;&gt;Hook: Градієнти Бакета K-1 готові
+    Hook-&gt;&gt;Net: Асинхронний тригер Ring-AllReduce(Бакет K-1)
+    Note over GPU, Net: Процес повторюється для всіх K бакетів</code></pre>
+<h3 id="25-vram-zero-1-zero-2-zero-3-fsdp">2.5. Математичні моделі декомпозиції пам'яті VRAM у парадигмах ZeRO-1, ZeRO-2, ZeRO-3 та FSDP при змішаній точності</h3>
+<p>Тренування сучасних моделей штучного інтелекту відбувається переважно у режимі змішаної точності (<strong>Mixed Precision FP16/BF16</strong> із накопиченням у <strong>FP32</strong>) з використанням адаптивного оптимізатора Adam. Проаналізуємо структуру статичної пам'яті, необхідної для збереження компонентів стану моделі з кількістю параметрів <span class="arithmatex">\(|\Psi|\)</span>.</p>
+<p>Для кожного параметра моделі виділяються такі структури:</p>
+<ol>
+<li>
+<p><strong>Параметри моделі (<span class="arithmatex">\(\text{FP16}\)</span>):</strong> <span class="arithmatex">\(2 \cdot |\Psi|\)</span> байтів.</p>
+</li>
+<li>
+<p><strong>Градієнти параметрів (<span class="arithmatex">\(\text{FP16}\)</span>):</strong> <span class="arithmatex">\(2 \cdot |\Psi|\)</span> байтів.</p>
+</li>
+<li>
+<p><strong>Стани оптимізатора Adam (<span class="arithmatex">\(\text{FP32}\)</span>):</strong> майстер-копія ваг у високій точності для стабільного числового оновлення (<span class="arithmatex">\(4 \cdot |\Psi|\)</span> байтів), перший момент стохастичного градієнта / Momentum (<span class="arithmatex">\(4 \cdot |\Psi|\)</span> байтів), другий нецентрований момент градієнта / Variance (<span class="arithmatex">\(4 \cdot |\Psi|\)</span> байтів). Сумарний стан оптимізатора становить:</p>
+</li>
+</ol>
+<p><span class="arithmatex">\(M_{\text{opt}} = 4|\Psi| + 4|\Psi| + 4|\Psi| = 12|\Psi| \quad [\text{Байтів}]\)</span></p>
+<p>Загальний базовий обсяг статичної пам'яті моделі <span class="arithmatex">\(M_{\text{base}}\)</span> без фрагментації (як у класичному DDP) становить:</p>
+<div class="arithmatex">\[M_{\text{base}} = 2|\Psi| + 2|\Psi| + 12|\Psi| = 16|\Psi| \quad [\text{Байтів}]\]</div>
+<p>Технологія <strong>ZeRO (Zero Redundancy Optimizer)</strong> та її стандартизована реалізація <strong>FSDP (Fully Sharded Data Parallel)</strong> усувають надмірність пам'яті за рахунок шардингу компонентів між <span class="arithmatex">\(P\)</span> прискорювачами кластера. Виведемо аналітичні залежності обсягу споживання пам'яті на один GPU для кожного етапу оптимізації:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Базовий DDP, нульовий шардинг):} &amp; \quad M_{\text{DDP}} = 2|\Psi| + 2|\Psi| + 12|\Psi| = 16|\Psi| \\
+\text{Етап 2 (ZeRO-Stage 1: Шардинг станів оптимізатора):} &amp; \quad M_{\text{ZeRO-1}} = 2|\Psi| + 2|\Psi| + \frac{12|\Psi|}{P} = 4|\Psi| + \frac{12|\Psi|}{P} \\
+\text{Етап 3 (ZeRO-Stage 2: Шардинг оптимізатора і градієнтів):} &amp; \quad M_{\text{ZeRO-2}} = 2|\Psi| + \frac{2|\Psi|}{P} + \frac{12|\Psi|}{P} = 2|\Psi| + \frac{14|\Psi|}{P} \\
+\text{Етап 4 (ZeRO-Stage 3 / Full FSDP: Повний шардинг):} &amp; \quad M_{\text{ZeRO-3}} = \frac{2|\Psi|}{P} + \frac{2|\Psi|}{P} + \frac{12|\Psi|}{P} = \frac{16|\Psi|}{P}
+\end{aligned}
+\]</div>
+<p>де <span class="arithmatex">\(P\)</span> позначає фізичну кількість паралельних процесів (графічних прискорювачів у комунікаційній групі); <span class="arithmatex">\(|\Psi|\)</span> позначає кількість параметрів нейромережі.</p>
+<p>Розрахуємо теоретичні асимптотичні межі стиснення статичної пам'яті при нескінченному масштабуванні кластера (<span class="arithmatex">\(P \to \infty\)</span>):</p>
+<div class="arithmatex">\[\lim_{P \to \infty} M_{\text{ZeRO-1}} = 4|\Psi| \quad (\text{економія до } 75\%)\]</div>
+<div class="arithmatex">\[\lim_{P \to \infty} M_{\text{ZeRO-2}} = 2|\Psi| \quad (\text{економія до } 87.5\%)\]</div>
+<div class="arithmatex">\[\lim_{P \to \infty} M_{\text{ZeRO-3}} = 0 \quad (\text{лінійне скорочення до нуля})\]</div>
+<p>Ціною повної декомпозиції стану в ZeRO-3 / FSDP є зміна комунікаційного шаблону. Оскільки параметри шардовані, кожен прискорювач перед виконанням прямого проходу шару <span class="arithmatex">\(l\)</span> повинен виконати операцію <code>All-Gather</code> для тимчасового збирання повної матриці ваг, а після розрахунку активацій — негайно звільнити цю пам'ять. </p>
+<p>Аналогічна операція <code>All-Gather</code> повторюється під час зворотного проходу, після чого обчислені градієнти редукуються операцією <code>Reduce-Scatter</code>. У результаті загальний комунікаційний обсяг на ітерацію зростає від <span class="arithmatex">\(2|\Psi|\)</span> (у DDP та ZeRO-1/2) до <span class="arithmatex">\(3|\Psi|\)</span> (у ZeRO-3/FSDP), що становить збільшення комунікаційного трафіку рівно на <span class="arithmatex">\(50\%\)</span>.</p>
+<hr />
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> 
+Теорема інваріантності пропускної здатності кільцевої редукції стверджує, що для логічного кільця з <span class="arithmatex">\(P\)</span> вузлів при передаванні масивів великої розмірності (<span class="arithmatex">\(M \to \infty\)</span>) обсяг даних, переданий і прийнятий кожним окремим мережевим інтерфейсом за один повний цикл AllReduce, обмежений константою <span class="arithmatex">\(\lim_{P \to \infty} 2 \cdot \frac{P - 1}{P} \cdot M = 2M\)</span>. </p>
+<p>Це означає, що за умови домінування фактора пропускної здатності (<span class="arithmatex">\(\beta_{\text{net}}\)</span>) над латентністю (<span class="arithmatex">\(\alpha_{\text{net}}\)</span>) час виконання синхронізації градієнтів у DDP не залежить від масштабу кластера і залишається постійним як для 4, так і для 4000 процесорів.</p>
+</blockquote>
+<hr />
+<h3 id="_6">Систематичний порівняльний аналіз моделей та алгоритмів розподіленої обробки</h3>
+<p>Нижче наведено зведену матрицю порівняння математичних та експлуатаційних показників розглянутих розподілених архітектур.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Аналітичний критерій</th>
+<th style="text-align: left;">Класичний DDP</th>
+<th style="text-align: left;">ZeRO-Stage 1</th>
+<th style="text-align: left;">ZeRO-Stage 2</th>
+<th style="text-align: left;">ZeRO-Stage 3 / FSDP</th>
+<th style="text-align: left;">Tensor Parallelism (TP)</th>
+<th style="text-align: left;">Pipeline Parallelism (PP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Формула статичної пам'яті VRAM (байти)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(16\vert\Psi\vert\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(4\vert\Psi\vert + \frac{12\vert\Psi\vert}{P}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\vert\Psi\vert + \frac{14\vert\Psi\vert}{P}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{16\vert\Psi\vert}{P}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{16\vert\Psi\vert}{P_{\text{TP}}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{16\vert\Psi\vert}{P_{\text{PP}}}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Комунікаційний обсяг на ітерацію (байти)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\vert\Psi\vert \cdot S_{\text{param}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\vert\Psi\vert \cdot S_{\text{param}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\vert\Psi\vert \cdot S_{\text{param}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(3\vert\Psi\vert \cdot S_{\text{param}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \cdot L \cdot \vert\Psi_{\text{act}}\vert\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \cdot M_{\text{micro}} \cdot \vert\Psi_{\text{act}}\vert\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Використовувані колективні операції</strong></td>
+<td style="text-align: left;"><code>Ring-AllReduce</code></td>
+<td style="text-align: left;"><code>AllReduce</code></td>
+<td style="text-align: left;"><code>Reduce-Scatter</code></td>
+<td style="text-align: left;"><code>All-Gather</code>, <code>Reduce-Scatter</code></td>
+<td style="text-align: left;"><code>All-Reduce</code> (в межах кожного шару)</td>
+<td style="text-align: left;"><code>P2P Send/Recv</code> між сусідніми стадіями</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Чутливість до латентності мережі (<span class="arithmatex">\(\alpha_{\text{net}}\)</span>)</strong></td>
+<td style="text-align: left;">Низька (завдяки бакетизації)</td>
+<td style="text-align: left;">Низька (бакетизація градієнтів)</td>
+<td style="text-align: left;">Середня (бакетизація часток)</td>
+<td style="text-align: left;">Висока (часті запити All-Gather)</td>
+<td style="text-align: left;">Критично висока (вимагає NVLink)</td>
+<td style="text-align: left;">Низька (потокова передача мікробатчів)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Мінімально необхідний мережевий інтерфейс</strong></td>
+<td style="text-align: left;">10–25 Gbps Ethernet</td>
+<td style="text-align: left;">25–50 Gbps Ethernet</td>
+<td style="text-align: left;">100 Gbps RoCE/IB</td>
+<td style="text-align: left;">200–400 Gbps InfiniBand</td>
+<td style="text-align: left;">NVLink / NVSwitch всередині вузла</td>
+<td style="text-align: left;">10–40 Gbps Ethernet / InfiniBand</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Рівень перекриття комунікацій (Overlap)</strong></td>
+<td style="text-align: left;">Повний (<span class="arithmatex">\(100\%\)</span> у межах бакетів)</td>
+<td style="text-align: left;">Повний (аналогічно DDP)</td>
+<td style="text-align: left;">Повний (Reduce-Scatter у зворотному проході)</td>
+<td style="text-align: left;">Частковий (вимагає префетчингу ваг)</td>
+<td style="text-align: left;">Відсутній (сувора синхронізація шару)</td>
+<td style="text-align: left;">Природний (через заповнення конвеєра)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Граничний розмір моделі (параметри)</strong></td>
+<td style="text-align: left;">До 1–2 млрд (обмежено VRAM 1 GPU)</td>
+<td style="text-align: left;">До 3–5 млрд</td>
+<td style="text-align: left;">До 10–15 млрд</td>
+<td style="text-align: left;">Необмежений (масштабується за рахунок <span class="arithmatex">\(P\)</span>)</td>
+<td style="text-align: left;">До сотень мільярдів (у зв'язці з PP/DP)</td>
+<td style="text-align: left;">До сотень мільярдів (у зв'язці з TP/DP)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> 
+Розподілений обчислювальний кластер складається з <span class="arithmatex">\(P = 8\)</span> вузлів, об'єднаних інтерконектом із латентністю <span class="arithmatex">\(\alpha_{\text{net}} = 5 \cdot 10^{-6}\text{ с}\)</span> та пропускною здатністю <span class="arithmatex">\(\beta_{\text{net}} = 12.5 \cdot 10^9\text{ Б/с}\)</span> (100 Gbps). Виконується тренування моделі розмірністю <span class="arithmatex">\(|\Psi| = 5 \cdot 10^8\)</span> параметрів у режимі FP16 (<span class="arithmatex">\(S_{\text{param}} = 2\text{ Б}\)</span>). На скільки секунд збільшиться комунікаційний час однієї ітерації при переході від архітектури DistributedDataParallel (DDP) до Fully Sharded Data Parallel (ZeRO-3), якщо накладними витратами на обчислення додавання знехтувати (<span class="arithmatex">\(\gamma_{\text{comp}} = 0\)</span>)?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p>Для розв'язання задачі необхідно розрахувати обсяг переданих даних для обох підходів та оцінити часові витрати за моделлю кільцевої передачі.</p>
+<ol>
+<li><strong>Розрахунок інформаційного обсягу параметрів моделі:</strong></li>
+</ol>
+<p><span class="arithmatex">\(M = |\Psi| \cdot S_{\text{param}} = 5 \cdot 10^8 \cdot 2\text{ Б} = 10^9\text{ Б} = 1\text{ ГБ}\)</span></p>
+<ol>
+<li><strong>Розрахунок часу комунікації для DistributedDataParallel (DDP):</strong>
+   У класичному DDP виконується одна операція <code>Ring-AllReduce</code> для градієнтів моделі. Загальний час за формулою (2.3) становить:</li>
+</ol>
+<p><span class="arithmatex">\(T_{\text{DDP}} = 2(P - 1)\alpha_{\text{net}} + 2\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}}\)</span></p>
+<p>Підставимо чисельні значення:</p>
+<p><span class="arithmatex">\(2(P - 1)\alpha_{\text{net}} = 2 \cdot (8 - 1) \cdot 5 \cdot 10^{-6}\text{ с} = 14 \cdot 5 \cdot 10^{-6}\text{ с} = 7 \cdot 10^{-5}\text{ с} = 0.00007\text{ с}\)</span></p>
+<p><span class="arithmatex">\(2\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}} = 2 \cdot \frac{7}{8} \cdot \frac{10^9\text{ Б}}{12.5 \cdot 10^9\text{ Б/с}} = \frac{7}{4} \cdot 0.08\text{ с} = 0.14\text{ с}\)</span></p>
+<p><span class="arithmatex">\(T_{\text{DDP}} = 0.00007\text{ с} + 0.14\text{ с} = 0.14007\text{ с}\)</span></p>
+<ol>
+<li>
+<p><strong>Розрахунок часу комунікації для Fully Sharded Data Parallel (ZeRO-3):</strong>
+   У підході ZeRO-3 виконується:</p>
+</li>
+<li>
+<p>Операція <code>All-Gather</code> для відновлення ваг перед прямим проходом: 
+     <span class="arithmatex">\(T_{\text{AG\_fwd}} = (P - 1)\alpha_{\text{net}} + \left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}}\)</span></p>
+</li>
+<li>
+<p>Операція <code>All-Gather</code> для відновлення ваг перед зворотним проходом:
+     <span class="arithmatex">\(T_{\text{AG\_bwd}} = (P - 1)\alpha_{\text{net}} + \left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}}\)</span></p>
+</li>
+<li>
+<p>Операція <code>Reduce-Scatter</code> для редукції та шардингу обчислених градієнтів:
+     <span class="arithmatex">\(T_{\text{RS\_bwd}} = (P - 1)\alpha_{\text{net}} + \left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}}\)</span></p>
+</li>
+</ol>
+<p>Сумарний час комунікації для ZeRO-3 дорівнює:</p>
+<p><span class="arithmatex">\(T_{\text{ZeRO-3}} = T_{\text{AG\_fwd}} + T_{\text{AG\_bwd}} + T_{\text{RS\_bwd}} = 3(P - 1)\alpha_{\text{net}} + 3\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}}\)</span></p>
+<p>Підставимо числові значення:</p>
+<p><span class="arithmatex">\(3(P - 1)\alpha_{\text{net}} = 3 \cdot 7 \cdot 5 \cdot 10^{-6}\text{ с} = 1.05 \cdot 10^{-4}\text{ с} = 0.000105\text{ с}\)</span></p>
+<p><span class="arithmatex">\(3\left(\frac{P - 1}{P}\right)\frac{M}{\beta_{\text{net}}} = 3 \cdot \frac{7}{8} \cdot \frac{10^9\text{ Б}}{12.5 \cdot 10^9\text{ Б/с}} = \frac{21}{8} \cdot 0.08\text{ с} = 0.21\text{ с}\)</span></p>
+<p><span class="arithmatex">\(T_{\text{ZeRO-3}} = 0.000105\text{ с} + 0.21\text{ с} = 0.210105\text{ с}\)</span></p>
+<ol>
+<li><strong>Різниця комунікаційного часу:</strong></li>
+</ol>
+<p><span class="arithmatex">\(\Delta T = T_{\text{ZeRO-3}} - T_{\text{DDP}} = 0.210105\text{ с} - 0.140070\text{ с} = 0.070035\text{ с} \approx 0.07\text{ с}\)</span></p>
+<p><strong>Висновок:</strong> Комунікаційний час однієї ітерації збільшиться рівно на <span class="arithmatex">\(0.070035\text{ с}\)</span> (що відповідає рівно полуторному зростанню витрат передавання), проте обсяг статичної пам'яті VRAM під ваги та оптимізатор зменшиться у <span class="arithmatex">\(P = 8\)</span> разів (із <span class="arithmatex">\(16\text{ ГБ}\)</span> до <span class="arithmatex">\(2\text{ ГБ}\)</span> на прискорювач).</p>
+</details>
+<hr />
+<h3 id="_7">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Дослідіть вплив зміни ємності градієнтного бакета <span class="arithmatex">\(C_{\text{bucket}}\)</span> на граничне співвідношення між латентністю ініціалізації передачі та утилізацією смуги пропускання мережевої карти. Обґрунтуйте, чому зменшення розміру бакета нижче критичного порогу (наприклад, менше <span class="arithmatex">\(5\text{ МБ}\)</span>) призводить до падіння ефективної пропускної здатності за моделлю LogP через домінування мережевих накладних витрат над корисним трафіком.</p>
+</li>
+<li>
+<p>Порівняйте математичну модель конвеєрного паралелізму за схемою 1F1B (<strong>One Forward, One Backward</strong>) із моделлю повного шардингу FSDP. Проаналізуйте, у яких апаратних сценаріях (наприклад, повільний міжвузловий Ethernet проти швидкісного внутрішньовузлового NVLink) доцільно комбінувати ці два підходи для оптимізації загального часу ітерації навчання.</p>
+</li>
+</ol>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31-allreduce-zero-3-10-16-">3.1. Комплексний інженерний кейс. Аналітичний розрахунок часового балансу конвеєра даних, комунікаційної трудомісткості операцій AllReduce та оптимізація розподілу відеопам'яті за технологією ZeRO-3 для навчання нейромережі на 10 мільярдів параметрів у 16-вузловому кластері</h3>
+<h4 id="_8">Постановка інженерної задачі</h4>
+<p>Розглядається завдання проектування обчислювального середовища для розподіленого навчання мовної моделі архітектури Transformer із кількістю параметрів <span class="arithmatex">\(|\Psi| = 10 \cdot 10^9\)</span> (10 мільярдів). Обчислювальний кластер складається з <span class="arithmatex">\(P = 16\)</span> однорідних графічних прискорювачів з обсягом локальної пам'яті <span class="arithmatex">\(\text{VRAM} = 80\text{ ГБ}\)</span> кожен, об'єднаних комутаційною мережею InfiniBand HDR з ефективною пропускною здатністю <span class="arithmatex">\(\beta_{\text{net}} = 25 \cdot 10^9\text{ Б/с}\)</span> (200 Гбіт/с) та мережевою латентністю <span class="arithmatex">\(\alpha_{\text{net}} = 3.5 \cdot 10^{-6}\text{ с}\)</span> (<span class="arithmatex">\(3.5\text{ мкс}\)</span>). Навчання здійснюється за технологією змішаної точності FP16/FP32 з використанням оптимізатора Adam. </p>
+<p>Для запобігання простою обчислювальних ядер необхідно:</p>
+<ol>
+<li>
+<p>Розрахувати часовий баланс і параметри асинхронного чотириетапного конвеєра завантаження даних (ETL) на хості, визначивши виконання умови режиму обмеження обчисленнями (Compute-Bound).</p>
+</li>
+<li>
+<p>Оцінити комунікаційну трудомісткість операції редукції градієнтів за алгоритмом Ring-AllReduce.</p>
+</li>
+<li>
+<p>Дослідити ефективність асинхронного перекриття обчислень та передавання даних за допомогою градієнтної бакетизації з фіксованим розміром бакета <span class="arithmatex">\(C_{\text{bucket}} = 25\text{ МБ}\)</span>.</p>
+</li>
+<li>
+<p>Провести порівняльний розрахунок статичного споживання відеопам'яті для архітектур DDP, ZeRO-1, ZeRO-2 та ZeRO-3 для з'ясування можливості фізичного розміщення моделі в доступному обсязі VRAM.</p>
+</li>
+</ol>
+<p>Нижче наведено зведену таблицю вхідних системних параметрів проектованого середовища.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Кількість параметрів моделі</td>
+<td style="text-align: left;"><span class="arithmatex">\(\vert\Psi\vert\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(10 \cdot 10^9\)</span></td>
+<td style="text-align: left;">Скаляр (безрозмірна величина)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Фізична кількість прискорювачів у кластері</td>
+<td style="text-align: left;"><span class="arithmatex">\(P\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(16\)</span></td>
+<td style="text-align: left;">Одиниць обладнання</td>
+</tr>
+<tr>
+<td style="text-align: left;">Обсяг оперативної пам'яті одного прискорювача</td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{VRAM}_{\text{total}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(80\)</span></td>
+<td style="text-align: left;">Гігабайт (<span class="arithmatex">\(\text{ГБ}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмір локального батчу на один прискорювач</td>
+<td style="text-align: left;"><span class="arithmatex">\(B\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: left;">Зразків на ітерацію</td>
+</tr>
+<tr>
+<td style="text-align: left;">Інформаційний обсяг одного зразка даних</td>
+<td style="text-align: left;"><span class="arithmatex">\(S_{\text{sample}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \cdot 10^6\)</span></td>
+<td style="text-align: left;">Байт (<span class="arithmatex">\(2\text{ МБ}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Фізичний час зчитування батчу зі сховища</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\text{ext}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.035\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Час централізованої трансформації батчу на CPU</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\text{trans}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.075\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Час DMA-передавання батчу Host-to-Device (PCIe)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\text{h2d}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.008\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Час прямого проходу моделі на GPU</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\text{fwd}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.180\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Час зворотного проходу моделі на GPU</td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\text{bwd}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0.360\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмір градієнтного бакета DDP</td>
+<td style="text-align: left;"><span class="arithmatex">\(C_{\text{bucket}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(25 \cdot 10^6\)</span></td>
+<td style="text-align: left;">Байт (<span class="arithmatex">\(25\text{ МБ}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Фізична пропускна здатність мережі кластера</td>
+<td style="text-align: left;"><span class="arithmatex">\(\beta_{\text{net}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(25 \cdot 10^9\)</span></td>
+<td style="text-align: left;">Байт за секунду (<span class="arithmatex">\(\text{Б/с}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Апаратна латентність мережевого пересилання</td>
+<td style="text-align: left;"><span class="arithmatex">\(\alpha_{\text{net}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(3.5 \cdot 10^{-6}\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(\text{с}\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart TD
+    S1["Етап 1: Аналіз часового балансу конвеєра ETL та оцінка критичного шляху"]
+    S2["Етап 2: Розрахунок комунікаційної трудомісткості редукції Ring-AllReduce"]
+    S3["Етап 3: Моделювання бакетизації та відкритої латентності зв'язку"]
+    S4["Етап 4: Розрахунок споживання пам'яті VRAM для DDP і стадій ZeRO"]
+    S5["Етап 5: Синтез оптимальної системної конфігурації розподіленого навчання"]
+
+    S1 --&gt; S2
+    S2 --&gt; S3
+    S3 --&gt; S4
+    S4 --&gt; S5</code></pre>
+<h4 id="_9">Покроковий аналітичний розрахунок</h4>
+<h5 id="1-etl">Крок 1. Розрахунок параметрів конвеєра даних (ETL) та аналіз критичного шляху</h5>
+<p>Сумарний час обчислень на графічному прискорювачі складається з тривалості прямого та зворотного проходів:</p>
+<div class="arithmatex">\[\tau_{\text{comp}} = \tau_{\text{fwd}} + \tau_{\text{bwd}} = 0.180\text{ с} + 0.360\text{ с} = 0.540\text{ с}\]</div>
+<p>Визначимо тривалість критичного шляху конвеєра підготовки та обчислення даних:</p>
+<div class="arithmatex">\[\tau_{\max} = \max(\tau_{\text{ext}}, \tau_{\text{trans}}, \tau_{\text{h2d}}, \tau_{\text{comp}}) = \max(0.035, 0.075, 0.008, 0.540) = 0.540\text{ с}\]</div>
+<p>Оскільки умова обмеження обчисленнями <span class="arithmatex">\(\tau_{\text{comp}} \ge \max(\tau_{\text{ext}}, \tau_{\text{trans}}, \tau_{\text{h2d}})\)</span> суворо виконується (<span class="arithmatex">\(0.540\text{ с} \ge 0.075\text{ с}\)</span>), конвеєр функціонує в режимі Compute-Bound.</p>
+<p>Розрахуємо сумарний час послідовної обробки <span class="arithmatex">\(T_{\text{seq}}\)</span> та конвеєрної обробки <span class="arithmatex">\(T_{\text{pipe}}\)</span> для навчальної епохи обсягом <span class="arithmatex">\(N_b = 1000\)</span> міні-батчів:</p>
+<div class="arithmatex">\[T_{\text{seq}} = N_b \cdot (\tau_{\text{ext}} + \tau_{\text{trans}} + \tau_{\text{h2d}} + \tau_{\text{comp}}) = 1000 \cdot (0.035 + 0.075 + 0.008 + 0.540) = 658.0\text{ с}\]</div>
+<div class="arithmatex">\[T_{\text{pipe}} = (\tau_{\text{ext}} + \tau_{\text{trans}} + \tau_{\text{h2d}}) + (N_b - 1) \cdot \tau_{\max} + \tau_{\text{comp}} = (0.035 + 0.075 + 0.008) + 999 \cdot 0.540 + 0.540 = 540.648\text{ с}\]</div>
+<p>Коефіцієнт прискорення конвеєризації становить:</p>
+<div class="arithmatex">\[S_{\text{pipe}} = \frac{T_{\text{seq}}}{T_{\text{pipe}}} = \frac{658.0}{540.648} \approx 1.217\]</div>
+<p>При цьому ступінь завантаження тензорних ядер GPU під час стаціонарної роботи конвеєра досягає:</p>
+<div class="arithmatex">\[\eta_{\text{GPU}} = \frac{\tau_{\text{comp}}}{\tau_{\max}} = \frac{0.540}{0.540} = 1.0 \quad (100\%)\]</div>
+<h5 id="2-allreduce">Крок 2. Розрахунок комунікаційної трудомісткості операцій AllReduce</h5>
+<p>У режимі FP16 кожен параметр представляється двома байтами (<span class="arithmatex">\(S_{\text{param}} = 2\text{ Б}\)</span>). Обсяг градієнтного масиву, що підлягає синхронізації, дорівнює:</p>
+<div class="arithmatex">\[M_{\text{grad}} = |\Psi| \cdot S_{\text{param}} = 10 \cdot 10^9 \cdot 2\text{ Б} = 20 \cdot 10^9\text{ Б} = 20\text{ ГБ}\]</div>
+<p>Розрахуємо тривалість кільцевої редукції <span class="arithmatex">\(T_{\text{Ring}}\)</span> для всього градієнтного тензора моделі на кластері з <span class="arithmatex">\(P = 16\)</span> вузлів:</p>
+<div class="arithmatex">\[T_{\text{Ring}}(M_{\text{grad}}, P) = 2(P - 1)\alpha_{\text{net}} + 2\left(\frac{P - 1}{P}\right)\frac{M_{\text{grad}}}{\beta_{\text{net}}}\]</div>
+<p>Підставимо числові значення:</p>
+<div class="arithmatex">\[T_{\text{latency}} = 2 \cdot (16 - 1) \cdot 3.5 \cdot 10^{-6}\text{ с} = 30 \cdot 3.5 \cdot 10^{-6}\text{ с} = 1.05 \cdot 10^{-4}\text{ с} = 0.000105\text{ с}\]</div>
+<div class="arithmatex">\[T_{\text{transfer}} = 2 \cdot \left(\frac{16 - 1}{16}\right) \cdot \frac{20 \cdot 10^9\text{ Б}}{25 \cdot 10^9\text{ Б/с}} = 2 \cdot \frac{15}{16} \cdot 0.8\text{ с} = 1.500\text{ с}\]</div>
+<div class="arithmatex">\[T_{\text{Ring}} = 0.000105\text{ с} + 1.500\text{ с} = 1.500105\text{ с}\]</div>
+<p>У разі монолітної синхронізації без перекриття час ітерації збільшився б на <span class="arithmatex">\(1.5\text{ с}\)</span>, що призвело б до падіння швидкодії майже в чотири рази відносно чистого часу обчислень <span class="arithmatex">\(\tau_{\text{comp}} = 0.540\text{ с}\)</span>.</p>
+<h5 id="3-ddp">Крок 3. Оцінка часу перекриття у DDP та залишкової відкритої латентності</h5>
+<p>Розбиття градієнтного простору моделі обсягом <span class="arithmatex">\(20\text{ ГБ}\)</span> на бакети розміром <span class="arithmatex">\(C_{\text{bucket}} = 25\text{ МБ} = 25 \cdot 10^6\text{ Б}\)</span> дає кількість бакетів:</p>
+<div class="arithmatex">\[K = \frac{M_{\text{grad}}}{C_{\text{bucket}}} = \frac{20 \cdot 10^9\text{ Б}}{25 \cdot 10^6\text{ Б}} = 800\text{ бакетів}\]</div>
+<p>Час комунікації одного бакета становить:</p>
+<div class="arithmatex">\[T_{\text{comm\_bucket}} = 2(P - 1)\alpha_{\text{net}} + 2\left(\frac{P - 1}{P}\right)\frac{C_{\text{bucket}}}{\beta_{\text{net}}} = 0.000105\text{ с} + 2 \cdot \frac{15}{16} \cdot \frac{25 \cdot 10^6}{25 \cdot 10^9} = 0.000105 + 0.001875 = 0.00198\text{ с}\]</div>
+<p>Середній час обчислення градієнтів, що відповідають одному бакету, під час зворотного проходу (<span class="arithmatex">\(\tau_{\text{bwd}} = 0.360\text{ с}\)</span>):</p>
+<div class="arithmatex">\[\tau_{\text{comp\_bucket}} = \frac{\tau_{\text{bwd}}}{K} = \frac{0.360\text{ с}}{800} = 0.00045\text{ с}\]</div>
+<p>Оскільки <span class="arithmatex">\(\tau_{\text{comp\_bucket}} = 0.00045\text{ с} &lt; T_{\text{comm\_bucket}} = 0.00198\text{ с}\)</span>, обчислення зворотного проходу на окремому бакеті виконуються швидше, ніж мережевий переказ попереднього бакета. Проте загальний зворотний прохід триває довше, ніж пересилання одного бакета. Розрахуємо сумарний час зворотного проходу з урахуванням бакетизації:</p>
+<div class="arithmatex">\[T_{\text{bwd, overlapped}} = \tau_{\text{comp\_bucket}} + (K - 1) \cdot \max(\tau_{\text{comp\_bucket}}, T_{\text{comm\_bucket}}) + T_{\text{comm\_bucket}}\]</div>
+<div class="arithmatex">\[T_{\text{bwd, overlapped}} = 0.00045 + 799 \cdot 0.00198 + 0.00198 \approx 1.584\text{ с}\]</div>
+<p>Відкрита комунікаційна затримка (<strong>Exposed Latency</strong>), яка додається до часу ітерації понад чистий час обчислень:</p>
+<div class="arithmatex">\[\Delta T_{\text{exposed}} = T_{\text{bwd, overlapped}} - \tau_{\text{bwd}} = 1.584\text{ с} - 0.360\text{ с} = 1.224\text{ с}\]</div>
+<h5 id="4-vram">Крок 4. Розрахунок та оптимізація споживання статичної відеопам'яті (VRAM)</h5>
+<p>Розрахуємо вимоги до статичної пам'яті для зберігання компонентів моделі при використанні оптимізатора Adam (FP16 параметри: <span class="arithmatex">\(2|\Psi|\)</span>, FP16 градієнти: <span class="arithmatex">\(2|\Psi|\)</span>, FP32 стан оптимізатора: <span class="arithmatex">\(12|\Psi|\)</span>):</p>
+<ol>
+<li>
+<p><strong>Класичний DDP (без шардингу):</strong>
+   <span class="arithmatex">\(M_{\text{DDP}} = 16 \cdot |\Psi| = 16 \cdot 10 \cdot 10^9\text{ Б} = 160 \cdot 10^9\text{ Б} = 160\text{ ГБ}\)</span>
+   Оскільки <span class="arithmatex">\(160\text{ ГБ} &gt; \text{VRAM}_{\text{total}} = 80\text{ ГБ}\)</span>, запуск моделі у стандартному DDP є неможливим через помилку вичерпання пам'яті (<strong>Out-Of-Memory, OOM</strong>).</p>
+</li>
+<li>
+<p><strong>ZeRO-Stage 1 (Шардинг станів оптимізатора):</strong>
+   <span class="arithmatex">\(M_{\text{ZeRO-1}} = 4|\Psi| + \frac{12|\Psi|}{P} = 4 \cdot 10\text{ ГБ} + \frac{12 \cdot 10\text{ ГБ}}{16} = 40\text{ ГБ} + 7.5\text{ ГБ} = 47.5\text{ ГБ}\)</span>
+   Модель вміщується у <span class="arithmatex">\(80\text{ ГБ}\)</span>, проте залишок для проміжних активацій та динамічних буферів становить лише <span class="arithmatex">\(80 - 47.5 = 32.5\text{ ГБ}\)</span>, що накладає жорсткі обмеження на довжину послідовності.</p>
+</li>
+<li>
+<p><strong>ZeRO-Stage 2 (Шардинг оптимізатора та градієнтів):</strong>
+   <span class="arithmatex">\(M_{\text{ZeRO-2}} = 2|\Psi| + \frac{14|\Psi|}{P} = 2 \cdot 10\text{ ГБ} + \frac{14 \cdot 10\text{ ГБ}}{16} = 20\text{ ГБ} + 8.75\text{ ГБ} = 28.75\text{ ГБ}\)</span>
+   Вивільняє понад <span class="arithmatex">\(51\text{ ГБ}\)</span> пам'яті на кожному прискорювачі без збільшення мережевого трафіку порівняно з DDP.</p>
+</li>
+<li>
+<p><strong>ZeRO-Stage 3 / FSDP (Повний шардинг усіх компонентів):</strong>
+   <span class="arithmatex">\(M_{\text{ZeRO-3}} = \frac{16|\Psi|}{P} = \frac{160\text{ ГБ}}{16} = 10.0\text{ ГБ}\)</span>
+   Споживання статичної пам'яті скорочується рівно у 16 разів відносно базового DDP. Доступний простір для динамічних активацій становить <span class="arithmatex">\(70\text{ ГБ}\)</span> на кожному прискорювачі.</p>
+</li>
+</ol>
+<h4 id="_10">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Застосування асинхронного конвеєра даних забезпечує режим Compute-Bound із коефіцієнтом утилізації GPU <span class="arithmatex">\(\eta_{\text{GPU}} = 100\%\)</span>, оскільки тривалість прямого та зворотного проходів (<span class="arithmatex">\(0.540\text{ с}\)</span>) суттєво перевищує критичну затримку фази CPU-трансформації (<span class="arithmatex">\(0.075\text{ с}\)</span>).</p>
+</li>
+<li>
+<p>Масштабування моделі розмірністю 10 мільярдів параметрів на стандартній інфраструктурі DDP є фізично неможливим через дефіцит VRAM (<span class="arithmatex">\(160\text{ ГБ}\)</span> потреби проти <span class="arithmatex">\(80\text{ ГБ}\)</span> фізичного ліміту прискорювача).</p>
+</li>
+<li>
+<p>Перехід до технології ZeRO-Stage 2 або ZeRO-Stage 3 (FSDP) є безальтернативним інженерним рішенням: ZeRO-3 зменшує статичний обсяг пам'яті до <span class="arithmatex">\(10.0\text{ ГБ}\)</span> на GPU, що залишає <span class="arithmatex">\(87.5\%\)</span> обсягу VRAM під збереження тензорів активацій великих контекстних вікон.</p>
+</li>
+<li>
+<p>Швидкість комунікацій <span class="arithmatex">\(200\text{ Гбіт/с}\)</span> мережі InfiniBand зумовлює переважання часу мережевої передачі бакетів над локальними обчисленнями, у зв'язку з чим для максимальної оптимізації доцільно збільшити розмір градієнтного бакета <span class="arithmatex">\(C_{\text{bucket}}\)</span> до <span class="arithmatex">\(50\text{--}100\text{ МБ}\)</span> з метою насичення шини комутатора.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Сторінково-зафіксована пам'ять (Pinned Memory)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{DMA}} = \alpha_{\text{PCIe}} + \frac{M}{\beta_{\text{PCIe}}}\)</span></td>
+<td style="text-align: left;">Виділення неперервних буферів хоста під асинхронне H2D передавання даних на GPU через DMA.</td>
+<td style="text-align: left;">Обмежена фізичним обсягом вільного ОЗП хоста; надмірне виділення дестабілізує ОС.</td>
+<td style="text-align: left;">Ототожнення зі звичайною динамічною пам'яттю <code>malloc</code>, яка вимагає подвійного копіювання драйвером.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кільцева редукція (Ring-AllReduce)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{Ring}} = 2(P-1)\alpha + 2\frac{P-1}{P}\frac{M}{\beta}\)</span></td>
+<td style="text-align: left;">Масштабована синхронізація градієнтів у кластерах без виділеного Parameter Server.</td>
+<td style="text-align: left;">Пропускна здатність обмежена найповільнішим лінком у кільці; чутлива до джиттеру вузлів.</td>
+<td style="text-align: left;">Хибне уявлення, що обсяг переданого трафіку на один GPU зростає лінійно з кількістю процесорів <span class="arithmatex">\(P\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Бакетизація градієнтів (Bucketing)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(K = \lceil \frac{\vert\Psi\vert \cdot S_{\text{param}}}{C_{\text{bucket}}} \rceil\)</span></td>
+<td style="text-align: left;">Суміщення зворотного проходу моделі на GPU з мережевими обмінами NCCL у DDP.</td>
+<td style="text-align: left;">Малий розмір бакета викликає накладні витрати латентності, завеликий — руйнує перекриття.</td>
+<td style="text-align: left;">Переконання, що бакетизація знижує сумарний обсяг переданих мережею байтів (вона змінює лише таймінг).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Шардинг станів оптимізатора (ZeRO-1)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(M_{\text{static}} = 4\vert\Psi\vert + \frac{12\vert\Psi\vert}{P}\)</span></td>
+<td style="text-align: left;">Скорочення обсягу VRAM на 75% при тренуванні з адаптивними оптимізаторами (Adam).</td>
+<td style="text-align: left;">Вимагає збереження повних реплік ваг і градієнтів на кожному окремому GPU.</td>
+<td style="text-align: left;">Твердження про наявність додаткового комунікаційного трафіку (обсяг обміну ідентичний DDP).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Повний шардинг параметрів (ZeRO-3 / FSDP)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(M_{\text{static}} = \frac{16\vert\Psi\vert}{P}\)</span></td>
+<td style="text-align: left;">Навчання екстремально великих нейромереж (LLM &gt; 10B), що не вміщуються в пам'ять одного GPU.</td>
+<td style="text-align: left;">Збільшує загальний обсяг мережевого трафіку на 50% внаслідок викликів <code>All-Gather</code>.</td>
+<td style="text-align: left;">Вважати, що ZeRO-3 повністю усуває потребу у конвеєрному та тензорному паралелізмі.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Критичний шлях конвеєра ETL</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\tau_{\max} = \max_{1 \le i \le S} \{\tau_i\}\)</span></td>
+<td style="text-align: left;">Визначення асимптотичної продуктивності конвеєра та виявлення вузьких місць системи.</td>
+<td style="text-align: left;">Продуктивність конвеєра строго обмежена найповільнішою стадією, незалежно від оптимізації інших.</td>
+<td style="text-align: left;">Спроби прискорити конвеєр шляхом оптимізації некритичних фаз (наприклад, PCIe замість диска).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_11">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Яким є теоретичний асимптотичний обсяг даних, що передається і приймається кожним окремим обчислювальним вузлом за один повний цикл роботи алгоритму Ring-AllReduce для тензора розміром <span class="arithmatex">\(M\)</span> байтів при необмеженому збільшенні кількості вузлів кластера (<span class="arithmatex">\(P \to \infty\)</span>)?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(M\)</span> байтів.</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(2M\)</span> байтів.</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(P \cdot M\)</span> байтів.</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(\frac{2M}{P}\)</span> байтів.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Алгоритм Ring-AllReduce складається з двох послідовних фаз: Scatter-Reduce та Allgather. Кожна фаза триває рівно <span class="arithmatex">\(P-1\)</span> комунікаційних кроків. На кожному кроці вузол відправляє блок розміром <span class="arithmatex">\(\frac{M}{P}\)</span> байтів. Сумарний обсяг переданих даних одним вузлом дорівнює:</li>
+</ol>
+<p><span class="arithmatex">\(V_{\text{node}} = 2 \cdot (P - 1) \cdot \frac{M}{P} = 2 \cdot \left( \frac{P - 1}{P} \right) \cdot M\)</span></p>
+<p>Знаходячи границю при <span class="arithmatex">\(P \to \infty\)</span>:</p>
+<p><span class="arithmatex">\(\lim_{P \to \infty} 2 \cdot \left( \frac{P - 1}{P} \right) \cdot M = 2M\)</span></p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки обсяг <span class="arithmatex">\(M\)</span> відповідає лише одній фазі алгоритму (наприклад, тільки Scatter-Reduce), ігноруючи необхідність розповсюдження редукованих сум у фазі Allgather.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що передавання обсягу <span class="arithmatex">\(P \cdot M\)</span> характерне для наївного централізованого алгоритму Parameter Server на центральному вузлі, а не для кільцевої децентралізованої структури.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> описує розмір одного блоку, що передається за дві фази, а не сумарний інтегральний трафік вузла за всю ітерацію.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Чому модуль <code>torch.nn.DataParallel</code> (DP) демонструє суттєво гіршу масштабованість порівняно з <code>torch.nn.parallel.DistributedDataParallel</code> (DDP) навіть у межах одного фізичного сервера з кількома GPU?</p>
+</li>
+<li>
+<p>A. Модуль DP не підтримує обчислення у форматі FP16.</p>
+</li>
+<li>
+<p>B. Модуль DP вимагає обов'язкового використання комутаторів InfiniBand.</p>
+</li>
+<li>
+<p>C. Модуль DP виконується в одному процесі Python, блокується GIL та централізує збір градієнтів на Master GPU.</p>
+</li>
+<li>
+<p>D. Модуль DP не дозволяє застосовувати оптимізатор Adam.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>
+<p>Архітектура DataParallel реалізує однопроцесну багатопотокову модель. У мові Python наявність механізму Global Interpreter Lock (GIL) унеможливлює паралельне виконання байткоду декількома потоками, що спричиняє серіалізацію викликів керування прискорювачами. Додатково Master GPU стає вузьким місцем підсистеми пам'яті, оскільки здійснює копіювання вхідних пакетів, збір градієнтів від усіх GPU, редукцію та оновлення параметрів. На відміну від цього, DDP створює окремий ізольований процес під кожен прискорювач, повністю уникаючи проблем із GIL та реалізуючи децентралізований Ring-AllReduce.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки модуль DataParallel підтримує операції автоматичного змішаного масштабування точності через <code>torch.cuda.amp</code>.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, оскільки DataParallel узагалі не здатен взаємодіяти з мережевими інтерфейсами міжвузлового рівня і працює виключно через системну шину PCIe одного вузла.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є невірним, тому що тип використовуваного оптимізатора функціонально не залежить від вибору модуля паралелізму.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яку ціну в термінах мережевого комунікаційного трафіку сплачує система при переході від оптимізатора ZeRO-Stage 2 до ZeRO-Stage 3 (Fully Sharded Data Parallel)?</p>
+</li>
+<li>
+<p>A. Трафік залишається незмінним.</p>
+</li>
+<li>
+<p>B. Трафік зростає рівно на <span class="arithmatex">\(50\%\)</span> (у <span class="arithmatex">\(1.5\)</span> раза).</p>
+</li>
+<li>
+<p>C. Трафік збільшується рівно втричі (<span class="arithmatex">\(300\%\)</span>).</p>
+</li>
+<li>
+<p>D. Трафік скорочується вдвічі завдяки шардингу.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>У ZeRO-Stage 2 параметри моделі дублюються на кожному GPU, а шардуються лише стани оптимізатора та градієнти. Комунікація полягає виключно в операції <code>Reduce-Scatter</code> градієнтів під час зворотного проходу, що вимагає передавання <span class="arithmatex">\(2 \cdot \frac{P-1}{P} \cdot M \approx 2M\)</span> байтів. </li>
+</ol>
+<p>У ZeRO-Stage 3 параметри моделі також шардовані. Тому перед виконанням прямого проходу необхідно виконати <code>All-Gather</code> для збирання параметрів кожного шару (обсяг <span class="arithmatex">\(M\)</span>), а перед зворотним проходом — повторний <code>All-Gather</code> ваг (обсяг <span class="arithmatex">\(M\)</span>). Разом із редукцією градієнтів <code>Reduce-Scatter</code> (обсяг <span class="arithmatex">\(M\)</span>) сумарний обсяг передавання зростає до <span class="arithmatex">\(3M\)</span>. Відношення становить <span class="arithmatex">\(\frac{3M}{2M} = 1.5\)</span>, тобто трафік зростає рівно на <span class="arithmatex">\(50\%\)</span>.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки шардинг ваг моделі фізично потребує додаткового відновлення повного стану шару перед кожним прямим і зворотним проходом.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним через завищення обсягів: операція All-Gather передає <span class="arithmatex">\(\frac{P-1}{P}M\)</span>, а не подвоєний обсяг на кожен прохід.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є абсурдним, оскільки шардинг зменшує вимоги до фізичної пам'яті VRAM, а не мережевий трафік.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>За якої умови виникає системний стан голодування обчислювальних ядер прискорювача (GPU Starvation) у тристадійному конвеєрі підготовки даних (читання з диска <span class="arithmatex">\(\tau_{\text{ext}}\)</span>, процесорна трансформація <span class="arithmatex">\(\tau_{\text{trans}}\)</span>, обчислення на GPU <span class="arithmatex">\(\tau_{\text{comp}}\)</span>)?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(\tau_{\text{comp}} \ge \max(\tau_{\text{ext}}, \tau_{\text{trans}})\)</span>.</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(\tau_{\text{comp}} &lt; \max(\tau_{\text{ext}}, \tau_{\text{trans}})\)</span>.</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(\tau_{\text{ext}} = \tau_{\text{trans}}\)</span>.</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(\tau_{\text{trans}} = 0\)</span>.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Конвеєр переходить у стан голодування обчислювача (Compute Starvation), коли фаза обчислень на GPU завершується швидше, ніж найповільніша з попередніх фаз генерації чи трансформації даних на хості. У цьому випадку тензорні ядра змушені переходити в режим очікування на час <span class="arithmatex">\(\Delta = \max(\tau_{\text{ext}}, \tau_{\text{trans}}) - \tau_{\text{comp}}\)</span>, утилізація GPU падає, а процес класифікується як I/O-Bound або CPU-Bound.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> описує бажаний збалансований режим Compute-Bound, за якого GPU утилізується на <span class="arithmatex">\(100\%\)</span>, а затримки вводу-виводу повністю маскуються тривалістю матричних обчислень.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> визначає внутрішній баланс між стадіями підготовки на хості, але не враховує швидкодії самого обчислювача GPU.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> описує ідеальний випадок миттєвої трансформації, за якого система все одно може голодувати, якщо затримка читання диска <span class="arithmatex">\(\tau_{\text{ext}}\)</span> перевищує <span class="arithmatex">\(\tau_{\text{comp}}\)</span>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_12">Завдання для самостійної роботи</h4>
+<h5 id="_13">Постановка задачі</h5>
+<p>Науково-дослідна лабораторія здійснює підготовку до розподіленого навчання мультимодальної моделі на 16 мільярдів параметрів (<span class="arithmatex">\(|\Psi| = 16 \cdot 10^9\)</span>). Тренувальний кластер налічує <span class="arithmatex">\(P = 32\)</span> графічні прискорювачі з обсягом пам'яті <span class="arithmatex">\(\text{VRAM} = 80\text{ ГБ}\)</span> кожен, об'єднані інтерконектом із пропускною здатністю <span class="arithmatex">\(\beta_{\text{net}} = 50 \cdot 10^9\text{ Б/с}\)</span> (<span class="arithmatex">\(400\text{ Gbps}\)</span> InfiniBand NDR) та затримкою <span class="arithmatex">\(\alpha_{\text{net}} = 2.0 \cdot 10^{-6}\text{ с}\)</span>. </p>
+<p>Навчання планується в режимі FP16 з оптимізатором Adam. Час обчислення прямого проходу становить <span class="arithmatex">\(\tau_{\text{fwd}} = 0.220\text{ с}\)</span>, а зворотного — <span class="arithmatex">\(\tau_{\text{bwd}} = 0.440\text{ с}\)</span>. Конвеєр завантаження даних забезпечує час вилучення пакета <span class="arithmatex">\(\tau_{\text{ext}} = 0.040\text{ с}\)</span>, час CPU-аугментації <span class="arithmatex">\(\tau_{\text{trans}} = 0.090\text{ с}\)</span> та час H2D копіювання через PCIe <span class="arithmatex">\(\tau_{\text{h2d}} = 0.010\text{ с}\)</span>.</p>
+<h5 id="_14">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Визначити тип обмеження обчислювального процесу (Compute-Bound або I/O-Bound) для наведених часових параметрів стадій конвеєра даних, розрахувавши теоретичний коефіцієнт утилізації графічного прискорювача <span class="arithmatex">\(\eta_{\text{GPU}}\)</span>.</p>
+</li>
+<li>
+<p>Розрахувати точний час виконання операції редукції градієнтів моделі за алгоритмом Ring-AllReduce у разі відсутності просторово-часового перекриття обчислень та передавання даних.</p>
+</li>
+<li>
+<p>Визначити аналітичні обсяги статичної відеопам'яті на один GPU, необхідні для розміщення компонентів навчання моделі (параметрів, градієнтів, станів оптимізатора Adam) у випадках використання DDP, ZeRO-Stage 1, ZeRO-Stage 2 та ZeRO-Stage 3 (FSDP). Зробити висновок щодо мінімально необхідного рівня оптимізації ZeRO для запобігання помилці Out-Of-Memory.</p>
+</li>
+<li>
+<p>Розрахувати теоретичну відкриту латентність зв'язку під час зворотного проходу, якщо розмір градієнтного бакета встановлено рівним <span class="arithmatex">\(C_{\text{bucket}} = 40\text{ МБ}\)</span>. Обґрунтувати, чи забезпечить дана конфігурація повне приховання комунікаційного часу за обчисленнями.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

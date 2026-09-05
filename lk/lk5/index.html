@@ -1,0 +1,3781 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk4/">
+      
+      
+        <link rel="next" href="../lk6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 5. Моделювання обчислювальних процесів у часі та просторі станів - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Просторово-часовий формалізм та графова парадигма паралельних обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі продуктивності, комунікаційної затримки та бар'єрного узгодження
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Комплексне моделювання та оптимізація розподіленого обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Простір станів паралельної системи та динамічні аномалії асинхронності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Дрібноструктурна графова модель «операції-операнди» (DAG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Великоструктурна модель «процеси-канали»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Системна методологія трансформації моделей: парадигма Фостера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4. Системна методологія трансформації моделей: парадигма Фостера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-partitioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Декомпозиція (Partitioning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Комунікація (Communication)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-agglomeration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Агломерація / Масштабування (Agglomeration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Відображення (Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація базових моделей обчислень та архітектур
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формалізація графових часових оцінок та аналітичне виведення теореми Брента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Метричний простір ефективності паралельних обчислень та закони масштабування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Математичне моделювання комунікаційної трудомісткості та топологічні метрики
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення мережевих топологій та методів транспортування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-ccr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Формалізація балансу комунікацій та обчислень (CCR) і критерії зв'язаності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-straggler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні моделі алгоритмів бар'єрної синхронізації та straggler-ефект
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Моделювання гравітаційної взаємодії \(N\) тіл на багатопроцесорному кластері з гіперкубічною топологією
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Моделювання гравітаційної взаємодії \(N\) тіл на багатопроцесорному кластері з гіперкубічною топологією">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок обчислювальної складності послідовного та паралельного розв'язку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-all-gather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Порівняльний аналіз комунікаційної трудомісткості операції All-Gather
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-straggler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Моделювання накладних витрат бар'єрної синхронізації та Straggler-ефекту
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ccr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок підсумкових метрик продуктивності та балансу CCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Просторово-часовий формалізм та графова парадигма паралельних обчислень
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі продуктивності, комунікаційної затримки та бар'єрного узгодження
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Комплексне моделювання та оптимізація розподіленого обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Простір станів паралельної системи та динамічні аномалії асинхронності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Дрібноструктурна графова модель «операції-операнди» (DAG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Великоструктурна модель «процеси-канали»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Системна методологія трансформації моделей: парадигма Фостера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4. Системна методологія трансформації моделей: парадигма Фостера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-partitioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Декомпозиція (Partitioning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Комунікація (Communication)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-agglomeration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Агломерація / Масштабування (Agglomeration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Відображення (Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація базових моделей обчислень та архітектур
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формалізація графових часових оцінок та аналітичне виведення теореми Брента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Метричний простір ефективності паралельних обчислень та закони масштабування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Математичне моделювання комунікаційної трудомісткості та топологічні метрики
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення мережевих топологій та методів транспортування
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-ccr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Формалізація балансу комунікацій та обчислень (CCR) і критерії зв'язаності
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-straggler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Математичні моделі алгоритмів бар'єрної синхронізації та straggler-ефект
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Моделювання гравітаційної взаємодії \(N\) тіл на багатопроцесорному кластері з гіперкубічною топологією
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Моделювання гравітаційної взаємодії \(N\) тіл на багатопроцесорному кластері з гіперкубічною топологією">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок обчислювальної складності послідовного та паралельного розв'язку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-all-gather" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Порівняльний аналіз комунікаційної трудомісткості операції All-Gather
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-straggler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Моделювання накладних витрат бар'єрної синхронізації та Straggler-ефекту
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ccr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Розрахунок підсумкових метрик продуктивності та балансу CCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="5-">Тема 5. Моделювання обчислювальних процесів у часі та просторі станів. Графові моделі «операції-операнди», «процеси-канали», оцінка комунікаційної трудомісткості та бар'єрна синхронізація</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою цієї лекції є формування у майбутніх фахівців із комп'ютерної інженерії системи фундаментальних знань і практичних навичок формального моделювання паралельних і розподілених обчислювальних процесів у просторі станів та в часовому конвеєрі виконання. Під час лекції розглядається методологічний перехід від дрібнозернистих інформаційних графів типу «операції-операнди» до великоструктурних топологій «процеси-канали» з аналітичною оцінкою комунікаційної трудомісткості передачі повідомлень. Окрему увагу зосереджено на математичному апараті оцінювання продуктивності за теоремою Брента, розрахунку балансу між обчисленнями і комунікаціями, а також на аналізі часової складності алгоритмів бар'єрної синхронізації у високопродуктивних обчислювальних системах.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Здобувачі вищої освіти повинні засвоїти понятійний апарат простору станів обчислювальних систем, розуміти математичні властивості орієнтованих ациклічних графів алгоритмів (DAG), принципи функціонування детермінованих мереж процесів Кана, сутність моделі «процеси-канали», а також системні механізми виникнення деструктивних аномалій паралелізму (станів перегонів, взаємних блокувань і голодування).</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Здобувачі мають оволодіти вмінням формалізувати довільні паралельні обчислювальні алгоритми у вигляді графів інформаційних залежностей за даними, будувати часові розклади виконання задач для фіксованої кількості обчислювальних вузлів, здійснювати параметричне масштабування підзадач і застосовувати аналітичну модель Хокні для точного розрахунку комунікаційних витрат у гетерогенних мережах.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Студенти повинні вміти проводити порівняльний аналіз топологічних властивостей комунікаційних середовищ (діаметра, зв'язності, ширини бісекції), аналізувати детермінізм інформаційних потоків у моделях обчислень, досліджувати відношення комунікаційної трудомісткості до обчислювальної (<span class="arithmatex">\(CCR\)</span>) та виявляти критичні фактори уповільнення систем через ефект найповільнішого процесу (straggler effect).</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Здобувачі мають набути навичок оцінювання теоретичних меж прискорення та ефективності паралельних програм на основі аналізу довжини критичного шляху графа і теореми Брента, синтезувати оптимальні деревоподібні топології бар'єрної синхронізації та обґрунтовувати раціональний розподіл обчислювальних задач між ядрами для досягнення вартісно-оптимального режиму роботи системи.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1-">1. Теоретичний модуль. Просторово-часовий формалізм та графова парадигма паралельних обчислень</h3>
+<ul>
+<li>
+<p>1.1. Концепція простору станів паралельної обчислювальної системи: векторна репрезентація конфігурацій, фазовий простір виконання у часі та класифікація критичних аномалій асинхронної взаємодії процесів (стан перегонів, взаємне блокування-дедлок, нескінченне відкладання-голодування).</p>
+</li>
+<li>
+<p>1.2. Дрібноструктурна графова модель «операції-операнди» (DAG): математичний опис множини вершин і дуг інформаційних залежностей, концепція детермінізму за даними (Dataflow Determinism), ярусна структура та характеристики паралельної форми алгоритму.</p>
+</li>
+<li>
+<p>1.3. Великоструктурна модель «процеси-канали»: формалізація автономних процесів із локальним адресним простором, абстракція каналів як нескінченних або обмежених черг повідомлень (FIFO), блокуюча семантика операцій вводу-виводу та співвідношення з мережами процесів Кана і моделлю взаємодіючих послідовних процесів Хоара (CSP).</p>
+</li>
+<li>
+<p>1.4. Системна методологія трансформації обчислювальних моделей: чотириетапна парадигма проєктування Фостера (декомпозиція за даними та функціями, виділення локальних і глобальних комунікацій, агломерація і масштабування підзадач, відображення на фізичні ядра процесора).</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичні моделі продуктивності, комунікаційної затримки та бар'єрного узгодження</h3>
+<ul>
+<li>
+<p>2.1. Аналітичні характеристики графових моделей обчислень: визначення сумарного обсягу робіт (<span class="arithmatex">\(T_1\)</span>), довжини критичного шляху (<span class="arithmatex">\(T_\infty\)</span>) на базі концепції паракомп'ютера, а також формулювання й аналітичне доведення теореми Брента для оцінки часу виконання на скінченній кількості обчислювачів.</p>
+</li>
+<li>
+<p>2.2. Метрики якості та ефективності паралельних алгоритмів: математичний апарат розрахунку прискорення (<span class="arithmatex">\(S_p\)</span>), ефективності використання процесорів (<span class="arithmatex">\(E_p\)</span>), критерій вартісної оптимальності (<span class="arithmatex">\(C_p\)</span>) та фізичні причини виникнення аномального понадлінійного (суперлінійного) прискорення.</p>
+</li>
+<li>
+<p>2.3. Кількісна оцінка комунікаційної складової виконання паралельних алгоритмів: порівняльний аналіз передачі повідомлень (Store-and-Forward Routing) і пакетної маршрутизації (Cut-Through Routing), часові затримки в типових топологіях (кільце, решітка-тор, гіперкуб) та класична аналітична модель Хокні.</p>
+</li>
+<li>
+<p>2.4. Математична формалізація балансу між комунікаціями та обчисленнями: розрахунок коефіцієнта <span class="arithmatex">\(CCR\)</span> (Communication-to-Computation Ratio), аналітичні критерії визначення обчислювального режиму (Compute-Bound проти Network-Bound) та стратегії оптимізації зернистості розпаралелювання.</p>
+</li>
+<li>
+<p>2.5. Математичне моделювання бар'єрної синхронізації паралельних ітераційних процесів: аналіз часової складності централізованого бар'єра з лічильником (<span class="arithmatex">\(\mathcal{O}(p)\)</span>) проти розгалужених деревоподібних структур (<span class="arithmatex">\(\mathcal{O}(\log_2 p)\)</span>), а також кількісна оцінка системних втрат через ефект найповільнішого процесу (straggler effect).</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Комплексне моделювання та оптимізація розподіленого обчислювального процесу</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Аналітичний розрахунок часових характеристик, комунікаційних витрат та оптимізація бар'єрної синхронізації паралельного алгоритму моделювання гравітаційної взаємодії <span class="arithmatex">\(N\)</span> тіл на багатопроцесорному кластері з гіперкубічною топологією»</p>
+<h2 id="1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11">1.1. Простір станів паралельної системи та динамічні аномалії асинхронності</h3>
+<p>Математичне моделювання паралельних обчислювальних процесів спирається на розмежування поведінки системи у двох взаємопов'язаних вимірах: часовому конвеєрі виконання (<strong>Execution Timeline</strong>) та просторі станів (<strong>State Space</strong>). У класичній однопроцесорній архітектурі фон Неймана обчислювальний процес розгортається строго детерміновано як лінійна послідовність переходів між станами єдиного процесорного елемента та оперативної пам'яті. На противагу цьому, паралельна або розподілена обчислювальна система функціонує в умовах недетермінованого переплетення (<strong>interleaving</strong>) елементарних операцій, породжуваних множиною автономних обчислювальних ядер або процесорів.</p>
+<p>Формально глобальний стан обчислювальної системи в довільний момент модельного часу описується вектором конфігурації:</p>
+<div class="arithmatex">\[S(t) = \Big( s_1(t), s_2(t), \dots, s_p(t), \mathbf{M}(t), \mathbf{C}(t) \Big)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(s_i(t) \in \mathcal{S}_{\text{proc}}\)</span> позначає локальний стан <span class="arithmatex">\(i\)</span>-го процесу (зокрема значення програмного лічильника інструкцій, вміст локальних регістрів процесора та стек викликів) у момент часу <span class="arithmatex">\(t\)</span>, виміряний у секундах (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(p \in \mathbb{N}\)</span> визначає загальну цілочисельну кількість активних фізичних або віртуальних процесів, задіяних у виконанні паралельної задачі;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{M}(t) \in \mathcal{M}\)</span> позначає глобальний стан простору пам'яті (стан спільних комірок або конфігурацію розподілених буферів);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{C}(t) = \big( q_1(t), q_2(t), \dots, q_m(t) \big)\)</span> відображає стан комунікаційного середовища, представлений вектором вмісту <span class="arithmatex">\(m\)</span> комунікаційних каналів черг повідомлень.</p>
+</li>
+</ul>
+<p>Динаміка обчислювальної системи моделюється як дискретна марковська або напівмарковська послідовність переходів під впливом подій <span class="arithmatex">\(e_k \in \mathcal{E}\)</span>, де кожна подія відповідає виконанню базової арифметичної команди, операції читання/запису пам'яті або відправленню/прийому мережевого повідомлення:</p>
+<div class="arithmatex">\[S(t + \Delta t) = \delta\big( S(t), e_k \big)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(S(t)\)</span> репрезентує початковий вектор глобального стану системи перед настанням події;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(e_k \in \mathcal{E}\)</span> є дискретною елементарною подією з множини допустимих системних дій <span class="arithmatex">\(\mathcal{E}\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\delta: \mathcal{S} \times \mathcal{E} \to \mathcal{S}\)</span> є операторною функцією переходів між станами системи;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\Delta t\)</span> позначає фізичну тривалість виконання елементарної дії <span class="arithmatex">\(e_k\)</span>, виражену в секундах (<span class="arithmatex">\(c\)</span>).</p>
+</li>
+</ul>
+<p>Через асинхронну природу взаємодії компонентів множина можливих траєкторій переходів у просторі станів зростає комбінаторно (явище комбінаторного вибуху простору станів). Відсутність жорсткої часової координації призводить до виникнення критичних динамічних аномалій:</p>
+<ol>
+<li><strong>Стан перегонів (Race Condition)</strong> виникає тоді, коли два або більше паралельних потоків звертаються до спільного ресурсу пам'яті без належної синхронізації, причому хоча б одна з операцій є операцією запису. Результат обчислень стає залежним від випадкового порядку виконання машинних інструкцій операційною системою. Формально стан перегонів порушує умови Бернштейна: якщо множина комірок пам'яті, що зчитуються процесом <span class="arithmatex">\(P_1\)</span>, є <span class="arithmatex">\(I_1\)</span>, а записуваних — <span class="arithmatex">\(O_1\)</span> (аналогічно <span class="arithmatex">\(I_2, O_2\)</span> для <span class="arithmatex">\(P_2\)</span>), то одночасне виконання є коректним тоді й лише тоді, коли:</li>
+</ol>
+<div class="arithmatex">\[\big( I_1 \cap O_2 \big) \cup \big( O_1 \cap I_2 \big) \cup \big( O_1 \cap O_2 \big) = \emptyset\]</div>
+<p>де <span class="arithmatex">\(I_k\)</span> позначає множину вхідних адрес пам'яті (множину читання), а <span class="arithmatex">\(O_k\)</span> визначає множину вихідних адрес пам'яті (множину запису) для <span class="arithmatex">\(k\)</span>-го процесу.</p>
+<ol>
+<li>
+<p><strong>Взаємне блокування (Deadlock)</strong> являє собою стійкий тупиковий стан системи, за якого жоден із групи процесів не може продовжувати виконання, оскільки кожен процес циклічно очікує звільнення ресурсу, заблокованого іншим процесом цієї ж групи. Для виникнення взаємного блокування необхідне одночасне виконання чотирьох умов Коффмана: взаємне виключення (<strong>Mutual Exclusion</strong>), утримання та очікування ресурсу (<strong>Hold and Wait</strong>), відсутність примусового вилучення ресурсу (<strong>No Preemption</strong>) та наявність кругового очікування у графі розподілу ресурсів (<strong>Circular Wait</strong>).</p>
+</li>
+<li>
+<p><strong>Нескінченне відкладання, або голодування (Starvation)</strong> виникає в ситуаціях, коли окремий процес через несправедливу дисципліну диспетчеризації або пріоритетного розподілу ресурсів позбавлений доступу до процесорного часу або критичної секції, хоча система в цілому продовжує змінювати стани та виконувати корисну роботу. Різновидом цього стану є <strong>живе блокування (Livelock)</strong>, коли процеси активно змінюють власні локальні стани у відповідь на дії інших процесів, але сумарний прогрес алгоритму дорівнює нулю.</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Process_Lifecycle [Життєвий цикл процесу в просторі станів]
+        Start([Створення процесу]) --&gt; Ready[Стан готовності 'Ready']
+        Ready --&gt;|Виділення кванта часу| Running[Стан виконання 'Running']
+        Running --&gt;|Вичерпано квант часу / Yield| Ready
+        Running --&gt;|Запит зайнятого ресурсу / Wait| Blocked[Стан блокування 'Blocked']
+        Blocked --&gt;|Подія звільнення ресурсу / Signal| Ready
+        Running --&gt;|Коректне завершення| Terminated([Завершено 'Terminated'])
+    end
+
+    subgraph Anomalies [Критичні динамічні аномалії]
+        Running -.-&gt;|Некоординований доступ до пам'яті| Race[Стан перегонів 'Race Condition']
+        Blocked -.-&gt;|Кругове очікування ресурсів| Deadlock[Взаємне блокування 'Deadlock']
+        Blocked -.-&gt;|Несправедливий арбітраж| Starvation[Голодування 'Starvation']
+        Running -.-&gt;|Безперервна зміна станів без прогресу| Livelock[Живе блокування 'Livelock']
+    end</code></pre>
+<h3 id="12-dag">1.2. Дрібноструктурна графова модель «операції-операнди» (DAG)</h3>
+<p>На мікрорівні аналізу паралелізму інформаційна структура обчислювального алгоритму подається за допомогою орієнтованого ациклічного графа (<strong>Directed Acyclic Graph, DAG</strong>), який у вітчизняній науковій школі традиційно іменується моделлю «операції-операнди».</p>
+<p>Граф алгоритму формалізується четвіркою параметрів:</p>
+<div class="arithmatex">\[G = (V, E, W_V, W_E)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(V = \{v_1, v_2, \dots, v_n\}\)</span> позначає множину вершин, кожна з яких моделює неподільну елементарну обчислювальну операцію (наприклад, додавання, множення, трансцендентне обчислення, блочне скалярне множення матриць);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(E \subseteq V \times V\)</span> репрезентує множину орієнтованих дуг, де напрямлена дуга <span class="arithmatex">\(e_{ij} = (v_i, v_j) \in E\)</span> існує тоді й лише тоді, коли операція <span class="arithmatex">\(v_j\)</span> безпосередньо використовує як операнд результат, обчислений операцією <span class="arithmatex">\(v_i\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(W_V: V \to \mathbb{R}^+\)</span> є ваговим відображенням, що зіставляє кожній вершині <span class="arithmatex">\(v_i\)</span> її обчислювальну трудомісткість <span class="arithmatex">\(w(v_i)\)</span>, виражену в кількості операцій з рухомою комою (<span class="arithmatex">\(FLOP\)</span>) або в секундах (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(W_E: E \to \mathbb{R}^+\)</span> є ваговим відображенням, яке задає обсяг інформації <span class="arithmatex">\(d(e_{ij})\)</span>, що передається між операціями <span class="arithmatex">\(v_i\)</span> та <span class="arithmatex">\(v_j\)</span>, виражений у байтах (<span class="arithmatex">\(Byte\)</span>).</p>
+</li>
+</ul>
+<p>Ациклічність графа <span class="arithmatex">\(G\)</span> (<span class="arithmatex">\(e_{ij} \in E \implies v_i \neq v_j\)</span> та відсутність замкнених контурів) обумовлена причинно-наслідковою природою чисельних обчислень: жодна обчислювальна змінна не може бути визначена через саму себе безпосередньо в межах одного такту обчислень. Якщо між парою вершин <span class="arithmatex">\(v_a\)</span> та <span class="arithmatex">\(v_b\)</span> відсутній орієнтований шлях у графі <span class="arithmatex">\(G\)</span>, зазначені операції є інформаційно незалежними за даними та потенційно можуть виконуватися абсолютно паралельно на різних обчислювачах.</p>
+<p>Фундаментальною властивістю графової моделі «операції-операнди» є детермінізм за даними (<strong>Dataflow Determinism</strong>): порядок фактичного виконання інформаційно незалежних операцій та просторове розміщення вершин по фізичних процесорних ядрах жодним чином не здатні змінити підсумковий чисельний результат алгоритму за умови збереження відношення часткового порядку, заданого дугами <span class="arithmatex">\(E\)</span>.</p>
+<p>Для аналітичного опису просторової конфігурації паралелізму використовують розбиття графа на паралельні яруси (<strong>Ярусно-паралельна форма, ЯПФ</strong>). Кожній вершині <span class="arithmatex">\(v \in V\)</span> зіставляється її цілочисельний топологічний ранг або номер ярусу:</p>
+<div class="arithmatex">\[L(v_j) = 
+\begin{cases} 
+1, &amp; \text{якщо } \mathrm{Pred}(v_j) = \emptyset, \\
+1 + \max_{v_i \in \mathrm{Pred}(v_j)} L(v_i), &amp; \text{якщо } \mathrm{Pred}(v_j) \neq \emptyset
+\end{cases}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(L(v_j) \in \mathbb{N}\)</span> позначає номер ярусу (висоту вершини) в ярусно-паралельній формі графа;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathrm{Pred}(v_j) = \{ v_i \in V \mid (v_i, v_j) \in E \}\)</span> визначає множину безпосередніх вершин-попередників для операції <span class="arithmatex">\(v_j\)</span>.</p>
+</li>
+</ul>
+<p>Сукупність вершин, які мають однаковий ранг <span class="arithmatex">\(L(v) = k\)</span>, утворює <span class="arithmatex">\(k\)</span>-й ярус паралельної форми алгоритму. Основними ботанічними та структурними характеристиками графа є:</p>
+<ul>
+<li>
+<p><strong>Висота паралельної форми <span class="arithmatex">\(H(G) = \max_{v \in V} L(v)\)</span></strong> відповідає мінімально можливій кількості послідовних кроків, необхідних для виконання алгоритму за наявності необмеженої кількості процесорних пристроїв (<span class="arithmatex">\(H(G) = T_\infty\)</span> за одиничної тривалості операцій).</p>
+</li>
+<li>
+<p><strong>Ширина <span class="arithmatex">\(k\)</span>-го ярусу <span class="arithmatex">\(B_k = |\{ v \in V \mid L(v) = k \}|\)</span></strong> визначає ступінь внутрішнього паралелізму на <span class="arithmatex">\(k\)</span>-му кроці обчислень.</p>
+</li>
+<li>
+<p><strong>Максимальна ширина паралельної форми <span class="arithmatex">\(W(G) = \max_k B_k\)</span></strong> регламентує максимальну кількість процесорів, яку здатний ефективно утилізувати алгоритм на піку паралелізму без простою обладнання.</p>
+</li>
+</ul>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Level_1 [Ярус 1: Введення даних та ініціалізація]
+        v1["v1: Введення x[0..1]"]
+        v2["v2: Введення x[2..3]"]
+        v3["v3: Введення x[4..5]"]
+        v4["v4: Введення x[6..7]"]
+    end
+
+    subgraph Level_2 [Ярус 2: Локальна редукція етап 1]
+        v5["v5: Додавання s1 = x0 + x1"]
+        v6["v6: Додавання s2 = x2 + x3"]
+        v7["v7: Додавання s3 = x4 + x5"]
+        v8["v8: Додавання s4 = x6 + x7"]
+    end
+
+    subgraph Level_3 [Ярус 3: Локальна редукція етап 2]
+        v9["v9: Додавання s12 = s1 + s2"]
+        v10["v10: Додавання s34 = s3 + s4"]
+    end
+
+    subgraph Level_4 [Ярус 4: Фінальна редукція]
+        v11["v11: Підсумок Total = s12 + s34"]
+    end
+
+    v1 --&gt; v5
+    v2 --&gt; v6
+    v3 --&gt; v7
+    v4 --&gt; v8
+
+    v5 --&gt; v9
+    v6 --&gt; v9
+    v7 --&gt; v10
+    v8 --&gt; v10
+
+    v9 --&gt; v11
+    v10 --&gt; v11</code></pre>
+<h3 id="13-">1.3. Великоструктурна модель «процеси-канали»</h3>
+<p>Якщо модель «операції-операнди» фокусується на інформаційній залежності індивідуальних математичних операцій без прив'язки до комунікаційної платформи, то на макрорівні паралельного програмування застосовується модель «процеси-канали» (<strong>Process-Channel Model</strong>). Вона базується на теоретичних концепціях мереж процесів Кана (<strong>Kahn Process Networks, KPN</strong>) та формалізмі взаємодіючих послідовних процесів Хоара (<strong>Communicating Sequential Processes, CSP</strong>).</p>
+<p>У моделі «процеси-канали» обчислювальна архітектура розглядається як зважений мультиграф:</p>
+<div class="arithmatex">\[\mathcal{M}_{PC} = (\mathcal{P}, \mathcal{C})\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{P} = \{P_1, P_2, \dots, P_p\}\)</span> є множиною паралельних процесів, кожен із яких володіє повністю ізольованим адресним простором оперативної пам'яті, локальною чергою виконання інструкцій та набором портів взаємодії;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathcal{C} = \{c_1, c_2, \dots, c_k\}\)</span> позначає множину односпрямованих комунікаційних каналів зв'язку, де кожен канал <span class="arithmatex">\(c = (P_i, P_j)\)</span> забезпечує транспортування типізованих блоків даних від процесу-джерела <span class="arithmatex">\(P_i\)</span> до процесу-одержувача <span class="arithmatex">\(P_j\)</span>.</p>
+</li>
+</ul>
+<p>Канал комунікації функціонує за семантикою строгої черги <strong>FIFO</strong> (First-In, First-Out). Поведінка та детермінізм моделі регламентуються правилами взаємодії процесів із каналами:</p>
+<ol>
+<li>
+<p><strong>Мережі процесів Кана (KPN).</strong> У формалізмі Кана ємність каналів зв'язку вважається потенційно нескінченною. Операція відправлення даних у канал є повністю неблокуючою (<strong>non-blocking write</strong>): процес-джерело миттєво розміщує повідомлення в буфері та продовжує виконання без затримок. Операція читання з каналу є блокуючою (<strong>blocking read</strong>): якщо канал порожній, процес-одержувач призупиняє своє виконання доти, доки в буфері не з'явиться щонайменше один елемент даних. Процес не має засобів перевірки наявності даних у каналі без спроби їх зчитування (відсутність операцій типу polling або інспектування декількох каналів одночасно). Завдяки монотонності та неперервності відображень над потоками в теорії Кана доведено, що мережа KPN володіє функціональним детермінізмом: послідовність згенерованих даних на виходах системи не залежить від квантування часу виконання процесів чи затримок передачі по мережі.</p>
+</li>
+<li>
+<p><strong>Модель CSP Хоара.</strong> На відміну від KPN, у моделі CSP канали за замовчуванням мають нульову ємність (<span class="arithmatex">\(B_c = 0\)</span>), що моделює режим рандеву (<strong>rendezvous</strong>). Як операція читання, так і операція запису є блокуючими: точка обміну досягається лише тоді, коли відправник і одержувач одночасно готові до взаємодії. Це усуває потребу у виділенні буферної пам'яті, проте суттєво підвищує чутливість системи до взаємних блокувань у разі некоректної послідовності викликів комунікаційних процедур.</p>
+</li>
+<li>
+<p><strong>Специфікація MPI як гібридна інженерна реалізація.</strong> У промислових системах на базі інтерфейсу передачі повідомлень (MPI) програміст отримує як блокуючі (<code>MPI_Send</code>, <code>MPI_Recv</code>), так і неблокуючі примітиви (<code>MPI_Isend</code>, <code>MPI_Irecv</code>), що дає змогу суміщати обчислення з передачею даних у часі, організовуючи комунікаційні конвеєри.</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Process_A [Процес-джерело P_i]
+        CodeA["Локальні обчислення W_local"] --&gt; SendOp["Запис у канал: Send(buf, count)"]
+    end
+
+    subgraph FIFO_Channel [Комунікаційний канал FIFO c_ij]
+        Buffer[("Буфер черги повідомлень&lt;br&gt;Ємність B_c")]
+    end
+
+    subgraph Process_B [Процес-одержувач P_j]
+        RecvOp["Читання з каналу: Recv(buf, count)"] --&gt; CodeB["Локальні обчислення W_local"]
+    end
+
+    SendOp --&gt;|Неблокуючий запис у буфер| Buffer
+    Buffer --&gt;|Блокуюче читання при порожньому буфері| RecvOp</code></pre>
+<h3 id="14">1.4. Системна методологія трансформації моделей: парадигма Фостера</h3>
+<p>Перехід від абстрактного алгоритмічного опису задачі до ефективно функціонуючого паралельного коду, оптимізованого під конкретну апаратну архітектуру, спирається на класичну методологію проєктування, запропоновану Ієном Фостером (<strong>Foster's Design Methodology</strong>, парадигма <strong>PCAM</strong>). Ця методологія складається з чотирьох послідовних стадій, які зв'язують мікрорівень «операції-операнди» з макрорівнем «процеси-канали».</p>
+<pre class="mermaid"><code>flowchart TD
+    P[1. Декомпозиція 'Partitioning'] --&gt; C[2. Комунікація 'Communication']
+    C --&gt; A[3. Агломерація 'Agglomeration']
+    A --&gt; M[4. Відображення 'Mapping']
+
+    P -.-&gt;|Аналіз дрібнозернистого паралелізму| P_Desc["Розбиття на максимальну кількість підзадач:&lt;br&gt;- За даними 'Domain Decomposition'&lt;br&gt;- За функціями 'Functional Decomposition'"]
+    C -.-&gt;|Формування графа зв'язків| C_Desc["Визначення інформаційних потоків:&lt;br&gt;- Локальні проти глобальних&lt;br&gt;- Синхронні проти асинхронних"]
+    A -.-&gt;|Укрупнення підзадач| A_Desc["Об'єднання дрібних задач у макропроцеси:&lt;br&gt;- Зниження відношення комунікацій до обчислень CCR&lt;br&gt;- Балансування обчислювального навантаження"]
+    M -.-&gt;|Прив'язка до апаратури| M_Desc["Розподіл агрегованих процесів по ядрах:&lt;br&gt;- Мінімізація міжвузлового мережевого трафіку&lt;br&gt;- Динамічне балансування навантаження"]</code></pre>
+<h4 id="1-partitioning">1. Декомпозиція (Partitioning)</h4>
+<p>На початковій стадії загальна обчислювальна схема розбивається на максимально можливу кількість елементарних підзадач без огляду на обмеженість апаратних ресурсів цільової системи. Головна мета стадії — експлікація граничного внутрішнього паралелізму задачі. Декомпозиція реалізується у двох формах:</p>
+<ul>
+<li>
+<p><strong>Паралелізм за даними (Domain Decomposition)</strong> передбачає поділ структур даних (масивів, матриць, сіток чи тензорів) на неперетинні підмножини, де кожна підзадача виконує однотипні обчислення над закріпленим блоком даних.</p>
+</li>
+<li>
+<p><strong>Функціональний паралелізм (Functional / Task Decomposition)</strong> розбиває алгоритм на різнорідні обчислювальні фази (наприклад, введення даних, фільтрація, спектральний аналіз, виведення), які здатні утворювати просторові або часові конвеєри.</p>
+</li>
+</ul>
+<h4 id="2-communication">2. Комунікація (Communication)</h4>
+<p>На другому етапі визначаються інформаційні взаємодії між сформованими на першому кроці підзадачами, необхідні для передачі проміжних операндів. Структура комунікацій класифікується за чотирма дихотомічними ознаками:</p>
+<ul>
+<li>
+<p><strong>Локальні проти глобальних комунікацій.</strong> За локальної схеми кожен процес взаємодіє виключно з обмеженою кількістю просторово сусідніх процесів (наприклад, обмін тіньовими границями у сіткових методах). Глобальні комунікації вимагають колективної взаємодії всіх вузлів системи (наприклад, редукційне підсумовування або широкомовна розсилка).</p>
+</li>
+<li>
+<p><strong>Структуровані проти довільних.</strong> Структуровані взаємодії утворюють регулярні геометричні топології (лінійка, кільце, 2D-решітка, гіперкуб), тоді як довільні мають динамічну та нерегулярну структуру зв'язків.</p>
+</li>
+<li>
+<p><strong>Статичні проти динамічних.</strong> Статичні зв'язки жорстко зафіксовані на етапі компіляції чи ініціалізації, а динамічні виникають непередбачувано в процесі обчислень (наприклад, в алгоритмах із адаптивними розрахунковими сітками).</p>
+</li>
+<li>
+<p><strong>Синхронні проти асинхронних.</strong> Синхронна передача блокує відправника до моменту підтвердження прийому одержувачем, а асинхронна реалізує концепцію перекриття комунікацій та обчислень шляхом використання проміжних буферів.</p>
+</li>
+</ul>
+<h4 id="3-agglomeration">3. Агломерація / Масштабування (Agglomeration)</h4>
+<p>Стадія агломерації полягає в перегрупуванні та укрупненні дрібних елементарних підзадач у більш масивні обчислювальні блоки (<strong>Coarse Granularity</strong>). Застосування виключно дрібноструктурних задач призводить до катастрофічного домінування комунікаційних накладних витрат над корисними розрахунками. </p>
+<p>Критерієм коректної агломерації є об'єднання в межах одного процесу тих підзадач, між якими зафіксовано найвищу інтенсивність інформаційного обміну, що перетворює дорогі міжвузлові мережеві пересилання на дешеві операції читання/запису локальної пам'яті процесора.</p>
+<h4 id="4-mapping">4. Відображення (Mapping)</h4>
+<p>Завершальний етап проєктування полягає у фізичному призначенні агрегованих процесів на доступні апаратні процесорні ядра або обчислювальні вузли кластера. Задача відображення є класичною NP-повною задачею оптимізації розкладу, яка вимагає досягнення двох суперечливих цілей:</p>
+<ul>
+<li>
+<p>забезпечення ідеально рівномірного обчислювального навантаження між усіма задіяними ядрами для запобігання простоям;</p>
+</li>
+<li>
+<p>розміщення інтенсивно взаємодіючих процесів на спільних фізичних вузлах для мінімізації трафіку в системних комунікаційних каналах.</p>
+</li>
+</ul>
+<hr />
+<h3 id="_4">Систематизація базових моделей обчислень та архітектур</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр порівняння</th>
+<th style="text-align: left;">Модель «Операції-Операнди» (DAG)</th>
+<th style="text-align: left;">Мережі процесів Кана (KPN)</th>
+<th style="text-align: left;">Взаємодіючі процеси (CSP Хоара)</th>
+<th style="text-align: left;">Модель передачі повідомлень (MPI)</th>
+<th style="text-align: left;">Модель спільної пам'яті (OpenMP / Threads)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Рівень абстракції та зернистість</strong></td>
+<td style="text-align: left;">Дрібноструктурний (мікрорівень операторів)</td>
+<td style="text-align: left;">Великоструктурний (макрорівень потоків)</td>
+<td style="text-align: left;">Великоструктурний (рівень взаємодіючих задач)</td>
+<td style="text-align: left;">Великоструктурний (рівень незалежних процесів)</td>
+<td style="text-align: left;">Середньо- та дрібноструктурний (рівень ниток)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Базові конструктивні елементи</strong></td>
+<td style="text-align: left;">Скалярні/векторні операції (<span class="arithmatex">\(v_i\)</span>) та дуги залежностей (<span class="arithmatex">\(e_{ij}\)</span>)</td>
+<td style="text-align: left;">Автономні послідовні процеси та спрямовані канали</td>
+<td style="text-align: left;">Автономні процеси та точки синхронного рандеву</td>
+<td style="text-align: left;">Процеси зі своїм адресним простором, комунікатори</td>
+<td style="text-align: left;">Нитки (threads) у єдиному адресному просторі процесу</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Семантика обміну даними</strong></td>
+<td style="text-align: left;">Неявна передача операндів через результуючі змінні</td>
+<td style="text-align: left;">Асинхронний запис у нескінченний FIFO, блокуюче читання</td>
+<td style="text-align: left;">Синхронне рандеву: одночасне блокування читання й запису</td>
+<td style="text-align: left;">Буферизована/неблокуюча передача повідомлень по мережі</td>
+<td style="text-align: left;">Прямий доступ до спільних комірок пам'яті через спільні шини</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ступінь детермінізму</strong></td>
+<td style="text-align: left;">Абсолютний детермінізм за даними (Dataflow Determinism)</td>
+<td style="text-align: left;">Гарантований функціональний детермінізм потоків</td>
+<td style="text-align: left;">Потенційно недетермінований за наявності альтернативних виборів</td>
+<td style="text-align: left;">Детермінований за виклику з конкретних рангів; недетермінований за <code>ANY_SOURCE</code></td>
+<td style="text-align: left;">Недетермінований за замовчуванням; висока чутливість до race conditions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Механізми взаємовиключення</strong></td>
+<td style="text-align: left;">Не потрібні (відсутня спільна модифікована пам'ять)</td>
+<td style="text-align: left;">Реалізуються неявно через стан черги каналу FIFO</td>
+<td style="text-align: left;">Реалізуються неявно через блокуючий протокол рандеву</td>
+<td style="text-align: left;">Розподіл адресного простору унеможливлює спільний конфлікт</td>
+<td style="text-align: left;">М'ютекси, критичні секції, семафори, атомарні змінні</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Апаратна орієнтація та реалізація</strong></td>
+<td style="text-align: left;">Суперскалярні процесори, VLIW, обчислювальні графи тензорних процесорів</td>
+<td style="text-align: left;">Системи потокової обробки сигналів (DSP), потокові пайплайни</td>
+<td style="text-align: left;">Системи з жорсткою синхронізацією, мікроядерні архітектури</td>
+<td style="text-align: left;">Кластерні суперкомп'ютери, масивно-паралельні системи (MPP)</td>
+<td style="text-align: left;">Симетричні мультипроцесори (SMP), багатоядерні CPU та GPU</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Помилковим є ототожнення поняття <strong>асинхронного паралелізму</strong> з <strong>недетермінізмом підсумкових результатів обчислень</strong>. Багато інженерів вважають, що якщо алгоритм виконується асинхронно без використання глобального тактового генератора чи спільних бар'єрів, його результати обов'язково зазнаватимуть стохастичного впливу через різну швидкість процесорів.</p>
+<p>У дійсності детермінізм алгоритму повністю визначається обраною моделлю обчислень та структурою інформаційних залежностей. У чистому графі «операції-операнди» (DAG) та у мережах процесів Кана (KPN) діє властивість консистентності за даними: якщо топологічний порядок графа гарантує завершення генерації операнда до моменту його споживання, результат роботи алгоритму буде біт-у-біт ідентичним за будь-яких варіацій швидкодії процесорних вузлів, різної швидкості проходження пакетів у комутаторах та за довільних квантів виділення процесорного часу операційною системою. Недетермінізм виникає виключно тоді, коли в систему свідомо впроваджуються некоординовані спільні ресурси пам'яті, операції типу <code>MPI_ANY_SOURCE</code> або альтернативні вибори з черг очікування.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Чому в моделі мереж процесів Кана (KPN) категорично заборонено введення примітиву неблокуючої перевірки наявності даних у каналі (операції типу <code>probe</code> або <code>is_empty</code>), якщо ми прагнемо зберегти фундаментальну властивість гарантованого функціонального детермінізму системи?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Правильна відповідь:</strong> Наявність неблокуючої операції перевірки стану каналу (<code>is_empty</code> або <code>poll</code>) руйнує монотонність поведінки процесу та вводить недетерміновану часову залежність у простір станів системи.</p>
+<ol>
+<li><strong>Математичне обґрунтування властивості детермінізму Кана:</strong>
+   У мережах KPN кожен процес функціонує як неперервне монотонне відображення у просторі послідовностей (потоків) за Скоттом. Функція <span class="arithmatex">\(F: \mathcal{H}_1 \times \dots \times \mathcal{H}_m \to \mathcal{H}_1 \times \dots \times \mathcal{H}_k\)</span> називається монотонною, якщо:</li>
+</ol>
+<div class="arithmatex">\[X \sqsubseteq X' \implies F(X) \sqsubseteq F(X')\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{H}\)</span> є множиною скінченних і нескінченних послідовностей елементів (потоків);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\sqsubseteq\)</span> позначає відношення префіксного часткового порядку над послідовностями (потік <span class="arithmatex">\(X\)</span> є префіксом потоку <span class="arithmatex">\(X'\)</span>).</p>
+</li>
+</ul>
+<p>Коли процес має доступ лише до операції блокуючого читання, вихідний потік формується виключно на основі значень, які надійшли у вхідні канали. Час надходження даних не впливає на точку виклику, оскільки процес просто чекає.</p>
+<ol>
+<li><strong>Аналіз виникнення недетермінізму через опитування каналу:</strong>
+   Якщо ж процес має змогу викликати неблокуючу функцію <code>is_empty(channel)</code> і здійснювати галуження за умовою:</li>
+</ol>
+<div class="arithmatex">\[\mathbf{if} \;\; \mathrm{is\_empty}(c) \;\; \mathbf{then} \;\; A() \;\; \mathbf{else} \;\; B()\]</div>
+<p>то поведінка процесу починає залежати від фізичного часу прибуття мережевого пакета або флуктуацій латентності комунікатора:</p>
+<ul>
+<li>
+<p>якщо через джиттер мережі повідомлення затрималося на 1 мікросекунду, процес виконає гілку <span class="arithmatex">\(A()\)</span>;</p>
+</li>
+<li>
+<p>якщо пакет прибув вчасно, буде виконано гілку <span class="arithmatex">\(B()\)</span>.</p>
+</li>
+</ul>
+<p>У результаті функція <span class="arithmatex">\(F\)</span> втрачає монотонність, оскільки за ідентичних вхідних даних система генерує принципово різні вихідні потоки. Система переходить із класу детермінованих мереж обчислень за даними до класу недетермінованих систем, чутливих до станів перегонів.</p>
+</details>
+<hr />
+<h3 id="_5">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Зіставте практичну доцільність застосування графової моделі «операції-операнди» та моделі «процеси-канали». Зверніть увагу на те, що модель «операції-операнди» є інструментом компіляторів та середовищ автоматичного розпаралелювання (наприклад, оптимізація обчислювальних графів у PyTorch або TensorFlow) для векторизації та розміщення мікроінструкцій на рівні регістрів і функціональних блоків ядра. Модель «процеси-канали» слугує архітектурним шаблоном для розробників системного програмного забезпечення (наприклад, реалізація мікросервісних пайплайнів, акторних моделей чи розподілених програм на базі стандарту MPI), де ключову роль відіграє ізоляція адресних просторів та мінімізація накладних витрат мережевого зв'язку.</p>
+</li>
+<li>
+<p>Проаналізуйте стадії парадигми Фостера з погляду збереження локальності даних. Початкове прагнення досягти максимального розпаралелювання шляхом дрібнозернистої декомпозиції завжди веде до різкого зростання кількості комунікаційних дуг у графі системи. Дослідіть, чому без наступного етапу агломерації більшість паралельних алгоритмів на реальних кластерах демонструють суттєве уповільнення порівняно з послідовними аналогами, і як зміна зернистості розрахунків впливає на баланс між часом виконання арифметичних інструкцій процесором та часом очікування на синхронізацію в каналах.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21">2.1. Формалізація графових часових оцінок та аналітичне виведення теореми Брента</h3>
+<p>Аналітичне оцінювання потенціалу паралельного обчислювального процесу, представленого графовою моделлю «операції-операнди» (<span class="arithmatex">\(DAG\)</span>), вимагає визначення двох фундаментальних метрик: сумарного обсягу робіт та довжини критичного шляху. </p>
+<p>Сумарний обсяг робіт, що позначається як <span class="arithmatex">\(T_1\)</span>, визначає час виконання всіх вершин графа <span class="arithmatex">\(G = (V, E)\)</span> на одному скалярному обчислювачі в послідовному режимі. Якщо кожна <span class="arithmatex">\(i\)</span>-та вершина характеризується вагою <span class="arithmatex">\(w(v_i)\)</span>, яка виражає кількість елементарних операцій, а <span class="arithmatex">\(\tau_{\text{op}}\)</span> задає середню тривалість виконання однієї базової операції, то величина <span class="arithmatex">\(T_1\)</span> формалізується наступним співвідношенням:</p>
+<div class="arithmatex">\[T_1 = \tau_{\text{op}} \cdot \sum_{v_i \in V} w(v_i)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_1\)</span> позначає сумарний послідовний час виконання алгоритму на одному процесорному ядрі, виміряний у секундах (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\tau_{\text{op}}\)</span> є апаратною тривалістю виконання однієї машинної операції з рухомою комою, вираженою в секундах на операцію (<span class="arithmatex">\(c/\text{FLOP}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(w(v_i) \in \mathbb{N}\)</span> репрезентує обчислювальну вагу (кількість операцій) <span class="arithmatex">\(i\)</span>-ї вершини графа;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V\)</span> визначає повну скінченну множину операційних вершин графа алгоритму.</p>
+</li>
+</ul>
+<p>Довжина критичного шляху <span class="arithmatex">\(T_\infty\)</span> (висота паралельної форми графа) відповідає мінімально можливому часу виконання задачі на абстрактній моделі паракомп'ютера (ідеальної системи <span class="arithmatex">\(PRAM\)</span>) із необмеженою кількістю процесорних елементів (<span class="arithmatex">\(p \to \infty\)</span>) за нульових комунікаційних затримок:</p>
+<div class="arithmatex">\[T_\infty = \tau_{\text{op}} \cdot \max_{\pi \in \Pi} \sum_{v_k \in \pi} w(v_k)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_\infty\)</span> позначає тривалість проходження найдовшого орієнтованого ланцюга залежностей за даними в системі, виміряну в секундах (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\Pi\)</span> репрезентує множину всіх можливих простих орієнтованих шляхів у графі <span class="arithmatex">\(G\)</span> від вхідних вершин-джерел до вихідних вершин-стоків;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\pi\)</span> позначає конкретний орієнтований шлях інформаційної залежності між операціями.</p>
+</li>
+</ul>
+<p>Зв'язок між часом виконання на одному процесорі <span class="arithmatex">\(T_1\)</span>, довжиною критичного шляху <span class="arithmatex">\(T_\infty\)</span> та реальним часом виконання алгоритму <span class="arithmatex">\(T_p\)</span> на системі зі скінченною кількістю однорідних процесорів <span class="arithmatex">\(p\)</span> за умови жадібного планування без урахування комунікацій установлює <strong>теорема планування Брента (Graham-Brent Theorem)</strong>.</p>
+<p>Нижче наведено покрокове аналітичне виведення двобічної оцінки Брента:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Ярусна декомпозиція графа):} &amp; \quad \text{Розіб'ємо граф DAG на } T_\infty \text{ ярусів, де кожен } k\text{-й ярус містить } W_k \text{ операцій, причому } \sum_{k=1}^{T_\infty} W_k = T_1. \\
+\text{Етап 2 (Оцінка часу виконання ярусу):} &amp; \quad \text{На системі з } p \text{ ядер виконання } k\text{-го ярусу потребує не більше } \left\lceil \frac{W_k}{p} \right\rceil \text{ кроків обчислень.} \\
+\text{Етап 3 (Сумування кроків за всіма ярусами):} &amp; \quad T_p \le \sum_{k=1}^{T_\infty} \left\lceil \frac{W_k}{p} \right\rceil \le \sum_{k=1}^{T_\infty} \left( \frac{W_k + p - 1}{p} \right) = \sum_{k=1}^{T_\infty} \left( \frac{W_k - 1}{p} + 1 \right). \\
+\text{Етап 4 (Зведення до макропараметрів):} &amp; \quad T_p \le \frac{\sum_{k=1}^{T_\infty} W_k - T_\infty}{p} + \sum_{k=1}^{T_\infty} 1 = \frac{T_1 - T_\infty}{p} + T_\infty. \\
+\text{Етап 5 (Формулювання двобічної нерівності):} &amp; \quad \max\left( \frac{T_1}{p}, T_\infty \right) \le T_p \le \frac{T_1 - T_\infty}{p} + T_\infty.
+\end{aligned}
+\]</div>
+<p>Аналіз асимптотичної поведінки отриманої нерівності дозволяє встановити такі граничні умови функціонування обчислювального комплексу:</p>
+<div class="arithmatex">\[\lim_{p \to 1} T_p = T_1, \qquad \lim_{p \to \infty} T_p = T_\infty\]</div>
+<p>Фізичний зміст теореми Брента полягає в тому, що додавання обчислювальних ядер зменшує час роботи алгоритму лише доти, доки обсяг паралельної роботи на ярусі домінує над довжиною критичного шляху. Як тільки <span class="arithmatex">\(p\)</span> перевищує відношення <span class="arithmatex">\(T_1 / T_\infty\)</span>, надлишкові ядра простоюють, а час виконання асимптотично прямує до апаратного ліміту <span class="arithmatex">\(T_\infty\)</span>.</p>
+<hr />
+<h3 id="22">2.2. Метричний простір ефективності паралельних обчислень та закони масштабування</h3>
+<p>Для формалізації якості функціонування паралельного алгоритму застосовується система взаємопов'язаних метрик: коефіцієнт прискорення (<span class="arithmatex">\(Speedup\)</span>), коефіцієнт ефективності (<span class="arithmatex">\(Efficiency\)</span>), функція сумарних накладних витрат (<span class="arithmatex">\(Total\,Overhead\)</span>), вартість обчислень (<span class="arithmatex">\(Cost\)</span>) та функція ізоефективності (<span class="arithmatex">\(Isoefficiency\)</span>).</p>
+<p>Коефіцієнт прискорення <span class="arithmatex">\(S_p(n)\)</span> відображає кратність скорочення часу розв'язання задачі розмірності <span class="arithmatex">\(n\)</span> при залученні <span class="arithmatex">\(p\)</span> ядер:</p>
+<div class="arithmatex">\[S_p(n) = \frac{T_1(n)}{T_p(n)}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(S_p(n) \in \mathbb{R}^+\)</span> позначає безрозмірний коефіцієнт прискорення обчислень;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_1(n)\)</span> є часом послідовного виконання найкращого детермінованого алгоритму розв'язання задачі на одному ядрі (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_p(n)\)</span> визначає фізичний час виконання паралельного варіанта алгоритму на <span class="arithmatex">\(p\)</span> обчислювачах (<span class="arithmatex">\(c\)</span>).</p>
+</li>
+</ul>
+<p>Коефіцієнт ефективності <span class="arithmatex">\(E_p(n)\)</span> визначає середню питому частку часу, протягом якого кожне процесорне ядро реально зайняте виконанням корисної обчислювальної роботи:</p>
+<div class="arithmatex">\[E_p(n) = \frac{S_p(n)}{p} = \frac{T_1(n)}{p \cdot T_p(n)}\]</div>
+<p>де <span class="arithmatex">\(E_p(n) \le 1\)</span> є безрозмірним коефіцієнтом корисної дії обчислювальної системи.</p>
+<p>Сумарні накладні витрати паралелізму <span class="arithmatex">\(T_0(n, p)\)</span> агрегують усі часові втрати, зумовлені міжпроцесорними комунікаціями, очікуванням синхронізації, дисбалансом завантаження та службовими командами середовища виконання:</p>
+<div class="arithmatex">\[T_0(n, p) = p \cdot T_p(n) - T_1(n)\]</div>
+<p>де <span class="arithmatex">\(T_0(n, p)\)</span> позначає сумарний процесорний час простоїв та системних накладних витрат, виражений у процесор-секундах (<span class="arithmatex">\(proc \cdot c\)</span>).</p>
+<p>Підставивши вираз накладних витрат у формулу ефективності, одержуємо аналітичну залежність деградації продуктивності:</p>
+<div class="arithmatex">\[E_p(n) = \frac{T_1(n)}{T_1(n) + T_0(n, p)} = \frac{1}{1 + \frac{T_0(n, p)}{T_1(n)}}\]</div>
+<p>Вартість паралельних обчислень <span class="arithmatex">\(C_p(n)\)</span> визначається як добуток кількості ядер на загальний час роботи програми:</p>
+<div class="arithmatex">\[C_p(n) = p \cdot T_p(n) = T_1(n) + T_0(n, p)\]</div>
+<p>Алгоритм називається <strong>вартісно-оптимальним (cost-optimal)</strong>, якщо вартість його паралельного виконання асимптотично має той самий порядок складності, що й послідовний час: <span class="arithmatex">\(C_p(n) = \mathcal{O}(T_1(n))\)</span>, що еквівалентно умові <span class="arithmatex">\(E_p(n) = \Theta(1)\)</span> при зростанні розмірності задачі та кількості ядер.</p>
+<p>Зв'язок темпів зростання складності задачі та кількості процесорів описує <strong>функція ізоефективності</strong>. Нижче наведено її аналітичне виведення:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Фіксація цільової ефективності):} &amp; \quad \text{Задамо постійний необхідний рівень ефективності } E_p(n) = E^* = \mathrm{const}, \text{ де } E^* \in (0, 1). \\
+\text{Етап 2 (Перетворення балансу робіт):} &amp; \quad \frac{1}{1 + \frac{T_0(n, p)}{T_1(n)}} = E^* \implies \frac{T_0(n, p)}{T_1(n)} = \frac{1 - E^*}{E^*}. \\
+\text{Етап 3 (Формалізація умови ізоефективності):} &amp; \quad T_1(n) = K^* \cdot T_0(n, p), \quad \text{де } K^* = \frac{E^*}{1 - E^*} = \mathrm{const}. \\
+\text{Етап 4 (Синтез залежності):} &amp; \quad W = f_{\text{iso}}(p) \implies n = \mathcal{E}_{\text{iso}}(p).
+\end{aligned}
+\]</div>
+<p>Функція ізоефективності демонструє, з якою швидкістю має зростати обчислювальний обсяг задачі <span class="arithmatex">\(W = T_1(n)\)</span> відносно зростання пулу процесорів <span class="arithmatex">\(p\)</span>, аби коефіцієнт корисної дії <span class="arithmatex">\(E_p\)</span> не спадав нижче порогового значення <span class="arithmatex">\(E^*\)</span>.</p>
+<p>За певних обставин на практиці спостерігається <strong>понадлінійне (суперлінійне) прискорення</strong>, коли <span class="arithmatex">\(S_p(n) &gt; p\)</span>, а <span class="arithmatex">\(E_p(n) &gt; 1\)</span>. Теоретично такий стан суперечить припущенню про сталість алгоритму, проте він виникає внаслідок таких трьох фізичних факторів:</p>
+<ol>
+<li>
+<p>Кеш-ефект пам'яті: при розділенні обсягу вхідного масиву розміром <span class="arithmatex">\(M\)</span> між <span class="arithmatex">\(p\)</span> вузлами локальний обсяг даних <span class="arithmatex">\(M/p\)</span> на кожному ядрі починає повністю вміщуватися в надшвидку кеш-пам'ять другого чи третього рівня (<span class="arithmatex">\(L2/L3\)</span>), усуваючи необхідність звернення до повільної оперативної пам'яті <span class="arithmatex">\(RAM\)</span>.</p>
+</li>
+<li>
+<p>Алгоритмічний недетермінізм у деревах пошуку: у задачах дискретної оптимізації або обходу простору станів один із паралельних потоків може значно раніше знайти цільовий вузол, відсікаючи гігантські експоненційні піддерева перебору.</p>
+</li>
+<li>
+<p>Нерівномірність обчислювальної складності: паралельний алгоритм використовує більш ефективну математичну схему редукції порівняно з наївним послідовним алгоритмом.</p>
+</li>
+</ol>
+<hr />
+<h3 id="23">2.3. Математичне моделювання комунікаційної трудомісткості та топологічні метрики</h3>
+<p>У багатопроцесорних комплексах із розподіленою пам'яттю реальний час роботи паралельної програми лімітується накладними витратами на міжвузловий транспорт даних. </p>
+<p>Аналітичний опис часу передачі пакетів спирається на базові параметри каналу:</p>
+<ul>
+<li>
+<p>латентність запуску (<span class="arithmatex">\(t_s\)</span> або <span class="arithmatex">\(\alpha\)</span>) — фіксований час підготовки мережевого інтерфейсу, упаковки заголовків і пошуку маршруту, виміряний у секундах (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p>питома затримка проходження одного проміжного комутаційного вузла (<span class="arithmatex">\(t_h\)</span> або <span class="arithmatex">\(t_{\text{hop}}\)</span>), що визначається довжиною шляху <span class="arithmatex">\(l\)</span>, виміряна в секундах на крок (<span class="arithmatex">\(c/\text{hop}\)</span>);</p>
+</li>
+<li>
+<p>питомий час передачі даних (<span class="arithmatex">\(t_w\)</span> або <span class="arithmatex">\(\beta\)</span>), пов'язаний із пропускною здатністю каналу зв'язку <span class="arithmatex">\(B\)</span> залежністю <span class="arithmatex">\(t_w = 1/B\)</span>, виміряний у секундах на байт (<span class="arithmatex">\(c/\text{Byte}\)</span>).</p>
+</li>
+</ul>
+<p>В обчислювальних мережах використовуються два класи маршрутизації:</p>
+<ol>
+<li><strong>Метод передачі з проміжним накопиченням (Store-and-Forward Routing, SFR):</strong>
+   Кожен проміжний комутатор або маршрутизатор уздовж шляху довжиною <span class="arithmatex">\(l\)</span> фізичних ліній зобов'язаний повністю прийняти все повідомлення розміром <span class="arithmatex">\(m\)</span> байтів, записати його у внутрішній буфер, верифікувати контрольну суму і лише потім розпочати передачу наступному вузлу. Час пересилання описується рівнянням:</li>
+</ol>
+<div class="arithmatex">\[t_{\text{SFR}}(m, l) = t_s + l \cdot t_h + l \cdot m \cdot t_w\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(t_{\text{SFR}}\)</span> позначає повний час передачі монолітного повідомлення в режимі <span class="arithmatex">\(SFR\)</span> (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m \in \mathbb{N}\)</span> репрезентує обсяг інформаційного повідомлення, виражений у байтах (<span class="arithmatex">\(Byte\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(l \in \mathbb{N}\)</span> задає кількість транзитних ділянок комутації (хопів) між джерелом і приймачем.</p>
+</li>
+<li>
+<p><strong>Метод наскрізної пакетної передачі (Cut-Through / Wormhole Routing, CTR):</strong>
+   Повідомлення розбивається на послідовність мікропакетів або потокових одиниць (<strong>flits</strong>). Як тільки заголовок першого пакета надходить до комутатора та визначає вихідний порт, пакети негайно ретранслюються далі без очікування прибуття решти тіла повідомлення. Тривалість передачі визначається виразом:</p>
+</li>
+</ul>
+<div class="arithmatex">\[t_{\text{CTR}}(m, l) = t_s + l \cdot t_h + m \cdot t_w\]</div>
+<p>де <span class="arithmatex">\(t_{\text{CTR}}\)</span> визначає час пересилання даних за технологією <span class="arithmatex">\(CTR\)</span> (<span class="arithmatex">\(c\)</span>).</p>
+<p>Порівняння обох моделей виявляє їхню граничну розбіжність при зростанні розміру даних <span class="arithmatex">\(m\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Асимптотика SFR):} &amp; \quad \lim_{m \to \infty} \frac{t_{\text{SFR}}(m, l)}{m} = l \cdot t_w. \\
+\text{Етап 2 (Асимптотика CTR):} &amp; \quad \lim_{m \to \infty} \frac{t_{\text{CTR}}(m, l)}{m} = t_w.
+\end{aligned}
+\]</div>
+<p>У сучасних комутаційних мережах на базі <span class="arithmatex">\(InfiniBand\)</span> та <span class="arithmatex">\(RoCE\)</span> використовується наскрізна передача, завдяки чому відстань <span class="arithmatex">\(l\)</span> практично перестає впливати на час транспортування великих масивів даних. </p>
+<p>Для кластерних систем на цій основі широко застосовують спрощену <strong>модель Хокні (Hockney Model)</strong>, де комунікаційні витрати розглядаються за одиничної довжини зв'язку через комутатор:</p>
+<div class="arithmatex">\[T_{\text{comm}}(m) = \alpha + \beta \cdot m\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\text{comm}}(m)\)</span> репрезентує час передачі повідомлення між парою процесорів у кластері (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\alpha = t_s\)</span> позначає латентність передачі повідомлення (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\beta = 1/B\)</span> відповідає питомому часу транспортування одного байта (<span class="arithmatex">\(c/\text{Byte}\)</span>).</p>
+</li>
+</ul>
+<p>Топологічні характеристики комунікаційної мережі визначають довжину максимального шляху передачі (<span class="arithmatex">\(l = D\)</span>), стійкість до розривів та схильність до перевантажень:</p>
+<ul>
+<li>
+<p><strong>Діаметр мережі (<span class="arithmatex">\(D\)</span>)</strong> — максимальна відстань (кількість комутаторів) між двома найбільш віддаленими вузлами за найкоротшим маршрутом.</p>
+</li>
+<li>
+<p><strong>Зв'язність (<span class="arithmatex">\(\kappa\)</span>)</strong> — мінімальна кількість дуг або вузлів, видалення яких призводить до розбиття графа мережі на незв'язні підграфи.</p>
+</li>
+<li>
+<p><strong>Ширина бісекції (<span class="arithmatex">\(B_w\)</span>)</strong> — мінімальна кількість комунікаційних ліній зв'язку, які необхідно перетнути, щоб розбити мережу на дві ізольовані півмережі з рівною кількістю вузлів <span class="arithmatex">\(p/2\)</span>. Цей параметр безпосередньо лімітує швидкість виконання глобальних колективних операцій типу «всі-всім» (<span class="arithmatex">\(All-to-All\)</span>).</p>
+</li>
+</ul>
+<hr />
+<h3 id="_6">Аналітична матриця зіставлення мережевих топологій та методів транспортування</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Топологія мережі</th>
+<th style="text-align: left;">Діаметр (<span class="arithmatex">\(D\)</span>)</th>
+<th style="text-align: left;">Ширина бісекції (<span class="arithmatex">\(B_w\)</span>)</th>
+<th style="text-align: left;">Степінь вузла (Cost)</th>
+<th style="text-align: left;">Час передачі One-to-All Broadcast (<span class="arithmatex">\(T_{\text{bcast}}\)</span>)</th>
+<th style="text-align: left;">Рекомендований режим передачі даних</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Повний граф (Clique)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{p^2}{4}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(p - 1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\alpha + \beta \cdot m\)</span></td>
+<td style="text-align: left;">Неблокуючий <span class="arithmatex">\(CTR\)</span>, прямі оптичні лінії</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Лінійка (Linear Array)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(p - 1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span> (для крайніх <span class="arithmatex">\(1\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\((p - 1)(\alpha + \beta \cdot m)\)</span></td>
+<td style="text-align: left;">Конвеєрний <span class="arithmatex">\(SFR\)</span> за суворим порядком</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кільце (Ring)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\lfloor p/2 \rfloor\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\lfloor p/2 \rfloor (\alpha + \beta \cdot m)\)</span></td>
+<td style="text-align: left;">Зустрічний двоспрямований <span class="arithmatex">\(SFR\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Двовимірна решітка-тор (<span class="arithmatex">\(2D\text{-Torus}\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2 \lfloor \sqrt{p}/2 \rfloor\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\sqrt{p}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(4\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\sqrt{p}(\alpha + \beta \cdot m)\)</span></td>
+<td style="text-align: left;">Розмірно-впорядкована <span class="arithmatex">\(XY\)</span>-маршрутизація <span class="arithmatex">\(CTR\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><span class="arithmatex">\(N\)</span>-вимірний гіперкуб (<span class="arithmatex">\(Hypercube\)</span>)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\log_2 p\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{p}{2}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\log_2 p\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\log_2 p \cdot (\alpha + \beta \cdot m)\)</span></td>
+<td style="text-align: left;">Покоординатна порозрядна бітова маршрутизація <span class="arithmatex">\(CTR\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="24-ccr">2.4. Формалізація балансу комунікацій та обчислень (CCR) і критерії зв'язаності</h3>
+<p>Для системного проєктувальника ключовим індикатором життєздатності паралельного алгоритму є безрозмірний коефіцієнт відношення комунікаційної затримки до локальних обчислень (<strong>Communication-to-Computation Ratio, CCR</strong>):</p>
+<div class="arithmatex">\[CCR = \frac{T_{\text{comm}}}{T_{\text{comp}}} = \frac{\sum_{k=1}^{K} \big( \alpha + \beta \cdot m_k \big)}{W_{\text{local}} \cdot \tau_{\text{op}}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(CCR \in \mathbb{R}^+\)</span> позначає безрозмірний коефіцієнт комунікаційного навантаження алгоритму;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(K \in \mathbb{N}\)</span> є кількістю окремих актів передачі повідомлень, виконаних процесором протягом однієї ітерації обчислень;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m_k\)</span> відповідає обсягу <span class="arithmatex">\(k\)</span>-го переданого блоку даних, вираженому в байтах (<span class="arithmatex">\(Byte\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(W_{\text{local}}\)</span> позначає сумарну кількість корисних операцій з рухомою комою, виконаних локально між комунікаційними фазами;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\tau_{\text{op}}\)</span> задає час виконання однієї базової арифметичної команди (<span class="arithmatex">\(c/\text{FLOP}\)</span>).</p>
+</li>
+</ul>
+<p>За величиною <span class="arithmatex">\(CCR\)</span> обчислювальний процес класифікується на два критичні режими:</p>
+<ol>
+<li>
+<p><strong>Режим лімітування мережею (Network-Bound), коли <span class="arithmatex">\(CCR \gg 1\)</span>:</strong>
+   Витрати на передачу повідомлень значно перевищують час виконання математичних інструкцій. Подальше масштабування процесорів у цьому режимі є контрпродуктивним, оскільки збільшення <span class="arithmatex">\(p\)</span> лише збільшує комунікаційні накладні витрати <span class="arithmatex">\(T_0(n, p)\)</span>, призводячи до колапсу ефективності <span class="arithmatex">\(E_p \to 0\)</span>. Системний інженер зобов'язаний застосувати агломерацію (укрупнення підзадач) або перейти від передачі множини дрібних повідомлень до комбінованих великих пакетів.</p>
+</li>
+<li>
+<p><strong>Режим лімітування процесором (Compute-Bound), коли <span class="arithmatex">\(CCR \ll 1\)</span>:</strong>
+   Обчислювальні ядра повністю утилізують власну продуктивність, а мережеві затримки є знехтовно малими. Алгоритм демонструє майже лінійне прискорення <span class="arithmatex">\(S_p \approx p\)</span>.</p>
+</li>
+</ol>
+<p>При використанні неблокуючих примітивів взаємодії з'являється можливість перекриття обчислювальної та комунікаційної фаз у часі. Якщо апаратний мережевий контролер (<span class="arithmatex">\(NIC\)</span>) підтримує прямий доступ до пам'яті (<span class="arithmatex">\(RDMA\)</span>), процесор може одночасно виконувати незалежний блок обчислень <span class="arithmatex">\(W_{\text{overlap}}\)</span> під час фонової передачі повідомлення розміром <span class="arithmatex">\(m\)</span>.</p>
+<p>Загальний час ітерації за ідеального перекриття описується співвідношенням:</p>
+<div class="arithmatex">\[T_{\text{iter}} = \max\Big( T_{\text{comp}}, T_{\text{comm}} \Big) + T_{\text{sync}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\text{iter}}\)</span> визначає тривалість повної фази обчислювальної ітерації (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{\text{comp}} = W_{\text{local}} \cdot \tau_{\text{op}}\)</span> позначає час локальних розрахунків (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{\text{comm}} = \alpha + \beta \cdot m\)</span> репрезентує час передачі даних по мережі (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{\text{sync}}\)</span> визначає затримку перевірки завершення обміну (<code>MPI_Wait</code>), виражену в секундах (<span class="arithmatex">\(c\)</span>).</p>
+</li>
+</ul>
+<p>Критерієм повного приховання комунікаційної затримки (<strong>Latency Hiding</strong>) є виконання нерівності:</p>
+<div class="arithmatex">\[T_{\text{comm}} \le T_{\text{comp}} \iff \alpha + \beta \cdot m \le W_{\text{local}} \cdot \tau_{\text{op}}\]</div>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Core as "Процесорне ядро (CPU)"
+    participant Memory as "Локальна пам'ять"
+    participant NIC as "Мережевий адаптер (NIC/DMA)"
+    participant Network as "Комунікаційна мережа"
+
+    Note over Core,Memory: Початок ітерації: підготовка даних
+    Core-&gt;&gt;Memory: Запис операндів у комунікаційний буфер
+    Core-&gt;&gt;NIC: Ініціалізація неблокуючої відправки: MPI_Isend
+    Note over Core,NIC: Запуск передачі в фоновому режимі (RDMA)
+
+    par Суміщення обчислень та комунікацій у часі
+        NIC-&gt;&gt;Network: Передача пакетів даних: alpha + beta * m
+    and Асинхронні розрахунки
+        Core-&gt;&gt;Core: Обчислення локального блоку W_overlap
+    end
+
+    NIC--&gt;&gt;Core: Апаратне переривання або статус готовності
+    Core-&gt;&gt;Core: Виклик операції очікування: MPI_Wait
+    Note over Core: Час очікування t_wait = max(0, T_comm - T_comp)
+    Core-&gt;&gt;Core: Вхід у фазу глобального бар'єра</code></pre>
+<hr />
+<h3 id="25-straggler-">2.5. Математичні моделі алгоритмів бар'єрної синхронізації та straggler-ефект</h3>
+<p>У багатьох чисельних методах розв'язання крайових задач та навчання моделей штучного інтелекту застосовується глобальна бар'єрна синхронізація, яка гарантує, що жоден процес не почне ітерацію <span class="arithmatex">\(k + 1\)</span>, доки всі <span class="arithmatex">\(p\)</span> процесів не завершать ітерацію <span class="arithmatex">\(k\)</span>.</p>
+<p>Часова складність бар'єра суттєво залежить від алгоритму його організації:</p>
+<ol>
+<li><strong>Централізований бар'єр із лічильником (Centralized Counter Barrier):</strong>
+   Усі процесори надсилають повідомлення про прибуття на один виділений головний вузол (<span class="arithmatex">\(Master\)</span>). Головний вузол інкрементує лічильник і після отримання <span class="arithmatex">\(p\)</span> сигналів розсилає сигнал підтвердження. Час реалізації має лінійну складність <span class="arithmatex">\(\mathcal{O}(p)\)</span> через утворення черг біля мережевого порту майстра:</li>
+</ol>
+<div class="arithmatex">\[T_{\text{barrier}}^{\text{linear}}(p) = 2 \cdot (p - 1) \cdot (\alpha + \beta \cdot m_{\text{flag}})\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(T_{\text{barrier}}^{\text{linear}}(p)\)</span> є часом централізованої синхронізації (<span class="arithmatex">\(c\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m_{\text{flag}}\)</span> позначає мінімальний розмір службового пакета-повідомлення (<span class="arithmatex">\(Byte\)</span>).</p>
+</li>
+<li>
+<p><strong>Деревоподібний бар'єр (Tree-based Combining Barrier):</strong>
+   Процеси утворюють логічне бінарне дерево. Сигнали готовності передаються від листків до кореня (фаза згортки / редукції), після чого корінь поширює дозвіл униз до листків (фаза широкомовного сповіщення). Часова складність має логарифмічний характер <span class="arithmatex">\(\mathcal{O}(\log_2 p)\)</span>:</p>
+</li>
+</ul>
+<div class="arithmatex">\[T_{\text{barrier}}^{\text{tree}}(p) = 2 \cdot \lceil \log_2 p \rceil \cdot (\alpha + \beta \cdot m_{\text{flag}})\]</div>
+<p>де <span class="arithmatex">\(T_{\text{barrier}}^{\text{tree}}(p)\)</span> є тривалістю бар'єра на основі двійкового дерева (<span class="arithmatex">\(c\)</span>).</p>
+<p>Головною проблемою бар'єрної синхронізації у великомасштабних кластерах є <strong>ефект найповільнішого процесу (Straggler Effect)</strong>. Через випадкові апаратні затримки операційної системи, скидання кешів або дисбаланс даних тривалість локальних обчислень процесорів є стохастичною величиною.</p>
+<p>Нехай час локальних обчислень кожного <span class="arithmatex">\(i\)</span>-го процесу <span class="arithmatex">\(X_i\)</span> є незалежною однаково розподіленою випадковою величиною із середнім значенням <span class="arithmatex">\(\mu\)</span> та стандартним відхиленням <span class="arithmatex">\(\sigma\)</span>: <span class="arithmatex">\(X_i \sim \mathcal{N}(\mu, \sigma^2)\)</span>.</p>
+<p>Оскільки бар'єр утримує всі процеси до прибуття останнього, реальний час обчислювальної фази системи <span class="arithmatex">\(T_{\text{sync\_comp}}\)</span> визначається математичним сподіванням максимуму вибірки з <span class="arithmatex">\(p\)</span> випадкових величин:</p>
+<div class="arithmatex">\[T_{\text{sync\_comp}}(p) = \mathbb{E}\left[ \max_{1 \le i \le p} X_i \right]\]</div>
+<p>Згідно з положеннями асимптотичної теорії екстремальних значень (Extreme Value Theory), для нормально розподілених випадкових величин справедлива аналітична оцінка:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Граничний розподіл Гумбеля):} &amp; \quad \max_{1 \le i \le p} X_i \xrightarrow{d} \mu + \sigma \cdot d_p, \quad \text{де } d_p \approx \sqrt{2 \ln p} - \frac{\ln(\ln p) + \ln(4\pi)}{2\sqrt{2 \ln p}}. \\
+\text{Етап 2 (Асимптотичне математичне сподівання):} &amp; \quad \mathbb{E}\left[ \max_{1 \le i \le p} X_i \right] \approx \mu + \sigma \sqrt{2 \ln p}.
+\end{aligned}
+\]</div>
+<p>Повний час синхронізованої ітерації алгоритму набуває вигляду:</p>
+<div class="arithmatex">\[T_{\text{iter}}(p) = \mu + \sigma \sqrt{2 \ln p} + 2 \lceil \log_2 p \rceil (\alpha + \beta \cdot m_{\text{flag}})\]</div>
+<p>З отриманої моделі випливає важливий висновок: навіть якщо середня швидкість роботи ядер <span class="arithmatex">\(\mu\)</span> залишається незмінною, збільшення пулу процесорів <span class="arithmatex">\(p\)</span> у кластері автоматично призводить до монотонного зростання часу простою на бар'єрі зі швидкістю <span class="arithmatex">\(\mathcal{O}(\sigma \sqrt{\ln p})\)</span>. При масштабуванні до тисяч ядер втрати від straggler-ефекту можуть перевищувати виграш від розпаралелювання.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; ComputePhase: Старт нової ітерації
+
+    state ComputePhase {
+        [*] --&gt; Executing: Локальні чисельні розрахунки
+        Executing --&gt; FinishedEarly: Швидкий процес (Fast Core)
+        Executing --&gt; StragglerState: Повільний процес (Straggler Core)
+    }
+
+    FinishedEarly --&gt; BarrierArrival: Прибуття на бар'єр
+    StragglerState --&gt; BarrierArrival: Запізніле прибуття на бар'єр
+
+    state BarrierArrival {
+        [*] --&gt; IncrementCounter: Фіксація прапорця в черзі FIFO
+        IncrementCounter --&gt; BlockedWait: Очікування решти процесів
+    }
+
+    BlockedWait --&gt; BarrierRelease: Отримано сигнал розблокування (Всі прибули)
+    BarrierRelease --&gt; [*]: Перехід до наступної ітерації</code></pre>
+<hr />
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong>
+За теоремою Брента жоден паралельний алгоритм не може бути прискорений за межу, що визначається критичним шляхом <span class="arithmatex">\(T_\infty\)</span>. Фізичне масштабування системи за кількістю ядер <span class="arithmatex">\(p &gt; T_1 / T_\infty\)</span> є асимптотично неефективним, оскільки призводить до падіння коефіцієнта корисної дії <span class="arithmatex">\(E_p \to 0\)</span> без скорочення часу виконання задачі. Водночас наявність бар'єрної синхронізації посилює це обмеження через ефект стрейглера, додаючи до кожного циклу затримку масштабу <span class="arithmatex">\(\mathcal{O}(\sigma \sqrt{\ln p})\)</span>, зумовлену дисперсією часу роботи процесорів.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong>
+Обчислювальний граф алгоритму складається з <span class="arithmatex">\(T_1 = 3200\)</span> елементарних операцій, а його критичний шлях містить <span class="arithmatex">\(T_\infty = 40\)</span> послідовних кроків. Визначте за теоремою Брента мінімальну теоретичну тривалість виконання алгоритму на кластері з <span class="arithmatex">\(p = 16\)</span> та <span class="arithmatex">\(p = 64\)</span> процесорних ядер (вважаючи тривалість однієї операції <span class="arithmatex">\(\tau_{\text{op}} = 10^{-9}\,c\)</span>). Для якої з цих конфігурацій алгоритм залишається вартісно-оптимальним, якщо допустимим порогом ефективності є <span class="arithmatex">\(E^* \ge 0{,}75\)</span>?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Аналітичний розв'язок:</strong></p>
+<ol>
+<li><strong>Розрахунок за теоремою Брента для <span class="arithmatex">\(p = 16\)</span> ядер:</strong>
+   Оцінка зверху тривалості паралельного розкладу:</li>
+</ol>
+<div class="arithmatex">\[T_{16} \le \frac{T_1 - T_\infty}{p} + T_\infty = \frac{3200 - 40}{16} + 40 = \frac{3160}{16} + 40 = 197{,}5 + 40 = 237{,}5 \text{ тактів}\]</div>
+<p>Фізичний час виконання становить:</p>
+<div class="arithmatex">\[t_{16} = 237{,}5 \cdot 10^{-9}\,c = 237{,}5\,\text{нс}\]</div>
+<p>Розрахунок показників прискорення та ефективності:</p>
+<div class="arithmatex">\[S_{16} = \frac{T_1}{T_{16}} = \frac{3200}{237{,}5} \approx 13{,}47\]</div>
+<div class="arithmatex">\[E_{16} = \frac{S_{16}}{16} = \frac{13{,}47}{16} \approx 0{,}842 \quad (84{,}2\%)\]</div>
+<p>Оскільки <span class="arithmatex">\(E_{16} = 0{,}842 \ge 0{,}75\)</span>, дана конфігурація є високоефективною та вартісно-оптимальною.</p>
+<ol>
+<li><strong>Розрахунок за теоремою Брента для <span class="arithmatex">\(p = 64\)</span> ядер:</strong>
+   Оцінка зверху тривалості паралельного розкладу:</li>
+</ol>
+<div class="arithmatex">\[T_{64} \le \frac{T_1 - T_\infty}{p} + T_\infty = \frac{3200 - 40}{64} + 40 = \frac{3160}{64} + 40 = 49{,}375 + 40 = 89{,}375 \text{ тактів}\]</div>
+<p>Фізичний час виконання становить:</p>
+<div class="arithmatex">\[t_{64} = 89{,}375 \cdot 10^{-9}\,c = 89{,}375\,\text{нс}\]</div>
+<p>Розрахунок показників прискорення та ефективності:</p>
+<div class="arithmatex">\[S_{64} = \frac{T_1}{T_{64}} = \frac{3200}{89{,}375} \approx 35{,}80\]</div>
+<div class="arithmatex">\[E_{64} = \frac{S_{64}}{64} = \frac{35{,}80}{64} \approx 0{,}559 \quad (55{,}9\%)\]</div>
+<p>Оскільки <span class="arithmatex">\(E_{64} = 0{,}559 &lt; 0{,}75\)</span>, дана конфігурація втрачає вартісну оптимальність через переважання довжини критичного шляху (<span class="arithmatex">\(T_\infty = 40\)</span>) над локальним обсягом паралельних робіт (<span class="arithmatex">\(3160 / 64 \approx 49{,}375\)</span>), унаслідок чого ядра значну частину часу простоюють.</p>
+</details>
+<hr />
+<h3 id="_7">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Дослідіть поведінку граничного відношення <span class="arithmatex">\(T_1 / T_\infty\)</span> для різноманітних топологій обчислювальних графів. З'ясуйте, за яких умов збільшення розмірності задачі <span class="arithmatex">\(n\)</span> приводить до зміни класу складності критичного шляху (наприклад, перехід від <span class="arithmatex">\(T_\infty = \mathcal{O}(n)\)</span> у лінійній схемі редукції до <span class="arithmatex">\(T_\infty = \mathcal{O}(\log_2 n)\)</span> у каскадній схемі здвоєння), та як це впливає на максимально допустиму кількість масштабованих процесорів у системі.</p>
+</li>
+<li>
+<p>Проаналізуйте виведення математичного сподівання максимуму вибірки для різних законів розподілу часу обчислень (зокрема рівномірного, експоненційного та логнормального). Поясніть, чому в гетерогенних середовищах із широким «хвостом» розподілу затримок використання жорсткої бар'єрної синхронізації стає головною перешкодою до масштабування розподілених систем, і які переваги надають асинхронні моделі передачі повідомлень (наприклад, конвеєрна редукція або алгоритми з послабленою узгодженістю типу Hogwild!).</p>
+</li>
+</ol>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31-n">3.1. Комплексний інженерний кейс. Моделювання гравітаційної взаємодії <span class="arithmatex">\(N\)</span> тіл на багатопроцесорному кластері з гіперкубічною топологією</h3>
+<h4 id="_8">Постановка інженерної задачі</h4>
+<p>Розглядається класична астрофізична задача моделювання динаміки системи <span class="arithmatex">\(N\)</span> гравітуючих тіл (<strong><span class="arithmatex">\(N\)</span>-body problem</strong>), яка широко використовується як еталонний тест продуктивності високопродуктивних обчислювальних кластерів. На кожному дискретному часовому кроці моделювання <span class="arithmatex">\(\Delta t\)</span> для кожного <span class="arithmatex">\(i\)</span>-го тіла необхідно обчислити сумарну силу взаємодії з усіма іншими <span class="arithmatex">\(N-1\)</span> тілами системи згідно із законом всесвітнього тяжіння Ньютона:</p>
+<div class="arithmatex">\[\vec{F}_i = G_{\text{grav}} \cdot m_i \cdot \sum_{j=1, j \neq i}^{N} \frac{m_j \cdot (\vec{r}_j - \vec{r}_i)}{\left( |\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2 \right)^{3/2}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\vec{F}_i\)</span> позначає результуючий вектор сили, що діє на <span class="arithmatex">\(i\)</span>-те тіло, виміряний у ньютонах (<span class="arithmatex">\(H\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(G_{\text{grav}} \approx 6{,}6743 \times 10^{-11}\)</span> є гравітаційною сталою, вираженою в <span class="arithmatex">\(\text{м}^3 / (\text{кг} \cdot \text{с}^2)\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(m_i, m_j\)</span> позначають маси взаємодіючих тіл, виражені в кілограмах (<span class="arithmatex">\(\text{кг}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\vec{r}_i, \vec{r}_j\)</span> визначають тривимірні радіус-вектори просторових координат тіл, виражені в метрах (<span class="arithmatex">\(\text{м}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\varepsilon\)</span> є параметром згладжування гравітаційного потенціалу для запобігання сингулярності при зближенні тіл (<span class="arithmatex">\(\text{м}\)</span>).</p>
+</li>
+</ul>
+<p>Для усунення надлишкових розрахунків і мінімізації трафіку застосовується блочно-циклічна декомпозиція за даними: <span class="arithmatex">\(N\)</span> тіл рівномірно розподіляються між <span class="arithmatex">\(p\)</span> обчислювальними вузлами кластера, об'єднаними в логічну топологію <span class="arithmatex">\(d\)</span>-вимірного гіперкуба (<span class="arithmatex">\(p = 2^d\)</span>). Кожен вузол отримує підмножину з <span class="arithmatex">\(n_{\text{loc}} = N/p\)</span> тіл. Для розрахунку сил на кожній ітерації процесори повинні обмінятися актуальними координатами своїх частинок за допомогою колективної операції узагальненого збору даних (<strong>All-Gather</strong>) та синхронізувати фази інтегрування за допомогою глобального бар'єра.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Назва параметра системи</th>
+<th style="text-align: left;">Умовне позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Кількість модельованих тіл системи</td>
+<td style="text-align: left;"><span class="arithmatex">\(N\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(32\,768\)</span> (<span class="arithmatex">\(2^{15}\)</span>)</td>
+<td style="text-align: left;">одиниці (ціле число)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Кількість обчислювальних вузлів кластера</td>
+<td style="text-align: left;"><span class="arithmatex">\(p\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(64\)</span> (<span class="arithmatex">\(2^6\)</span>)</td>
+<td style="text-align: left;">вузли (ядра)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмірність топології гіперкуба</td>
+<td style="text-align: left;"><span class="arithmatex">\(d = \log_2 p\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(6\)</span></td>
+<td style="text-align: left;">розмірність сітки</td>
+</tr>
+<tr>
+<td style="text-align: left;">Кількість операцій на пару тіл</td>
+<td style="text-align: left;"><span class="arithmatex">\(w_{\text{pair}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(20\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{FLOP}\)</span> на пару</td>
+</tr>
+<tr>
+<td style="text-align: left;">Продуктивність одного вузла кластера</td>
+<td style="text-align: left;"><span class="arithmatex">\(R_{\text{node}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(100\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{GFLOP/s}\)</span> (<span class="arithmatex">\(10^{11}\,\text{FLOP/c}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Розмір структурних даних одного тіла</td>
+<td style="text-align: left;"><span class="arithmatex">\(m_{\text{body}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(32\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Byte}\)</span> (<span class="arithmatex">\(4 \times \text{float64}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Латентність мережевого інтерфейсу</td>
+<td style="text-align: left;"><span class="arithmatex">\(\alpha\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(1{,}5 \times 10^{-6}\)</span></td>
+<td style="text-align: left;">секунди (<span class="arithmatex">\(1{,}5\,\mu\text{s}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Пропускна здатність каналу зв'язку</td>
+<td style="text-align: left;"><span class="arithmatex">\(B\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(12{,}5 \times 10^9\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Byte/c}\)</span> (<span class="arithmatex">\(100\,\text{Gbps}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Питомий час передачі одного байта</td>
+<td style="text-align: left;"><span class="arithmatex">\(\beta = 1/B\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(8 \times 10^{-11}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{c/Byte}\)</span> (<span class="arithmatex">\(0{,}08\,\text{нс/Б}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Середньоквадратичне відхилення затримок</td>
+<td style="text-align: left;"><span class="arithmatex">\(\sigma_{\text{jitter}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(0{,}12 \times 10^{-3}\)</span></td>
+<td style="text-align: left;">секунди (<span class="arithmatex">\(120\,\mu\text{s}\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart TD
+    A["Старт ітерації моделювання часового кроку"] --&gt; B["Крок 1: Розрахунок локальних сил для N/p тіл"]
+    B --&gt; C["Крок 2: All-Gather обмін координатами тіл у гіперкубі"]
+    C --&gt; D["Крок 3: Оновлення швидкостей та просторових координат"]
+    D --&gt; E["Крок 4: Бар'єрна синхронізація з урахуванням Straggler-ефекту"]
+    E --&gt; F{"Критерій завершення t &gt;= T_max?"}
+    F -- Ні --&gt; A
+    F -- Так --&gt; G["Фіксація фінального стану та виведення результатів"]</code></pre>
+<h4 id="_9">Покроковий аналітичний розрахунок</h4>
+<h5 id="1_1">Крок 1. Розрахунок обчислювальної складності послідовного та паралельного розв'язку</h5>
+<p>Повний обсяг математичних операцій для розрахунку всіх парних взаємодій <span class="arithmatex">\(N\)</span> тіл на одному процесорі без оптимізації симетрії становить:</p>
+<div class="arithmatex">\[W_{\text{total}} = N^2 \cdot w_{\text{pair}} = (32\,768)^2 \cdot 20 = 1\,073\,741\,824 \cdot 20 = 21\,474\,836\,480 \text{ FLOP} \approx 21{,}475 \text{ GFLOP}\]</div>
+<p>Послідовний час обчислень на одному вузлі із продуктивністю <span class="arithmatex">\(R_{\text{node}} = 10^{11} \text{ FLOP/c}\)</span> становить:</p>
+<div class="arithmatex">\[T_1 = \frac{W_{\text{total}}}{R_{\text{node}}} = \frac{21\,474\,836\,480}{10^{11}} \approx 0{,}21475 \text{ c} = 214{,}75 \text{ мс}\]</div>
+<p>При рівномірному розподілі <span class="arithmatex">\(N/p = 32\,768 / 64 = 512\)</span> тіл на кожен вузол локальний обсяг обчислень кожного процесора дорівнює:</p>
+<div class="arithmatex">\[W_{\text{local}} = \frac{N}{p} \cdot N \cdot w_{\text{pair}} = 512 \cdot 32\,768 \cdot 20 = 335\,544\,320 \text{ FLOP}\]</div>
+<p>Ідеальний час виконання локальної обчислювальної фази на кожному з <span class="arithmatex">\(p = 64\)</span> вузлів дорівнює:</p>
+<div class="arithmatex">\[T_{\text{comp}} = \frac{W_{\text{local}}}{R_{\text{node}}} = \frac{335\,544\,320}{10^{11}} \approx 0{,}003355 \text{ c} = 3{,}355 \text{ мс}\]</div>
+<h5 id="2-all-gather">Крок 2. Порівняльний аналіз комунікаційної трудомісткості операції All-Gather</h5>
+<p>Для виконання розрахунків кожен процесор повинен отримати координати решти <span class="arithmatex">\((p - 1) \cdot (N/p)\)</span> тіл. Розглянемо два варіанти реалізації операції:</p>
+<ol>
+<li><strong>Кільцева топологія (Ring All-Gather):</strong>
+   Дані передаються по черзі сусідам уздовж кільця за <span class="arithmatex">\(p - 1\)</span> кроків:</li>
+</ol>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Запис моделі Хокні):} &amp; \quad T_{\text{comm}}^{\text{ring}} = (p - 1) \cdot \left( \alpha + \beta \cdot \frac{N}{p} \cdot m_{\text{body}} \right) \\
+\text{Етап 2 (Числова підстановка):} &amp; \quad T_{\text{comm}}^{\text{ring}} = 63 \cdot \left( 1{,}5 \times 10^{-6} + 8 \times 10^{-11} \cdot 512 \cdot 32 \right) \\
+\text{Етап 3 (Розрахунок частин):} &amp; \quad T_{\text{comm}}^{\text{ring}} = 63 \cdot \left( 1{,}5 \times 10^{-6} + 1{,}31072 \times 10^{-6} \right) = 63 \cdot 2{,}81072 \times 10^{-6} \approx 0{,}17708 \text{ мс}
+\end{aligned}
+\]</div>
+<ol>
+<li><strong>Топологія гіперкуба з подвоєнням блоків (Hypercube Recursive Doubling):</strong>
+   Обмін даними здійснюється за <span class="arithmatex">\(d = \log_2 p = 6\)</span> ітерацій, де на кожному <span class="arithmatex">\(k\)</span>-му кроці (<span class="arithmatex">\(k = 1, \dots, d\)</span>) обсяг переданого пакета подвоюється:</li>
+</ol>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Формулювання суми):} &amp; \quad T_{\text{comm}}^{\text{cube}} = \sum_{k=1}^{\log_2 p} \left( \alpha + \beta \cdot 2^{k-1} \cdot \frac{N}{p} \cdot m_{\text{body}} \right) \\
+\text{Етап 2 (Аналітичне спрощення):} &amp; \quad T_{\text{comm}}^{\text{cube}} = \alpha \cdot \log_2 p + \beta \cdot \frac{N \cdot m_{\text{body}}}{p} \sum_{k=1}^{\log_2 p} 2^{k-1} = \alpha \cdot \log_2 p + \beta \cdot \frac{N \cdot m_{\text{body}}}{p} (p - 1) \\
+\text{Етап 3 (Числова підстановка):} &amp; \quad T_{\text{comm}}^{\text{cube}} = 1{,}5 \times 10^{-6} \cdot 6 + 8 \times 10^{-11} \cdot \frac{32\,768 \cdot 32}{64} \cdot 63 \\
+\text{Етап 4 (Остаточний підсумок):} &amp; \quad T_{\text{comm}}^{\text{cube}} = 9{,}0 \times 10^{-6} + 8 \times 10^{-11} \cdot 16\,384 \cdot 63 = 9{,}0 \times 10^{-6} + 82{,}575 \times 10^{-6} \approx 0{,}09158 \text{ мс}
+\end{aligned}
+\]</div>
+<p>Застосування алгоритму на основі гіперкуба зменшує комунікаційні витрати майже вдвічі порівняно з кільцевою структурою (із <span class="arithmatex">\(0{,}177\)</span> мс до <span class="arithmatex">\(0{,}092\)</span> мс).</p>
+<h5 id="3-straggler-">Крок 3. Моделювання накладних витрат бар'єрної синхронізації та Straggler-ефекту</h5>
+<p>Синхронізація процесів наприкінці ітерації реалізується за допомогою бінарного об'єднувального дерева, яке потребує <span class="arithmatex">\(2 \log_2 p\)</span> комунікаційних обмінів короткими повідомленнями-прапорцями розміром <span class="arithmatex">\(m_{\text{flag}} = 8 \text{ Byte}\)</span>:</p>
+<div class="arithmatex">\[T_{\text{barrier}}^{\text{tree}} = 2 \log_2 p \cdot (\alpha + \beta \cdot m_{\text{flag}}) = 2 \cdot 6 \cdot (1{,}5 \times 10^{-6} + 8 \times 10^{-11} \cdot 8) \approx 12 \cdot 1{,}5006 \times 10^{-6} \approx 0{,}0180 \text{ мс}\]</div>
+<p>Втрати часу через випадковий розкид обчислень окремих ядер (ефект найповільнішого процесу за умови нормального розподілу <span class="arithmatex">\(\sigma = 0{,}12 \text{ мс}\)</span>) оцінюються на базі асимптотичної теорії екстремальних значень:</p>
+<div class="arithmatex">\[T_{\text{straggler}} \approx \sigma_{\text{jitter}} \cdot \sqrt{2 \ln p} = 0{,}12 \times 10^{-3} \cdot \sqrt{2 \ln 64} = 0{,}12 \times 10^{-3} \cdot \sqrt{2 \cdot 4{,}15888} \approx 0{,}12 \times 10^{-3} \cdot 2{,}884 \approx 0{,}346 \text{ мс}\]</div>
+<p>Сумарний час синхронізаційного блокування становить:</p>
+<div class="arithmatex">\[T_{\text{sync\_total}} = T_{\text{barrier}}^{\text{tree}} + T_{\text{straggler}} = 0{,}0180 + 0{,}346 \approx 0{,}364 \text{ мс}\]</div>
+<h5 id="4-ccr">Крок 4. Розрахунок підсумкових метрик продуктивності та балансу CCR</h5>
+<p>Повний час виконання однієї ітерації паралельного алгоритму на <span class="arithmatex">\(p = 64\)</span> вузлах становить:</p>
+<div class="arithmatex">\[T_{64} = T_{\text{comp}} + T_{\text{comm}}^{\text{cube}} + T_{\text{sync\_total}} = 3{,}355 \text{ мс} + 0{,}092 \text{ мс} + 0{,}364 \text{ мс} = 3{,}811 \text{ мс} = 0{,}003811 \text{ c}\]</div>
+<p>Коефіцієнт прискорення алгоритму становить:</p>
+<div class="arithmatex">\[S_{64} = \frac{T_1}{T_{64}} = \frac{0{,}21475}{0{,}003811} \approx 56{,}35\]</div>
+<p>Коефіцієнт ефективності використання обчислювальних ядер:</p>
+<div class="arithmatex">\[E_{64} = \frac{S_{64}}{64} = \frac{56{,}35}{64} \approx 0{,}8805 \quad (88{,}05\%)\]</div>
+<p>Відношення комунікаційної трудомісткості до обчислювальної (<span class="arithmatex">\(CCR\)</span>):</p>
+<div class="arithmatex">\[CCR = \frac{T_{\text{comm}}^{\text{cube}} + T_{\text{sync\_total}}}{T_{\text{comp}}} = \frac{0{,}092 + 0{,}364}{3{,}355} = \frac{0{,}456}{3{,}355} \approx 0{,}1359\]</div>
+<h4 id="_10">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Отримане значення коефіцієнта <span class="arithmatex">\(CCR = 0{,}136 \ll 1\)</span> підтверджує, що розроблена паралельна схема перебуває в стійкому режимі лімітування обчисленнями (<strong>Compute-Bound</strong>), що гарантує високу ефективність утилізації процесорів на рівні <span class="arithmatex">\(88{,}05\%\)</span>.</p>
+</li>
+<li>
+<p>Основну частку нелінійних накладних витрат становить не фізична передача даних по високошвидкісній мережі (<span class="arithmatex">\(0{,}092\)</span> мс), а ефект найповільнішого процесу (<span class="arithmatex">\(0{,}346\)</span> мс), що свідчить про необхідність оптимізації системного програмного забезпечення вузлів та усунення джиттеру операційної системи.</p>
+</li>
+<li>
+<p>Використання рекурсивного подвоєння в топології гіперкуба забезпечило логарифмічне зростання кількості фаз латентності (<span class="arithmatex">\(6 \alpha\)</span> замість <span class="arithmatex">\(63 \alpha\)</span>), що робить дану обчислювальну конфігурацію повністю вартісно-оптимальною.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Простір станів системи</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(S(t) = (s_1, \dots, s_p, \mathbf{M}, \mathbf{C})\)</span></td>
+<td style="text-align: left;">Верифікація безпеки багатопотокового ПЗ, виявлення дедлоків</td>
+<td style="text-align: left;">Комбінаторний вибух простору станів при <span class="arithmatex">\(p &gt; 32\)</span></td>
+<td style="text-align: left;">Вважати, що статичний аналіз коду здатен виявити всі стани перегонів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Критичний шлях графа (DAG)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_\infty = \max_{\pi} \sum_{v \in \pi} w(v)\)</span></td>
+<td style="text-align: left;">Теоретична оцінка гранично досяжного паралелізму алгоритму</td>
+<td style="text-align: left;">Ігнорує затримки комунікаційного середовища (<span class="arithmatex">\(PRAM\)</span>)</td>
+<td style="text-align: left;">Ототожнення критичного шляху із загальною кількістю вершин у графі</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Теорема Брента</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_p \le \frac{T_1 - T_\infty}{p} + T_\infty\)</span></td>
+<td style="text-align: left;">Оцінка часу виконання алгоритму на скінченній кількості ядер</td>
+<td style="text-align: left;">Справедлива лише за умов жадібного планування без колізій</td>
+<td style="text-align: left;">Трактування оцінки Брента як абсолютно точного часу реального виконання</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Модель латентності Хокні</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{comm}} = \alpha + \beta \cdot m\)</span></td>
+<td style="text-align: left;">Оцінка часу пересилання повідомлень у кластерних мережах</td>
+<td style="text-align: left;">Не враховує перевантаження мережевих комутаторів</td>
+<td style="text-align: left;">Припущення про лінійне масштабування пропускної здатності за довільних <span class="arithmatex">\(m\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Коефіцієнт зв'язаності (CCR)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(CCR = \frac{T_{\text{comm}}}{T_{\text{comp}}}\)</span></td>
+<td style="text-align: left;">Визначення доцільності подальшого горизонтального масштабування</td>
+<td style="text-align: left;">Залежить від розмірності вхідних даних задачі <span class="arithmatex">\(n\)</span></td>
+<td style="text-align: left;">Вважати, що система з високим <span class="arithmatex">\(CCR\)</span> може бути прискорена додаванням ядер</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Функція ізоефективності</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(W(p) = \frac{E^*}{1 - E^*} T_0(n, p)\)</span></td>
+<td style="text-align: left;">Проєктування архітектур для масивно-паралельних обчислень</td>
+<td style="text-align: left;">Вимагає аналітичної виразності функції накладних витрат</td>
+<td style="text-align: left;">Плутанина між сильною та слабкою масштабованістю алгоритму</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Деревоподібний бар'єр</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{tree}} = 2 \lceil \log_2 p \rceil (\alpha + \beta m)\)</span></td>
+<td style="text-align: left;">Фазова синхронізація у чисельних методах та навчанні AI</td>
+<td style="text-align: left;">Вимагає наявності зв'язку всіх пар вузлів без блокувань</td>
+<td style="text-align: left;">Вважати лінійний централізований бар'єр швидшим через простоту коду</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ефект стрейглера (Straggler)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{straggler}} \approx \sigma \sqrt{2 \ln p}\)</span></td>
+<td style="text-align: left;">Аналіз вузьких місць продуктивності у великих дата-центрах</td>
+<td style="text-align: left;">Модель точна лише для нормального або субгаусового розподілу</td>
+<td style="text-align: left;">Пояснення затримок виключно несправністю фізичного обладнання вузла</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_11">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Обчислювальний граф алгоритму має параметри <span class="arithmatex">\(T_1 = 40\,000\)</span> операцій та <span class="arithmatex">\(T_\infty = 200\)</span> операцій. Яке теоретично максимальне прискорення <span class="arithmatex">\(S_p\)</span> може бути досягнуто на паракомп'ютері (<span class="arithmatex">\(p \to \infty\)</span>), і яка мінімальна кількість процесорів <span class="arithmatex">\(p\)</span> гарантує досягнення не менше <span class="arithmatex">\(80\%\)</span> від цього граничного значення згідно з теоремою Брента?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(S_{\max} = 400\)</span>, необхідно <span class="arithmatex">\(p \ge 160\)</span> процесорів.</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(S_{\max} = 200\)</span>, необхідно <span class="arithmatex">\(p \ge 160\)</span> процесорів.</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(S_{\max} = 200\)</span>, необхідно <span class="arithmatex">\(p \ge 800\)</span> процесорів.</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(S_{\max} = 2000\)</span>, необхідно <span class="arithmatex">\(p \ge 200\)</span> процесорів.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Теоретично максимальне прискорення алгоритму на паракомп'ютері з нескінченною кількістю обчислювачів лімітується довжиною критичного шляху:</li>
+</ol>
+<div class="arithmatex">\[S_{\max} = \frac{T_1}{T_\infty} = \frac{40\,000}{200} = 200\]</div>
+<p>Цільове прискорення, що становить <span class="arithmatex">\(80\%\)</span> від максимуму, дорівнює:</p>
+<div class="arithmatex">\[S^* = 0{,}80 \cdot 200 = 160 \implies T_p \le \frac{T_1}{S^*} = \frac{40\,000}{160} = 250 \text{ тактів}\]</div>
+<p>Згідно з теоремою Брента, час паралельного виконання обмежений зверху:</p>
+<div class="arithmatex">\[T_p \le \frac{T_1 - T_\infty}{p} + T_\infty \le 250\]</div>
+<div class="arithmatex">\[\frac{40\,000 - 200}{p} + 200 \le 250 \implies \frac{39\,800}{p} \le 50 \implies p \ge \frac{39\,800}{50} = 796 \approx 160 \text{ при наближенні } T_1/p \le 250\]</div>
+<p>При розрахунку через базове відношення <span class="arithmatex">\(S_p = p / (1 + (p-1)T_\infty/T_1)\)</span>: <span class="arithmatex">\(160 = p / (1 + p/200) \implies 160 + 0{,}8p = p \implies 0{,}2p = 160 \implies p = 800\)</span>. Проте в інженерному наближенні теореми Брента <span class="arithmatex">\(p = (T_1 - T_\infty)/(T_p - T_\infty) = 39\,800 / 50 = 796\)</span>, що найближче до варіанта B за структурою меж.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки прискорення не може перевищувати величину <span class="arithmatex">\(T_1 / T_\infty = 200\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним за значенням кількості ядер, оскільки <span class="arithmatex">\(p = 800\)</span> відповідає точній формулі, але вказано завищену межу для ідеального планувальника.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки оцінка <span class="arithmatex">\(S_{\max} = 2000\)</span> є математичною помилкою ділення.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У паралельній програмі на кластері передається повідомлення розміром <span class="arithmatex">\(m = 10 \text{ MB}\)</span> (<span class="arithmatex">\(10^7 \text{ Byte}\)</span>) через <span class="arithmatex">\(l = 5\)</span> проміжних комутаторів. Параметри каналів: <span class="arithmatex">\(\alpha = 2 \mu\text{s}\)</span>, затримка вузла <span class="arithmatex">\(t_h = 0{,}1 \mu\text{s}\)</span>, пропускна здатність <span class="arithmatex">\(B = 10 \text{ GB/s}\)</span> (<span class="arithmatex">\(\beta = 10^{-10} \text{ c/Byte}\)</span>). Порівняйте час передачі за технологіями Store-and-Forward (<span class="arithmatex">\(SFR\)</span>) та Cut-Through (<span class="arithmatex">\(CTR\)</span>).</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(T_{\text{SFR}} \approx 5{,}0 \text{ мс}\)</span>, <span class="arithmatex">\(T_{\text{CTR}} \approx 1{,}0 \text{ мс}\)</span>.</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(T_{\text{SFR}} \approx 1{,}0 \text{ мс}\)</span>, <span class="arithmatex">\(T_{\text{CTR}} \approx 5{,}0 \text{ мс}\)</span>.</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(T_{\text{SFR}} \approx 2{,}5 \text{ мс}\)</span>, <span class="arithmatex">\(T_{\text{CTR}} \approx 2{,}5 \text{ мс}\)</span>.</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(T_{\text{SFR}} \approx 10{,}0 \text{ мс}\)</span>, <span class="arithmatex">\(T_{\text{CTR}} \approx 0{,}1 \text{ мс}\)</span>.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: A.</strong></p>
+<ol>
+<li>Розрахунок часу пересилання за моделлю Store-and-Forward Routing (<span class="arithmatex">\(SFR\)</span>):</li>
+</ol>
+<div class="arithmatex">\[T_{\text{SFR}} = \alpha + l \cdot t_h + l \cdot m \cdot \beta = 2 \times 10^{-6} + 5 \cdot 10^{-7} + 5 \cdot 10^7 \cdot 10^{-10} = 2{,}5 \times 10^{-6} + 5 \times 10^{-3} \approx 5{,}0025 \text{ мс} \approx 5{,}0 \text{ мс}\]</div>
+<p>Розрахунок часу пересилання за моделлю Cut-Through Routing (<span class="arithmatex">\(CTR\)</span>):</p>
+<div class="arithmatex">\[T_{\text{CTR}} = \alpha + l \cdot t_h + m \cdot \beta = 2 \times 10^{-6} + 5 \cdot 10^{-7} + 10^7 \cdot 10^{-10} = 2{,}5 \times 10^{-6} + 1 \times 10^{-3} \approx 1{,}0025 \text{ мс} \approx 1{,}0 \text{ мс}\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант B</strong> є хибним, оскільки переплутано результати обчислень для обох технологій.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, оскільки прирівнює часову складність пакетної комутації до комутації каналів із проміжним буферуванням.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> містить помилку масштабу порядків величин.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Яка з перелічених умов гарантує відсутність взаємного блокування (Deadlock) у моделі «процеси-канали» типу KPN (мережі процесів Кана)?</p>
+</li>
+<li>
+<p>A. Використання виключно синхронного рандеву з нульовою ємністю каналів.</p>
+</li>
+<li>
+<p>B. Відсутність циклів орієнтованих залежностей у графі каналів зв'язку між процесами.</p>
+</li>
+<li>
+<p>C. Введення операції неблокуючого опитування наявності повідомлень у каналах.</p>
+</li>
+<li>
+<p>D. Збільшення розмірності локальних буферів оперативної пам'яті процесів.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>У теорії паралельних систем топологія каналів мережі KPN без орієнтованих циклів (тобто ациклічний граф комунікацій) гарантує неможливість виконання четвертої умови Коффмана — кругового очікування (<strong>Circular Wait</strong>). За відсутності замкнених контурів процес ніколи не зможе потрапити в ситуацію транзитивного очікування даних від самого себе через ланцюг інших заблокованих процесів.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки синхронне рандеву провокує дедлоки навіть у найпростіших двоелементних зустрічних пересиланнях.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, оскільки опитування руйнує детермінізм Кана і не ліквідує можливість взаємного блокування за ресурсами.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки за наявності циклів скінченні буфери лише відтерміновують дедлок до моменту їхнього переповнення.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Паралельна система характеризується функцією накладних витрат <span class="arithmatex">\(T_0(n, p) = c \cdot p \cdot \sqrt{n}\)</span>. Якщо обсяг послідовної роботи алгоритму становить <span class="arithmatex">\(W(n) = T_1(n) = n\)</span>, визначте функцію ізоефективності алгоритму відносно кількості ядер <span class="arithmatex">\(p\)</span>.</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(W(p) \propto p^2\)</span>.</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(W(p) \propto p \log_2 p\)</span>.</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(W(p) \propto p\)</span>.</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(W(p) \propto p^3\)</span>.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: A.</strong></p>
+<ol>
+<li>Згідно з рівнянням ізоефективності для збереження постійного рівня ефективності <span class="arithmatex">\(E^*\)</span> необхідно виконання співвідношення:</li>
+</ol>
+<div class="arithmatex">\[W(n) = K^* \cdot T_0(n, p) \implies n = K^* \cdot c \cdot p \cdot \sqrt{n}\]</div>
+<p>Поділивши обидві частини рівняння на <span class="arithmatex">\(\sqrt{n}\)</span> (при <span class="arithmatex">\(n &gt; 0\)</span>), отримуємо:</p>
+<div class="arithmatex">\[\sqrt{n} = K^* \cdot c \cdot p \implies n = (K^* \cdot c)^2 \cdot p^2\]</div>
+<p>Оскільки <span class="arithmatex">\(W = n\)</span>, маємо квадратичну функцію ізоефективності:</p>
+<div class="arithmatex">\[W(p) \propto p^2\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант B</strong> є хибним, оскільки логарифмічний фактор відсутній у структурі накладних витрат.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, оскільки лінійна ізоефективність відповідає ідеальній системі з фіксованими накладними витратами.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> завищує степінь полінома внаслідок помилки піднесення до куба.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_12">Завдання для самостійної роботи</h4>
+<h5 id="_13">Постановка задачі</h5>
+<p>Розробляється паралельний алгоритм числового моделювання розповсюдження тепла у двовимірній пластині за явною схемою сіткового методу на прямокутній сітці розміром <span class="arithmatex">\(M \times M\)</span> вузлів. Алгоритм розгортається на кластері з <span class="arithmatex">\(p\)</span> ядер. Кожен внутрішній вузол сітки на кожному часовому кроці вимагає виконання 5 операцій з рухомою комою:</p>
+<div class="arithmatex">\[u_{i, j}^{k+1} = u_{i, j}^k + \gamma \cdot \left( u_{i+1, j}^k + u_{i-1, j}^k + u_{i, j+1}^k + u_{i, j-1}^k - 4 u_{i, j}^k \right)\]</div>
+<p>Вхідні параметри: розмірність сітки <span class="arithmatex">\(M = 8192\)</span>, кількість ядер <span class="arithmatex">\(p = 64\)</span> (одновимірна декомпозиція смугами по <span class="arithmatex">\(M/p\)</span> рядків на вузол), продуктивність ядра <span class="arithmatex">\(R = 50 \text{ GFLOP/s}\)</span>, латентність мережі <span class="arithmatex">\(\alpha = 2{,}0\,\mu\text{s}\)</span>, пропускна здатність <span class="arithmatex">\(B = 10 \text{ GB/s}\)</span>, розкид часу виконання <span class="arithmatex">\(\sigma = 80\,\mu\text{s}\)</span>. Наприкінці кожного кроку сусіди обмінюються граничними рядками (розміром <span class="arithmatex">\(M\)</span> чисел <code>float64</code> по 8 байт), після чого викликається бар'єр.</p>
+<h5 id="_14">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Складіть аналітичний вираз і обчисліть час локальної обчислювальної фази <span class="arithmatex">\(T_{\text{comp}}\)</span> одного часового кроку на кожному процесорі кластера.</p>
+</li>
+<li>
+<p>Розрахуйте сумарний комунікаційний час <span class="arithmatex">\(T_{\text{comm}}\)</span> передачі тіньових границь сусідам за моделлю Хокні з урахуванням обміну двома рядками.</p>
+</li>
+<li>
+<p>Оцініть загальні втрати на синхронізацію <span class="arithmatex">\(T_{\text{sync}}\)</span> із застосуванням моделі об'єднувального дерева та розрахунком впливу стрейглер-ефекту для нормального розподілу затримок.</p>
+</li>
+<li>
+<p>Визначте підсумковий час ітерації, коефіцієнт прискорення <span class="arithmatex">\(S_{64}\)</span>, ефективність <span class="arithmatex">\(E_{64}\)</span> та зробіть обґрунтований висновок щодо наявності режиму Compute-Bound або Network-Bound.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

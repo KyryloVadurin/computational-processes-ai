@@ -1,0 +1,3688 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk1/">
+      
+      
+        <link rel="next" href="../lk3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-simd-gpu-pytorch" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні парадигми апаратного прискорення обчислень ШІ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі, формалізація пам'яті та алгоритмічні конвеєри
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Профілювання та інженерна оптимізація тензорної алгебри в PyTorch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-cpu-simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Багатопотоковість процесорів CPU та векторна обробка даних SIMD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gpu-nvidia-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Масивно-паралельна архітектура GPU та обчислювальна модель NVIDIA CUDA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Фізичні та апаратні фактори деградації продуктивності GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3. Фізичні та апаратні фактори деградації продуктивності GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Дивергенція варпу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-coalescing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Коалесцинг звернень до пам'яті (Memory Coalescing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-tpunpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Спеціалізовані матричні прискорювачі: мікроархітектура тензорних ядер і матричних процесорів TPU/NPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз обчислювальних платформ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-roofline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формальна модель операційної інтенсивності Roofline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-wmma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат мікроматричних операцій WMMA на тензорних ядрах
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчна та адресна модель представлення тензорів у пам'яті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичні засади автоматичної змішаної точності та динамічного масштабування градієнтів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-cuda-streams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Моделювання асинхронного виконання та паралелізму завдань через CUDA Streams і зрощування ядер
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5. Моделювання асинхронного виконання та паралелізму завдань через CUDA Streams і зрощування ядер">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична модель зрощування операцій (Kernel Fusion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення обчислювальних моделей та оптимізаційних механізмів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Базовий аналіз та розрахунок часу виконання неоптимізованого блоку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stride-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Оптимізація пам'яті через Stride-вирівнювання та коалесцинг
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-amp-bf16-tensor-cores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Перехід на змішану точність AMP (BF16) та активація Tensor Cores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-pytorch-20-triton-kernel-fusing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Компіляція графа за допомогою PyTorch 2.0 / Triton (Kernel Fusing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Архітектурні парадигми апаратного прискорення обчислень ШІ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі, формалізація пам'яті та алгоритмічні конвеєри
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Профілювання та інженерна оптимізація тензорної алгебри в PyTorch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-cpu-simd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Багатопотоковість процесорів CPU та векторна обробка даних SIMD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gpu-nvidia-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Масивно-паралельна архітектура GPU та обчислювальна модель NVIDIA CUDA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Фізичні та апаратні фактори деградації продуктивності GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3. Фізичні та апаратні фактори деградації продуктивності GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Дивергенція варпу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-coalescing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Коалесцинг звернень до пам'яті (Memory Coalescing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-tpunpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Спеціалізовані матричні прискорювачі: мікроархітектура тензорних ядер і матричних процесорів TPU/NPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Систематизація та порівняльний аналіз обчислювальних платформ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-roofline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Формальна модель операційної інтенсивності Roofline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-wmma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Математичний апарат мікроматричних операцій WMMA на тензорних ядрах
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчна та адресна модель представлення тензорів у пам'яті
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичні засади автоматичної змішаної точності та динамічного масштабування градієнтів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-cuda-streams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Моделювання асинхронного виконання та паралелізму завдань через CUDA Streams і зрощування ядер
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5. Моделювання асинхронного виконання та паралелізму завдань через CUDA Streams і зрощування ядер">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математична модель зрощування операцій (Kernel Fusion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналітична матриця зіставлення обчислювальних моделей та оптимізаційних механізмів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Базовий аналіз та розрахунок часу виконання неоптимізованого блоку
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stride-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Оптимізація пам'яті через Stride-вирівнювання та коалесцинг
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-amp-bf16-tensor-cores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Перехід на змішану точність AMP (BF16) та активація Tensor Cores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-pytorch-20-triton-kernel-fusing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Компіляція графа за допомогою PyTorch 2.0 / Triton (Kernel Fusing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-simd-gpu-pytorch">Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ. Векторна обробка, архітектура GPU, тензорні ядра, векторизована тензорна алгебра на PyTorch</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекції є формування у майбутніх інженерів комплексної системи знань та інженерних умінь щодо організації, оптимізації та математичного опису масивно-паралельних векторних і тензорних обчислень на сучасних процесорних архітектурах. У межах заняття досліджуються механізми переходу від послідовного скалярного виконання до багатопотокової SIMD/SIMT-обробки на CPU та GPU, специфіка функціонування спеціалізованих матричних блоків Tensor Cores, а також низькорівнева адресація багатовимірних тензорів у фреймворку PyTorch. Заняття покликане навчити студентів діагностувати апаратні обмеження за моделлю Roofline, запобігати дивергенції варпів, забезпечувати коалесцинг пам'яті та ефективно проєктувати обчислювальні конвеєри штучного інтелекту із застосуванням автоматичної змішаної точності й компіляції графів.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<p>Після успішного засвоєння матеріалу лекції здобувачі вищої освіти зможуть продемонструвати такі результати:</p>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Студенти повинні демонструвати ґрунтовне розуміння фундаментальних відмінностей між парадигмами SIMD, SIMT та систолічними матричними обчисленнями, а також детально пояснювати мікроархітектуру потокових мультипроцесорів GPU, варп-планувальників, тензорних ядер і формати даних зниженої точності.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Студенти мають уміти практично реалізовувати високопродуктивні векторизовані операції у середовищі PyTorch, налаштовувати механізми автоматичної змішаної точності (AMP) із масштабуванням градієнтів, керувати асинхронними CUDA-потоками та оптимізувати адресацію тензорів на основі вектора кроків у пам'яті.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Студенти повинні володіти методами аналітичного дослідження обчислювальних алгоритмів за моделлю Roofline для чіткої ідентифікації обмежень швидкодії (Memory-Bound проти Compute-Bound), а також аналізувати деградацію продуктивності, спричинену некоалесцентним доступом до глобальної пам'яті VRAM або дивергенцією варпів у розгалужених алгоритмах.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Студенти мають набути здатність критично оцінювати компроміси між обчислювальною швидкістю, енергоефективністю та числовою стійкістю моделей при використанні форматів FP32, TF32, FP16, BF16, INT8 і FP8, а також проєктувати синтезовані, високооптимізовані конвеєри машинного навчання із застосуванням компілятора PyTorch 2.0 (TorchDynamo/Triton).</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Архітектурні парадигми апаратного прискорення обчислень ШІ</h3>
+<ul>
+<li>
+<p>1.1. Багатопотоковість процесорів CPU та векторна обробка даних SIMD (розширення AVX-512, ARM NEON, векторні регістри та компіляторні інтрінсики).</p>
+</li>
+<li>
+<p>1.2. Масивно-паралельна архітектура GPU та обчислювальна модель NVIDIA CUDA (потокові мультипроцесори SM, концепція SIMT, ієрархія Grid-Block-Thread, планування варпів).</p>
+</li>
+<li>
+<p>1.3. Фізичні та апаратні фактори деградації продуктивності GPU (явище розгалуження потоків Warp Divergence та некоалесцентний доступ до глобальної пам'яті Memory Coalescing).</p>
+</li>
+<li>
+<p>1.4. Спеціалізовані матричні прискорювачі: мікроархітектура тензорних ядер (Tensor Cores) і матричних процесорів TPU/NPU (плиткові операції Tile WMMA, систолічні масиви та формати даних FP16, BF16, TF32, FP8).</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичні моделі, формалізація пам'яті та алгоритмічні конвеєри</h3>
+<ul>
+<li>
+<p>2.1. Формальна модель операційної інтенсивності Roofline (математичний зв'язок FLOP/Byte, визначення критичної межі переходу між режимами Memory-Bound та Compute-Bound).</p>
+</li>
+<li>
+<p>2.2. Математична формалізація операцій на тензорних ядрах WMMA (матричне векторно-блочне перемноження та підсумовування Fused Multiply-Add над мікроматрицями, розрахунок пікової щільності FLOP/такт).</p>
+</li>
+<li>
+<p>2.3. Алгебраїчна та адресна модель представлення тензорів у пам'яті (вектор кроків Strides, рекурентні умови контигуальності Contiguous та механіка безкоштовного транспонування зі зміною метаданих).</p>
+</li>
+<li>
+<p>2.4. Математичні моделі змішаної точності (Automatic Mixed Precision) та динамічного масштабування градієнтів (запобігання явищам Underflow/Overflow за допомогою GradScaler).</p>
+</li>
+<li>
+<p>2.5. Моделювання асинхронного виконання та паралелізму завдань через механізм CUDA Streams і зрощування операцій (Kernel Fusing) у середовищі PyTorch 2.0 / Triton.</p>
+</li>
+</ul>
+<h3 id="3-pytorch">3. Практично-розрахунковий кейс. Профілювання та інженерна оптимізація тензорної алгебри в PyTorch</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі: перехід від скалярно-невирівняних операцій до тензорних ядер через Stride-оптимізацію, режим AMP та компіляцію графа TorchDynamo/Triton».</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<p>Еволюція алгоритмів штучного інтелекту, зокрема глибоких нейронних мереж, трансформувала вимоги до апаратної бази обчислювальних комплексів. Якщо класичні алгоритми обробки інформації спиралися на складну логіку керування з високим рівнем галуження, то сучасні моделі машинного навчання є масивно-однорідними за своєю природою. Вони вимагають багаторазового виконання базових операцій лінійної алгебри над багатовимірними масивами даних. </p>
+<p>Традиційна мікропроцесорна парадигма, орієнтована на мінімізацію затримок виконання окремого послідовного потоку (<strong>latency-oriented architecture</strong>), досягла фізичних меж ефективності. Це обумовило перехід до масивно-паралельних архітектур, що оптимізують сумарну пропускну здатність обчислювального тракту (<strong>throughput-oriented architecture</strong>).</p>
+<h3 id="11-cpu-simd">1.1. Багатопотоковість процесорів CPU та векторна обробка даних SIMD</h3>
+<p>Класичні центральні процесори (<strong>Central Processing Unit, CPU</strong>) оптимізовані для виконання послідовних інструкцій із мінімальною латентністю. Для цього значна частка площі напівпровідникового кристала відводиться під блоки динамічного передбачення переходів (<strong>Branch Predictors</strong>), механізми позачергового виконання інструкцій (<strong>Out-of-Order Execution, OoO</strong>) та багаторівневу ієрархію кеш-пам'яті (L1, L2, L3).</p>
+<p>Згідно з класичною систематизацією паралельних архітектур за <strong>таксономією Флінна</strong>, обчислювальні процеси поділяються на чотири базові класи:</p>
+<ol>
+<li>
+<p><strong>SISD (Single Instruction, Single Data)</strong> — традиційний послідовний потік, де один процесорний блок обробляє один потік скалярних даних за одиницю часу.</p>
+</li>
+<li>
+<p><strong>SIMD (Single Instruction, Multiple Data)</strong> — парадигма, в якій єдина апаратна інструкція одночасно застосовується до множини різних елементів даних, розміщених у спеціалізованих векторних регістрах.</p>
+</li>
+<li>
+<p><strong>MISD (Multiple Instruction, Single Data)</strong> — конвеєрна обробка єдиного потоку даних послідовністю різних команд, що рідко зустрічається в універсальних обчислювачах.</p>
+</li>
+<li>
+<p><strong>MIMD (Multiple Instruction, Multiple Data)</strong> — повноцінна багатоядерна або багатопроцесорна обробка, де кожне ядро виконує власний незалежний потік інструкцій над власним набором даних (<strong>Thread-Level Parallelism, TLP</strong>).</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Flynn_Taxonomy [Класифікація паралельних систем за таксономією Флінна]
+        SISD["SISD ('Класичний скалярний процесор')"]
+        SIMD["SIMD ('Векторні розширення CPU: AVX-512, NEON')"]
+        MISD["MISD ('Спеціалізовані конвеєрні системи')"]
+        MIMD["MIMD ('Багатоядерні CPU та кластери')"]
+    end
+
+    subgraph Accelerator_Paradigms [Парадигми масивно-паралельних прискорювачів]
+        SIMT["SIMT ('Масивно-потокова архітектура GPU CUDA')"]
+        Systolic["Систолічні матричні решітки ('TPU / NPU')"]
+    end
+
+    SIMD -.-&gt;|Розвиток у масивний паралелізм| SIMT
+    SIMD -.-&gt;|Апаратна спеціалізація для матриць| Systolic</code></pre>
+<p>Для задач векторно-матричної алгебри на CPU застосовується парадигма <strong>SIMD</strong>. Сучасні процесори інтегрують векторні розширення: набір інструкцій <strong>AVX-512</strong> (Advanced Vector Extensions) у процесорах архітектури x86-64 або <strong>ARM NEON / SVE</strong> у мікроархітектурах ARM. </p>
+<p>Фізично SIMD спирається на наявність розширених регістрових файлів. Наприклад, у стандарті AVX-512 використовуються <span class="arithmatex">\(32\)</span> регістри шириною <span class="arithmatex">\(512\)</span> біт кожен (регістри <code>ZMM0</code>–<code>ZMM31</code>). Векторний регістр дозволяє розмістити одночасно <span class="arithmatex">\(16\)</span> чисел одинарної точності (<strong>FP32</strong>) або <span class="arithmatex">\(8\)</span> чисел подвійної точності (<strong>FP64</strong>). </p>
+<p>Виконання векторної інструкції типу <strong>FMA (Fused Multiply-Add)</strong> забезпечує паралельне обчислення виразу <span class="arithmatex">\(a \cdot b + c\)</span> для всіх елементів вектора за один такт процесора:</p>
+<div class="arithmatex">\[S_{\text{SIMD}} = \frac{1}{(1 - p) + \frac{p}{N_{\text{lanes}}}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(S_{\text{SIMD}}\)</span> — теоретичний коефіцієнт прискорення обчислень за рахунок векторизації (безрозмірна величина);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(p\)</span> — частка коду, яка піддається векторизації (дійсне число в діапазоні <span class="arithmatex">\([0, 1]\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{lanes}}\)</span> — апаратна ширина векторного конвеєра, що визначає кількість одночасно оброблюваних скалярних елементів:</p>
+</li>
+</ul>
+<div class="arithmatex">\[N_{\text{lanes}} = \frac{W_{\text{reg}}}{B_{\text{data}}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(W_{\text{reg}}\)</span> — розрядність векторного регістра процесора (наприклад, <span class="arithmatex">\(512\)</span> біт для архітектури AVX-512);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(B_{\text{data}}\)</span> — бітова ширина одного оброблюваного числа (наприклад, <span class="arithmatex">\(32\)</span> біти для формату FP32 або <span class="arithmatex">\(16\)</span> біт для формату FP16).</p>
+</li>
+</ul>
+<p>Векторизація коду здійснюється або автоматично компілятором (<strong>Auto-vectorization</strong>), або вручну розробником за допомогою низькорівневих функцій — <strong>векторних інтрінсиків (Intrinsics)</strong>, таких як <code>_mm512_fmadd_ps()</code>. </p>
+<p>Проте масштабування продуктивності CPU обмежене тепловим пакетом, малою кількістю фізичних ядер та недостатньою пропускною здатністю шини системної оперативної пам'яті (<strong>DDR4/DDR5</strong>).</p>
+<hr />
+<h3 id="12-gpu-nvidia-cuda">1.2. Масивно-паралельна архітектура GPU та обчислювальна модель NVIDIA CUDA</h3>
+<p>Графічні процесори (<strong>Graphics Processing Unit, GPU</strong>) проєктуються за парадигмою максимізації пропускної здатності. На відміну від CPU, де більша частина кристала відведена під кеш-пам'ять та логіку передбачення, у GPU понад <span class="arithmatex">\(80\%\)</span> кремнієвої площі займають масиви арифметично-логічних пристроїв (<strong>Arithmetic Logic Units, ALU</strong>).</p>
+<p>Латентність доступу до пам'яті в GPU не мінімізується гігантськими кешами, а <strong>маскується (Latency Hiding)</strong>: коли одна група обчислювальних потоків очікує на завантаження даних із глобальної пам'яті, апаратний планувальник миттєво перемикає виконавчий блок на виконання інструкцій іншої, готової до роботи групи потоків без накладних витрат.</p>
+<p>Фізично графічний процесор складається з масиву потокових мультипроцесорів (<strong>Streaming Multiprocessors, SM</strong>). Кожен SM містить:</p>
+<ol>
+<li>
+<p>Множину універсальних ядер <strong>CUDA Cores</strong> для цілочисельних (INT32) та плаваючих (FP32, FP64) операцій.</p>
+</li>
+<li>
+<p>Спеціалізовані апаратні модулі: тензорні ядра (<strong>Tensor Cores</strong>) та блоки спеціальних функцій (<strong>Special Function Units, SFU</strong>).</p>
+</li>
+<li>
+<p>Високошвидкісний масив регістрів (<strong>Register File</strong>) великого обсягу (зазвичай <span class="arithmatex">\(64\text{ КБ}\)</span> – <span class="arithmatex">\(256\text{ КБ}\)</span> на один SM).</p>
+</li>
+<li>
+<p>Програмно керовану розділювану пам'ять наднизької латентності (<strong>Shared Memory</strong>), фізично об'єднану з апаратним кешем першого рівня (<strong>L1 Cache</strong>).</p>
+</li>
+<li>
+<p>Апаратні планувальники варпів (<strong>Warp Schedulers</strong>) та блоки диспетчеризації інструкцій.</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Host_CPU [Хост-система: CPU та системна пам'ять]
+        HostCode["Код хоста ('Python / PyTorch / C++ Driver')"]
+        HostRAM["Системна пам'ять Host RAM"]
+    end
+
+    subgraph PCIe_Bus [Шина передачі даних PCIe Gen4 / Gen5 / NVLink]
+        DataTransfer["Передача пам'яті HtoD / DtoH"]
+    end
+
+    subgraph GPU_Device [Графічний прискорювач GPU]
+        GlobalMem["Глобальна пам'ять VRAM ('HBM3 / GDDR6X')"]
+        L2Cache["Загальний кеш L2 Cache"]
+
+        subgraph SM_Array [Масив потокових мультипроцесорів SM]
+            SM1["Streaming Multiprocessor 0"]
+            SM2["Streaming Multiprocessor 1"]
+            SMN["Streaming Multiprocessor N"]
+        end
+
+        subgraph Single_SM [Мікроархітектура одного мультипроцесора SM]
+            WarpSched["Апаратні планувальники варпів ('Warp Schedulers')"]
+            RegFile["Регістровий файл ('Register File')"]
+            SharedL1["Розділювана пам'ять / L1 Кеш ('Shared Memory')"]
+
+            subgraph ExecUnits [Виконавчі блоки SM]
+                CUDACores["CUDA Cores ('ALU FP32/INT32')"]
+                TensorCoresBlock["Тензорні ядра ('Tensor Cores WMMA')"]
+            end
+        end
+    end
+
+    HostCode --&gt;|Виклик CUDA Kernel| DataTransfer
+    DataTransfer --&gt; GlobalMem
+    GlobalMem &lt;--&gt; L2Cache
+    L2Cache &lt;--&gt; SM_Array
+    SM1 --- Single_SM
+    WarpSched --&gt; RegFile
+    WarpSched --&gt; ExecUnits
+    ExecUnits &lt;--&gt; SharedL1</code></pre>
+<p>На програмному рівні компанія NVIDIA запровадила модель <strong>SIMT (Single Instruction, Multiple Threads)</strong>. У моделі SIMT інженер створює програму з розрахунку на один абстрактний потік (<strong>Thread</strong>), а графічний процесор масштабує виконання на тисячі апаратних ниток. </p>
+<p>Програмна ієрархія CUDA організована таким чином:</p>
+<ol>
+<li>
+<p><strong>Потік (Thread)</strong> — базовий елемент виконання, що має власний набір регістрів та локальну пам'ять.</p>
+</li>
+<li>
+<p><strong>Блок потоків (Thread Block)</strong> — група потоків (до <span class="arithmatex">\(1024\)</span>), які виконуються на одному фізичному мультипроцесорі SM, мають доступ до спільної пам'яті Shared Memory та можуть синхронізуватися за допомогою бар'єрів <code>__syncthreads()</code>.</p>
+</li>
+<li>
+<p><strong>Сітка (Grid)</strong> — дво- або тривимірний масив блоків потоків, що формується під час запуску обчислювального ядра (<strong>Kernel</strong>).</p>
+</li>
+</ol>
+<p>На апаратному рівні мультипроцесор SM не оперує окремими потоками. Усі потоки всередині блоку групуються в неподільні кванти виконання — <strong>варпи (Warps)</strong>. Один варп складається строго з <span class="arithmatex">\(32\)</span> потоків. Усі <span class="arithmatex">\(32\)</span> потоки одного варпу в кожен системний такт отримують від планувальника одну й ту саму машинну команду та виконують її синхронно над власними даними.</p>
+<hr />
+<h3 id="13-gpu">1.3. Фізичні та апаратні фактори деградації продуктивності GPU</h3>
+<p>Розробка високоефективного програмного забезпечення для масивно-паралельних архітектур вимагає врахування двох фізичних обмежень мікроархітектури GPU: розгалуження потоків та структури транзакцій пам'яті.</p>
+<h4 id="_4">Дивергенція варпу</h4>
+<p>Оскільки всі <span class="arithmatex">\(32\)</span> потоки одного варпу прив'язані до єдиного лічильника команд, наявність умовних переходів (<code>if-else</code>, цикли зі змінною кількістю ітерацій) створює явище <strong>дивергенції варпу</strong>.</p>
+<p>Якщо різні потоки всередині одного варпу обирають різні шляхи виконання умови, апаратний планувальник змушений виконувати гілки <strong>послідовно</strong>:</p>
+<ol>
+<li>
+<p>Спочатку мультипроцесор виконує інструкції гілки <code>True</code>, при цьому потоки, для яких умова виявилася хибною, апаратно блокуються шляхом виставлення бітової маски активності (<strong>Active Mask</strong>).</p>
+</li>
+<li>
+<p>Потім мультипроцесор виконує інструкції гілки <code>False</code>, маскуючи потоки першої групи.</p>
+</li>
+<li>
+<p>У точці реконвергенції (<strong>Reconvergence Point</strong>) маска знову відкриває всі потоки, і синхронне виконання відновлюється.</p>
+</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    WarpStart["Початок виконання інструкції варпом: 32 потоки"] --&gt; CondBranch{"Обчислення умови: threadIdx.x % 2 == 0"}
+
+    CondBranch --&gt;|Парні потоки: 16 потоків| BranchA["Гілка True: Обчислення блоку А"]
+    CondBranch --&gt;|Непарні потоки: 16 потоків| BranchB["Гілка False: Обчислення блоку B"]
+
+    subgraph Execution_Phase1 [Такт 1: Потоки False замасковані]
+        BranchA --&gt; MaskExec1["Виконання гілки True - корисна потужність 50%"]
+    end
+
+    subgraph Execution_Phase2 [Такт 2: Потоки True замасковані]
+        MaskExec1 --&gt; MaskExec2["Виконання гілки False - корисна потужність 50%"]
+    end
+
+    MaskExec2 --&gt; Reconvergence["Точка злиття: Відновлення паралельного виконання 32 потоків"]</code></pre>
+<p>Ефективність використання обчислювальної потужності варпу <span class="arithmatex">\(\eta_{\text{warp}}\)</span> за наявності розгалужень формалізується аналітичним виразом:</p>
+<div class="arithmatex">\[\eta_{\text{warp}} = \frac{\sum_{k=1}^{K} A_k}{K \cdot N_{\text{warp}}}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\eta_{\text{warp}}\)</span> — коефіцієнт обчислювальної ефективності варпу (безрозмірна величина в діапазоні <span class="arithmatex">\((0, 1]\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(K\)</span> — загальна кількість взаємовиключних гілок виконання в умовному операторі (ціле додатне число);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(A_k\)</span> — кількість активних потоків, що задіяні у виконанні <span class="arithmatex">\(k\)</span>-ї гілки розгалуження (ціле число від <span class="arithmatex">\(1\)</span> до <span class="arithmatex">\(32\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{warp}}\)</span> — фізичний розмір варпу (константа для архітектури NVIDIA CUDA, що дорівнює <span class="arithmatex">\(32\)</span>).</p>
+</li>
+</ul>
+<h4 id="memory-coalescing">Коалесцинг звернень до пам'яті (Memory Coalescing)</h4>
+<p>Глобальна пам'ять GPU (<strong>VRAM / HBM</strong>) має високу латентність (сотні системних тактів). Контролер пам'яті обробляє запити не окремими байтами, а пакетними транзакціями фіксованої ширини: сегментами по <span class="arithmatex">\(32\)</span>, <span class="arithmatex">\(64\)</span> або <span class="arithmatex">\(128\)</span> байт.</p>
+<p><strong>Коалесцинг пам'яті (Memory Coalescing)</strong> — це процес об'єднання запитів на читання або запис до глобальної пам'яті від усіх <span class="arithmatex">\(32\)</span> потоків варпу в мінімально можливу кількість апаратних транзакцій шини пам'яті. </p>
+<p>Якщо <span class="arithmatex">\(32\)</span> потоки звертаються до суміжних елементів даних розміром <span class="arithmatex">\(4\)</span> байти (наприклад, масив <code>float</code>), сумарний запит становить:</p>
+<div class="arithmatex">\[32 \times 4\text{ байти} = 128\text{ байт}\]</div>
+<p>Контролер пам'яті виконує цей доступ за <strong>одну</strong> транзакцію шириною <span class="arithmatex">\(128\)</span> байт. </p>
+<p>Якщо ж доступ здійснюється з кроком (наприклад, читання матриці по стовпцях без транспонування) або за випадковими індексами, кожен потік потрапляє в окремий сектор пам'яті. Це змушує контролер виконувати до <span class="arithmatex">\(32\)</span> окремих транзакцій по <span class="arithmatex">\(32\)</span> байти (<span class="arithmatex">\(1024\)</span> переданих байти заради отримання <span class="arithmatex">\(128\)</span> байт корисних даних). </p>
+<p>Коефіцієнт ефективності використання пропускної здатності шини пам'яті <span class="arithmatex">\(\eta_{\text{mem}}\)</span> визначається як:</p>
+<div class="arithmatex">\[\eta_{\text{mem}} = \frac{V_{\text{useful}}}{N_{\text{trans}} \cdot S_{\text{segment}}} \times 100\%\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\eta_{\text{mem}}\)</span> — ефективність утилізації пропускної здатності шини пам'яті (виражається у відсотках, <span class="arithmatex">\(\% \in (0, 100]\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V_{\text{useful}}\)</span> — сумарний обсяг корисних даних, безпосередньо запитаних потоками варпу (вимірюється в байтах, <span class="arithmatex">\(\text{Bytes}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{trans}}\)</span> — фактична кількість згенерованих контролером апаратних транзакцій (ціле додатне число);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(S_{\text{segment}}\)</span> — апаратний розмір однієї транзакції шини пам'яті (становить <span class="arithmatex">\(32\)</span>, <span class="arithmatex">\(64\)</span> або <span class="arithmatex">\(128\)</span> байт).</p>
+</li>
+</ul>
+<hr />
+<h3 id="14-tpunpu">1.4. Спеціалізовані матричні прискорювачі: мікроархітектура тензорних ядер і матричних процесорів TPU/NPU</h3>
+<p>У класичній моделі CUDA Core кожне ядро виконує скалярну операцію над одним числом за такт. Для обчислення множення двох матриць потрібні мільйони незалежних інструкцій. Починаючи з архітектури <strong>Volta</strong> (2017 р.) та продовжуючи в <strong>Ampere</strong>, <strong>Hopper</strong> і <strong>Blackwell</strong>, компанія NVIDIA впровадила в структуру SM спеціалізовані апаратні блоки — <strong>тензорні ядра (Tensor Cores)</strong>.</p>
+<p>Тензорне ядро реалізує концепцію виконання матричної операції над цілими підматрицями (плитками, або <strong>Tiles</strong>) за один системний такт варпу. Базова операція має назву <strong>WMMA (Warp Matrix Multiply and Accumulate)</strong>:</p>
+<div class="arithmatex">\[\mathbf{D} = \mathbf{A} \times \mathbf{B} + \mathbf{C}\]</div>
+<p>де матриці <span class="arithmatex">\(\mathbf{A}\)</span> та <span class="arithmatex">\(\mathbf{B}\)</span> мають розмірність <span class="arithmatex">\(16 \times 16\)</span> елементів зниженої точності, а матриці <span class="arithmatex">\(\mathbf{C}\)</span> та <span class="arithmatex">\(\mathbf{D}\)</span> слугують акумуляторами підвищеної точності.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Inputs [Матриці операндів зниженої точності]
+        MatA["Матриця A (16x16) Format: FP16 / BF16 / INT8 / FP8"]
+        MatB["Матриця B (16x16) Format: FP16 / BF16 / INT8 / FP8"]
+    end
+
+    subgraph Tensor_Core_Engine [Апаратний конвеєр Tensor Core]
+        WMMA_Unit["Блок матричного множення плиток (WMMA Engine)"]
+        Accumulator["Блок сумування з матрицею акумулятора C"]
+    end
+
+    subgraph Output [Підсумковий результат]
+        MatD["Матриця результату D (16x16) Format: FP32 / FP16"]
+    end
+
+    MatA --&gt; WMMA_Unit
+    MatB --&gt; WMMA_Unit
+    WMMA_Unit --&gt; Accumulator
+    MatC["Матриця зміщення C (16x16) Format: FP32"] --&gt; Accumulator
+    Accumulator --&gt; MatD</code></pre>
+<p>Еволюція форматів даних для тензорних обчислень стала ключовим фактором прискорення:</p>
+<ol>
+<li>
+<p><strong>FP32 (IEEE 754)</strong> — <span class="arithmatex">\(1\)</span> біт знака, <span class="arithmatex">\(8\)</span> біт експоненти, <span class="arithmatex">\(23\)</span> біти мантиси (динамічний діапазон <span class="arithmatex">\(\approx 10^{\pm 38}\)</span>, висока точність).</p>
+</li>
+<li>
+<p><strong>FP16</strong> — <span class="arithmatex">\(1\)</span> біт знака, <span class="arithmatex">\(5\)</span> біт експоненти, <span class="arithmatex">\(10\)</span> біт мантиси (вузький динамічний діапазон <span class="arithmatex">\(\approx 10^{\pm 5}\)</span>, схильний до переповнення та зникнення градієнтів).</p>
+</li>
+<li>
+<p><strong>BF16 (Bfloat16)</strong> — <span class="arithmatex">\(1\)</span> біт знака, <span class="arithmatex">\(8\)</span> біт експоненти (як у FP32), <span class="arithmatex">\(7\)</span> біт мантиси (широкий динамічний діапазон, що виключає ризик числової нестабільності).</p>
+</li>
+<li>
+<p><strong>TF32 (TensorFloat-32)</strong> — внутрішній апаратний формат NVIDIA: <span class="arithmatex">\(1\)</span> біт знака, <span class="arithmatex">\(8\)</span> біт експоненти, <span class="arithmatex">\(10\)</span> біт мантиси (займає <span class="arithmatex">\(19\)</span> біт, зчитується з коду FP32 автоматично без зміни інтерфейсу).</p>
+</li>
+<li>
+<p><strong>FP8 (E4M3 та E5M2)</strong> — <span class="arithmatex">\(8\)</span>-бітові формати плаваючої крапки для квантованого інференсу та навчання надвеликих мовних моделей (<strong>LLM</strong>).</p>
+</li>
+</ol>
+<p>Іншим архітектурним напрямом є <strong>систолічні матричні решітки (Systolic Arrays)</strong>, реалізовані в процесорах <strong>Google TPU</strong> та спеціалізованих нейропроцесорах (<strong>NPU</strong>). </p>
+<p>У систолічному масиві процесорні елементи (<strong>Processing Elements, PE</strong>) з'єднані в двовимірну регулярну сітку. Дані (ваги та активації) подаються на краї матриці й «пульсують» (передаються від одного вузла до сусіднього) крізь решітку за системними тактами без постійного проміжного збереження у великому регістровому файлі. Це знижує енергоспоживання шини даних у <span class="arithmatex">\(5\)</span>–<span class="arithmatex">\(10\)</span> разів порівняно з класичними векторними регістрами.</p>
+<hr />
+<h3 id="_5">Систематизація та порівняльний аналіз обчислювальних платформ</h3>
+<p>Для обґрунтованого вибору апаратного забезпечення під конкретні задачі штучного інтелекту в таблиці наведено порівняльний аналіз базових архітектурних парадигм.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурна платформа</th>
+<th style="text-align: left;">Парадигма виконання</th>
+<th style="text-align: left;">Базовий тип обчислювача</th>
+<th style="text-align: left;">Основні підтримувані формати</th>
+<th style="text-align: left;">Пропускна здатність та спеціалізація</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>CPU SIMD (Intel AVX-512 / ARM NEON)</strong></td>
+<td style="text-align: left;">Векторний паралелізм даних (SIMD)</td>
+<td style="text-align: left;">Широкі векторні регістри (128–512 біт)</td>
+<td style="text-align: left;">FP64, FP32, FP16, INT64–INT8</td>
+<td style="text-align: left;">Універсальна логіка, максимальна гнучкість при роботі з розгалуженим кодом; низька щільність FLOP/Ватт у тензорних задачах</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPU CUDA Cores (NVIDIA Streaming MP)</strong></td>
+<td style="text-align: left;">Масивно-потоковий паралелізм (SIMT)</td>
+<td style="text-align: left;">Масиви скалярних ядер ALU</td>
+<td style="text-align: left;">FP64, FP32, FP16, INT32, INT8</td>
+<td style="text-align: left;">Висока універсальна паралельна продуктивність для поелементних операцій; чутливість до дивергенції варпів</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPU Tensor Cores (NVIDIA Volta – Blackwell)</strong></td>
+<td style="text-align: left;">Блоково-матричний паралелізм (WMMA Tile)</td>
+<td style="text-align: left;">Апаратні матричні FMA-множники підматриць <span class="arithmatex">\(16 \times 16\)</span></td>
+<td style="text-align: left;">TF32, BF16, FP16, FP8, INT8, INT4</td>
+<td style="text-align: left;">Екстремальна продуктивність GEMM-операцій (множення матриць); жорстка вимога до кратності розмірів шарів (<span class="arithmatex">\(8, 16, 32\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Google TPU (Tensor Processing Unit)</strong></td>
+<td style="text-align: left;">Систолічна матрична решітка (Systolic Array)</td>
+<td style="text-align: left;">Двовимірний масив <span class="arithmatex">\(128 \times 128\)</span> процесорних елементів</td>
+<td style="text-align: left;">BF16, FP32 (акумуляція), INT8</td>
+<td style="text-align: left;">Максимальна енергоефективність щільного матричного множення; повна відсутність підтримки довільного неструктурованого коду</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Edge NPU (Neural Processing Unit)</strong></td>
+<td style="text-align: left;">Фіксований потік даних (Dataflow Engine)</td>
+<td style="text-align: left;">Систолічні або векторні блоки фіксованої точності</td>
+<td style="text-align: left;">INT8, INT4, FP16 (обмежено)</td>
+<td style="text-align: left;">Мініатюрні енергетичні бюджети (<span class="arithmatex">\(0.5\)</span>–<span class="arithmatex">\(15\text{ Вт}\)</span>) для інференсу нейромереж на мобільних і вбудованих терміналах</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong><br />
+Поширеним помилковим судженням серед інженерів-початківців є ототожнення технології <strong>NVIDIA CUDA SIMT</strong> із класичним векторним розширенням <strong>CPU SIMD</strong>. Принципова різниця полягає в тому, що в SIMD програміст або компілятор зобов'язаний явно запакувати вектор у регістр фіксованої довжини (наприклад, 16 чисел FP32 в один <code>__m512</code>), а будь-яке скалярне відхилення призводить до аварійного розпакування. </p>
+<p>У моделі SIMT інструкція пишеться як для повністю автономного скалярного потоку. Апаратне об'єднання <span class="arithmatex">\(32\)</span> потоків у варп виконується динамічно на рівні кремнію. Інженер взаємодіє з абстракцією віртуального потоку, а не апаратного регістра фіксованої довжини, що кардинально спрощує написання паралельного коду, хоча й створює ризики прихованої деградації продуктивності через дивергенцію.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong><br />
+Чому розробники глибоких нейронних мереж у фреймворку PyTorch намагаються завжди обирати розміри батчів (<strong>Batch Size</strong>) та розмірності схованих шарів (<strong>Hidden Dimensions</strong>), що є строго кратними числам <span class="arithmatex">\(8\)</span>, <span class="arithmatex">\(16\)</span> або <span class="arithmatex">\(32\)</span>? Які мікроархітектурні механізми GPU викликають катастрофічне падіння швидкодії, якщо розмір шару становить, наприклад, <span class="arithmatex">\(513\)</span> замість <span class="arithmatex">\(512\)</span>?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p>Падіння продуктивності зумовлене одночасно двома апаратними факторами архітектури GPU:</p>
+<ol>
+<li><strong>Апаратна розмірність варпу та тензорних ядер:</strong>
+   Фізичний розмір варпу в архітектурі NVIDIA становить строго <span class="arithmatex">\(N_{\text{warp}} = 32\)</span> потоки, а тензорні ядра (<strong>Tensor Cores</strong>) виконують множення матриць виключно плитками розмірністю <span class="arithmatex">\(16 \times 16 \times 16\)</span> (або кратними субплитками <span class="arithmatex">\(8 \times 8\)</span>). Якщо розмірність матриці становить <span class="arithmatex">\(513\)</span>, то остання плитка не може бути заповнена повністю. </li>
+</ol>
+<p>Для її обробки бібліотека <strong>cuBLAS</strong> змушена виділяти додатковий варп і цілий блок обчислень тензорного ядра, в якому <span class="arithmatex">\(15\)</span> із <span class="arithmatex">\(16\)</span> каналів маскуються або заповнюються нулями (<strong>Padding</strong>). Обчислювальна ефективність останнього блоку падає до:</p>
+<p>$<span class="arithmatex">\(\eta = \frac{1}{16} = 6.25\%\)</span>$</p>
+<ol>
+<li><strong>Руйнування коалесцингу пам'яті (Memory Unaligned Access):</strong>
+   При розмірі рядка матриці в <span class="arithmatex">\(513\)</span> елементів типу FP32 (<span class="arithmatex">\(513 \times 4\text{ байти} = 2052\text{ байти}\)</span>) адреса початку кожного наступного рядка перестає бути вирівняною по межі апаратного сегмента контролера пам'яті (<span class="arithmatex">\(128\)</span> байт, оскільки <span class="arithmatex">\(2052 \pmod{128} = 4 \neq 0\)</span>). </li>
+</ol>
+<p>У результаті всі наступні транзакції читання рядків матриці з глобальної пам'яті VRAM розбиваються на дві незв'язані транзакції замість однієї коалесцентної. Це зменшує ефективну пропускну здатність шини пам'яті майже вдвічі.</p>
+</details>
+<hr />
+<h3 id="_6">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Порівняйте застосування інструкцій CPU AVX-512 та ядер GPU CUDA Cores для задач обробки табличних даних невеликого обсягу (до <span class="arithmatex">\(10\text{ МБ}\)</span>). Обґрунтуйте, чому накладні витрати на копіювання даних через шину PCI Express роблять використання потужного GPU менш ефективним, ніж обчислення на CPU із SIMD-векторизацією.</p>
+</li>
+<li>
+<p>Проаналізуйте різницю між представленням чисел у форматах FP16 та BF16. Поясніть, чому однаковий розмір бітової сітки (<span class="arithmatex">\(16\)</span> біт) забезпечує принципово різну поведінку під час зворотного поширення помилки у глибоких мережах, та за яких умов формат BF16 повністю усуває необхідність штучного масштабування градієнтів.</p>
+</li>
+<li>
+<p>Визначте взаємозв'язок між кількістю локальних змінних у ядрі CUDA (що визначає тиск на регістровий файл — <strong>Register Pressure</strong>) та коефіцієнтом зайнятості мультипроцесора. Зробіть висновок про те, як надмірне використання регістрів одним потоком може знизити загальну паралельну продуктивність графічного прискорювача.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<p>Сучасні методи апаратного прискорення алгоритмів штучного інтелекту спираються на суворі аналітичні моделі розподілу ресурсів, пропускної здатності та обчислювальної складності. Для проєктування високопродуктивних систем необхідна формалізація зв'язку між архітектурними параметрами процесорів (кількість обчислювальних блоків, ширина шини пам'яті) та характеристиками алгоритмів (кількість операцій, структура доступу до пам'яті, динамічний діапазон числових форматів).</p>
+<hr />
+<h3 id="21-roofline">2.1. Формальна модель операційної інтенсивності Roofline</h3>
+<p>Для аналітичного оцінювання продуктивності алгоритмів глибокого навчання на паралельних прискорювачах застосовується двопараметрична <strong>модель Roofline</strong>. Вона визначає верхню теоретичну межу швидкодії як функцію від операційної інтенсивності алгоритму.</p>
+<p>Операційна (арифметична) інтенсивність <span class="arithmatex">\(I\)</span> визначає щільність обчислень на один байт переміщених даних і вимірюється в <span class="arithmatex">\(\text{FLOP}/\text{Byte}\)</span>:</p>
+<div class="arithmatex">\[I = \frac{W}{V}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(I\)</span> — операційна інтенсивність алгоритму (<span class="arithmatex">\(\text{FLOP}/\text{Byte}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(W\)</span> — загальна кількість виконаних операцій із плаваючою крапкою (<span class="arithmatex">\(\text{FLOP}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V\)</span> — сумарний обсяг даних, переданих через шину між глобальною пам'яттю (VRAM) та процесорними ядрами (байтів, <span class="arithmatex">\(\text{Bytes}\)</span>).</p>
+</li>
+</ul>
+<p>Функція досяжної продуктивності <span class="arithmatex">\(P(I)\)</span> описується нелінійним кусочно-лінійним виразом:</p>
+<div class="arithmatex">\[P(I) = \min\left(P_{\max}, I \cdot B_{\max}\right)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(P(I)\)</span> — теоретично досяжна продуктивність системи для заданого алгоритму (<span class="arithmatex">\(\text{FLOP}/\text{s}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P_{\max}\)</span> — пікова обчислювальна потужність ядер або тензорних блоків прискорювача (<span class="arithmatex">\(\text{FLOP}/\text{s}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(B_{\max}\)</span> — максимальна фізична пропускна здатність шини оперативної або відеопам'яті (<span class="arithmatex">\(\text{Bytes}/\text{s}\)</span>).</p>
+</li>
+</ul>
+<p>Точка зламу функції визначає <strong>критичну операційну інтенсивність</strong> <span class="arithmatex">\(I^*\)</span>:</p>
+<div class="arithmatex">\[I^* = \frac{P_{\max}}{B_{\max}}\]</div>
+<p>де <span class="arithmatex">\(I^*\)</span> — порогове значення операційної інтенсивності (<span class="arithmatex">\(\text{FLOP}/\text{Byte}\)</span>), що розділяє два принципово різні режими функціонування апаратного комплексу.</p>
+<p>Покрокове аналітичне виведення граничної поведінки продуктивності системи має вигляд:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Режим обмеження пам'яттю, } I \lt  I^*\text{):} &amp; \quad P(I) = I \cdot B_{\max}, \quad \lim_{I \to 0} P(I) = 0 \\
+\text{Етап 2 (Точка апаратного балансу, } I = I^*\text{):} &amp; \quad P(I^*) = I^* \cdot B_{\max} = \frac{P_{\max}}{B_{\max}} \cdot B_{\max} = P_{\max} \\
+\text{Етап 3 (Режим обмеження обчисленнями, } I &gt; I^*\text{):} &amp; \quad P(I) = P_{\max}, \quad \lim_{I \to \infty} P(I) = P_{\max}
+\end{aligned}
+\]</div>
+<p>Для операції поелементного додавання двох векторів довжиною <span class="arithmatex">\(N\)</span> (<span class="arithmatex">\(\mathbf{y} = \mathbf{x}_1 + \mathbf{x}_2\)</span> у форматі FP32) необхідно виконати <span class="arithmatex">\(W = N\text{ FLOP}\)</span>, зчитавши <span class="arithmatex">\(2N \times 4\text{ байти}\)</span> та записавши <span class="arithmatex">\(N \times 4\text{ байти}\)</span> (<span class="arithmatex">\(V = 12N\text{ байт}\)</span>). Операційна інтенсивність становить:</p>
+<div class="arithmatex">\[I_{\text{add}} = \frac{N}{12N} = \frac{1}{12} \approx 0.083\text{ FLOP}/\text{Byte}\]</div>
+<p>Оскільки для сучасних GPU (наприклад, NVIDIA H100 SXM, де <span class="arithmatex">\(P_{\max} \approx 1000\text{ TFLOPS}\)</span> у режимі TF32, а <span class="arithmatex">\(B_{\max} \approx 3.35\text{ ТБ}/\text{s}\)</span>) критична межа дорівнює:</p>
+<div class="arithmatex">\[I^* = \frac{1000 \times 10^{12}}{3.35 \times 10^{12}} \approx 298.5\text{ FLOP}/\text{Byte}\]</div>
+<p>Значення <span class="arithmatex">\(I_{\text{add}} \ll I^*\)</span> свідчить, що поелементні операції використовують менше <span class="arithmatex">\(0.03\%\)</span> пікової обчислювальної потужності кристала, повністю утилізуючи лише пропускну здатність шини VRAM (<strong>Memory-Bound</strong>). Навпаки, операція множення квадратних матриць розмірності <span class="arithmatex">\(N \times N\)</span> вимагає <span class="arithmatex">\(W = 2N^3\text{ FLOP}\)</span> при обсязі пам'яті <span class="arithmatex">\(V = 3N^2 \times 4\text{ байти}\)</span>, що дає:</p>
+<div class="arithmatex">\[I_{\text{GEMM}} = \frac{2N^3}{12N^2} = \frac{N}{6}\text{ FLOP}/\text{Byte}\]</div>
+<p>При <span class="arithmatex">\(N &gt; 1800\)</span> операція переходить у зону <span class="arithmatex">\(I &gt; I^*\)</span> (<strong>Compute-Bound</strong>), де досягається <span class="arithmatex">\(100\%\)</span> утилізація апаратних матричних конвеєрів.</p>
+<hr />
+<h3 id="22-wmma">2.2. Математичний апарат мікроматричних операцій WMMA на тензорних ядрах</h3>
+<p>Мікроархітектурна одиниця Tensor Core реалізує операцію <strong>Warp Matrix Multiply and Accumulate (WMMA)</strong>. На рівні одного варпу (<span class="arithmatex">\(32\)</span> потоки) обчислюється матричний добуток над мікроплитками (<strong>Tiles</strong>):</p>
+<div class="arithmatex">\[\mathbf{D} = \mathbf{A} \cdot \mathbf{B} + \mathbf{C}\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathbf{A} \in \mathbb{R}^{M_t \times K_t}\)</span> — матриця вхідних активацій у форматі зниженої точності (FP16, BF16, FP8);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{B} \in \mathbb{R}^{K_t \times N_t}\)</span> — матриця вагових коефіцієнтів у форматі зниженої точності;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{C} \in \mathbb{R}^{M_t \times N_t}\)</span> — матриця початкового накопичення (Bias/Accumulator) у форматі FP32 або FP16;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{D} \in \mathbb{R}^{M_t \times N_t}\)</span> — результуюча матриця вихідних активацій у форматі FP32 або FP16;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(M_t, N_t, K_t\)</span> — просторові розмірності матричної плитки (канонічний базовий розмір в архітектурі NVIDIA Ampere/Hopper: <span class="arithmatex">\(M_t = 16, N_t = 16, K_t = 16\)</span>).</p>
+</li>
+</ul>
+<p>Покомпонентне значення елемента результуючої плитки <span class="arithmatex">\(d_{i,j}\)</span> визначається аналітичним виразом:</p>
+<div class="arithmatex">\[d_{i,j} = \left(\sum_{k=1}^{K_t} a_{i,k} \cdot b_{k,j}\right) + c_{i,j}, \quad \forall i \in \{1, \dots, M_t\}, \; \forall j \in \{1, \dots, N_t\}\]</div>
+<p>де <span class="arithmatex">\(a_{i,k}\)</span> — елемент <span class="arithmatex">\(i\)</span>-го рядка та <span class="arithmatex">\(k\)</span>-го стовпця матриці <span class="arithmatex">\(\mathbf{A}\)</span>, а <span class="arithmatex">\(b_{k,j}\)</span> — елемент <span class="arithmatex">\(k\)</span>-го рядка та <span class="arithmatex">\(j\)</span>-го стовпця матриці <span class="arithmatex">\(\mathbf{B}\)</span>.</p>
+<p>Сумарна кількість операцій із плаваючою крапкою, виконуваних за одну інструкцію WMMA одним варпом, розраховується як:</p>
+<div class="arithmatex">\[W_{\text{WMMA}} = 2 \cdot M_t \cdot N_t \cdot K_t = 2 \cdot 16 \cdot 16 \cdot 16 = 8192\text{ FLOP}\]</div>
+<p>Теоретична пікова продуктивність графічного процесора з тензорними ядрами <span class="arithmatex">\(P_{\text{TC}}\)</span> виводиться на основі апаратної конфігурації:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Обчислення потужності одного SM за такт):} &amp; \quad W_{\text{SM}} = N_{\text{TC\_per\_SM}} \cdot W_{\text{WMMA}} \\
+\text{Етап 2 (Масштабування на масив SM):} &amp; \quad W_{\text{GPU}} = N_{\text{SM}} \cdot W_{\text{SM}} = N_{\text{SM}} \cdot N_{\text{TC\_per\_SM}} \cdot 8192 \\
+\text{Етап 3 (Перехід до часової продуктивності):} &amp; \quad P_{\text{TC}} = W_{\text{GPU}} \cdot f_{\text{clk}} = N_{\text{SM}} \cdot N_{\text{TC\_per\_SM}} \cdot 8192 \cdot f_{\text{clk}}
+\end{aligned}
+\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(P_{\text{TC}}\)</span> — пікова теоретична продуктивність тензорних блоків прискорювача (<span class="arithmatex">\(\text{FLOP}/\text{s}\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{SM}}\)</span> — загальна кількість потокових мультипроцесорів на кристалі (ціле додатне число);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_{\text{TC\_per\_SM}}\)</span> — кількість апаратних тензорних ядер у межах одного мультипроцесора SM;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(f_{\text{clk}}\)</span> — робоча тактова частота обчислювальних ядер GPU (<span class="arithmatex">\(\text{Hz}\)</span>).</p>
+</li>
+</ul>
+<hr />
+<h3 id="23">2.3. Алгебраїчна та адресна модель представлення тензорів у пам'яті</h3>
+<p>У фреймворках глибокого навчання (зокрема PyTorch) <span class="arithmatex">\(D\)</span>-вимірний тензор <span class="arithmatex">\(\mathcal{T}\)</span> представляється парою: неперервним одновимірним фізичним буфером пам'яті <span class="arithmatex">\(\mathcal{S}\)</span> (<strong>Storage</strong>) та вектором метаданих, що задає просторову конфігурацію.</p>
+<p>Формальний метричний простір тензора задається кортежем:</p>
+<div class="arithmatex">\[\mathcal{T} = \left(\mathcal{S}, \mathbf{S}, \mathbf{St}, \delta_{\text{offset}}\right)\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{S}\)</span> — одновимірний масив послідовних адрес у фізичній пам'яті (VRAM або RAM);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{S} = (S_0, S_1, \dots, S_{D-1})\)</span> — вектор форми (<strong>Shape</strong>), де <span class="arithmatex">\(S_d \in \mathbb{N}\)</span> визначає розмірність за віссю <span class="arithmatex">\(d\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{St} = (St_0, St_1, \dots, St_{D-1})\)</span> — вектор кроків (<strong>Strides</strong>), де <span class="arithmatex">\(St_d \in \mathbb{Z}\)</span> визначає кількість елементів у фізичній пам'яті, яку необхідно пропустити для переходу до наступного індексу за віссю <span class="arithmatex">\(d\)</span>;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\delta_{\text{offset}}\)</span> — базове початкове зміщення відносно нульового покажчика буфера <span class="arithmatex">\(\mathcal{S}\)</span> (вимірюється в кількості елементів, <span class="arithmatex">\(\mathbb{N}_0\)</span>).</p>
+</li>
+</ul>
+<p>Фізична адреса елемента <span class="arithmatex">\(A_{\text{elem}}\)</span> із багатовимірним логічним індексом <span class="arithmatex">\((i_0, i_1, \dots, i_{D-1})\)</span> обчислюється через скалярний добуток індексного вектора на вектор кроків:</p>
+<div class="arithmatex">\[A_{\text{elem}}(i_0, \dots, i_{D-1}) = \text{Ptr}(\mathcal{S}) + \left( \delta_{\text{offset}} + \sum_{d=0}^{D-1} i_d \cdot St_d \right) \cdot \text{sizeof}(\text{dtype})\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\text{Ptr}(\mathcal{S})\)</span> — базовий 64-бітний покажчик на початок виділеної області пам'яті;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\text{sizeof}(\text{dtype})\)</span> — апаратний розмір одного скалярного елемента в байтах (наприклад, <span class="arithmatex">\(4\)</span> для FP32, <span class="arithmatex">\(2\)</span> для FP16/BF16, <span class="arithmatex">\(1\)</span> для INT8/FP8).</p>
+</li>
+</ul>
+<p>Тензор задовольняє <strong>умову строгої неперервності (C-Contiguous Invariant)</strong> тоді й тільки тоді, коли вектор кроків відповідає системі рекурентних рівнянь:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Базовий крок останньої осі):} &amp; \quad St_{D-1} = 1 \\
+\text{Етап 2 (Рекурентний крок старших осей):} &amp; \quad St_d = St_{d+1} \cdot S_{d+1}, \quad \forall d \in \{D-2, D-3, \dots, 0\} \\
+\text{Етап 3 (Повна розгортка кроку осі } d\text{):} &amp; \quad St_d = \prod_{k=d+1}^{D-1} S_k
+\end{aligned}
+\]</div>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong><br />
+Операції зміни порядку осей (наприклад, транспонування <span class="arithmatex">\(\mathcal{T}^T\)</span>, <code>.permute()</code>, <code>.transpose()</code>) або виділення вузьких діапазонів (<code>.narrow()</code>, slicing) мають часову складність <span class="arithmatex">\(O(1)\)</span>, оскільки модифікують виключно метадані <span class="arithmatex">\(\mathbf{S}\)</span> та <span class="arithmatex">\(\mathbf{St}\)</span>, залишаючи фізичний буфер <span class="arithmatex">\(\mathcal{S}\)</span> інваріантним. </p>
+<p>Проте порушення умови <span class="arithmatex">\(St_{D-1} = 1\)</span> робить тензор неконтигуальним (<strong>Non-contiguous</strong>). Передача такого тензора у векторизовані ядра cuBLAS/cuDNN або Tensor Cores без виклику методу <code>.contiguous()</code> заборонена або викликає приховане копіювання пам'яті зі складністю <span class="arithmatex">\(O(\prod_{d=0}^{D-1} S_d)\)</span>, оскільки апаратні блоки WMMA вимагають послідовного розташування елементів у рядках плиткової матриці.</p>
+</blockquote>
+<hr />
+<h3 id="24">2.4. Математичні засади автоматичної змішаної точності та динамічного масштабування градієнтів</h3>
+<p>Використання <span class="arithmatex">\(16\)</span>-бітового формату з плаваючою крапкою IEEE 754 (<strong>FP16</strong>) забезпечує прискорення обчислень на Tensor Cores, але супроводжується різким звуженням динамічного діапазону порівняно з <strong>FP32</strong>:</p>
+<div class="arithmatex">\[\text{Range}_{\text{FP32}} \approx [1.4 \times 10^{-45}, 3.4 \times 10^{38}] \quad \Longleftrightarrow \quad \text{Range}_{\text{FP16}} \approx [5.96 \times 10^{-8}, 65504]\]</div>
+<p>Під час фази зворотного поширення помилки (<strong>Backpropagation</strong>) значна частка компонентів вектора градієнтів ваг <span class="arithmatex">\(\mathbf{g} = \nabla_{\mathbf{w}} \mathcal{L}\)</span> набуває значень <span class="arithmatex">\(|\mathbf{g}| &lt; 2^{-24} \approx 5.96 \times 10^{-8}\)</span>. У форматі FP16 це викликає критичну втрату числових даних — <strong>явище зникнення градієнта (Gradient Underflow)</strong>, коли малі значення апаратно округлюються до нуля:</p>
+<div class="arithmatex">\[\forall g \in \mathbf{g} : |g| \lt  2^{-24} \implies \text{quantize}_{\text{FP16}}(g) \equiv 0\]</div>
+<p>Для розв'язання цієї проблеми розроблено математичний апарат динамічного масштабування функціонала втрат (<strong>Dynamic Loss Scaling</strong>):</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Масштабування втрат на хості):} &amp; \quad \mathcal{L}_{\text{scaled}} = S \cdot \mathcal{L} \\
+\text{Етап 2 (Диференціювання масштабованого виразу):} &amp; \quad \mathbf{g}_{\text{scaled}} = \nabla_{\mathbf{w}} \mathcal{L}_{\text{scaled}} = \nabla_{\mathbf{w}} (S \cdot \mathcal{L}) = S \cdot \nabla_{\mathbf{w}} \mathcal{L} = S \cdot \mathbf{g} \\
+\text{Етап 3 (Апаратна перевірка та демасштабування):} &amp; \quad \mathbf{g}_{\text{true}} = \frac{1}{S} \cdot \mathbf{g}_{\text{scaled}} = \mathbf{g}
+\end{aligned}
+\]</div>
+<p>де:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mathcal{L}\)</span> — початкове значення функції втрат (скаляр FP32);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(S \in \mathbb{R}^+\)</span> — адаптивний масштабний множник (<span class="arithmatex">\(S \gg 1\)</span>, початково <span class="arithmatex">\(S = 2^{16} = 65536\)</span>);</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{g}_{\text{scaled}}\)</span> — масштабований вектор градієнтів, обчислений у форматі FP16 без зникнення молодших розрядів;</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mathbf{g}_{\text{true}}\)</span> — відновлений вектор градієнтів, що передається в оптимізатор (FP32 Master Weights).</p>
+</li>
+</ul>
+<p>Алгоритм динамічного коригування масштабного коефіцієнта описується автоматом станів <code>GradScaler</code>:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Forward_Pass
+    Forward_Pass --&gt; Scale_Loss : Прямий прохід у FP16 або BF16
+    Scale_Loss --&gt; Backward_Pass : Масштабування Loss_scaled = S * Loss
+    Backward_Pass --&gt; Inspect_Gradients : Обчислення g_scaled у FP16
+
+    Inspect_Gradients --&gt; Check_Inf_NaN : Сканування на наявність Inf або NaN
+
+    Check_Inf_NaN --&gt; Overflow_Detected : Виявлено Inf або NaN
+    Check_Inf_NaN --&gt; Stable_Step : Усі значення скінченні
+
+    state Overflow_Detected {
+        [*] --&gt; Skip_Update : Пропуск оновлення ваг
+        Skip_Update --&gt; Reduce_Scale : Зменшення scale множником beta
+        Reduce_Scale --&gt; Reset_Counter : Обнулення лічильника стабільності
+    }
+
+    state Stable_Step {
+        [*] --&gt; Unscale_Gradients : Демасштабування g = g_scaled / S
+        Unscale_Gradients --&gt; Optimizer_Step : Оновлення FP32 Master Weights
+        Optimizer_Step --&gt; Increment_Counter : Інкремент growth_tracker
+    }
+
+    Overflow_Detected --&gt; Forward_Pass : Перехід до наступного батчу
+    Stable_Step --&gt; Check_Growth : Перевірка умови growth_tracker
+
+    Check_Growth --&gt; Increase_Scale : Досягнуто поріг N_growth
+    Check_Growth --&gt; Forward_Pass : Нижче порогу, збереження S
+    Increase_Scale --&gt; Forward_Pass : Збільшення S множником alpha</code></pre>
+<hr />
+<h3 id="25-cuda-streams">2.5. Моделювання асинхронного виконання та паралелізму завдань через CUDA Streams і зрощування ядер</h3>
+<p>Час повного виконання обчислювального графа нейронної мережі на графічному прискорювачі визначається суперпозицією трьох складових: латентності передачі даних через шину PCIe (<span class="arithmatex">\(T_{\text{transfer}}\)</span>), часу запуску обчислювальних ядер драйвером CPU (<span class="arithmatex">\(T_{\text{launch}}\)</span>) та безпосереднього часу виконання обчислень на мультипроцесорах (<span class="arithmatex">\(T_{\text{compute}}\)</span>).</p>
+<p>При синхронному послідовному виконанні загальний час ітерації <span class="arithmatex">\(T_{\text{sync}}\)</span> для послідовності з <span class="arithmatex">\(K\)</span> шарів є сумою затримок:</p>
+<div class="arithmatex">\[T_{\text{sync}} = \sum_{k=1}^K \left( T_{\text{transfer}}^{(k)} + T_{\text{launch}}^{(k)} + T_{\text{compute}}^{(k)} \right)\]</div>
+<p>Використання механізму незалежних асинхронних черг виконання — <strong>CUDA Streams</strong> — дає змогу сумістити операції передачі пам'яті (Host-to-Device / Device-to-Host) з виконанням обчислень попередніх батчів за схемою подвійної буферизації (<strong>Double Buffering</strong>).</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Host as Хост-процесор (CPU Thread)
+    participant Stream_H2D as CUDA Stream 1 (Data Engine HtoD)
+    participant Stream_GPU as CUDA Stream 2 (Compute Engine SM)
+
+    Note over Host,Stream_GPU: Початок конвеєризованої обробки потоків
+    Host-&gt;&gt;Stream_H2D: cudaMemcpyAsync(Batch_N+1, HtoD)
+    Host-&gt;&gt;Stream_GPU: Launch_Kernel(Batch_N)
+
+    par Передача по шині PCIe
+        Stream_H2D-&gt;&gt;Stream_H2D: Завантаження даних Батчу N+1 по PCIe
+    and Обчислення на SM
+        Stream_GPU-&gt;&gt;Stream_GPU: Обчислення на Tensor Cores для Батчу N
+    end
+
+    Stream_H2D--&gt;&gt;Host: Асинхронна подія завершення завантаження (EventRecord)
+    Stream_GPU--&gt;&gt;Host: Асинхронна подія завершення розрахунку
+
+    Note over Host,Stream_GPU: Синхронізація наступного кроку конвеєра
+    Host-&gt;&gt;Stream_H2D: cudaMemcpyAsync(Batch_N+2, HtoD)
+    Host-&gt;&gt;Stream_GPU: Launch_Kernel(Batch_N+1)</code></pre>
+<p>Асимптотичний час конвеєризованого виконання <span class="arithmatex">\(M\)</span> ітерацій описується рівнянням максимуму затримок:</p>
+<div class="arithmatex">\[T_{\text{async}} = \left( T_{\text{transfer}}^{(1)} + T_{\text{compute}}^{(M)} \right) + \sum_{m=1}^{M-1} \max\left( T_{\text{transfer}}^{(m+1)}, \; T_{\text{compute}}^{(m)} \right) + M \cdot T_{\text{launch}}\]</div>
+<p>При цьому, якщо <span class="arithmatex">\(T_{\text{compute}} &gt; T_{\text{transfer}}\)</span>, накладні витрати передачі даних повністю маскуються:</p>
+<div class="arithmatex">\[\lim_{M \to \infty} \frac{T_{\text{async}}}{M} = \max(T_{\text{transfer}}, T_{\text{compute}}) = T_{\text{compute}}\]</div>
+<h4 id="kernel-fusion">Математична модель зрощування операцій (Kernel Fusion)</h4>
+<p>У класичному середовищі виконання кожна поелементна операція над тензорами генерує окреме CUDA-ядро, що вимагає зчитування та зворотного запису проміжних результатів у VRAM. </p>
+<p>Для послідовності з <span class="arithmatex">\(J\)</span> поелементних операцій (наприклад: <span class="arithmatex">\(\mathbf{Y} = \text{GELU}(\text{LayerNorm}(\mathbf{X} \cdot \mathbf{W} + \mathbf{b}))\)</span>) час виконання <span class="arithmatex">\(T_{\text{unfused}}\)</span> визначається сумарною латентністю шини пам'яті:</p>
+<div class="arithmatex">\[T_{\text{unfused}} = \sum_{j=1}^J \left( T_{\text{launch}} + \frac{V_{\text{read}}^{(j)} + V_{\text{write}}^{(j)}}{B_{\text{VRAM}}} + \frac{W_j}{P_{\text{ALU}}} \right)\]</div>
+<p>де <span class="arithmatex">\(V_{\text{read}}^{(j)}, V_{\text{write}}^{(j)}\)</span> — обсяги проміжних тензорів, які прокачуються через VRAM.</p>
+<p>Компілятор <strong>Triton / PyTorch 2.0 TorchDynamo</strong> об'єднує (зрощує) усю послідовність операцій в єдине ядро (<strong>Fused Kernel</strong>). Проміжні змінні утримуються виключно в надшвидких регістрах або спільній пам'яті Shared Memory мультипроцесора SM:</p>
+<div class="arithmatex">\[T_{\text{fused}} = T_{\text{launch}} + \frac{V_{\text{input}} + V_{\text{output}}}{B_{\text{VRAM}}} + \frac{\sum_{j=1}^J W_j}{P_{\text{ALU}}}\]</div>
+<p>Коефіцієнт прискорення від зрощування ядер <span class="arithmatex">\(S_{\text{fusion}}\)</span> в асимптотиці великих розмірностей тензорів (<span class="arithmatex">\(V \to \infty\)</span>) становить:</p>
+<div class="arithmatex">\[S_{\text{fusion}} = \lim_{V \to \infty} \frac{T_{\text{unfused}}}{T_{\text{fused}}} = \frac{\sum_{j=1}^J \left( V_{\text{read}}^{(j)} + V_{\text{write}}^{(j)} \right)}{V_{\text{input}} + V_{\text{output}}}\]</div>
+<p>Для ланцюжка з 4-х послідовних поелементних трансформацій коефіцієнт скорочення трафіку пам'яті досягає <span class="arithmatex">\(S_{\text{fusion}} \approx 3.5\text{ – }4.0\)</span>, що забезпечує пропорційне скорочення часу виконання операції.</p>
+<hr />
+<h3 id="_7">Аналітична матриця зіставлення обчислювальних моделей та оптимізаційних механізмів</h3>
+<p>У таблиці наведено зіставлення математичних моделей апаратного прискорення за ключовими системними критеріями.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Модель / Механізм</th>
+<th style="text-align: left;">Цільовий оптимізаційний критерій</th>
+<th style="text-align: left;">Математичний апарат / Формалізація</th>
+<th style="text-align: left;">Архітектурне вузьке місце (Bottleneck)</th>
+<th style="text-align: left;">Асимптотичний ефект масштабування</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Модель Roofline</strong></td>
+<td style="text-align: left;">Балансування обчислень і передачі даних</td>
+<td style="text-align: left;"><span class="arithmatex">\(P(I) = \min(P_{\max}, I \cdot B_{\max})\)</span></td>
+<td style="text-align: left;">Пропускна здатність VRAM або пік TFLOPS</td>
+<td style="text-align: left;"><span class="arithmatex">\(\lim_{I \to \infty} P(I) = P_{\max}\)</span>; чітка межа переходу при <span class="arithmatex">\(I^* = \frac{P_{\max}}{B_{\max}}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WMMA Плиткове множення</strong></td>
+<td style="text-align: left;">Максимізація щільності матричного FMA</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{D} = \mathbf{A}_{16 \times 16} \cdot \mathbf{B}_{16 \times 16} + \mathbf{C}\)</span></td>
+<td style="text-align: left;">Заповнення сітки плитками, кратність розмірів осей</td>
+<td style="text-align: left;">Приріст щільності FLOP/такт у <span class="arithmatex">\(8\)</span>–<span class="arithmatex">\(16\)</span> разів порівняно зі скалярними ядрами</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stride-модель пам'яті</strong></td>
+<td style="text-align: left;">Мінімізація затримок перетворення структур даних</td>
+<td style="text-align: left;"><span class="arithmatex">\(A_{\text{elem}} = \text{Ptr} + \sum i_d \cdot St_d\)</span></td>
+<td style="text-align: left;">Розрив неперервності пам'яті (<span class="arithmatex">\(St_{D-1} \neq 1\)</span>)</td>
+<td style="text-align: left;">Транспонування за час <span class="arithmatex">\(O(1)\)</span> без виділення додаткової пам'яті</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dynamic Loss Scaling (AMP)</strong></td>
+<td style="text-align: left;">Усунення зникнення градієнтів у FP16</td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{g}_{\text{true}} = \frac{1}{S} \cdot \nabla_{\mathbf{w}} (S \cdot \mathcal{L})\)</span></td>
+<td style="text-align: left;">Апаратне переповнення експоненти FP16 (<span class="arithmatex">\(&gt; 65504\)</span>)</td>
+<td style="text-align: left;">Скорочення використання VRAM у <span class="arithmatex">\(2\)</span> рази, збереження числової збіжності FP32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kernel Fusing (Triton / Dynamo)</strong></td>
+<td style="text-align: left;">Скорочення транзакцій до глобальної VRAM</td>
+<td style="text-align: left;"><span class="arithmatex">\(S_{\text{fusion}} = \frac{\sum V_{\text{unfused}}}{V_{\text{in}} + V_{\text{out}}}\)</span></td>
+<td style="text-align: left;">Обсяг регістрового файлу та Shared Memory SM</td>
+<td style="text-align: left;">Зниження трафіку шини пам'яті в <span class="arithmatex">\(K\)</span> разів, де <span class="arithmatex">\(K\)</span> — глибина ланцюжка операцій</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong><br />
+Обчислювальний блок глибокої нейронної мережі містить операцію нормалізації LayerNorm над тензором активацій розмірності <span class="arithmatex">\(B \times L \times D = 32 \times 512 \times 4096\)</span> у форматі FP32.<br />
+1. Розрахуйте точну кількість операцій <span class="arithmatex">\(W\)</span> (<span class="arithmatex">\(\text{FLOP}\)</span>) та обсяг пам'яті <span class="arithmatex">\(V\)</span> (<span class="arithmatex">\(\text{Bytes}\)</span>), необхідні для прямого проходу LayerNorm (включаючи розрахунок середнього <span class="arithmatex">\(\mu\)</span>, дисперсії <span class="arithmatex">\(\sigma^2\)</span>, нормалізацію та масштабування коефіцієнтами <span class="arithmatex">\(\gamma, \beta\)</span>).<br />
+2. Обчисліть операційну інтенсивність <span class="arithmatex">\(I_{\text{LN}}\)</span>.<br />
+3. Визначте режим функціонування операції (Memory-Bound чи Compute-Bound) на прискорювачі з характеристиками <span class="arithmatex">\(P_{\max} = 312\text{ TFLOPS}\)</span> (TF32) та <span class="arithmatex">\(B_{\max} = 2000\text{ ГБ}/\text{s}\)</span>.</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>1. Розрахунок кількості операцій <span class="arithmatex">\(W\)</span> та обсягу пам'яті <span class="arithmatex">\(V\)</span>:</strong></p>
+<ul>
+<li>Загальна кількість елементів у тензорі становить:</li>
+</ul>
+<div class="arithmatex">\[N_{\text{total}} = B \cdot L \cdot D = 32 \cdot 512 \cdot 4096 = 67\,108\,864\text{ елементів}\]</div>
+<ul>
+<li>
+<p>Кількість операцій <span class="arithmatex">\(W\)</span>:<br />
+  Для кожного з <span class="arithmatex">\(B \cdot L = 16\,384\)</span> векторів довжиною <span class="arithmatex">\(D = 4096\)</span> виконуються такі етапи:</p>
+</li>
+<li>
+<p>Розрахунок середнього <span class="arithmatex">\(\mu = \frac{1}{D}\sum x_i\)</span>: <span class="arithmatex">\(D\)</span> операцій додавання та <span class="arithmatex">\(1\)</span> ділення (<span class="arithmatex">\(D+1\text{ FLOP}\)</span>).</p>
+</li>
+<li>
+<p>Розрахунок дисперсії <span class="arithmatex">\(\sigma^2 = \frac{1}{D}\sum (x_i - \mu)^2\)</span>: <span class="arithmatex">\(D\)</span> віднімань, <span class="arithmatex">\(D\)</span> множень, <span class="arithmatex">\(D\)</span> додавань та <span class="arithmatex">\(1\)</span> ділення (<span class="arithmatex">\(3D+1\text{ FLOP}\)</span>).</p>
+</li>
+<li>
+<p>Нормалізація та афінне перетворення <span class="arithmatex">\(\hat{x}_i = \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} \cdot \gamma_i + \beta_i\)</span>: <span class="arithmatex">\(1\)</span> корінь, <span class="arithmatex">\(1\)</span> додавання, <span class="arithmatex">\(1\)</span> ділення, <span class="arithmatex">\(D\)</span> множень на масштабований коефіцієнт та <span class="arithmatex">\(D\)</span> додавань (<span class="arithmatex">\(2D + 3\text{ FLOP}\)</span>).</p>
+</li>
+</ul>
+<p>Разом на один вектор: <span class="arithmatex">\(\approx 6D + 5 \approx 6 \cdot 4096 = 24\,576\text{ FLOP}\)</span>.<br />
+  Сумарна кількість операцій становить:</p>
+<div class="arithmatex">\[W = N_{\text{total}} \cdot 6 = 67\,108\,864 \cdot 6 \approx 402.65 \times 10^6\text{ FLOP} = 402.65\text{ MFLOP}\]</div>
+<ul>
+<li>Обсяг передачі даних <span class="arithmatex">\(V\)</span>:<br />
+  Для розрахунку без зрощування ядер необхідно зчитати тензор <span class="arithmatex">\(\mathbf{X}\)</span> (<span class="arithmatex">\(4\text{ байти}/\text{елемент}\)</span>), ваги <span class="arithmatex">\(\gamma, \beta\)</span> (<span class="arithmatex">\(2 \times 4096 \times 4\text{ байти} \approx 32\text{ КБ}\)</span>, нехтувано мало) та записати вихідний тензор <span class="arithmatex">\(\mathbf{Y}\)</span> (<span class="arithmatex">\(4\text{ байти}/\text{елемент}\)</span>).</li>
+</ul>
+<div class="arithmatex">\[V = N_{\text{total}} \cdot 4\text{ байти (read)} + N_{\text{total}} \cdot 4\text{ байти (write)} = 8 \cdot N_{\text{total}} = 536\,870\,912\text{ байтів} \approx 536.87\text{ МБ}\]</div>
+<hr />
+<p><strong>2. Обчислення операційної інтенсивності <span class="arithmatex">\(I_{\text{LN}}\)</span>:</strong></p>
+<div class="arithmatex">\[I_{\text{LN}} = \frac{W}{V} = \frac{6 \cdot N_{\text{total}}}{8 \cdot N_{\text{total}}} = \frac{6}{8} = 0.75\text{ FLOP}/\text{Byte}\]</div>
+<hr />
+<p><strong>3. Визначення режиму функціонування за моделлю Roofline:</strong></p>
+<ul>
+<li>Критична інтенсивність прискорювача <span class="arithmatex">\(I^*\)</span>:</li>
+</ul>
+<div class="arithmatex">\[I^* = \frac{P_{\max}}{B_{\max}} = \frac{312 \times 10^{12}\text{ FLOP}/\text{s}}{2000 \times 10^9\text{ Bytes}/\text{s}} = 156\text{ FLOP}/\text{Byte}\]</div>
+<ul>
+<li>Порівняння:</li>
+</ul>
+<div class="arithmatex">\[I_{\text{LN}} = 0.75\text{ FLOP}/\text{Byte} \ll I^* = 156\text{ FLOP}/\text{Byte}\]</div>
+<p><strong>Висновок:</strong> Операція є виражено <strong>Memory-Bound</strong> (обмежена пропускною здатністю шини пам'яті). Реальна швидкодія складе:</p>
+<div class="arithmatex">\[P = I_{\text{LN}} \cdot B_{\max} = 0.75 \cdot 2000\text{ ГБ}/\text{s} = 1.5\text{ TFLOPS}\]</div>
+<p>Це становить лише <span class="arithmatex">\(\frac{1.5}{312} \times 100\% \approx 0.48\%\)</span> від пікової потужності прискорювача. Єдиним шляхом радикального підвищення швидкодії для цієї операції є <strong>Kernel Fusion</strong> (зрощування обчислення середнього, дисперсії та нормалізації в один прохід без скидання проміжних векторів у глобальну пам'ять VRAM).</p>
+</details>
+<h2 id="3-">3. Практично-прикладний блок</h2>
+<h3 id="31">3.1. Комплексний інженерний кейс. Комплексна інженерна оптимізація та профілювання обчислювального блоку глибокої нейронної мережі</h3>
+<h4 id="_8">Постановка інженерної задачі</h4>
+<p>На серверному обчислювальному вузлі розгортається трансформерний блок генеративної моделі. У процесі профілювання виявлено суттєву деградацію пропускної здатності в модулі лінійної проєкції та наступної пост-обробки активацій. </p>
+<p>Початкова неоптимізована реалізація виконує операції у форматі <strong>FP32</strong> на стандартних ядрах CUDA, використовує неконтигуальне представлення тензора вхідних даних після операції зміни розмірностей, а також викликає окремі розрізнені ядра для зсуву (<strong>Bias Add</strong>), функції активації <strong>GELU</strong> та шару нормалізації <strong>LayerNorm</strong>.</p>
+<p>Необхідно провести покрокову оптимізацію обчислювального конвеєра:</p>
+<ol>
+<li>
+<p>Розрахувати теоретичний та реальний час виконання базового неоптимізованого конвеєра з урахуванням деградації коалесцингу пам'яті.</p>
+</li>
+<li>
+<p>Оцінити ефект відновлення контигуальності тензора пам'яті та коалесцентного зчитування.</p>
+</li>
+<li>
+<p>Розрахувати виграш від переходу на змішану точність <strong>AMP (BF16/FP16)</strong> та активації тензорних ядер <strong>Tensor Cores</strong>.</p>
+</li>
+<li>
+<p>Оцінити ефект повного зрощування ядер (<strong>Kernel Fusion</strong>) засобами компілятора <strong>PyTorch 2.0 (TorchDynamo/Triton)</strong>.</p>
+</li>
+</ol>
+<p>Вхідні параметри апаратного прискорювача та обчислювального блоку зведено в таблицю:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Розмір вхідного батчу</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(B\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: left;">Елементів (векторів)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Довжина послідовності токенів</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(L\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(512\)</span></td>
+<td style="text-align: left;">Токенів на послідовність</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність вхідного простору</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(D_{\text{in}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2048\)</span></td>
+<td style="text-align: left;">Скалярних ознак</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність вихідного простору</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(D_{\text{out}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(4096\)</span></td>
+<td style="text-align: left;">Скалярних ознак</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Пікова продуктивність FP32 (CUDA Cores)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(P_{\text{FP32}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(19.5 \times 10^{12}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{FLOP}/\text{s}\)</span> (<span class="arithmatex">\(19.5\text{ TFLOPS}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Пікова продуктивність Tensor Cores (BF16)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(P_{\text{TC}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(312.0 \times 10^{12}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{FLOP}/\text{s}\)</span> (<span class="arithmatex">\(312.0\text{ TFLOPS}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Пропускна здатність шини пам'яті VRAM</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(B_{\max}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(2.0 \times 10^{12}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Bytes}/\text{s}\)</span> (<span class="arithmatex">\(2000\text{ GB/s}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Латентність запуску ядра (Launch Overhead)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T_{\text{launch}}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(5.0 \times 10^{-6}\)</span></td>
+<td style="text-align: left;">Секунд (<span class="arithmatex">\(5.0\text{ }\mu\text{s}\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart TD
+    Start["Вхідний тензор X (64x512x2048) - Non-contiguous"] --&gt; Stage1["Етап 1: Базовий стан (FP32, Некоалесцентний GEMM, 4 розрізнених ядра)"]
+    Stage1 --&gt; Stage2["Етап 2: Оптимізація пам'яті (Відновлення неперервності Stride-вектора, Coalesced VRAM)"]
+    Stage2 --&gt; Stage3["Етап 3: Активація Tensor Cores (Перехід до FP16/BF16 AMP, Матричні плитки 16x16)"]
+    Stage3 --&gt; Stage4["Етап 4: Компіляція графа Triton/Dynamo (Зрощування Bias + GELU + LayerNorm в одне ядро)"]
+    Stage4 --&gt; End["Оптимізований вихідний тензор Y (64x512x4096)"]</code></pre>
+<hr />
+<h4 id="_9">Покроковий аналітичний розрахунок</h4>
+<h5 id="1_2">Крок 1. Базовий аналіз та розрахунок часу виконання неоптимізованого блоку</h5>
+<p>Загальна кількість токенів у батчі становить:</p>
+<div class="arithmatex">\[M = B \cdot L = 64 \cdot 512 = 32\,768\text{ токенів}\]</div>
+<p>Обчислення лінійного шару <span class="arithmatex">\(\mathbf{Y}_{\text{raw}} = \mathbf{X} \cdot \mathbf{W}\)</span> (<span class="arithmatex">\(\mathbf{X} \in \mathbb{R}^{32768 \times 2048}\)</span>, <span class="arithmatex">\(\mathbf{W} \in \mathbb{R}^{2048 \times 4096}\)</span>) вимагає виконання матричного множення:</p>
+<div class="arithmatex">\[W_{\text{GEMM}} = 2 \cdot M \cdot D_{\text{in}} \cdot D_{\text{out}} = 2 \cdot 32768 \cdot 2048 \cdot 4096 = 549\,755\,813\,888\text{ FLOP} \approx 549.76\text{ GFLOP}\]</div>
+<p>Оскільки вхідний тензор <span class="arithmatex">\(\mathbf{X}\)</span> є неконтигуальним у пам'яті (крок за останнім виміром <span class="arithmatex">\(St_1 \neq 1\)</span>), ефективність транзакцій шини пам'яті під час зчитування матриці <span class="arithmatex">\(\mathbf{X}\)</span> падає до <span class="arithmatex">\(\eta_{\text{mem}} \approx 25\%\)</span>. Час виконання неоптимізованого GEMM на стандартних ядрах FP32 CUDA Cores з урахуванням апаратного штрафу становить:</p>
+<div class="arithmatex">\[T_{\text{GEMM, base}} = \frac{W_{\text{GEMM}}}{P_{\text{FP32}} \cdot \eta_{\text{mem}}} = \frac{549.76 \times 10^9}{19.5 \times 10^{12} \cdot 0.25} \approx 112.77 \times 10^{-3}\text{ s} = 112.77\text{ ms}\]</div>
+<p>Поелементні операції (Bias Add, GELU, LayerNorm) виконуються як три послідовні незрощені ядра. Для вихідного тензора розміром <span class="arithmatex">\(N_{\text{out}} = M \cdot D_{\text{out}} = 32768 \cdot 4096 = 134\,217\,728\text{ елементів}\)</span> обсяг одного тензора у форматі FP32 дорівнює:</p>
+<div class="arithmatex">\[V_{\text{tensor, FP32}} = N_{\text{out}} \cdot 4\text{ байти} = 536\,870\,912\text{ байтів} = 536.87\text{ МБ}\]</div>
+<p>Кожне з трьох ядер зчитує вхідний тензор і записує результат назад у VRAM, прокачуючи <span class="arithmatex">\(2 \times 536.87\text{ МБ} = 1073.74\text{ МБ}\)</span> трафіку. Сумарний трафік пам'яті для 3-х ядер складає:</p>
+<div class="arithmatex">\[V_{\text{elem, total}} = 3 \cdot 1073.74\text{ МБ} = 3221.22\text{ МБ} \approx 3.221\text{ ГБ}\]</div>
+<p>Час виконання поелементних операцій (Memory-Bound):</p>
+<div class="arithmatex">\[T_{\text{elem, base}} = 3 \cdot T_{\text{launch}} + \frac{V_{\text{elem, total}}}{B_{\max}} = 3 \cdot (5.0 \times 10^{-6}) + \frac{3.221 \times 10^9}{2.0 \times 10^{12}} \approx 0.015\text{ ms} + 1.61\text{ ms} = 1.625\text{ ms}\]</div>
+<p>Сумарний базовий час ітерації:</p>
+<div class="arithmatex">\[T_{\text{total, base}} = T_{\text{GEMM, base}} + T_{\text{elem, base}} = 112.77\text{ ms} + 1.625\text{ ms} = 114.395\text{ ms}\]</div>
+<hr />
+<h5 id="2-stride-">Крок 2. Оптимізація пам'яті через Stride-вирівнювання та коалесцинг</h5>
+<p>Відновлення неперервного розміщення тензора <span class="arithmatex">\(\mathbf{X}\)</span> у фізичній пам'яті (<span class="arithmatex">\(St_2 = 1, St_1 = D_{\text{in}}\)</span>) усуває штраф за некоалесцентний доступ, відновлюючи <span class="arithmatex">\(\eta_{\text{mem}} \to 100\%\)</span>. </p>
+<p>Час виконання операції GEMM на ядрах FP32 CUDA Cores становить:</p>
+<div class="arithmatex">\[T_{\text{GEMM, coalesced}} = \frac{W_{\text{GEMM}}}{P_{\text{FP32}}} = \frac{549.76 \times 10^9}{19.5 \times 10^{12}} \approx 28.19\text{ ms}\]</div>
+<p>Сумарний час конвеєра після оптимізації структури пам'яті:</p>
+<div class="arithmatex">\[T_{\text{total, step2}} = 28.19\text{ ms} + 1.625\text{ ms} = 29.815\text{ ms}\]</div>
+<p>Коефіцієнт прискорення на даному етапі:</p>
+<div class="arithmatex">\[S_1 = \frac{T_{\text{total, base}}}{T_{\text{total, step2}}} = \frac{114.395}{29.815} \approx 3.84\text{ раза}\]</div>
+<hr />
+<h5 id="3-amp-bf16-tensor-cores">Крок 3. Перехід на змішану точність AMP (BF16) та активація Tensor Cores</h5>
+<p>Переведення обчислень лінійного шару у формат <strong>BF16</strong> активує тензорні ядра <strong>Tensor Cores</strong>, що збільшує пікову обчислювальну потужність до <span class="arithmatex">\(P_{\text{TC}} = 312.0\text{ TFLOPS}\)</span>. Обсяг пам'яті тензорів скорочується вдвічі (<span class="arithmatex">\(\text{sizeof}(\text{BF16}) = 2\text{ байти}\)</span>).</p>
+<p>Час матричного множення на тензорних ядрах:</p>
+<div class="arithmatex">\[T_{\text{GEMM, TC}} = \frac{W_{\text{GEMM}}}{P_{\text{TC}}} = \frac{549.76 \times 10^9}{312.0 \times 10^{12}} \approx 1.762\text{ ms}\]</div>
+<p>Трафік пам'яті для поелементних операцій у форматі BF16 зменшується у <span class="arithmatex">\(2\)</span> рази:</p>
+<div class="arithmatex">\[V_{\text{elem, BF16}} = \frac{V_{\text{elem, total}}}{2} = \frac{3.221\text{ ГБ}}{2} = 1.6105\text{ ГБ}\]</div>
+<div class="arithmatex">\[T_{\text{elem, BF16}} = 3 \cdot T_{\text{launch}} + \frac{1.6105 \times 10^9}{2.0 \times 10^{12}} \approx 0.015\text{ ms} + 0.805\text{ ms} = 0.820\text{ ms}\]</div>
+<p>Сумарний час конвеєра на тензорних ядрах:</p>
+<div class="arithmatex">\[T_{\text{total, step3}} = T_{\text{GEMM, TC}} + T_{\text{elem, BF16}} = 1.762\text{ ms} + 0.820\text{ ms} = 2.582\text{ ms}\]</div>
+<p>Коефіцієнт прискорення відносно попереднього кроку:</p>
+<div class="arithmatex">\[S_2 = \frac{T_{\text{total, step2}}}{T_{\text{total, step3}}} = \frac{29.815}{2.582} \approx 11.55\text{ раза}\]</div>
+<hr />
+<h5 id="4-pytorch-20-triton-kernel-fusing">Крок 4. Компіляція графа за допомогою PyTorch 2.0 / Triton (Kernel Fusing)</h5>
+<p>Застосування <code>torch.compile(mode='max-autotune')</code> об'єднує послідовність операцій (Bias Add + GELU + LayerNorm) в єдине високооптимізоване Triton-ядро. Проміжні результати зберігаються в реєстрах мультипроцесора SM, виключаючи <span class="arithmatex">\(4\)</span> транзакції до глобальної пам'яті VRAM.</p>
+<p>Сумарний трафік пам'яті для зрощеного ядра складається лише з одного зчитування <span class="arithmatex">\(\mathbf{Y}_{\text{raw}}\)</span> та одного запису нормалізованого <span class="arithmatex">\(\mathbf{Y}_{\text{final}}\)</span> у форматі BF16:</p>
+<div class="arithmatex">\[V_{\text{fused}} = 2 \times (N_{\text{out}} \cdot 2\text{ байти}) = 2 \times 268.44\text{ МБ} = 536.87\text{ МБ} = 0.53687\text{ ГБ}\]</div>
+<p>Час виконання зрощеного поелементного ядра:</p>
+<div class="arithmatex">\[T_{\text{elem, fused}} = 1 \cdot T_{\text{launch}} + \frac{0.53687 \times 10^9}{2.0 \times 10^{12}} = 0.005\text{ ms} + 0.268\text{ ms} = 0.273\text{ ms}\]</div>
+<p>Підсумковий час виконання повністю оптимізованого конвеєра:</p>
+<div class="arithmatex">\[T_{\text{total, final}} = T_{\text{GEMM, TC}} + T_{\text{elem, fused}} = 1.762\text{ ms} + 0.273\text{ ms} = 2.035\text{ ms}\]</div>
+<p>Підсумковий коефіцієнт прискорення конвеєра:</p>
+<div class="arithmatex">\[S_{\text{total}} = \frac{T_{\text{total, base}}}{T_{\text{total, final}}} = \frac{114.395\text{ ms}}{2.035\text{ ms}} \approx 56.21\text{ раза}\]</div>
+<hr />
+<h4 id="_10">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Усунення фрагментації пам'яті та приведення тензорів до неперервного стану (<strong>Contiguous Layout</strong>) дозволило підвищити реальну швидкість GEMM у <span class="arithmatex">\(3.84\)</span> раза виключно за рахунок відновлення апаратного коалесцингу транзакцій контролера VRAM.</p>
+</li>
+<li>
+<p>Перехід до змішаної точності <strong>AMP BF16</strong> забезпечив домінуючий внесок у продуктивність (прискорення в <span class="arithmatex">\(11.55\)</span> раза), оскільки операція GEMM із високою операційною інтенсивністю перейшла в зону максимальної утилізації блоків <strong>Tensor Cores</strong>.</p>
+</li>
+<li>
+<p>Зрощування поелементних операцій (<strong>Kernel Fusion</strong>) скоротило затримку блоку пост-обробки активацій із <span class="arithmatex">\(0.820\text{ ms}\)</span> до <span class="arithmatex">\(0.273\text{ ms}\)</span> (у <span class="arithmatex">\(3\)</span> рази) за рахунок трикратного зменшення кількості звернень до глобальної пам'яті VRAM та усунення зайвих накладних витрат на диспетчеризацію ядер.</p>
+</li>
+<li>
+<p>Комплексна синергетична оптимізація забезпечила сумарне прискорення конвеєра у <strong><span class="arithmatex">\(56.21\)</span> раза</strong> без зміни вихідної топології нейронної мережі та без деградації підсумкової точності моделі.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>SIMD-векторизація CPU</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(S_{\text{SIMD}} = \frac{1}{(1-p) + \frac{p \cdot B_{\text{data}}}{W_{\text{reg}}}}\)</span></td>
+<td style="text-align: left;">Обробка невеликих масивів даних, аугментація на CPU, робота за відсутності GPU</td>
+<td style="text-align: left;">Розрядність векторних регістрів (128–512 біт), пропускна здатність системної шини RAM</td>
+<td style="text-align: left;">Ототожнення з багатопотоковістю: SIMD прискорює операції в межах одного ядра, а не між ядрами.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Варп (CUDA Warp)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(N_{\text{warp}} = 32\text{ потоки}\)</span></td>
+<td style="text-align: left;">Базовий неподільний квант планування та диспетчеризації інструкцій у GPU SM</td>
+<td style="text-align: left;">Фіксований апаратний розмір; втрата продуктивності при розгалуженні потоків</td>
+<td style="text-align: left;">Спроба створити варп іншого розміру на рівні коду CUDA чи фреймворку PyTorch.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Коалесцинг пам'яті</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\eta_{\text{mem}} = \frac{V_{\text{useful}}}{N_{\text{trans}} \cdot S_{\text{segment}}}\)</span></td>
+<td style="text-align: left;">Організація структур збереження тензорів у пам'яті VRAM, оптимізація Stride</td>
+<td style="text-align: left;">Доступ суміжних 32 потоків варпу до неперервного сегмента пам'яті 128 байт</td>
+<td style="text-align: left;">Припущення, що кеш L1 повністю компенсує втрати від хаотичного або крокового доступу до VRAM.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Дивергенція варпу</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\eta_{\text{warp}} = \frac{\sum A_k}{K \cdot 32}\)</span></td>
+<td style="text-align: left;">Написання розгалужених обчислювальних ядер із конструкціями <code>if-else</code></td>
+<td style="text-align: left;">Послідовна серіалізація виконання гілок варпом із маскуванням неактивних потоків</td>
+<td style="text-align: left;">Впевненість у тому, що гілки умовного оператора виконуються апаратно паралельно всередині одного варпу.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tensor Cores WMMA</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{D} = \mathbf{A}_{16 \times 16} \cdot \mathbf{B}_{16 \times 16} + \mathbf{C}\)</span></td>
+<td style="text-align: left;">Прискорення щільних лінійних шарів (GEMM) та згорток у глибоких нейромережах</td>
+<td style="text-align: left;">Обов'язкова кратність просторових розмірностей матриць числам <span class="arithmatex">\(8, 16, 32\)</span></td>
+<td style="text-align: left;">Використання Tensor Cores для поелементного додавання, ReLU або Softmax (вони не підтримуються).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Вектор кроків (Strides)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Offset} = \sum_{d=0}^{D-1} i_d \cdot St_d\)</span></td>
+<td style="text-align: left;">Швидка зміна розмірностей і транспонування тензорів за час <span class="arithmatex">\(O(1)\)</span></td>
+<td style="text-align: left;">Порушення інваріанта неперервності <span class="arithmatex">\(St_{D-1} = 1\)</span> блокує виклик векторизованих CUDA-ядер</td>
+<td style="text-align: left;">Хибне уявлення, що операція <code>.transpose()</code> або <code>.view()</code> фізично переставляє байти в пам'яті.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dynamic Loss Scaling</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\mathbf{g}_{\text{true}} = \frac{1}{S} \cdot \nabla (S \cdot \mathcal{L})\)</span></td>
+<td style="text-align: left;">Навчання нейромереж у режимі автоматичної змішаної точності FP16</td>
+<td style="text-align: left;">Динамічний діапазон чисел FP16 (максимум <span class="arithmatex">\(65504\)</span>, мінімум <span class="arithmatex">\(5.96 \times 10^{-8}\)</span>)</td>
+<td style="text-align: left;">Застосування масштабування градієнтів для формату BF16, де діапазон експоненти збігається з FP32.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kernel Fusion (Triton)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(S_{\text{fusion}} = \frac{\sum V_{\text{unfused}}}{V_{\text{in}} + V_{\text{out}}}\)</span></td>
+<td style="text-align: left;">Оптимізація ланцюжків поелементних шарів (LayerNorm, GELU, Residual Add)</td>
+<td style="text-align: left;">Обмежений обсяг регістрового файлу та пам'яті Shared Memory на один SM</td>
+<td style="text-align: left;">Очікування прискорення Compute-Bound операцій від зрощування (воно оптимізує лише трафік пам'яті).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_11">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Тензор розмірності <span class="arithmatex">\((128, 256, 512)\)</span> типу FP32 має канонічні кроки в пам'яті <span class="arithmatex">\((131072, 512, 1)\)</span>. До нього послідовно застосовують операції: <code>t2 = t.permute(1, 0, 2)</code> та <code>t3 = t2.reshape(256, 65536)</code>. Яка системна подія відбудеться на рівні пам'яті під час виконання виклику <code>reshape</code>?</p>
+</li>
+<li>
+<p>A) Тензор <code>t3</code> буде створено миттєво за час <span class="arithmatex">\(O(1)\)</span> як новий метаданий View без копіювання фізичного буфера.</p>
+</li>
+<li>
+<p>B) PyTorch викличе аварійне виключення <code>RuntimeError</code>, оскільки неконтигуальні тензори заборонено решейпити.</p>
+</li>
+<li>
+<p>C) Відбудеться неявне алокування нового буфера VRAM та фізичне копіювання <span class="arithmatex">\(67.1\text{ МБ}\)</span> даних для забезпечення контигуальності.</p>
+</li>
+<li>
+<p>D) Кроки тензора перерахуються автоматично за формулою <span class="arithmatex">\(St_0 = 65536, St_1 = 1\)</span> без виділення пам'яті.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>
+<p>Операція <code>permute(1, 0, 2)</code> міняє місцями нульову та першу осі тензора. Новий вектор кроків стає рівним <span class="arithmatex">\(\mathbf{St}' = (512, 131072, 1)\)</span>. У цьому стані тензор втрачає властивість неперервності за першими двома осями, оскільки <span class="arithmatex">\(St_0' &lt; St_1'\)</span>. Метод <code>reshape()</code> намагається створити представлення View, проте об'єднання осей <span class="arithmatex">\(0\)</span> і <span class="arithmatex">\(2\)</span> розмірністю <span class="arithmatex">\(128 \times 512 = 65536\)</span> неможливе за допомогою єдиного лінійного кроку без порушення адресації пам'яті. Відповідно, фреймворк вимушений виконати прихований виклик <code>.contiguous()</code>, що виділяє новий масив пам'яті у VRAM обсягом <span class="arithmatex">\(128 \cdot 256 \cdot 512 \cdot 4\text{ байти} = 67\,108\,864\text{ байти} = 67.1\text{ МБ}\)</span> та здійснює фізичне копіювання елементів.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки геометрія кроків несумісна з лінійним об'єднанням осей без фізичного копіювання даних.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що метод <code>reshape()</code> (на відміну від суворого <code>.view()</code>) автоматично викликає копіювання при несумісності кроків.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки математично неможливо описати адреси елементів після зміни осей однією парою кроків <span class="arithmatex">\((65536, 1)\)</span> без фізичної перестановки байтів у буфері.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<ol>
+<li>
+<p>Обчислювальне CUDA-ядро виконує обробку масиву даних за допомогою варпу з <span class="arithmatex">\(32\)</span> потоків. Код ядра містить наступну інструкцію:<br />
+<code>if (threadIdx.x &lt; 8) { compute_A(); } else { compute_B(); }</code><br />
+   Час виконання функції <code>compute_A()</code> становить <span class="arithmatex">\(100\)</span> тактів, а <code>compute_B()</code> — <span class="arithmatex">\(150\)</span> тактів. Скільки системних тактів сумарно витратить варп на виконання даного умовного блоку?</p>
+</li>
+<li>
+<p>A) <span class="arithmatex">\(150\)</span> тактів завдяки апаратному маскуванню меншої гілки.</p>
+</li>
+<li>
+<p>B) <span class="arithmatex">\(250\)</span> тактів через повну послідовну серіалізацію гілок у варпі.</p>
+</li>
+<li>
+<p>C) <span class="arithmatex">\(125\)</span> тактів як середньозважений час виконання потоків.</p>
+</li>
+<li>
+<p>D) <span class="arithmatex">\(100\)</span> тактів, оскільки перші <span class="arithmatex">\(8\)</span> потоків мають пріоритет у планувальнику.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Оскільки всі <span class="arithmatex">\(32\)</span> потоки одного варпу підпорядковані єдиному лічильнику команд, при виникненні дивергенції варпу апаратний планувальник GPU виконує всі гілки розгалуження послідовно. Спочатку активується маска для потоків із <span class="arithmatex">\(0\)</span> по <span class="arithmatex">\(7\)</span>, які виконують <code>compute_A()</code>, що займає <span class="arithmatex">\(100\)</span> тактів (потоки <span class="arithmatex">\(8\)</span>–<span class="arithmatex">\(31\)</span> при цьому простоюють). Після цього маска перемикається на потоки з <span class="arithmatex">\(8\)</span> по <span class="arithmatex">\(31\)</span>, які виконують <code>compute_B()</code>, що потребує ще <span class="arithmatex">\(150\)</span> тактів (потоки <span class="arithmatex">\(0\)</span>–<span class="arithmatex">\(7\)</span> простоюють). Загальний час блоку є сумою тривалостей обох гілок:</li>
+</ol>
+<div class="arithmatex">\[T_{\text{total}} = T_A + T_B = 100 + 150 = 250\text{ тактів}\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки апаратні блоки SIMT не здатні виконувати різні інструкції паралельно в межах одного варпу.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що час виконання адитивно підсумовується, а не усереднюється.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки завершення коротшої гілки не скасовує необхідність виконання довшої гілки рештою потоків.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<ol>
+<li>
+<p>За моделлю Roofline графічний прискорювач має пікову потужність <span class="arithmatex">\(P_{\max} = 150\text{ TFLOPS}\)</span> і фізичну пропускну здатність шини пам'яті <span class="arithmatex">\(B_{\max} = 1500\text{ ГБ}/\text{s}\)</span>. Алгоритм виконує <span class="arithmatex">\(3 \times 10^{11}\text{ FLOP}\)</span>, здійснюючи при цьому обмін із VRAM в обсязі <span class="arithmatex">\(6 \times 10^9\text{ байтів}\)</span>. Який режим обчислень спостерігається і яка реальна швидкодія буде досягнута?</p>
+</li>
+<li>
+<p>A) Режим Compute-Bound, досягнута швидкодія складе <span class="arithmatex">\(150\text{ TFLOPS}\)</span>.</p>
+</li>
+<li>
+<p>B) Режим Memory-Bound, досягнута швидкодія складе <span class="arithmatex">\(75\text{ TFLOPS}\)</span>.</p>
+</li>
+<li>
+<p>C) Режим Memory-Bound, досягнута швидкодія складе <span class="arithmatex">\(50\text{ TFLOPS}\)</span>.</p>
+</li>
+<li>
+<p>D) Режим Compute-Bound, досягнута швидкодія складе <span class="arithmatex">\(100\text{ TFLOPS}\)</span>.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Розрахуємо критичну інтенсивність прискорювача:</li>
+</ol>
+<div class="arithmatex">\[I^* = \frac{P_{\max}}{B_{\max}} = \frac{150 \times 10^{12}\text{ FLOP/s}}{1500 \times 10^9\text{ Bytes/s}} = 100\text{ FLOP/Byte}\]</div>
+<p>Операційна інтенсивність алгоритму:</p>
+<div class="arithmatex">\[I = \frac{W}{V} = \frac{3 \times 10^{11}\text{ FLOP}}{6 \times 10^9\text{ Bytes}} = 50\text{ FLOP/Byte}\]</div>
+<p>Оскільки <span class="arithmatex">\(I = 50 &lt; I^* = 100\)</span>, процес є суворо <strong>Memory-Bound</strong> (обмежений пропускною здатністю пам'яті). Реальна швидкодія системи складе:</p>
+<div class="arithmatex">\[P = I \cdot B_{\max} = 50\text{ FLOP/Byte} \cdot 1500 \times 10^9\text{ Bytes/s} = 75 \times 10^{12}\text{ FLOP/s} = 75\text{ TFLOPS}\]</div>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки алгоритм не досягає точки зламу <span class="arithmatex">\(I^*\)</span> і не може утилізувати пікову потужність процесора.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним через помилку в розрахунку підсумкового множення <span class="arithmatex">\(I \cdot B_{\max}\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки алгоритм помилково класифіковано як обмежений обчисленнями.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<ol>
+<li>
+<p>Під час навчання складної нейромережі у форматі FP16 із використанням модуля <code>torch.cuda.amp.GradScaler</code> на 100-й ітерації у векторі градієнтів було зафіксовано значення <code>+Inf</code>. Які дії виконає компонент <code>GradScaler</code> на цій ітерації?</p>
+</li>
+<li>
+<p>A) Аварійно зупинить процес навчання з викиданням виключення <code>FloatingPointError</code>.</p>
+</li>
+<li>
+<p>B) Замінить значення <code>Inf</code> на нулі, виконає крок оптимізатора <code>optimizer.step()</code> і збільшить масштабний коефіцієнт <span class="arithmatex">\(S\)</span> удвічі.</p>
+</li>
+<li>
+<p>C) Пропустить оновлення ваг моделі, зменшить масштабний коефіцієнт <span class="arithmatex">\(S\)</span> за формулою <span class="arithmatex">\(S \leftarrow S \cdot \beta\)</span> та скине лічильник стабільних ітерацій.</p>
+</li>
+<li>
+<p>D) Автоматично конвертує всю модель у формат FP32 і повторить ітерацію з тими самими вагами.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>
+<p>Наявність значень <code>+Inf</code> або <code>NaN</code> свідчить про виникнення числового переповнення (<strong>Overflow</strong>) під час зворотного поширення помилки через надмірно високе значення масштабного коефіцієнта <span class="arithmatex">\(S\)</span>. Алгоритм <code>GradScaler</code> захищає параметри моделі від псування, повністю пропускаючи крок оновлення ваг <code>optimizer.step()</code>. Одночасно масштабний множник зменшується (за замовчуванням <span class="arithmatex">\(\beta = 0.5\)</span>, тобто <span class="arithmatex">\(S \leftarrow S \cdot 0.5\)</span>), а лічильник успішних стабільних кроків обнуляється, щоб запобігти передчасному зростанню масштабу на наступних батчах.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки переповнення є штатним станом для алгоритму адаптивного скалювання втрат і не викликає аварійної зупинки.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що оновлення параметрів із замаскованими градієнтами зруйнує стан оптимізатора (наприклад, оцінки моментів у Adam).</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є помилковим, оскільки автоматична зміна архітектурного типу даних моделі на льоту не підтримується і є надлишковою.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h4 id="_12">Завдання для самостійної роботи</h4>
+<h5 id="_13">Постановка задачі</h5>
+<p>Інженерна група проводить оптимізацію блоку багатовиголової уваги (<strong>Multi-Head Attention, MHA</strong>) на графічному прискорювачі з характеристиками:</p>
+<ul>
+<li>
+<p>Пікова потужність тензорних ядер: <span class="arithmatex">\(P_{\text{TC}} = 165.0\text{ TFLOPS}\)</span> (формат FP16/BF16);</p>
+</li>
+<li>
+<p>Фізична пропускна здатність пам'яті HBM: <span class="arithmatex">\(B_{\max} = 1200\text{ ГБ}/\text{s}\)</span>;</p>
+</li>
+<li>
+<p>Розмір батчу <span class="arithmatex">\(B = 32\)</span>, довжина послідовності <span class="arithmatex">\(L = 1024\)</span>, кількість голів уваги <span class="arithmatex">\(H = 16\)</span>, розмірність голови <span class="arithmatex">\(d_k = 64\)</span> (загальна розмірність <span class="arithmatex">\(D = H \cdot d_k = 1024\)</span>).</p>
+</li>
+</ul>
+<p>Блок розрахунку матриць уваги <span class="arithmatex">\(\mathbf{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}\)</span> у початковій реалізації виконує три операції окремо:</p>
+<ol>
+<li>
+<p>Батчеве множення матриць <span class="arithmatex">\(\mathbf{S} = \mathbf{Q}\mathbf{K}^T\)</span> у форматі FP16;</p>
+</li>
+<li>
+<p>Поелементне масштабування та взяття функції <span class="arithmatex">\(\mathbf{P} = \text{Softmax}(\mathbf{S})\)</span> у форматі FP32;</p>
+</li>
+<li>
+<p>Батчеве множення матриць <span class="arithmatex">\(\mathbf{O} = \mathbf{P}\mathbf{V}\)</span> у форматі FP16.</p>
+</li>
+</ol>
+<h5 id="_14">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Розрахуйте точну кількість операцій із плаваючою крапкою <span class="arithmatex">\(W_{\text{FLOP}}\)</span> та сумарний обсяг трафіку глобальної пам'яті <span class="arithmatex">\(V_{\text{Bytes}}\)</span> для базової незрощеної схеми розрахунку уваги (враховуючи запис проміжних матриць <span class="arithmatex">\(\mathbf{S}\)</span> та <span class="arithmatex">\(\mathbf{P}\)</span> у VRAM).</p>
+</li>
+<li>
+<p>Обчисліть операційну інтенсивність <span class="arithmatex">\(I\)</span> кожного з трьох етапів та за моделлю Roofline класифікуйте кожен етап як <strong>Memory-Bound</strong> або <strong>Compute-Bound</strong>.</p>
+</li>
+<li>
+<p>Розрахуйте теоретичний час виконання кожної операції та сумарний час розрахунку всього блоку уваги на заданому прискорювачі.</p>
+</li>
+<li>
+<p>Оцініть аналітично, як зміниться час виконання та загальний обсяг трафіку пам'яті VRAM у разі переходу до технології <strong>FlashAttention</strong> (повне зрощування розрахунку уваги всередині Shared Memory SM без збереження проміжних матриць <span class="arithmatex">\(\mathbf{S}\)</span> та <span class="arithmatex">\(\mathbf{P}\)</span> розміром <span class="arithmatex">\(B \times H \times L \times L\)</span> у VRAM). Сформулюйте висновок у вигляді коефіцієнта прискорення <span class="arithmatex">\(S_{\text{FlashAttention}}\)</span>.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
