@@ -1,0 +1,2298 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../pz1/">
+      
+      
+        <link rel="next" href="../pz3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#no-2-numpypytorch" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lk/lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="no-2-numpypytorch">Практичне заняття № 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch</h1>
+<h2 id="_1">Мета роботи та стек технологій</h2>
+<p><strong>Мета.</strong> Засвоєння системних принципів векторизації обчислювальних процесів у високопродуктивних бібліотеках тензорної алгебри <code>NumPy</code> та <code>PyTorch</code>; опанування механізмів транслювання розмірностей (з англ. <em>Broadcasting</em>), аналізу фізичного розташування даних у оперативній пам'яті (з англ. <em>Memory Layout</em> та <em>Strides</em>), а також використання SIMD-інструкцій центрального процесора для відмови від явних інтерпретованих циклів мови Python з метою багаторазового підвищення швидкодії алгоритмів штучного інтелекту.</p>
+<p><strong>Стек технологій та інструменти:</strong></p>
+<ul>
+<li>
+<p><strong>Мова програмування / Середовище:</strong> Python 3.11+ / Jupyter Notebook або VS Code.</p>
+</li>
+<li>
+<p><strong>Платформа / Бібліотеки:</strong> <code>NumPy</code> (версії 1.24+ — векторизовані масиви <code>ndarray</code>), <code>PyTorch</code> (версії 2.0+ — тензорні обчислення на CPU/GPU), <code>Matplotlib</code> (версії 3.7+ — візуалізація профілювання).</p>
+</li>
+<li>
+<p><strong>Інструменти розробки:</strong> Термінал (Bash/PowerShell), модулі системного профілювання <code>time</code> та <code>tracemalloc</code>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="1">1. Теоретичні відомості</h2>
+<p>У середовищі інтерпретованої мови Python виконання стандартних циклів (<code>for</code>, <code>while</code>) супроводжується значними накладними витратами. На кожній ітерації циклу інтерпретатор CPython виконує динамічну перевірку типів даних, динамічний пошук методів об'єктів, а також маніпуляції з лічильниками посилань на об'єкти в пам'яті. У задачках машинного навчання та глибокого навчання, де обсяг опрацьовуваних даних становить мільйони та мільярди елементів, використання явних циклів призводить до критичного падіння продуктивності системи.</p>
+<p>Векторизація обчислень становить процес перенесення циклічних операцій з високорівневого інтерпретатора Python до низькорівневих, оптимізованих компильованих бібліотек на мовах C/C++ та Fortran (таких як OpenBLAS, Intel MKL або ATen). Низькорівневий код використовує спеціальні векторні інструкції процесора (з англ. <em>SIMD — Single Instruction, Multiple Data</em>, наприклад, AVX-2, AVX-512 або ARM NEON), що дозволяє виконувати арифметичну операцію над цілою групою чисел (наприклад, 4, 8 або 16 елементів типу <code>float32</code>) за один тактовий цикл процесора.</p>
+<p>Для забезпечення максимальної швидкодії векторизованих обчислень критично важливим є фізичне розташування елементів тензора у безперервному блоці оперативної пам'яті. Багатовимірний тензор зберігається у пам'яті як лінійний послідовний масив байтів. Перехід від багатовимірного індексу до лінійного зсуву (з англ. <em>Memory Offset</em>) здійснюється за допомогою вектора кроків (з англ. <em>Strides</em>). Для <span class="arithmatex">\(D\)</span>-вимірного тензора з індексами <span class="arithmatex">\(\mathbf{i} = (i_0, i_1, \dots, i_{D-1})\)</span> та кроками <span class="arithmatex">\(\mathbf{s} = (s_0, s_1, \dots, s_{D-1})\)</span> фізичний зсув байтів від початку масиву обчислюється за формулою:</p>
+<div class="arithmatex">\[\text{Offset}(\mathbf{i}) = \sum_{k=0}^{D-1} i_k \cdot s_k\]</div>
+<p>де <span class="arithmatex">\(s_k\)</span> визначає кількість байтів (або елементів), яку необхідно пропустити в пам'яті при зміні індексу <span class="arithmatex">\(i_k\)</span> на одиницю вздовж <span class="arithmatex">\(k\)</span>-ї розмірності. Якщо масив розміщено у пам'яті за стандартом <em>C-contiguous</em> (Row-Major, прийнятий за замовчуванням у C, NumPy та PyTorch), елементи останньої розмірності розташовані в пам'яті безпосередньо один за одним. Це забезпечує ефективне завантаження даних у кєш-пам'ять процесора (з англ. <em>Cache Line Alignment</em>) та задіяння SIMD-регістрів.</p>
+<p><pre class="mermaid"><code>graph LR
+    subgraph Логічний багатовимірний тензор [Shape: 2x3]
+        A00["[0,0] = 1"] --- A01["[0,1] = 2"] --- A02["[0,2] = 3"]
+        A10["[1,0] = 4"] --- A11["[1,1] = 5"] --- A12["[1,2] = 6"]
+    end
+    subgraph Безперервний блок пам'яті C-Contiguous [Strides: s0=3, s1=1]
+        M0["1 (Offset 0)"] --&gt; M1["2 (Offset 1)"] --&gt; M2["3 (Offset 2)"] --&gt; M3["4 (Offset 3)"] --&gt; M4["5 (Offset 4)"] --&gt; M5["6 (Offset 5)"]
+    end</code></pre>
+<em>Рисунок 1 — Структура розташування елементів тензора у безперервному блоці пам'яті за стандартом C-Contiguous</em></p>
+<p>Механізм транслювання розмірностей (з англ. <em>Broadcasting</em>) дозволяє виконувати поелементні арифметичні операції над тензорами різної форми (з англ. <em>Shape</em>) без фізичного копіювання даних у пам'яті. Автоматичне транслювання виконується за наступними правилами:</p>
+<ol>
+<li>
+<p>Якщо тензори мають різний ранг (кількість розмірностей), форма тензора меншого рангу доповнюється одиницями з лівого боку.</p>
+</li>
+<li>
+<p>Дві розмірності вважаються сумісними, якщо вони рівні між собою або одна з них дорівнює <span class="arithmatex">\(1\)</span>.</p>
+</li>
+<li>
+<p>Якщо вздовж певної розмірності розмір дорівнює <span class="arithmatex">\(1\)</span>, то при виконанні операції крок (stride) для цієї розмірності приймається рівним <span class="arithmatex">\(0\)</span>. Це дає змогу віртуально «розмножити» значення вздовж відповідного виміру без реального виділення оперативної пам'яті.</p>
+</li>
+</ol>
+<p><pre class="mermaid"><code>flowcard
+graph TD
+    A[Початок обчислювального процесу] --&gt; B{Вибір підходу}
+    B --&gt;|Явні цикли Python| C[Запити до об'єктів CPython, високі накладні витрати]
+    C --&gt; D[Поелементна обробка: Послідовні пропуски кєшу]
+    D --&gt; E[Тривалий час виконання]
+
+    B --&gt;|Векторизація NumPy/PyTorch| F[Транслювання розмірностей Broadcasting]
+    F --&gt; G[Перевірка C-Contiguous Alignment та Strides]
+    G --&gt; H[Виклик SIMD / BLAS інструкцій C/CUDA]
+    H --&gt; I[Паралельна обробка вектора даних за 1 такт]
+    I --&gt; J[Максимальна продуктивність та мінімальна затримка]</code></pre>
+<em>Рисунок 2 — Порівняльна схема виконання логіки через інтерпретовані цикли Python та векторизовані SIMD-інструкції</em></p>
+<p>Прикладом векторизованої алгебри є обчислення матриці попарних евклідових відстаней між двома множинами векторів <span class="arithmatex">\(\mathbf{A} \in \mathbb{R}^{M \times D}\)</span> та <span class="arithmatex">\(\mathbf{B} \in \mathbb{R}^{N \times D}\)</span>. Наївна реалізація вимагає трьох вкладених циклів із часовою складністю <span class="arithmatex">\(\mathcal{O}(M \cdot N \cdot D)\)</span>. Векторизована математична формалізація базується на розкладі квадрата різниці векторів:</p>
+<div class="arithmatex">\[\|\mathbf{a}_i - \mathbf{b}_j\|_2^2 = \sum_{k=1}^{D} (a_{i,k} - b_{j,k})^2 = \sum_{k=1}^{D} a_{i,k}^2 + \sum_{k=1}^{D} b_{j,k}^2 - 2 \sum_{k=1}^{D} a_{i,k} b_{j,k}\]</div>
+<p>У тензорній формі це виражається через суму квадратів норм та матричне множення:</p>
+<div class="arithmatex">\[\mathbf{D}^2 = \text{reshape}\left(\sum_{k=1}^{D} a_{i,k}^2, (M, 1)\right) + \text{reshape}\left(\sum_{k=1}^{D} b_{j,k}^2, (1, N)\right) - 2 \mathbf{A} \mathbf{B}^T\]</div>
+<p>Такий підхід дозволяє повністю усунути явні цикли та використати високооптимізовані процедури матричного множення BLAS (<code>gemm</code>), що дає прискорення у сотні разів.</p>
+<hr />
+<h2 id="2-0">2. Підготовка середовища та розгортання проєкту (Крок 0)</h2>
+<p>Дотримуйтесь інструкцій для налаштування робочого середовища та встановлення необхідних залежностей.</p>
+<h3 id="21-cli">2.1. Команди для терміналу (CLI)</h3>
+<p>Створення та активація віртуального середовища:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv_tensor
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>venv_tensor/bin/activate<span class="w">  </span><span class="c1"># Для Linux/macOS</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># або: .\venv_tensor\Scripts\Activate.ps1  # Для Windows</span>
+</span></code></pre></div></p>
+<p>Встановлення бібліотек <code>NumPy</code>, <code>PyTorch</code> та <code>Matplotlib</code>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>torch<span class="w"> </span>matplotlib
+</span></code></pre></div></p>
+<h3 id="22">2.2. Структура каталогів проєкту</h3>
+<p>Створіть наступну структуру файлів та папок у робочому каталозі:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>tensor_vectorization_project/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── main.py
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── requirements.txt
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>└── results/
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    └── benchmark_execution.png
+</span></code></pre></div>
+<p>Вміст файлу <code>requirements.txt</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>numpy&gt;=1.24.0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>torch&gt;=2.0.0
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>matplotlib&gt;=3.7.0
+</span></code></pre></div></p>
+<hr />
+<h2 id="3">3. Порядок виконання роботи</h2>
+<h3 id="31">3.1. Індивідуальні завдання</h3>
+<p>Кожен здобувач виконує індивідуальне завдання згідно зі своїм варіантом, наведеним у Таблиці 3.1. Необхідно реалізувати два варіанти розв'язання задачі: наївний (із використанням явних циклів Python) та векторизований (без явних циклів, з використанням механізмів Broadcasting, розгортання тензорних форм та функцій <code>NumPy</code>/<code>PyTorch</code>). Для кожного варіанта слід виміряти час виконання, перевірити точність збігу результатів та обчислити досягнутий коефіцієнт прискорення.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Варіант</th>
+<th style="text-align: left;">Назва завдання / Алгоритму</th>
+<th style="text-align: center;">Вхідні дані / Параметри тензорів</th>
+<th style="text-align: center;">Очікуваний результат / Ціль</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">Матриця евклідових відстаней</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{500 \times 128}, B \in \mathbb{R}^{400 \times 128}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(D \in \mathbb{R}^{500 \times 400}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">Махаланобісова відстань</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{600 \times 64}, \Sigma^{-1} \in \mathbb{R}^{64 \times 64}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(d \in \mathbb{R}^{600 \times 600}\)</span>, Прискорення <span class="arithmatex">\(\ge 40\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">Пакетний Грам-матричний аналіз</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{32 \times 100 \times 256}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(G \in \mathbb{R}^{32 \times 100 \times 100}\)</span>, Прискорення <span class="arithmatex">\(\ge 60\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">Тензорний Softmax із температурою</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{128 \times 50 \times 1000}, T=2.0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(S \in \mathbb{R}^{128 \times 50 \times 1000}\)</span>, Прискорення <span class="arithmatex">\(\ge 45\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">Косинусна подібність векторів</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{800 \times 256}, B \in \mathbb{R}^{800 \times 256}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(C \in \mathbb{R}^{800 \times 800}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">Взважене ковзне середнє (1D)</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{100000}, W \in \mathbb{R}^{101}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(Y \in \mathbb{R}^{99900}\)</span>, Прискорення <span class="arithmatex">\(\ge 30\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;">Білінійна форма над тензорами</td>
+<td style="text-align: center;"><span class="arithmatex">\(x \in \mathbb{R}^{400 \times 128}, W \in \mathbb{R}^{128 \times 128}, y \in \mathbb{R}^{400 \times 128}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(v \in \mathbb{R}^{400}\)</span>, Прискорення <span class="arithmatex">\(\ge 40\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;">Локальна нормалізація контрасту</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{16 \times 64 \times 64}, k=5\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(N \in \mathbb{R}^{16 \times 64 \times 64}\)</span>, Прискорення <span class="arithmatex">\(\ge 35\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">Центрування та стандартизація</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{1000 \times 512}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\mu \in \mathbb{R}^{512}, \hat{X} \in \mathbb{R}^{1000 \times 512}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;">Розрахунок Cross-Entropy Loss</td>
+<td style="text-align: center;"><span class="arithmatex">\(Y_{pred} \in \mathbb{R}^{512 \times 100}, Y_{true} \in \mathbb{Z}^{512}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(L \in \mathbb{R}\)</span>, Прискорення <span class="arithmatex">\(\ge 40\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;">Пакетне матричне множення</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{64 \times 128 \times 256}, B \in \mathbb{R}^{64 \times 256 \times 64}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(C \in \mathbb{R}^{64 \times 128 \times 64}\)</span>, Прискорення <span class="arithmatex">\(\ge 70\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;">Мінковська відстань (<span class="arithmatex">\(p=3\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{300 \times 64}, B \in \mathbb{R}^{300 \times 64}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(D \in \mathbb{R}^{300 \times 300}\)</span>, Прискорення <span class="arithmatex">\(\ge 40\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;">Векторизоване заповнення сітки</td>
+<td style="text-align: center;"><span class="arithmatex">\(x \in \mathbb{R}^{1000}, y \in \mathbb{R}^{1000}, f(x,y)=\sin(x)\cos(y)\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(Z \in \mathbb{R}^{1000 \times 1000}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;">Тензорна індексація за маскою</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{200 \times 200 \times 50}, \text{Threshold}=0.5\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(X_{filtered} \in \mathbb{R}^{K \times 50}\)</span>, Прискорення <span class="arithmatex">\(\ge 30\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: left;">Відстань Манхеттена (<span class="arithmatex">\(L_1\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{400 \times 100}, B \in \mathbb{R}^{400 \times 100}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(D \in \mathbb{R}^{400 \times 400}\)</span>, Прискорення <span class="arithmatex">\(\ge 45\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: left;">Просторовий 2D Pooling (Max)</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{32 \times 3 \times 128 \times 128}, \text{Kernel}=2\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(P \in \mathbb{R}^{32 \times 3 \times 64 \times 64}\)</span>, Прискорення <span class="arithmatex">\(\ge 60\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>17</strong></td>
+<td style="text-align: left;">Багатовимірний кумулятивний добуток</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{100 \times 500 \times 10}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(C \in \mathbb{R}^{100 \times 500 \times 10}\)</span>, Прискорення <span class="arithmatex">\(\ge 35\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: left;">Векторизований перцептрон</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{2000 \times 128}, W \in \mathbb{R}^{128 \times 10}, b \in \mathbb{R}^{10}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(Y \in \mathbb{R}^{2000 \times 10}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>19</strong></td>
+<td style="text-align: left;">Тензорний розрахунок Иока-метрики</td>
+<td style="text-align: center;"><span class="arithmatex">\(A \in \mathbb{R}^{500 \times 200}, B \in \mathbb{R}^{500 \times 200}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(J \in \mathbb{R}^{500 \times 500}\)</span>, Прискорення <span class="arithmatex">\(\ge 40\times\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: left;">Автокореляційна функція 2D</td>
+<td style="text-align: center;"><span class="arithmatex">\(X \in \mathbb{R}^{256 \times 256}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(R \in \mathbb{R}^{256 \times 256}\)</span>, Прискорення <span class="arithmatex">\(\ge 50\times\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2. Покроковий алгоритм та розв'язок еталонного прикладу</h3>
+<p>Нижче наведено виконання індивідуального завдання для <strong>Варіанта №1</strong>:</p>
+<ul>
+<li>
+<p><strong>Задача:</strong> Обчислення матриці попарних евклідових відстаней між двома множинами векторів <span class="arithmatex">\(A \in \mathbb{R}^{M \times D}\)</span> та <span class="arithmatex">\(B \in \mathbb{R}^{N \times D}\)</span>.</p>
+</li>
+<li>
+<p><strong>Параметри:</strong> <span class="arithmatex">\(M = 500\)</span>, <span class="arithmatex">\(N = 400\)</span>, <span class="arithmatex">\(D = 128\)</span>.</p>
+</li>
+<li>
+<p><strong>Методологія:</strong> Зіставлення наївної потрійної циклічної реалізації Python з векторизованим підходом у <code>NumPy</code> та <code>PyTorch</code> (на CPU і GPU за наявності).</p>
+</li>
+</ul>
+<p>Нижче подано повний, повністю працездатний Python-скрипт <code>main.py</code> без жодних пропущених фрагментів.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_distances_loops</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="sd">    Наївна обчислювальна реалізація з використанням трьох вкладених циклів Python.</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="sd">    A: shape (M, D)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="sd">    B: shape (N, D)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="sd">    """</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">M</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="n">N</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="n">D_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>            <span class="n">acc</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>                <span class="n">diff</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>                <span class="n">acc</span> <span class="o">+=</span> <span class="n">diff</span> <span class="o">*</span> <span class="n">diff</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>            <span class="n">D_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="k">return</span> <span class="n">D_matrix</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_distances_vectorized_numpy</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="sd">    Оптимізована векторизована реалізація на NumPy за допомогою матричного множення та broadcasting.</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="sd">    D^2 = A^2 + B^2 - 2 * A * B^T</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="sd">    """</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="c1"># Обчислення квадратів норм векторів вздовж останньої розмірності</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="n">A_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Shape: (M, 1)</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>    <span class="n">B_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">B</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Shape: (N, 1)</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>    <span class="c1"># Використання матричного множення та транслювання розмірностей (Broadcasting)</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>    <span class="n">D_sq</span> <span class="o">=</span> <span class="n">A_sq</span> <span class="o">+</span> <span class="n">B_sq</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>    <span class="c1"># Чисельна стабілізація для усунення можливих від'ємних значень через похибки округлення FP32</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>    <span class="n">D_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">D_sq</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D_sq</span><span class="p">)</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_distances_pytorch_cpu</span><span class="p">(</span><span class="n">A_t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">B_t</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="sd">    Векторизоване обчислення на PyTorch (CPU) з використанням torch.cdist.</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="sd">    """</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">A_t</span><span class="p">,</span> <span class="n">B_t</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>    <span class="c1"># Налаштування відтворюваності генератора випадкових чисел</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>    <span class="c1"># Параметри тензорів для Варіанта №1</span>
+</span><span id="__span-4-56"><a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>    <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">128</span>
+</span><span id="__span-4-57"><a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+</span><span id="__span-4-58"><a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ПРАКТИЧНЕ ЗАНЯТТЯ №2. ВЕКТОРИЗАЦІЯ ТЕНЗОРНИХ ОПЕРАЦІЙ"</span><span class="p">)</span>
+</span><span id="__span-4-59"><a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Параметри: M=</span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">, N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-60"><a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+</span><span id="__span-4-61"><a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>
+</span><span id="__span-4-62"><a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a>    <span class="c1"># 1. Генерація вихідних даних</span>
+</span><span id="__span-4-63"><a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>    <span class="n">A_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span id="__span-4-64"><a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a>    <span class="n">B_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span id="__span-4-65"><a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a>
+</span><span id="__span-4-66"><a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[ІНФО] Характеристики розміщення даних в пам'яті (Memory Layout):"</span><span class="p">)</span>
+</span><span id="__span-4-67"><a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - NumPy A Shape: </span><span class="si">{</span><span class="n">A_np</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Strides: </span><span class="si">{</span><span class="n">A_np</span><span class="o">.</span><span class="n">strides</span><span class="si">}</span><span class="s2">, C-Contiguous: </span><span class="si">{</span><span class="n">A_np</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">c_contiguous</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-68"><a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - NumPy B Shape: </span><span class="si">{</span><span class="n">B_np</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Strides: </span><span class="si">{</span><span class="n">B_np</span><span class="o">.</span><span class="n">strides</span><span class="si">}</span><span class="s2">, C-Contiguous: </span><span class="si">{</span><span class="n">B_np</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">c_contiguous</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-69"><a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a>
+</span><span id="__span-4-70"><a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a>    <span class="c1"># 2. Вимірювання часу виконання наївної реалізації (цикли Python)</span>
+</span><span id="__span-4-71"><a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[1/3] Запуск наївної реалізації на циклах Python..."</span><span class="p">)</span>
+</span><span id="__span-4-72"><a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-73"><a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a>    <span class="n">res_loops</span> <span class="o">=</span> <span class="n">pairwise_distances_loops</span><span class="p">(</span><span class="n">A_np</span><span class="p">,</span> <span class="n">B_np</span><span class="p">)</span>
+</span><span id="__span-4-74"><a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a>    <span class="n">t_loops</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-75"><a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  --&gt; Час виконання (Python Loops): </span><span class="si">{</span><span class="n">t_loops</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> секунд"</span><span class="p">)</span>
+</span><span id="__span-4-76"><a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a>
+</span><span id="__span-4-77"><a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>    <span class="c1"># 3. Вимірювання часу векторизованої реалізації NumPy</span>
+</span><span id="__span-4-78"><a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[2/3] Запуск векторизованої реалізації NumPy (Broadcasting + BLAS)..."</span><span class="p">)</span>
+</span><span id="__span-4-79"><a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-80"><a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a>    <span class="n">res_numpy</span> <span class="o">=</span> <span class="n">pairwise_distances_vectorized_numpy</span><span class="p">(</span><span class="n">A_np</span><span class="p">,</span> <span class="n">B_np</span><span class="p">)</span>
+</span><span id="__span-4-81"><a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a>    <span class="n">t_numpy</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-82"><a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  --&gt; Час виконання (NumPy Vectorized): </span><span class="si">{</span><span class="n">t_numpy</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> секунд"</span><span class="p">)</span>
+</span><span id="__span-4-83"><a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a>
+</span><span id="__span-4-84"><a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a>    <span class="c1"># 4. Вимірювання часу векторизованої реалізації PyTorch CPU</span>
+</span><span id="__span-4-85"><a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a>    <span class="n">A_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">A_np</span><span class="p">)</span>
+</span><span id="__span-4-86"><a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a>    <span class="n">B_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">B_np</span><span class="p">)</span>
+</span><span id="__span-4-87"><a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[3/3] Запуск векторизованої реалізації PyTorch (CPU)..."</span><span class="p">)</span>
+</span><span id="__span-4-88"><a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-89"><a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a>    <span class="n">res_torch</span> <span class="o">=</span> <span class="n">pairwise_distances_pytorch_cpu</span><span class="p">(</span><span class="n">A_torch</span><span class="p">,</span> <span class="n">B_torch</span><span class="p">)</span>
+</span><span id="__span-4-90"><a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a>    <span class="n">t_torch</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-91"><a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  --&gt; Час виконання (PyTorch cdist CPU): </span><span class="si">{</span><span class="n">t_torch</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> секунд"</span><span class="p">)</span>
+</span><span id="__span-4-92"><a id="__codelineno-4-92" name="__codelineno-4-92" href="#__codelineno-4-92"></a>
+</span><span id="__span-4-93"><a id="__codelineno-4-93" name="__codelineno-4-93" href="#__codelineno-4-93"></a>    <span class="c1"># 5. Перевірка точності обчислень та відсутності розбіжностей</span>
+</span><span id="__span-4-94"><a id="__codelineno-4-94" name="__codelineno-4-94" href="#__codelineno-4-94"></a>    <span class="n">diff_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res_loops</span> <span class="o">-</span> <span class="n">res_numpy</span><span class="p">))</span>
+</span><span id="__span-4-95"><a id="__codelineno-4-95" name="__codelineno-4-95" href="#__codelineno-4-95"></a>    <span class="n">diff_torch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res_loops</span> <span class="o">-</span> <span class="n">res_torch</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+</span><span id="__span-4-96"><a id="__codelineno-4-96" name="__codelineno-4-96" href="#__codelineno-4-96"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+</span><span id="__span-4-97"><a id="__codelineno-4-97" name="__codelineno-4-97" href="#__codelineno-4-97"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"ПЕРЕВІРКА ТОЧНОСТІ ОБЧИСЛЕНЬ:"</span><span class="p">)</span>
+</span><span id="__span-4-98"><a id="__codelineno-4-98" name="__codelineno-4-98" href="#__codelineno-4-98"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - Максимальна абсолютна розбіжність (Loops vs NumPy):   </span><span class="si">{</span><span class="n">diff_np</span><span class="si">:</span><span class="s2">.8e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-99"><a id="__codelineno-4-99" name="__codelineno-4-99" href="#__codelineno-4-99"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - Максимальна абсолютна розбіжність (Loops vs PyTorch): </span><span class="si">{</span><span class="n">diff_torch</span><span class="si">:</span><span class="s2">.8e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-100"><a id="__codelineno-4-100" name="__codelineno-4-100" href="#__codelineno-4-100"></a>
+</span><span id="__span-4-101"><a id="__codelineno-4-101" name="__codelineno-4-101" href="#__codelineno-4-101"></a>    <span class="c1"># Розрахунок коефіцієнтів прискорення</span>
+</span><span id="__span-4-102"><a id="__codelineno-4-102" name="__codelineno-4-102" href="#__codelineno-4-102"></a>    <span class="n">speedup_numpy</span> <span class="o">=</span> <span class="n">t_loops</span> <span class="o">/</span> <span class="n">t_numpy</span>
+</span><span id="__span-4-103"><a id="__codelineno-4-103" name="__codelineno-4-103" href="#__codelineno-4-103"></a>    <span class="n">speedup_torch</span> <span class="o">=</span> <span class="n">t_loops</span> <span class="o">/</span> <span class="n">t_torch</span>
+</span><span id="__span-4-104"><a id="__codelineno-4-104" name="__codelineno-4-104" href="#__codelineno-4-104"></a>
+</span><span id="__span-4-105"><a id="__codelineno-4-105" name="__codelineno-4-105" href="#__codelineno-4-105"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+</span><span id="__span-4-106"><a id="__codelineno-4-106" name="__codelineno-4-106" href="#__codelineno-4-106"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"ПІДСУМКОВІ ПОКАЗНИКИ ПРИСКОРЕННЯ (SPEEDUP):"</span><span class="p">)</span>
+</span><span id="__span-4-107"><a id="__codelineno-4-107" name="__codelineno-4-107" href="#__codelineno-4-107"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - Прискорення NumPy Векторизації:  </span><span class="si">{</span><span class="n">speedup_numpy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x"</span><span class="p">)</span>
+</span><span id="__span-4-108"><a id="__codelineno-4-108" name="__codelineno-4-108" href="#__codelineno-4-108"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - Прискорення PyTorch cdist (CPU): </span><span class="si">{</span><span class="n">speedup_torch</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x"</span><span class="p">)</span>
+</span><span id="__span-4-109"><a id="__codelineno-4-109" name="__codelineno-4-109" href="#__codelineno-4-109"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+</span><span id="__span-4-110"><a id="__codelineno-4-110" name="__codelineno-4-110" href="#__codelineno-4-110"></a>
+</span><span id="__span-4-111"><a id="__codelineno-4-111" name="__codelineno-4-111" href="#__codelineno-4-111"></a>    <span class="c1"># 6. Побудова та збереження гістограми порівняння часу</span>
+</span><span id="__span-4-112"><a id="__codelineno-4-112" name="__codelineno-4-112" href="#__codelineno-4-112"></a>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-113"><a id="__codelineno-4-113" name="__codelineno-4-113" href="#__codelineno-4-113"></a>    <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Python Loops'</span><span class="p">,</span> <span class="s1">'NumPy Vectorized'</span><span class="p">,</span> <span class="s1">'PyTorch CPU'</span><span class="p">]</span>
+</span><span id="__span-4-114"><a id="__codelineno-4-114" name="__codelineno-4-114" href="#__codelineno-4-114"></a>    <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">t_loops</span><span class="p">,</span> <span class="n">t_numpy</span><span class="p">,</span> <span class="n">t_torch</span><span class="p">]</span>
+</span><span id="__span-4-115"><a id="__codelineno-4-115" name="__codelineno-4-115" href="#__codelineno-4-115"></a>    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="s1">'darkgreen'</span><span class="p">,</span> <span class="s1">'navy'</span><span class="p">]</span>
+</span><span id="__span-4-116"><a id="__codelineno-4-116" name="__codelineno-4-116" href="#__codelineno-4-116"></a>
+</span><span id="__span-4-117"><a id="__codelineno-4-117" name="__codelineno-4-117" href="#__codelineno-4-117"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-4-118"><a id="__codelineno-4-118" name="__codelineno-4-118" href="#__codelineno-4-118"></a>    <span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span id="__span-4-119"><a id="__codelineno-4-119" name="__codelineno-4-119" href="#__codelineno-4-119"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>  <span class="c1"># Логарифмічна шкала через колосальну різницю</span>
+</span><span id="__span-4-120"><a id="__codelineno-4-120" name="__codelineno-4-120" href="#__codelineno-4-120"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Час виконання (секунди, логарифмічна шкала)'</span><span class="p">)</span>
+</span><span id="__span-4-121"><a id="__codelineno-4-121" name="__codelineno-4-121" href="#__codelineno-4-121"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Порівняльне профілювання швидкодії обчислення матриці відстаней'</span><span class="p">)</span>
+</span><span id="__span-4-122"><a id="__codelineno-4-122" name="__codelineno-4-122" href="#__codelineno-4-122"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span><span id="__span-4-123"><a id="__codelineno-4-123" name="__codelineno-4-123" href="#__codelineno-4-123"></a>
+</span><span id="__span-4-124"><a id="__codelineno-4-124" name="__codelineno-4-124" href="#__codelineno-4-124"></a>    <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+</span><span id="__span-4-125"><a id="__codelineno-4-125" name="__codelineno-4-125" href="#__codelineno-4-125"></a>        <span class="n">yval</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+</span><span id="__span-4-126"><a id="__codelineno-4-126" name="__codelineno-4-126" href="#__codelineno-4-126"></a>        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">yval</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">yval</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'bottom'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+</span><span id="__span-4-127"><a id="__codelineno-4-127" name="__codelineno-4-127" href="#__codelineno-4-127"></a>
+</span><span id="__span-4-128"><a id="__codelineno-4-128" name="__codelineno-4-128" href="#__codelineno-4-128"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="__span-4-129"><a id="__codelineno-4-129" name="__codelineno-4-129" href="#__codelineno-4-129"></a>    <span class="n">plot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="s2">"benchmark_execution.png"</span><span class="p">)</span>
+</span><span id="__span-4-130"><a id="__codelineno-4-130" name="__codelineno-4-130" href="#__codelineno-4-130"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</span><span id="__span-4-131"><a id="__codelineno-4-131" name="__codelineno-4-131" href="#__codelineno-4-131"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[INFO] Графік результатів профілювання збережено у: </span><span class="si">{</span><span class="n">plot_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-132"><a id="__codelineno-4-132" name="__codelineno-4-132" href="#__codelineno-4-132"></a>
+</span><span id="__span-4-133"><a id="__codelineno-4-133" name="__codelineno-4-133" href="#__codelineno-4-133"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="__span-4-134"><a id="__codelineno-4-134" name="__codelineno-4-134" href="#__codelineno-4-134"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="33">3.3. Графічна візуалізація обчислювального процесу</h3>
+<p>Наведено графічну діаграму обчислювального графа та потоку даних при векторизованому розрахунку матриці відстаней.</p>
+<p><pre class="mermaid"><code>graph TD
+    A["Тензор A (M x D)"] --&gt;|Сума квадратів уздовж D| A_sq["Norm_A (M x 1)"]
+    B["Тензор B (N x D)"] --&gt;|Сума квадратів уздовж D| B_sq["Norm_B (1 x N)"]
+
+    A --&gt;|Матричне множення A x B^T| AB["Dot_AB (M x N)"]
+    B --&gt; AB
+
+    A_sq --&gt;|Broadcasting Додавання| Sum_Norms["(M x N) Сума норм"]
+    B_sq --&gt;|Broadcasting Додавання| Sum_Norms
+
+    Sum_Norms --&gt;|Віднімання 2 * Dot_AB| D_sq["Квадрат відстаней D^2 (M x N)"]
+    AB --&gt;|Множення на 2.0| D_sq
+
+    D_sq --&gt;|Квадратний корінь sqrt| Result["Матриця відстаней D (M x N)"]</code></pre>
+<em>Рисунок 3 — Діаграма обчислювального графа розрахунку векторизованої матриці евклідових відстаней без явних циклів</em></p>
+<h3 id="34">3.4. Запуск, тестування та перевірка результатів</h3>
+<p>Для запуску програмного модуля виконайте в консолі терміналу команду:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>main.py
+</span></code></pre></div></p>
+<p><strong>Еталонне виведення програми в консоль для перевірки:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>======================================================================
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ПРАКТИЧНЕ ЗАНЯТТЯ №2. ВЕКТОРИЗАЦІЯ ТЕНЗОРНИХ ОПЕРАЦІЙ
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Параметри: M=500, N=400, D=128
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>======================================================================
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>[ІНФО] Характеристики розміщення даних в пам'яті (Memory Layout):
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>  - NumPy A Shape: (500, 128), Strides: (512, 4), C-Contiguous: True
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>  - NumPy B Shape: (400, 128), Strides: (512, 4), C-Contiguous: True
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>[1/3] Запуск наївної реалізації на циклах Python...
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>  --&gt; Час виконання (Python Loops): 12.8450 секунд
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>[2/3] Запуск векторизованої реалізації NumPy (Broadcasting + BLAS)...
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>  --&gt; Час виконання (NumPy Vectorized): 0.003810 секунд
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>[3/3] Запуск векторизованої реалізації PyTorch (CPU)...
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>  --&gt; Час виконання (PyTorch cdist CPU): 0.002150 секунд
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>----------------------------------------------------------------------
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>ПЕРЕВІРКА ТОЧНОСТІ ОБЧИСЛЕНЬ:
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>  - Максимальна абсолютна розбіжність (Loops vs NumPy):   3.81469727e-06
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>  - Максимальна абсолютна розбіжність (Loops vs PyTorch): 3.81469727e-06
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>======================================================================
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>ПІДСУМКОВІ ПОКАЗНИКИ ПРИСКОРЕННЯ (SPEEDUP):
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>  - Прискорення NumPy Векторизації:  3371.39x
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>  - Прискорення PyTorch cdist (CPU): 5974.42x
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>======================================================================
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>[INFO] Графік результатів профілювання збережено у: results/benchmark_execution.png
+</span></code></pre></div>
+<hr />
+<h2 id="4">4. Вимоги до змісту звіту</h2>
+<p>Звіт за результатами виконання практичної роботи повинен бути оформлений у відповідності до вимог стандарту та містити наступні обов'язкові блоки:</p>
+<ol>
+<li>
+<p><strong>Титульна сторінка.</strong> Назва навчального закладу, факультету, кафедри, назва освітнього компонента, номер практичного заняття, тема, ПІБ здобувача, група та номер обраного індивідуального варіанта.</p>
+</li>
+<li>
+<p><strong>Мета та постановка задачі.</strong> Чітке формулювання мети дослідження, вхідних форм та розмірностей тензорів згідно з Таблицею 3.1.</p>
+</li>
+<li>
+<p><strong>Теоретичне обґрунтування.</strong> Математичний розклад та матрично-тензорні формули виключення явних циклів. Пояснення правил транслювання розмірностей (Broadcasting) та фізичної структури розташування елементів у пам'яті (<em>C-Contiguous, Strides</em>).</p>
+</li>
+<li>
+<p><strong>Програмний код.</strong> Повний, детально прокоментований вихідний код програми на мові Python, що включає порівняльні функції обчислень.</p>
+</li>
+<li>
+<p><strong>Результати тестування.</strong> Скріншот консольного виведення з показниками часу виконання, коефіцієнтами прискорення та збережений файл візуалізації <code>results/benchmark_execution.png</code>.</p>
+</li>
+<li>
+<p><strong>Висновки.</strong> Аналіз ефективності векторизації, пояснення причин колосального прискорення (задіяння SIMD, усунення перевірок типів CPython) та оцінка точності отриманих розв'язків.</p>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. Контрольні запитання для захисту роботи</h2>
+<ol>
+<li>
+<p>Поясніть причинно-наслідковий зв'язок низької швидкодії явних циклів у середовищі CPython при роботі з великими масивами даних.</p>
+</li>
+<li>
+<p>Що таке вектор кроків (<em>Strides</em>) у тензорі, і як він використовується для обчислення абсолютного фізичного зсуву адреси байта в оперативній пам'яті?</p>
+</li>
+<li>
+<p>Сформулюйте три правила механізму транслювання розмірностей (<em>Broadcasting</em>) у NumPy/PyTorch. Як транслювання дозволяє економити оперативну пам'ять?</p>
+</li>
+<li>
+<p>У чому полягає відмінність між викликом операції зміни форми тензора <code>view()</code> (або <code>reshape()</code>) та викликом копіювання даних <code>clone()</code> / <code>copy()</code> з точки зору збереження безперервності пам'яті (<em>C-Contiguous</em>)?</p>
+</li>
+<li>
+<p>Яким чином виражається математичне розгортання квадрата евклідової відстані <span class="arithmatex">\(\|\mathbf{a} - \mathbf{b}\|^2\)</span>, і чому заміна різниці на матричне множення дозволяє використати бібліотеки BLAS?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

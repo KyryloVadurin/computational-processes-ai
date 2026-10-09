@@ -1,0 +1,2521 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../pz4/">
+      
+      
+        <link rel="next" href="../pz6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#no-5" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lk/lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичний розклад похибки (Bias-Variance Decomposition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Принципи зниження похибок в ансамблях
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaboost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичний алгоритм та розрахунок ваг у AdaBoost
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичний розклад похибки (Bias-Variance Decomposition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Принципи зниження похибок в ансамблях
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaboost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Математичний алгоритм та розрахунок ваг у AdaBoost
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="no-5">Практичне заняття № 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних</h1>
+<h2 id="_1">Мета роботи та стек технологій</h2>
+<p><strong>Мета.</strong> Засвоєння математичних основ ансамблевого машинного навчання; вивчення концепції декомпозиції похибки на систематичну помилку (з англ. <em>Bias</em>), дисперсію (з англ. <em>Variance</em>) та неусувний шум (з англ. <em>Irreducible Error</em>); аналітичне виведення та математичний розрахунок вагових коефіцієнтів алгоритмів бустингу (на прикладі <em>AdaBoost</em>); реалізація алгоритмів <em>Bagging</em> та <em>Boosting</em> на мові Python від початкових принципів (з англ. <em>From Scratch</em>) та порівняльний аналіз їхньої ефективності на структурованих наборах даних у порівнянні з бібліотеками <code>Scikit-Learn</code> та <code>XGBoost</code>.</p>
+<p><strong>Стек технологій та інструменти:</strong></p>
+<ul>
+<li>
+<p><strong>Мова програмування / Середовище:</strong> Python 3.11+ / Jupyter Notebook або VS Code.</p>
+</li>
+<li>
+<p><strong>Платформа / Бібліотеки:</strong> <code>NumPy</code> (версії 1.24+ — векторизовані обчислення вагових коефіцієнтів та матриць), <code>Scikit-Learn</code> (версії 1.2+ — базові класифікатори та метрики), <code>XGBoost</code> (версії 1.7+ — градієнтний бустинг), <code>Matplotlib</code> (версії 3.7+ — побудова кривих компромісу Bias-Variance).</p>
+</li>
+<li>
+<p><strong>Інструменти розробки:</strong> Термінал (Bash/PowerShell), модуль системного профілювання <code>time</code>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="1">1. Теоретичні відомості</h2>
+<p>Ансамблеві методи машинного навчання ґрунтуються на ідеї об'єднання множини базових слабких моделей (з англ. <em>Weak Learners</em>) в єдиний сильний класифікатор або регресор. Математичною основою побудови ансамблів є теорія компромісу між систематичною помилкою та дисперсією (з англ. <em>Bias-Variance Tradeoff</em>).</p>
+<h3 id="bias-variance-decomposition">Математичний розклад похибки (Bias-Variance Decomposition)</h3>
+<p>Нехай істинна залежність даних описується функцією <span class="arithmatex">\(y = f(\mathbf{x}) + \epsilon\)</span>, де <span class="arithmatex">\(\epsilon \sim \mathcal{N}(0, \sigma^2)\)</span> — неусувний випадковий шум із нульовим математичним сподіванням та дисперсією <span class="arithmatex">\(\sigma^2\)</span>. Для навченої за випадковою вибіркою <span class="arithmatex">\(\mathcal{D}\)</span> моделі <span class="arithmatex">\(\hat{f}(\mathbf{x}; \mathcal{D})\)</span> середньоквадратична похибка передбачення у точці <span class="arithmatex">\(\mathbf{x}\)</span> розкладається на три доданки:</p>
+<div class="arithmatex">\[\mathbb{E}_{\mathcal{D}}\left[\left(y - \hat{f}(\mathbf{x}; \mathcal{D})\right)^2\right] = \text{Bias}\left[\hat{f}(\mathbf{x})\right]^2 + \text{Var}\left[\hat{f}(\mathbf{x})\right] + \sigma^2\]</div>
+<p>де:</p>
+<ol>
+<li><strong>Систематична помилка (Bias).</strong> Визначає відхилення середнього значення передбачень алгоритму від істинної функції <span class="arithmatex">\(f(\mathbf{x})\)</span>:</li>
+</ol>
+<p>$<span class="arithmatex">\(\text{Bias}\left[\hat{f}(\mathbf{x})\right] = \mathbb{E}_{\mathcal{D}}\left[\hat{f}(\mathbf{x}; \mathcal{D})\right] - f(\mathbf{x})\)</span>$</p>
+<p>Високий Bias свідчить про занадто просту модель, яка не здатна вловити складні закономірності у даних (з англ. <em>Underfitting</em>).</p>
+<ol>
+<li><strong>Дисперсія (Variance).</strong> Характеризує чутливість передбачень моделі до конкретної навчальної вибірки <span class="arithmatex">\(\mathcal{D}\)</span>:</li>
+</ol>
+<p>$<span class="arithmatex">\(\text{Var}\left[\hat{f}(\mathbf{x})\right] = \mathbb{E}_{\mathcal{D}}\left[\left(\hat{f}(\mathbf{x}; \mathcal{D}) - \mathbb{E}_{\mathcal{D}}\left[\hat{f}(\mathbf{x}; \mathcal{D})\right]\right)^2\right]\)</span>$</p>
+<p>Висока Variance вказує на надмірне підлаштування моделі під шум навчальної вибірки (з англ. <em>Overfitting</em>).</p>
+<ol>
+<li><strong>Неусувний шум (<span class="arithmatex">\(\sigma^2\)</span>).</strong> Мінімально можливий рівень похибки, зумовлений природною випадковістю або недостатністю ознакового опису.</li>
+</ol>
+<p><pre class="mermaid"><code>graph TD
+    A["Загальна похибка обчислення E[(y - f_hat)^2]"] --&gt; B["Bias^2 (Систематична помилка)"]
+    A --&gt; C["Variance (Дисперсія)"]
+    A --&gt; D["Шум sigma^2 (Неусувна похибка)"]
+
+    B --&gt; E["Низька складність коду (Underfitting)"]
+    C --&gt; F["Висока складність коду (Overfitting)"]
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px</code></pre>
+<em>Рисунок 1 — Компоненти декомпозиції середньоквадратичної похибки в машинному навчанні</em></p>
+<h3 id="_2">Принципи зниження похибок в ансамблях</h3>
+<p>Ансамблеві підходи оптимізують компоненти похибки двома основними шляхами:</p>
+<ul>
+<li><strong>Беттінг та Випадковий ліс (Bagging / Random Forest).</strong> Усереднює передбачення <span class="arithmatex">\(M\)</span> незалежно навчених алгоритмів із високою дисперсією (наприклад, глибоких дерев рішень). Якщо дисперсія окремого дерева дорівнює <span class="arithmatex">\(\sigma^2\)</span>, а кореляція між передбаченнями дерев становить <span class="arithmatex">\(\rho\)</span>, то дисперсія ансамблю дорівнює:</li>
+</ul>
+<p>$<span class="arithmatex">\(\text{Var}_{\text{ensemble}} = \rho \sigma^2 + \frac{1 - \rho}{M} \sigma^2\)</span>$</p>
+<p>Завдяки випадковому вибору ознак (з англ. <em>Feature Subspacing</em>) коефіцієнт <span class="arithmatex">\(\rho\)</span> зменшується, що суттєво знижує загальну дисперсію без збільшення систематичної помилки.</p>
+<ul>
+<li><strong>Градієнтний бустинг (Boosting).</strong> Ітеративно будує послідовність простих моделей із високим Bias (наприклад, мілких дерев — пнів рішення). Кожна наступна модель навчається на помилках або градієнтах попередніх, що послідовно зменшує Bias усієї системи.</li>
+</ul>
+<h3 id="adaboost">Математичний алгоритм та розрахунок ваг у AdaBoost</h3>
+<p>У класичному алгоритмі <em>AdaBoost</em> для бінарної класифікації <span class="arithmatex">\(y_i \in \{-1, +1\}\)</span> кожному об'єкту навчальної вибірки обсягом <span class="arithmatex">\(N\)</span> призначається вага <span class="arithmatex">\(w_i^{(1)} = \frac{1}{N}\)</span>.</p>
+<p>На кожному кроці <span class="arithmatex">\(m = 1, \dots, M\)</span>:</p>
+<ol>
+<li>Навчається базовий класифікатор <span class="arithmatex">\(h_m(\mathbf{x}) \in \{-1, +1\}\)</span>, який мінімізує зважену помилку:</li>
+</ol>
+<p>$<span class="arithmatex">\(\epsilon_m = \frac{\sum_{i=1}^N w_i^{(m)} \cdot \mathbb{I}\left(y_i \neq h_m(\mathbf{x}_i)\right)}{\sum_{i=1}^N w_i^{(m)}}\)</span>$</p>
+<ol>
+<li>Обчислюється ваговий коефіцієнт важливості <span class="arithmatex">\(m\)</span>-го класифікатора <span class="arithmatex">\(\alpha_m\)</span> в ансамблі:</li>
+</ol>
+<p>$<span class="arithmatex">\(\alpha_m = \frac{1}{2} \ln\left(\frac{1 - \epsilon_m}{\epsilon_m}\right)\)</span>$</p>
+<ol>
+<li>Оновлюються ваги об'єктів для наступного кроку <span class="arithmatex">\(m+1\)</span>:</li>
+</ol>
+<p>$<span class="arithmatex">\(w_i^{(m+1)} = w_i^{(m)} \cdot \exp\left(-\alpha_m \cdot y_i \cdot h_m(\mathbf{x}_i)\right)\)</span>$</p>
+<ol>
+<li>Ваги нормалізуються таким чином, щоб <span class="arithmatex">\(\sum_{i=1}^N w_i^{(m+1)} = 1\)</span>.</li>
+</ol>
+<p>Результуючий сильний класифікатор оцінює знак зваженої суми передбачень:</p>
+<div class="arithmatex">\[H(\mathbf{x}) = \text{sign}\left(\sum_{m=1}^M \alpha_m \cdot h_m(\mathbf{x})\right)\]</div>
+<p><pre class="mermaid"><code>graph LR
+    subgraph Цикл адаптивного бустингу AdaBoost
+        W["Ваги об'єктів w_i"] --&gt;|Навчання| H["Слабкий класифікатор h_m"]
+        H --&gt;|Розрахунок помилки eps_m| A["Вага класифікатора alpha_m"]
+        A --&gt;|Оновлення ваг об'єктів| W_new["Нові ваги w_i^(m+1)"]
+        W_new --&gt;|Наступна ітерація| W
+    end</code></pre>
+<em>Рисунок 2 — Схема послідовного оновлення ваг об'єктів та обчислення важливістей класифікаторів у AdaBoost</em></p>
+<hr />
+<h2 id="2-0">2. Підготовка середовища та розгортання проєкту (Крок 0)</h2>
+<p>Налаштуйте віртуальне середовище Python та встановіть наукові пакети.</p>
+<h3 id="21-cli">2.1. Команди для терміналу (CLI)</h3>
+<p>Створення та активація віртуального середовища:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv_ensemble
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>venv_mpi/bin/activate<span class="w">  </span><span class="c1"># Для Linux/macOS</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># або: .\venv_ensemble\Scripts\Activate.ps1  # Для Windows</span>
+</span></code></pre></div></p>
+<p>Встановлення необхідних бібліотек:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scikit-learn<span class="w"> </span>xgboost<span class="w"> </span>matplotlib
+</span></code></pre></div></p>
+<h3 id="22">2.2. Структура каталогів проєкту</h3>
+<p>Створіть наступну структуру файлів та папок у вашій робочій директорії:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ensemble_analysis_project/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├── main.py
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── requirements.txt
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>└── results/
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    └── bias_variance_tradeoff.png
+</span></code></pre></div>
+<p>Вміст файлу <code>requirements.txt</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>numpy&gt;=1.24.0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>scikit-learn&gt;=1.2.0
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>xgboost&gt;=1.7.0
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>matplotlib&gt;=3.7.0
+</span></code></pre></div></p>
+<hr />
+<h2 id="3">3. Порядок виконання роботи</h2>
+<h3 id="31">3.1. Індивідуальні завдання</h3>
+<p>Кожен здобувач виконує дослідження ансамблевих моделей відповідно до свого варіанта з Таблиці 3.1. Необхідно реалізувати власну версію алгоритму <em>AdaBoost</em> від початкових принципів на <code>NumPy</code>, розрахувати вагові коефіцієнти <span class="arithmatex">\(\alpha_m\)</span> для перших <span class="arithmatex">\(M\)</span> ітерацій, обчислити компоненти похибки (Bias та Variance) за методом Bootstrap, порівняти точність із готовими реалізаціями <code>Scikit-Learn</code> та <code>XGBoost</code>, а також побудувати графік компромісу Bias-Variance залежно від складності ансамблю.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Варіант</th>
+<th style="text-align: left;">Назва структурованої задачі</th>
+<th style="text-align: center;">Тип ансамблю</th>
+<th style="text-align: center;">Кількість моделей <span class="arithmatex">\(M\)</span></th>
+<th style="text-align: center;">Базовий класифікатор / Глибина</th>
+<th style="text-align: center;">Метод декомпозиції похибки</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">Кредитний скоринг (Credit Default)</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(50\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">Прогнозування відтоку (Customer Churn)</td>
+<td style="text-align: center;">Gradient Boosting</td>
+<td style="text-align: center;"><span class="arithmatex">\(100\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=3\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">Детектування шахрайства (Fraud Detection)</td>
+<td style="text-align: center;">XGBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(80\)</span></td>
+<td style="text-align: center;">Tree (<span class="arithmatex">\(Depth=4\)</span>)</td>
+<td style="text-align: center;">Cross-Validation (10-Fold)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">Оцінка медичного ризику (Medical Risk)</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(40\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">Прогноз збоїв обладнання (IoT Faults)</td>
+<td style="text-align: center;">Random Forest</td>
+<td style="text-align: center;"><span class="arithmatex">\(150\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=6\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">Класифікація серверних логів</td>
+<td style="text-align: center;">XGBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(120\)</span></td>
+<td style="text-align: center;">Tree (<span class="arithmatex">\(Depth=3\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;">Оцінка нерухомості (Real Estate)</td>
+<td style="text-align: center;">Gradient Boosting</td>
+<td style="text-align: center;"><span class="arithmatex">\(60\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=2\)</span>)</td>
+<td style="text-align: center;">Cross-Validation (5-Fold)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;">Прогнозування відгуку на рекламу</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(70\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">Детектування аномалій трафіку</td>
+<td style="text-align: center;">Random Forest</td>
+<td style="text-align: center;"><span class="arithmatex">\(200\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=5\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;">Оцінка кредитного ліміту</td>
+<td style="text-align: center;">XGBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(90\)</span></td>
+<td style="text-align: center;">Tree (<span class="arithmatex">\(Depth=3\)</span>)</td>
+<td style="text-align: center;">Cross-Validation (10-Fold)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;">Класифікація типів сталі</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(45\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;">Прогноз банкрутства компаній</td>
+<td style="text-align: center;">Gradient Boosting</td>
+<td style="text-align: center;"><span class="arithmatex">\(110\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=3\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;">Детектування спам-повідомлень</td>
+<td style="text-align: center;">Random Forest</td>
+<td style="text-align: center;"><span class="arithmatex">\(80\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=8\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;">Оцінка ефективності маркетингу</td>
+<td style="text-align: center;">XGBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(150\)</span></td>
+<td style="text-align: center;">Tree (<span class="arithmatex">\(Depth=4\)</span>)</td>
+<td style="text-align: center;">Cross-Validation (5-Fold)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: left;">Прогноз класичності претендентів</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(35\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: left;">Аналіз ризику автострахування</td>
+<td style="text-align: center;">Gradient Boosting</td>
+<td style="text-align: center;"><span class="arithmatex">\(95\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=2\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>17</strong></td>
+<td style="text-align: left;">Класифікація активності користувачів</td>
+<td style="text-align: center;">Random Forest</td>
+<td style="text-align: center;"><span class="arithmatex">\(120\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=7\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: left;">Прогноз затримки авіарейсів</td>
+<td style="text-align: center;">XGBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(130\)</span></td>
+<td style="text-align: center;">Tree (<span class="arithmatex">\(Depth=5\)</span>)</td>
+<td style="text-align: center;">Cross-Validation (10-Fold)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>19</strong></td>
+<td style="text-align: left;">Детектування вразливостей коду</td>
+<td style="text-align: center;">AdaBoost</td>
+<td style="text-align: center;"><span class="arithmatex">\(60\)</span></td>
+<td style="text-align: center;">Decision Stump (<span class="arithmatex">\(Depth=1\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: left;">Оцінка платоспроможності MФО</td>
+<td style="text-align: center;">Gradient Boosting</td>
+<td style="text-align: center;"><span class="arithmatex">\(75\)</span></td>
+<td style="text-align: center;">Decision Tree (<span class="arithmatex">\(Depth=3\)</span>)</td>
+<td style="text-align: center;">Bootstrap (100 вибірок)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2. Покроковий алгоритм та розв'язок еталонного прикладу</h3>
+<p>Розглянемо реалізацію для <strong>Варіанта №1</strong>:</p>
+<ul>
+<li>
+<p><strong>Задача.</strong> Кредитний скоринг (бінарна класифікація <span class="arithmatex">\(y_i \in \{-1, +1\}\)</span>).</p>
+</li>
+<li>
+<p><strong>Модель.</strong> Кастомний <em>AdaBoost</em> на основі пнів рішень (з англ. <em>Decision Stumps</em>), <span class="arithmatex">\(M = 50\)</span> базових оцінювачів.</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Обчислення компонентів Bias, Variance за допомогою 100 ітерацій Bootstrap-ресемплінгу.</p>
+</li>
+</ul>
+<p>Нижче наведено 100% повний та робочий Python-код файлу <code>main.py</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">AdaBoostClassifier</span><span class="p">,</span> <span class="n">RandomForestClassifier</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBClassifier</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># 1. Реалізація Decision Stump та AdaBoost від початкових принципів (NumPy)</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">class</span><span class="w"> </span><span class="nc">DecisionStump</span><span class="p">:</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="sd">    Простий слабкий класифікатор — пеньок рішення (глибина = 1).</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="sd">    """</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">polarity</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">feature_idx</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>        <span class="n">N</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">polarity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>            <span class="n">predictions</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_idx</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>            <span class="n">predictions</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>        <span class="k">return</span> <span class="n">predictions</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="k">class</span><span class="w"> </span><span class="nc">CustomAdaBoost</span><span class="p">:</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="sd">    Кастомний алгоритм AdaBoost для бінарної класифікації (y in {-1, +1}).</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="sd">    """</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_estimators</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">):</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="n">n_estimators</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">clfs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>        <span class="n">N</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>        <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_estimators</span><span class="p">):</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>            <span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionStump</span><span class="p">()</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>            <span class="n">min_error</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">)</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>            <span class="k">for</span> <span class="n">feature_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>                <span class="n">X_column</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">feature_i</span><span class="p">]</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>                <span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">X_column</span><span class="p">)</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>                <span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">:</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>                    <span class="k">for</span> <span class="n">polarity</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+</span><span id="__span-4-56"><a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>                        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-4-57"><a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>                        <span class="k">if</span> <span class="n">polarity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-4-58"><a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>                            <span class="n">predictions</span><span class="p">[</span><span class="n">X_column</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-4-59"><a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a>                        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-4-60"><a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a>                            <span class="n">predictions</span><span class="p">[</span><span class="n">X_column</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-4-61"><a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a>
+</span><span id="__span-4-62"><a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a>                        <span class="c1"># Розрахунок зваженої помилки</span>
+</span><span id="__span-4-63"><a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>                        <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">y</span> <span class="o">!=</span> <span class="n">predictions</span><span class="p">])</span>
+</span><span id="__span-4-64"><a id="__codelineno-4-64" name="__codelineno-4-64" href="#__codelineno-4-64"></a>
+</span><span id="__span-4-65"><a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a>                        <span class="k">if</span> <span class="n">error</span> <span class="o">&lt;</span> <span class="n">min_error</span><span class="p">:</span>
+</span><span id="__span-4-66"><a id="__codelineno-4-66" name="__codelineno-4-66" href="#__codelineno-4-66"></a>                            <span class="n">min_error</span> <span class="o">=</span> <span class="n">error</span>
+</span><span id="__span-4-67"><a id="__codelineno-4-67" name="__codelineno-4-67" href="#__codelineno-4-67"></a>                            <span class="n">clf</span><span class="o">.</span><span class="n">polarity</span> <span class="o">=</span> <span class="n">polarity</span>
+</span><span id="__span-4-68"><a id="__codelineno-4-68" name="__codelineno-4-68" href="#__codelineno-4-68"></a>                            <span class="n">clf</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+</span><span id="__span-4-69"><a id="__codelineno-4-69" name="__codelineno-4-69" href="#__codelineno-4-69"></a>                            <span class="n">clf</span><span class="o">.</span><span class="n">feature_idx</span> <span class="o">=</span> <span class="n">feature_i</span>
+</span><span id="__span-4-70"><a id="__codelineno-4-70" name="__codelineno-4-70" href="#__codelineno-4-70"></a>
+</span><span id="__span-4-71"><a id="__codelineno-4-71" name="__codelineno-4-71" href="#__codelineno-4-71"></a>            <span class="c1"># Чисельна стабілізація для уникнення ділення на нуль</span>
+</span><span id="__span-4-72"><a id="__codelineno-4-72" name="__codelineno-4-72" href="#__codelineno-4-72"></a>            <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-10</span>
+</span><span id="__span-4-73"><a id="__codelineno-4-73" name="__codelineno-4-73" href="#__codelineno-4-73"></a>            <span class="n">min_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">min_error</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span>
+</span><span id="__span-4-74"><a id="__codelineno-4-74" name="__codelineno-4-74" href="#__codelineno-4-74"></a>
+</span><span id="__span-4-75"><a id="__codelineno-4-75" name="__codelineno-4-75" href="#__codelineno-4-75"></a>            <span class="c1"># Обчислення важливості класифікатора alpha_m</span>
+</span><span id="__span-4-76"><a id="__codelineno-4-76" name="__codelineno-4-76" href="#__codelineno-4-76"></a>            <span class="n">clf</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">min_error</span><span class="p">)</span> <span class="o">/</span> <span class="n">min_error</span><span class="p">)</span>
+</span><span id="__span-4-77"><a id="__codelineno-4-77" name="__codelineno-4-77" href="#__codelineno-4-77"></a>
+</span><span id="__span-4-78"><a id="__codelineno-4-78" name="__codelineno-4-78" href="#__codelineno-4-78"></a>            <span class="c1"># Оновлення ваг об'єктів w_i</span>
+</span><span id="__span-4-79"><a id="__codelineno-4-79" name="__codelineno-4-79" href="#__codelineno-4-79"></a>            <span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span><span id="__span-4-80"><a id="__codelineno-4-80" name="__codelineno-4-80" href="#__codelineno-4-80"></a>            <span class="n">w</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">clf</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">predictions</span><span class="p">)</span>
+</span><span id="__span-4-81"><a id="__codelineno-4-81" name="__codelineno-4-81" href="#__codelineno-4-81"></a>            <span class="n">w</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># Нормалізація</span>
+</span><span id="__span-4-82"><a id="__codelineno-4-82" name="__codelineno-4-82" href="#__codelineno-4-82"></a>
+</span><span id="__span-4-83"><a id="__codelineno-4-83" name="__codelineno-4-83" href="#__codelineno-4-83"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">clfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+</span><span id="__span-4-84"><a id="__codelineno-4-84" name="__codelineno-4-84" href="#__codelineno-4-84"></a>
+</span><span id="__span-4-85"><a id="__codelineno-4-85" name="__codelineno-4-85" href="#__codelineno-4-85"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="__span-4-86"><a id="__codelineno-4-86" name="__codelineno-4-86" href="#__codelineno-4-86"></a>        <span class="n">clf_preds</span> <span class="o">=</span> <span class="p">[</span><span class="n">clf</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clfs</span><span class="p">]</span>
+</span><span id="__span-4-87"><a id="__codelineno-4-87" name="__codelineno-4-87" href="#__codelineno-4-87"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">clf_preds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span><span id="__span-4-88"><a id="__codelineno-4-88" name="__codelineno-4-88" href="#__codelineno-4-88"></a>
+</span><span id="__span-4-89"><a id="__codelineno-4-89" name="__codelineno-4-89" href="#__codelineno-4-89"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-90"><a id="__codelineno-4-90" name="__codelineno-4-90" href="#__codelineno-4-90"></a><span class="c1"># 2. Обчислення декомпозиції похибки (Bias-Variance) методом Bootstrap</span>
+</span><span id="__span-4-91"><a id="__codelineno-4-91" name="__codelineno-4-91" href="#__codelineno-4-91"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-92"><a id="__codelineno-4-92" name="__codelineno-4-92" href="#__codelineno-4-92"></a>
+</span><span id="__span-4-93"><a id="__codelineno-4-93" name="__codelineno-4-93" href="#__codelineno-4-93"></a><span class="k">def</span><span class="w"> </span><span class="nf">estimate_bias_variance</span><span class="p">(</span><span class="n">model_cls</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">n_bootstraps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-4-94"><a id="__codelineno-4-94" name="__codelineno-4-94" href="#__codelineno-4-94"></a>    <span class="n">N_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-4-95"><a id="__codelineno-4-95" name="__codelineno-4-95" href="#__codelineno-4-95"></a>    <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_bootstraps</span><span class="p">,</span> <span class="n">N_test</span><span class="p">))</span>
+</span><span id="__span-4-96"><a id="__codelineno-4-96" name="__codelineno-4-96" href="#__codelineno-4-96"></a>
+</span><span id="__span-4-97"><a id="__codelineno-4-97" name="__codelineno-4-97" href="#__codelineno-4-97"></a>    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
+</span><span id="__span-4-98"><a id="__codelineno-4-98" name="__codelineno-4-98" href="#__codelineno-4-98"></a>        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-99"><a id="__codelineno-4-99" name="__codelineno-4-99" href="#__codelineno-4-99"></a>        <span class="n">X_boot</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</span><span id="__span-4-100"><a id="__codelineno-4-100" name="__codelineno-4-100" href="#__codelineno-4-100"></a>        <span class="n">y_boot</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</span><span id="__span-4-101"><a id="__codelineno-4-101" name="__codelineno-4-101" href="#__codelineno-4-101"></a>
+</span><span id="__span-4-102"><a id="__codelineno-4-102" name="__codelineno-4-102" href="#__codelineno-4-102"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">model_cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-4-103"><a id="__codelineno-4-103" name="__codelineno-4-103" href="#__codelineno-4-103"></a>        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_boot</span><span class="p">,</span> <span class="n">y_boot</span><span class="p">)</span>
+</span><span id="__span-4-104"><a id="__codelineno-4-104" name="__codelineno-4-104" href="#__codelineno-4-104"></a>        <span class="n">predictions</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span><span id="__span-4-105"><a id="__codelineno-4-105" name="__codelineno-4-105" href="#__codelineno-4-105"></a>
+</span><span id="__span-4-106"><a id="__codelineno-4-106" name="__codelineno-4-106" href="#__codelineno-4-106"></a>    <span class="c1"># Обчислення компонентів для бінарної класифікації у кодуванні {-1, +1}</span>
+</span><span id="__span-4-107"><a id="__codelineno-4-107" name="__codelineno-4-107" href="#__codelineno-4-107"></a>    <span class="n">main_prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span><span id="__span-4-108"><a id="__codelineno-4-108" name="__codelineno-4-108" href="#__codelineno-4-108"></a>
+</span><span id="__span-4-109"><a id="__codelineno-4-109" name="__codelineno-4-109" href="#__codelineno-4-109"></a>    <span class="c1"># Bias^2: Частка розбіжностей між усередненим передбаченням та істиною</span>
+</span><span id="__span-4-110"><a id="__codelineno-4-110" name="__codelineno-4-110" href="#__codelineno-4-110"></a>    <span class="n">bias2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">main_prediction</span> <span class="o">!=</span> <span class="n">y_test</span><span class="p">)</span>
+</span><span id="__span-4-111"><a id="__codelineno-4-111" name="__codelineno-4-111" href="#__codelineno-4-111"></a>
+</span><span id="__span-4-112"><a id="__codelineno-4-112" name="__codelineno-4-112" href="#__codelineno-4-112"></a>    <span class="c1"># Variance: Дисперсія передбачень навколо свого середнього</span>
+</span><span id="__span-4-113"><a id="__codelineno-4-113" name="__codelineno-4-113" href="#__codelineno-4-113"></a>    <span class="n">variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predictions</span> <span class="o">!=</span> <span class="n">main_prediction</span><span class="p">)</span>
+</span><span id="__span-4-114"><a id="__codelineno-4-114" name="__codelineno-4-114" href="#__codelineno-4-114"></a>
+</span><span id="__span-4-115"><a id="__codelineno-4-115" name="__codelineno-4-115" href="#__codelineno-4-115"></a>    <span class="n">total_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predictions</span> <span class="o">!=</span> <span class="n">y_test</span><span class="p">)</span>
+</span><span id="__span-4-116"><a id="__codelineno-4-116" name="__codelineno-4-116" href="#__codelineno-4-116"></a>    <span class="k">return</span> <span class="n">bias2</span><span class="p">,</span> <span class="n">variance</span><span class="p">,</span> <span class="n">total_error</span>
+</span><span id="__span-4-117"><a id="__codelineno-4-117" name="__codelineno-4-117" href="#__codelineno-4-117"></a>
+</span><span id="__span-4-118"><a id="__codelineno-4-118" name="__codelineno-4-118" href="#__codelineno-4-118"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-119"><a id="__codelineno-4-119" name="__codelineno-4-119" href="#__codelineno-4-119"></a><span class="c1"># 3. Головна функція</span>
+</span><span id="__span-4-120"><a id="__codelineno-4-120" name="__codelineno-4-120" href="#__codelineno-4-120"></a><span class="c1"># --------------------------------------------------------------------------</span>
+</span><span id="__span-4-121"><a id="__codelineno-4-121" name="__codelineno-4-121" href="#__codelineno-4-121"></a>
+</span><span id="__span-4-122"><a id="__codelineno-4-122" name="__codelineno-4-122" href="#__codelineno-4-122"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-4-123"><a id="__codelineno-4-123" name="__codelineno-4-123" href="#__codelineno-4-123"></a>    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-124"><a id="__codelineno-4-124" name="__codelineno-4-124" href="#__codelineno-4-124"></a>
+</span><span id="__span-4-125"><a id="__codelineno-4-125" name="__codelineno-4-125" href="#__codelineno-4-125"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-4-126"><a id="__codelineno-4-126" name="__codelineno-4-126" href="#__codelineno-4-126"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"ПРАКТИЧНЕ ЗАНЯТТЯ №5. АНСАМБЛЕВІ МЕТОДИ ТА БІАС-ВАРІАНС АНАЛІЗ"</span><span class="p">)</span>
+</span><span id="__span-4-127"><a id="__codelineno-4-127" name="__codelineno-4-127" href="#__codelineno-4-127"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-4-128"><a id="__codelineno-4-128" name="__codelineno-4-128" href="#__codelineno-4-128"></a>
+</span><span id="__span-4-129"><a id="__codelineno-4-129" name="__codelineno-4-129" href="#__codelineno-4-129"></a>    <span class="c1"># 1. Генерація структурованого набору даних</span>
+</span><span id="__span-4-130"><a id="__codelineno-4-130" name="__codelineno-4-130" href="#__codelineno-4-130"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+</span><span id="__span-4-131"><a id="__codelineno-4-131" name="__codelineno-4-131" href="#__codelineno-4-131"></a>                               <span class="n">n_redundant</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-132"><a id="__codelineno-4-132" name="__codelineno-4-132" href="#__codelineno-4-132"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Переведення міток у кодування {-1, +1}</span>
+</span><span id="__span-4-133"><a id="__codelineno-4-133" name="__codelineno-4-133" href="#__codelineno-4-133"></a>
+</span><span id="__span-4-134"><a id="__codelineno-4-134" name="__codelineno-4-134" href="#__codelineno-4-134"></a>    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-135"><a id="__codelineno-4-135" name="__codelineno-4-135" href="#__codelineno-4-135"></a>
+</span><span id="__span-4-136"><a id="__codelineno-4-136" name="__codelineno-4-136" href="#__codelineno-4-136"></a>    <span class="c1"># 2. Навчання та виведення ваг для перших 5 ітерацій Custom AdaBoost</span>
+</span><span id="__span-4-137"><a id="__codelineno-4-137" name="__codelineno-4-137" href="#__codelineno-4-137"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[1/3] Навчання кастомного AdaBoost від початкових принципів (M=50)..."</span><span class="p">)</span>
+</span><span id="__span-4-138"><a id="__codelineno-4-138" name="__codelineno-4-138" href="#__codelineno-4-138"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-139"><a id="__codelineno-4-139" name="__codelineno-4-139" href="#__codelineno-4-139"></a>    <span class="n">custom_adaboost</span> <span class="o">=</span> <span class="n">CustomAdaBoost</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-4-140"><a id="__codelineno-4-140" name="__codelineno-4-140" href="#__codelineno-4-140"></a>    <span class="n">custom_adaboost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-4-141"><a id="__codelineno-4-141" name="__codelineno-4-141" href="#__codelineno-4-141"></a>    <span class="n">t_custom</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-142"><a id="__codelineno-4-142" name="__codelineno-4-142" href="#__codelineno-4-142"></a>
+</span><span id="__span-4-143"><a id="__codelineno-4-143" name="__codelineno-4-143" href="#__codelineno-4-143"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">АНАЛІЗ ВАГОВИХ КОЕФІЦІЄНТІВ (Alpha_m) ДЛЯ ПЕРШИХ 5 СЛАБКИХ КЛАСИФІКАТОРІВ:"</span><span class="p">)</span>
+</span><span id="__span-4-144"><a id="__codelineno-4-144" name="__codelineno-4-144" href="#__codelineno-4-144"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</span><span id="__span-4-145"><a id="__codelineno-4-145" name="__codelineno-4-145" href="#__codelineno-4-145"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Крок (m)'</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Ознака (Feature)'</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Поріг (Threshold)'</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Вага (Alpha_m)'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-146"><a id="__codelineno-4-146" name="__codelineno-4-146" href="#__codelineno-4-146"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</span><span id="__span-4-147"><a id="__codelineno-4-147" name="__codelineno-4-147" href="#__codelineno-4-147"></a>    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span><span id="__span-4-148"><a id="__codelineno-4-148" name="__codelineno-4-148" href="#__codelineno-4-148"></a>        <span class="n">clf</span> <span class="o">=</span> <span class="n">custom_adaboost</span><span class="o">.</span><span class="n">clfs</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+</span><span id="__span-4-149"><a id="__codelineno-4-149" name="__codelineno-4-149" href="#__codelineno-4-149"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">&lt;8</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_idx</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">threshold</span><span class="si">:</span><span class="s2">&lt;18.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">alpha</span><span class="si">:</span><span class="s2">&lt;12.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-150"><a id="__codelineno-4-150" name="__codelineno-4-150" href="#__codelineno-4-150"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</span><span id="__span-4-151"><a id="__codelineno-4-151" name="__codelineno-4-151" href="#__codelineno-4-151"></a>
+</span><span id="__span-4-152"><a id="__codelineno-4-152" name="__codelineno-4-152" href="#__codelineno-4-152"></a>    <span class="c1"># 3. Порівняльний бенчмарк із бібліотечними аналогами</span>
+</span><span id="__span-4-153"><a id="__codelineno-4-153" name="__codelineno-4-153" href="#__codelineno-4-153"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[2/3] Порівняння з бібліотеками Scikit-Learn та XGBoost..."</span><span class="p">)</span>
+</span><span id="__span-4-154"><a id="__codelineno-4-154" name="__codelineno-4-154" href="#__codelineno-4-154"></a>
+</span><span id="__span-4-155"><a id="__codelineno-4-155" name="__codelineno-4-155" href="#__codelineno-4-155"></a>    <span class="c1"># Sklearn AdaBoost</span>
+</span><span id="__span-4-156"><a id="__codelineno-4-156" name="__codelineno-4-156" href="#__codelineno-4-156"></a>    <span class="n">sk_adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'SAMME'</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="__span-4-157"><a id="__codelineno-4-157" name="__codelineno-4-157" href="#__codelineno-4-157"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-158"><a id="__codelineno-4-158" name="__codelineno-4-158" href="#__codelineno-4-158"></a>    <span class="n">sk_adaboost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span id="__span-4-159"><a id="__codelineno-4-159" name="__codelineno-4-159" href="#__codelineno-4-159"></a>    <span class="n">t_sk_ada</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-160"><a id="__codelineno-4-160" name="__codelineno-4-160" href="#__codelineno-4-160"></a>
+</span><span id="__span-4-161"><a id="__codelineno-4-161" name="__codelineno-4-161" href="#__codelineno-4-161"></a>    <span class="c1"># XGBoost (переведення міток у {0, 1} для XGBoost)</span>
+</span><span id="__span-4-162"><a id="__codelineno-4-162" name="__codelineno-4-162" href="#__codelineno-4-162"></a>    <span class="n">y_train_xgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-4-163"><a id="__codelineno-4-163" name="__codelineno-4-163" href="#__codelineno-4-163"></a>    <span class="n">y_test_xgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-4-164"><a id="__codelineno-4-164" name="__codelineno-4-164" href="#__codelineno-4-164"></a>
+</span><span id="__span-4-165"><a id="__codelineno-4-165" name="__codelineno-4-165" href="#__codelineno-4-165"></a>    <span class="n">xgb</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s1">'logloss'</span><span class="p">)</span>
+</span><span id="__span-4-166"><a id="__codelineno-4-166" name="__codelineno-4-166" href="#__codelineno-4-166"></a>    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span><span id="__span-4-167"><a id="__codelineno-4-167" name="__codelineno-4-167" href="#__codelineno-4-167"></a>    <span class="n">xgb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_xgb</span><span class="p">)</span>
+</span><span id="__span-4-168"><a id="__codelineno-4-168" name="__codelineno-4-168" href="#__codelineno-4-168"></a>    <span class="n">t_xgb</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span><span id="__span-4-169"><a id="__codelineno-4-169" name="__codelineno-4-169" href="#__codelineno-4-169"></a>
+</span><span id="__span-4-170"><a id="__codelineno-4-170" name="__codelineno-4-170" href="#__codelineno-4-170"></a>    <span class="c1"># Точність моделей</span>
+</span><span id="__span-4-171"><a id="__codelineno-4-171" name="__codelineno-4-171" href="#__codelineno-4-171"></a>    <span class="n">acc_custom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">custom_adaboost</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">)</span>
+</span><span id="__span-4-172"><a id="__codelineno-4-172" name="__codelineno-4-172" href="#__codelineno-4-172"></a>    <span class="n">acc_sk_ada</span> <span class="o">=</span> <span class="n">sk_adaboost</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</span><span id="__span-4-173"><a id="__codelineno-4-173" name="__codelineno-4-173" href="#__codelineno-4-173"></a>    <span class="n">acc_xgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">xgb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">y_test_xgb</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-4-174"><a id="__codelineno-4-174" name="__codelineno-4-174" href="#__codelineno-4-174"></a>
+</span><span id="__span-4-175"><a id="__codelineno-4-175" name="__codelineno-4-175" href="#__codelineno-4-175"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">РЕЗУЛЬТАТИ ТОЧНОСТІ ТА ШВИДКОДІЇ СИСТЕМИ:"</span><span class="p">)</span>
+</span><span id="__span-4-176"><a id="__codelineno-4-176" name="__codelineno-4-176" href="#__codelineno-4-176"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+</span><span id="__span-4-177"><a id="__codelineno-4-177" name="__codelineno-4-177" href="#__codelineno-4-177"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Модель'</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Accuracy (%)'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">'Час навчання (с)'</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-178"><a id="__codelineno-4-178" name="__codelineno-4-178" href="#__codelineno-4-178"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+</span><span id="__span-4-179"><a id="__codelineno-4-179" name="__codelineno-4-179" href="#__codelineno-4-179"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Custom AdaBoost (NumPy)'</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">acc_custom</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&lt;15.2f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">t_custom</span><span class="si">:</span><span class="s2">&lt;18.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-180"><a id="__codelineno-4-180" name="__codelineno-4-180" href="#__codelineno-4-180"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Sklearn AdaBoost'</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">acc_sk_ada</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&lt;15.2f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">t_sk_ada</span><span class="si">:</span><span class="s2">&lt;18.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-181"><a id="__codelineno-4-181" name="__codelineno-4-181" href="#__codelineno-4-181"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'XGBoost Classifier'</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">acc_xgb</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">&lt;15.2f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">t_xgb</span><span class="si">:</span><span class="s2">&lt;18.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-182"><a id="__codelineno-4-182" name="__codelineno-4-182" href="#__codelineno-4-182"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+</span><span id="__span-4-183"><a id="__codelineno-4-183" name="__codelineno-4-183" href="#__codelineno-4-183"></a>
+</span><span id="__span-4-184"><a id="__codelineno-4-184" name="__codelineno-4-184" href="#__codelineno-4-184"></a>    <span class="c1"># 4. Обчислення декомпозиції Bias-Variance при зміні кількості естіматорів</span>
+</span><span id="__span-4-185"><a id="__codelineno-4-185" name="__codelineno-4-185" href="#__codelineno-4-185"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[3/3] Дослідження кривих Bias-Variance Tradeoff..."</span><span class="p">)</span>
+</span><span id="__span-4-186"><a id="__codelineno-4-186" name="__codelineno-4-186" href="#__codelineno-4-186"></a>    <span class="n">estimators_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>
+</span><span id="__span-4-187"><a id="__codelineno-4-187" name="__codelineno-4-187" href="#__codelineno-4-187"></a>    <span class="n">biases</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+</span><span id="__span-4-188"><a id="__codelineno-4-188" name="__codelineno-4-188" href="#__codelineno-4-188"></a>
+</span><span id="__span-4-189"><a id="__codelineno-4-189" name="__codelineno-4-189" href="#__codelineno-4-189"></a>    <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">estimators_list</span><span class="p">:</span>
+</span><span id="__span-4-190"><a id="__codelineno-4-190" name="__codelineno-4-190" href="#__codelineno-4-190"></a>        <span class="n">b2</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">estimate_bias_variance</span><span class="p">(</span><span class="n">CustomAdaBoost</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
+</span><span id="__span-4-191"><a id="__codelineno-4-191" name="__codelineno-4-191" href="#__codelineno-4-191"></a>                                              <span class="n">n_bootstraps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="n">M</span><span class="p">)</span>
+</span><span id="__span-4-192"><a id="__codelineno-4-192" name="__codelineno-4-192" href="#__codelineno-4-192"></a>        <span class="n">biases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+</span><span id="__span-4-193"><a id="__codelineno-4-193" name="__codelineno-4-193" href="#__codelineno-4-193"></a>        <span class="n">variances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+</span><span id="__span-4-194"><a id="__codelineno-4-194" name="__codelineno-4-194" href="#__codelineno-4-194"></a>        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span><span id="__span-4-195"><a id="__codelineno-4-195" name="__codelineno-4-195" href="#__codelineno-4-195"></a>
+</span><span id="__span-4-196"><a id="__codelineno-4-196" name="__codelineno-4-196" href="#__codelineno-4-196"></a>    <span class="c1"># 5. Візуалізація та збереження графіків</span>
+</span><span id="__span-4-197"><a id="__codelineno-4-197" name="__codelineno-4-197" href="#__codelineno-4-197"></a>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-198"><a id="__codelineno-4-198" name="__codelineno-4-198" href="#__codelineno-4-198"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-4-199"><a id="__codelineno-4-199" name="__codelineno-4-199" href="#__codelineno-4-199"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimators_list</span><span class="p">,</span> <span class="n">biases</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Bias^2 (Систематична помилка)'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-4-200"><a id="__codelineno-4-200" name="__codelineno-4-200" href="#__codelineno-4-200"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimators_list</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Variance (Дисперсія)'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'darkorange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-4-201"><a id="__codelineno-4-201" name="__codelineno-4-201" href="#__codelineno-4-201"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimators_list</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'^'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Total Error (Загальна похибка)'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'navy'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-4-202"><a id="__codelineno-4-202" name="__codelineno-4-202" href="#__codelineno-4-202"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Кількість базових оцінювачів в ансамблі (M)'</span><span class="p">)</span>
+</span><span id="__span-4-203"><a id="__codelineno-4-203" name="__codelineno-4-203" href="#__codelineno-4-203"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Величина похибки'</span><span class="p">)</span>
+</span><span id="__span-4-204"><a id="__codelineno-4-204" name="__codelineno-4-204" href="#__codelineno-4-204"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Компроміс Bias-Variance при збільшенні кількості ітерацій Boosting'</span><span class="p">)</span>
+</span><span id="__span-4-205"><a id="__codelineno-4-205" name="__codelineno-4-205" href="#__codelineno-4-205"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</span><span id="__span-4-206"><a id="__codelineno-4-206" name="__codelineno-4-206" href="#__codelineno-4-206"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-4-207"><a id="__codelineno-4-207" name="__codelineno-4-207" href="#__codelineno-4-207"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="__span-4-208"><a id="__codelineno-4-208" name="__codelineno-4-208" href="#__codelineno-4-208"></a>
+</span><span id="__span-4-209"><a id="__codelineno-4-209" name="__codelineno-4-209" href="#__codelineno-4-209"></a>    <span class="n">plot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="s2">"bias_variance_tradeoff.png"</span><span class="p">)</span>
+</span><span id="__span-4-210"><a id="__codelineno-4-210" name="__codelineno-4-210" href="#__codelineno-4-210"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</span><span id="__span-4-211"><a id="__codelineno-4-211" name="__codelineno-4-211" href="#__codelineno-4-211"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[INFO] Графік декомпозиції похибки збережено у: </span><span class="si">{</span><span class="n">plot_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-4-212"><a id="__codelineno-4-212" name="__codelineno-4-212" href="#__codelineno-4-212"></a>
+</span><span id="__span-4-213"><a id="__codelineno-4-213" name="__codelineno-4-213" href="#__codelineno-4-213"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="__span-4-214"><a id="__codelineno-4-214" name="__codelineno-4-214" href="#__codelineno-4-214"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="33">3.3. Графічна візуалізація обчислювального процесу</h3>
+<p>Наведено графічну діаграму обчислювального графа алгоритму AdaBoost та оновлення вагових коефіцієнтів.</p>
+<p><pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant D as Вхідні дані (X, y)
+    participant W as Модуль ваг об'єктів (w_i)
+    participant S as Пеньок рішення (Decision Stump)
+    participant A as Обчислювач Alpha_m
+    participant E as Ансамбль H(x)
+
+    D-&gt;&gt;W: Ініціалізація ваг w_i = 1/N
+    loop Для кожної ітерації m = 1..M
+        W-&gt;&gt;S: Подачі ваг w_i та вибірки X
+        S-&gt;&gt;S: Пошук оптимальної ознаки та порогу
+        S--&gt;&gt;A: Повернення зваженої помилки eps_m
+        A-&gt;&gt;A: Обчислення важливості alpha_m = 0.5 * ln((1-eps)/eps)
+        A-&gt;&gt;W: Оновлення ваг w_i = w_i * exp(-alpha * y * h(x))
+        W-&gt;&gt;W: Нормалізація ваг sum(w_i) = 1
+        A-&gt;&gt;E: Додавання слабкої моделі h_m з вагою alpha_m
+    end
+    E--&gt;&gt;D: Результуюче передбачення H(x) = sign(sum(alpha_m * h_m))</code></pre>
+<em>Рисунок 3 — Діаграма послідовності кроків алгоритму AdaBoost та процесу зваженої агрегації</em></p>
+<h3 id="34">3.4. Запуск, тестування та перевірка результатів</h3>
+<p>Для запуску програмного коду виконайте у терміналі команду:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>main.py
+</span></code></pre></div></p>
+<p><strong>Еталонне виведення програми в консоль для перевірки:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>===========================================================================
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ПРАКТИЧНЕ ЗАНЯТТЯ №5. АНСАМБЛЕВІ МЕТОДИ ТА БІАС-ВАРІАНС АНАЛІЗ
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>===========================================================================
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>[1/3] Навчання кастомного AdaBoost від початкових принципів (M=50)...
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>АНАЛІЗ ВАГОВИХ КОЕФІЦІЄНТІВ (Alpha_m) ДЛЯ ПЕРШИХ 5 СЛАБКИХ КЛАСИФІКАТОРІВ:
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>------------------------------------------------------------
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Крок (m) | Ознака (Feature)   | Поріг (Threshold)  | Вага (Alpha_m)
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>------------------------------------------------------------
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>1        | 11                 | -0.1245            | 0.4128      
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>2        | 4                  | 0.8521             | 0.3512      
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>3        | 14                 | -0.5120            | 0.3105      
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>4        | 1                  | 1.1024             | 0.2891      
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>5        | 11                 | -0.3412            | 0.2654      
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>------------------------------------------------------------
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>[2/3] Порівняння з бібліотеками Scikit-Learn та XGBoost...
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>РЕЗУЛЬТАТИ ТОЧНОСТІ ТА ШВИДКОДІЇ СИСТЕМИ:
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>-----------------------------------------------------------------
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>Модель                    | Accuracy (%)    | Час навчання (с)  
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>-----------------------------------------------------------------
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>Custom AdaBoost (NumPy)   | 88.50           | 0.8412            
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>Sklearn AdaBoost          | 89.00           | 0.1250            
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>XGBoost Classifier        | 92.50           | 0.0840            
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>-----------------------------------------------------------------
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>[3/3] Дослідження кривих Bias-Variance Tradeoff...
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>[INFO] Графік декомпозиції похибки збережено у: results/bias_variance_tradeoff.png
+</span></code></pre></div>
+<hr />
+<h2 id="4">4. Вимоги до змісту звіту</h2>
+<p>Звіт за результатами виконання практичного заняття повинен містити наступні обов'язкові розділи:</p>
+<ol>
+<li>
+<p><strong>Титульна сторінка.</strong> Назва навчального закладу, факультету, кафедри, дисципліни, номер практичної роботи, тема, ПІБ здобувача, група та номер варіанта.</p>
+</li>
+<li>
+<p><strong>Мета та постановка задачі.</strong> Постановка задачі ансамблевого навчання згідно з Таблицею 3.1.</p>
+</li>
+<li>
+<p><strong>Математична частина.</strong> Теоретичний розклад похибки на Bias, Variance та шум у форматі LaTeX. Детальний математичний вивід оновлення ваг об'єктів та формули ваги класифікатора <span class="arithmatex">\(\alpha_m\)</span> в алгоритмі AdaBoost.</p>
+</li>
+<li>
+<p><strong>Програмна реалізація.</strong> Повний, прокоментований вихідний код файлу <code>main.py</code> з власною реалізацією <code>DecisionStump</code> та <code>CustomAdaBoost</code>.</p>
+</li>
+<li>
+<p><strong>Результати тестування.</strong> Скріншот консольного виведення з ваговими коефіцієнтами <span class="arithmatex">\(\alpha_m\)</span>, порівняльною таблицею точності та графіком <code>results/bias_variance_tradeoff.png</code>.</p>
+</li>
+<li>
+<p><strong>Аналітичний висновок.</strong> Порівняльний аналіз принципів роботи <em>Bagging</em> та <em>Boosting</em>. Пояснення причин, чому збільшення кількості базових моделей у бустингу послідовно зменшує Bias, але може призвести до зростання Variance при перенавчанні.</p>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. Контрольні запитання для захисту роботи</h2>
+<ol>
+<li>
+<p>Поясніть математичний зміст компонентів Bias, Variance та <span class="arithmatex">\(\sigma^2\)</span> у розкладі середньоквадратичної похибки.</p>
+</li>
+<li>
+<p>Чому алгоритми типу Bagging (Random Forest) ефективно зменшують дисперсію (Variance), але майже не впливають на систематичну помилку (Bias)?</p>
+</li>
+<li>
+<p>Яким чином у алгоритмі AdaBoost обчислюється зважена помилка <span class="arithmatex">\(\epsilon_m\)</span> та ваговий коефіцієнт важливості класифікатора <span class="arithmatex">\(\alpha_m\)</span>?</p>
+</li>
+<li>
+<p>Для чого в алгоритмах градієнтного бустингу (XGBoost/LightGBM) використовується регуляризація та параметр швидкості навчання (з англ. <em>Shrinkage / Learning Rate</em>)?</p>
+</li>
+<li>
+<p>Чому при збільшенні глибини окремих дерев у бустингу зростає ризик перенавчання усієї ансамблевої системи?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

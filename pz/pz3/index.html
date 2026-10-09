@@ -1,0 +1,2512 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../pz2/">
+      
+      
+        <link rel="next" href="../pz4/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#no-3-mpi-ai-" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lk/lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lk/lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hockney-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель Хокні (Hockney Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loggp-loggp-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель LogGP (LogGP Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналіз колективних операцій MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета роботи та стек технологій
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичні відомості
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Теоретичні відомості">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hockney-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель Хокні (Hockney Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loggp-loggp-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель LogGP (LogGP Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Аналіз колективних операцій MPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Підготовка середовища та розгортання проєкту (Крок 0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Підготовка середовища та розгортання проєкту (Крок 0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Команди для терміналу (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Структура каталогів проєкту
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Порядок виконання роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Порядок виконання роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Індивідуальні завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Покроковий алгоритм та розв'язок еталонного прикладу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Графічна візуалізація обчислювального процесу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Запуск, тестування та перевірка результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Вимоги до змісту звіту
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Контрольні запитання для захисту роботи
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="no-3-mpi-ai-">Практичне заняття № 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів</h1>
+<h2 id="_1">Мета роботи та стек технологій</h2>
+<p><strong>Мета.</strong> Засвоєння системних засад функціонування розподілених обчислювальних систем та інтерфейсу передачі повідомлень (з англ. <em>Message Passing Interface — MPI</em>); аналітичне проєктування та порівняльний аналіз комунікаційних затримок точкових (<em>Point-to-Point</em>) і колективних (<em>Collective Operations: Broadcast, Scatter, Reduce, Allreduce</em>) операцій у високопродуктивних AI-кластерах на основі математичних моделей Хокні (Hockney) та LogGP; оцінювання ефективності топологій комунікації (біноміальне дерево, кільцевий Allreduce) при розподіленому навчанні глибоких нейронних мереж.</p>
+<p><strong>Стек технологій та інструменти:</strong></p>
+<ul>
+<li>
+<p><strong>Мова програмування / Середовище:</strong> Python 3.11+ / Jupyter Notebook або VS Code.</p>
+</li>
+<li>
+<p><strong>Платформа / Бібліотеки:</strong> <code>NumPy</code> (версії 1.24+ — векторизоване моделювання тензорних масивів), <code>Matplotlib</code> (версії 3.7+ — візуалізація часових характеристик комунікації), <code>mpi4py</code> (опціонально для натурного тестування у реальному середовищі MPI).</p>
+</li>
+<li>
+<p><strong>Інструменти розробки:</strong> термінал (Bash/PowerShell), менеджери процесів <code>OpenMPI</code> або <code>MS-MPI</code>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="1">1. Теоретичні відомості</h2>
+<p>У сучасних розподілених системах штучного інтелекту навчання великомасштабних нейромережевих моделей (таких як LLM або ResNet) виконується на паралельних обчислювальних кластерах. У режимі паралелізму за даними (з англ. <em>Distributed Data Parallel — DDP</em>) кожен обчислювальний вузол (GPU/CPU) утримує локальну копію вагових коефіцієнтів моделі та обчислює градієнти функції втрат на власному міні-батчі. Для підтримки синхронізації параметрів моделі наприкінці кожної ітерації ітеративного градієнтного спуску виконується колективна операція усреднення градієнтів <code>Allreduce</code>. Час міжпроцесорних комунікацій становить значну частку загального часу навчання, що робить точний аналіз та оптимізацію комунікаційних затримок критично важливим завданням комп'ютерної інженерії.</p>
+<p>Для аналітичного оцінювання часу передачі повідомлень між вузлами застосовуються аналітичні параметричні моделі.</p>
+<h3 id="hockney-model">Модель Хокні (Hockney Model)</h3>
+<p>Модель Хокні описує тривалість передачі повідомлення розміром <span class="arithmatex">\(m\)</span> байтів між двома вузлами мережі як лінійну функцію, що враховує затримку ініціалізації та пропускну здатність комутаційного каналу:</p>
+<div class="arithmatex">\[T_{\text{Hockney}}(m) = \alpha + \beta \cdot m = \alpha + \frac{m}{B}\]</div>
+<p>де <span class="arithmatex">\(\alpha\)</span> (з англ. <em>Latency / Startup Time</em>) — латентність мережі (час початкової підготовки та запуску операції в секундах), <span class="arithmatex">\(\beta = 1/B\)</span> — питома затримка передачі одного байта, <span class="arithmatex">\(B\)</span> — смуга пропускання комунікаційного каналу (з англ. <em>Bandwidth</em>, байт/с), <span class="arithmatex">\(m\)</span> — обсяг повідомлення в байтах.</p>
+<h3 id="loggp-loggp-model">Модель LogGP (LogGP Model)</h3>
+<p>Модель LogGP розширює базову модель і враховує накладні витрати центрального процесора та мінімальні інтервали між відправками коротких та довгих повідомлень:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(L\)</span> (<em>Latency</em>) — мережева затримка фізичного середовища передачі байта від джерела до одержувача.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(o\)</span> (<em>Overhead</em>) — накладні витрати центрального процесора на підготовку та обробку пакету (апаратно-програмне блокування CPU).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(g\)</span> (<em>Gap</em>) — мінімальний часовий інтервал між послідовними відправками або прийомами коротких повідомлень (<span class="arithmatex">\(g = 1/\text{Rate}\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(G\)</span> (<em>Gap per byte</em>) — питомий час передачі одного байта даних (<span class="arithmatex">\(G = 1/B\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(P\)</span> (<em>Processors</em>) — кількість обчислювальних вузлів системи.</p>
+</li>
+</ul>
+<p>Тривалість передачі повідомлення розміром <span class="arithmatex">\(m\)</span> байтів між двома вузлами за моделлю LogGP обчислюється за формулою:</p>
+<div class="arithmatex">\[T_{\text{LogGP}}(m) = 2o + L + (m - 1) \cdot G\]</div>
+<p><pre class="mermaid"><code>graph LR
+    subgraph Вузол-Відправник [Sender Node]
+        CPU1[CPU Overhead: o] --&gt; Net1[Network Interface]
+    end
+    subgraph Фізичний канал зв'язку [InfiniBand / Ethernet]
+        Net1 --&gt;|Latency: L + m-1 * G| Net2[Network Interface]
+    end
+    subgraph Вузол-Одержувач [Receiver Node]
+        Net2 --&gt; CPU2[CPU Overhead: o]
+    end</code></pre>
+<em>Рисунок 1 — Структурна схема затримок передачі даних за моделлю LogGP</em></p>
+<h3 id="mpi">Аналіз колективних операцій MPI</h3>
+<p>Колективні операції вимагають синхронізації та обміну даними між усіма <span class="arithmatex">\(p\)</span> процесами комунікатора.</p>
+<ol>
+<li><strong>Широкомовна розсилка (Broadcast / <code>MPI_Bcast</code>).</strong> Передача одного й того самого повідомлення розміром <span class="arithmatex">\(m\)</span> байтів від одного кореневого вузла усім іншим <span class="arithmatex">\((p-1)\)</span> вузлам. При використанні оптимізованого алгоритму біноміального дерева (з англ. <em>Binomial Tree</em>) тривалість становить:</li>
+</ol>
+<p>$<span class="arithmatex">\(T_{\text{Bcast}}(m, p) = \lceil \log_2 p \rceil \cdot \left( \alpha + \frac{m}{B} \right)\)</span>$</p>
+<ol>
+<li><strong>Розподіл даних (Scatter / <code>MPI_Scatter</code>).</strong> Розбиття масиву розміром <span class="arithmatex">\(m\)</span> байтів на <span class="arithmatex">\(p\)</span> рівних частин розміром <span class="arithmatex">\(m/p\)</span> та відправка кожної унікальної частини відповідному процесу. За біноміальною схемою:</li>
+</ol>
+<p>$<span class="arithmatex">\(T_{\text{Scatter}}(m, p) = \lceil \log_2 p \rceil \cdot \alpha + \left(\frac{p-1}{p}\right) \cdot m \cdot \beta\)</span>$</p>
+<ol>
+<li><strong>Редукція даних (Reduce / <code>MPI_Reduce</code>).</strong> Збирання блоків розміром <span class="arithmatex">\(m\)</span> байтів від усіх <span class="arithmatex">\(p\)</span> процесів на одному кореневому вузлі з поелементним застосуванням операції (наприклад, додавання). Враховуючи час векторної обробки <span class="arithmatex">\(\gamma_{\text{comp}}\)</span> (секунд на байт):</li>
+</ol>
+<p>$<span class="arithmatex">\(T_{\text{Reduce}}(m, p) = \lceil \log_2 p \rceil \cdot \left( \alpha + \frac{m}{B} + m \cdot \gamma_{\text{comp}} \right)\)</span>$</p>
+<ol>
+<li><strong>Кільцевий Allreduce (Ring-Allreduce).</strong> Сучасний стандарт для синхронізації градієнтів у AI-кластерах (NCLL/Horovod). Обчислення виконується за два етапи: <em>Scatter-Reduce</em> та <em>Allgather</em>. Кожен вузол обмінюється даними лише зі своїм сусідом у кільці фрагментами розміром <span class="arithmatex">\(m/p\)</span>. Загальний час не залежить логарифмічно від кількості вузлів для обсягу даних:</li>
+</ol>
+<p>$<span class="arithmatex">\(T_{\text{Ring-Allreduce}}(m, p) = 2(p-1) \cdot \alpha + 2 \left(\frac{p-1}{p}\right) \cdot \frac{m}{B} + \left(\frac{p-1}{p}\right) \cdot m \cdot \gamma_{\text{comp}}\)</span>$</p>
+<p><pre class="mermaid"><code>graph TD
+    subgraph Етап 1: Scatter-Reduce Phase
+        N0[Node 0] --&gt;|m/p bytes| N1[Node 1]
+        N1 --&gt;|m/p bytes| N2[Node 2]
+        N2 --&gt;|m/p bytes| N3[Node 3]
+        N3 --&gt;|m/p bytes| N0
+    end
+    subgraph Етап 2: Allgather Phase
+        N0_2[Node 0] --&gt;|m/p bytes| N1_2[Node 1]
+        N1_2 --&gt;|m/p bytes| N2_2[Node 2]
+        N2_2 --&gt;|m/p bytes| N3_2[Node 3]
+        N3_2 --&gt;|m/p bytes| N0_2
+    end</code></pre>
+<em>Рисунок 2 — Схема передачі даних у кільцевому алгоритмі Ring-Allreduce для 4 AI-вузлів</em></p>
+<hr />
+<h2 id="2-0">2. Підготовка середовища та розгортання проєкту (Крок 0)</h2>
+<p>Для виконання лабораторних обчислень та моделювання комунікаційних схем налаштуйте робоче середовище Python.</p>
+<h3 id="21-cli">2.1. Команди для терміналу (CLI)</h3>
+<p>Створення та активація віртуального середовища:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv_mpi
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">source</span><span class="w"> </span>venv_mpi/bin/activate<span class="w">  </span><span class="c1"># Для Linux/macOS</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># або: .\venv_mpi\Scripts\Activate.ps1  # Для Windows</span>
+</span></code></pre></div></p>
+<p>Встановлення бібліотек <code>NumPy</code> та <code>Matplotlib</code>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>matplotlib
+</span></code></pre></div></p>
+<p><em>(Опціонально)</em> Для проведення натурних випробувань у реальному середовищі MPI встановить <code>mpi4py</code> (потребує попередньо встановленого OpenMPI або MS-MPI):
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mpi4py
+</span></code></pre></div></p>
+<h3 id="22">2.2. Структура каталогів проєкту</h3>
+<p>Створіть наступну структуру файлів та папок у робочому каталозі:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mpi_communication_project/
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── main.py
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>├── requirements.txt
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>└── results/
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    └── mpi_analysis_plots.png
+</span></code></pre></div>
+<p>Вміст файлу <code>requirements.txt</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>numpy&gt;=1.24.0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>matplotlib&gt;=3.7.0
+</span></code></pre></div></p>
+<hr />
+<h2 id="3">3. Порядок виконання роботи</h2>
+<h3 id="31">3.1. Індивідуальні завдання</h3>
+<p>Кожен здобувач виконує аналітичні розрахунки відповідно до свого варіанта з наведеної нижче Таблиці 3.1. Необхідно розрахувати час точкової передачі за моделями Хокні та LogGP, порівняти затримки операцій <code>Broadcast</code>, <code>Scatter</code>, <code>Reduce</code> за біноміальною схемою та обчислити комунікаційну затримку <code>Ring-Allreduce</code> для синхронізації тензора градієнтів заданого обсягу.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Варіант</th>
+<th style="text-align: left;">Мережева технологія</th>
+<th style="text-align: center;">Латентність <span class="arithmatex">\(\alpha\)</span> (<span class="arithmatex">\(L\)</span>)</th>
+<th style="text-align: center;">Пропускна здатність <span class="arithmatex">\(B\)</span> (<span class="arithmatex">\(1/G\)</span>)</th>
+<th style="text-align: center;">CPU Overhead <span class="arithmatex">\(o\)</span></th>
+<th style="text-align: center;">Gap <span class="arithmatex">\(g\)</span></th>
+<th style="text-align: center;">Кількість вузлів <span class="arithmatex">\(p\)</span></th>
+<th style="text-align: center;">Розмір тензора градієнтів <span class="arithmatex">\(m\)</span></th>
+<th style="text-align: center;">Час векторної операції <span class="arithmatex">\(\gamma_{\text{comp}}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">InfiniBand HDR</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(200 \text{ Gbps}\)</span> (<span class="arithmatex">\(25 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.8 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">100GbE RoCEv2</td>
+<td style="text-align: center;"><span class="arithmatex">\(5.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ Gbps}\)</span> (<span class="arithmatex">\(12.5 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(2.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(32\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(50 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.3 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">InfiniBand EDR</td>
+<td style="text-align: center;"><span class="arithmatex">\(2.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ Gbps}\)</span> (<span class="arithmatex">\(12.5 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(128\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(200 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.15 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">25GbE Standard</td>
+<td style="text-align: center;"><span class="arithmatex">\(15.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(25 \text{ Gbps}\)</span> (<span class="arithmatex">\(3.125 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(3.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(4.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(16\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(20 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.5 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">NVLink Interconnect</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(900 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.3 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(16\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(500 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.05 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">InfiniBand NDR</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.8 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(400 \text{ Gbps}\)</span> (<span class="arithmatex">\(50 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.6 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(256\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(400 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.1 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;">40GbE RoCE</td>
+<td style="text-align: center;"><span class="arithmatex">\(8.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(40 \text{ Gbps}\)</span> (<span class="arithmatex">\(5.0 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(2.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(2.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(80 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.4 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;">PCIe 4.0 x16 Bus</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(31.5 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.4 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(150 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;">PCIe 5.0 x16 Bus</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.6 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(63.0 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.3 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.4 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(300 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.1 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;">10GbE Standard</td>
+<td style="text-align: center;"><span class="arithmatex">\(30.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(10 \text{ Gbps}\)</span> (<span class="arithmatex">\(1.25 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(5.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(6.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(32\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(10 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.8 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;">InfiniBand QDR</td>
+<td style="text-align: center;"><span class="arithmatex">\(3.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(40 \text{ Gbps}\)</span> (<span class="arithmatex">\(5.0 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.8 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(2.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(60 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.3 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;">200GbE RoCEv2</td>
+<td style="text-align: center;"><span class="arithmatex">\(2.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(200 \text{ Gbps}\)</span> (<span class="arithmatex">\(25 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(128\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(250 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.15 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;">Ultra Accelerator Link</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.4 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(600 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.15 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(32\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1000 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.04 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;">InfiniBand FDR</td>
+<td style="text-align: center;"><span class="arithmatex">\(2.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(56 \text{ Gbps}\)</span> (<span class="arithmatex">\(7.0 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(32\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(40 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.25 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: left;">50GbE RoCEv2</td>
+<td style="text-align: center;"><span class="arithmatex">\(6.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(50 \text{ Gbps}\)</span> (<span class="arithmatex">\(6.25 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(2.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(2.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(90 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.35 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: left;">CXL 2.0 Interconnect</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.9 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.4 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.5 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(16\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(200 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.12 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>17</strong></td>
+<td style="text-align: left;">Shared Memory Inter-Process</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ GB/s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.1 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.1 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(8\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(150 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.1 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: left;">InfiniBand HDR100</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.8 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ Gbps}\)</span> (<span class="arithmatex">\(12.5 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.9 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.1 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(128\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(120 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.18 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>19</strong></td>
+<td style="text-align: left;">100GbE AWS EFA</td>
+<td style="text-align: center;"><span class="arithmatex">\(4.0 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(100 \text{ Gbps}\)</span> (<span class="arithmatex">\(12.5 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.6 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1.8 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(64\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(180 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.2 \text{ ns/byte}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: left;">800GbE NextGen</td>
+<td style="text-align: center;"><span class="arithmatex">\(1.2 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(800 \text{ Gbps}\)</span> (<span class="arithmatex">\(100 \text{ GB/s}\)</span>)</td>
+<td style="text-align: center;"><span class="arithmatex">\(0.6 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.7 \ \mu\text{s}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(512\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(500 \text{ MB}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0.08 \text{ ns/byte}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2. Покроковий алгоритм та розв'язок еталонного прикладу</h3>
+<p>Розглянемо виконання розрахунків для <strong>Варіанта №1</strong>:</p>
+<ul>
+<li><strong>Параметри:</strong> InfiniBand HDR, <span class="arithmatex">\(\alpha = 1.5 \ \mu\text{s} = 1.5 \times 10^{-6} \text{ с}\)</span>, <span class="arithmatex">\(B = 25 \text{ GB/s} = 25 \times 10^9 \text{ байт/с}\)</span>, <span class="arithmatex">\(o = 0.8 \ \mu\text{s} = 0.8 \times 10^{-6} \text{ с}\)</span>, <span class="arithmatex">\(g = 1.0 \ \mu\text{s} = 1.0 \times 10^{-6} \text{ с}\)</span>, <span class="arithmatex">\(G = 1/B = 4.0 \times 10^{-11} \text{ с/байт}\)</span>, <span class="arithmatex">\(p = 64\)</span> вузли, <span class="arithmatex">\(m = 100 \text{ MB} = 100 \times 10^6 \text{ байт}\)</span>, <span class="arithmatex">\(\gamma_{\text{comp}} = 0.2 \text{ ns/byte} = 0.2 \times 10^{-9} \text{ с/байт}\)</span>.</li>
+</ul>
+<p><strong>Математичний розрахунок затримок:</strong></p>
+<ol>
+<li>
+<p><strong>Точкова передача (Point-to-Point) за моделлю Хокні:</strong>
+   $<span class="arithmatex">\(T_{\text{Hockney}}(m) = \alpha + \frac{m}{B} = 1.5 \times 10^{-6} + \frac{100 \times 10^6}{25 \times 10^9} = 1.5 \times 10^{-6} + 0.004 = 0.0040015 \text{ с} \approx 4.0015 \text{ ms}\)</span>$</p>
+</li>
+<li>
+<p><strong>Точкова передача (Point-to-Point) за моделлю LogGP:</strong>
+   $<span class="arithmatex">\(T_{\text{LogGP}}(m) = 2o + L + (m-1)G = 2(0.8 \times 10^{-6}) + 1.5 \times 10^{-6} + (100 \times 10^6 - 1) \cdot (4 \times 10^{-11}) \approx 3.1 \times 10^{-6} + 0.004 = 0.0040031 \text{ с} \approx 4.0031 \text{ ms}\)</span>$</p>
+</li>
+<li>
+<p><strong>Біноміальний Broadcast (<span class="arithmatex">\(p = 64\)</span>, <span class="arithmatex">\(\lceil \log_2 64 \rceil = 6\)</span>):</strong>
+   $<span class="arithmatex">\(T_{\text{Bcast}}(m, p) = 6 \cdot \left(1.5 \times 10^{-6} + 0.004\right) = 6 \cdot 0.0040015 = 0.024009 \text{ с} \approx 24.009 \text{ ms}\)</span>$</p>
+</li>
+<li>
+<p><strong>Біноміальний Scatter (<span class="arithmatex">\(p = 64\)</span>):</strong>
+   $<span class="arithmatex">\(T_{\text{Scatter}}(m, p) = 6 \cdot (1.5 \times 10^{-6}) + \left(\frac{63}{64}\right) \cdot 100 \times 10^6 \cdot \left(\frac{1}{25 \times 10^9}\right) = 9 \times 10^{-6} + 0.984375 \cdot 0.004 = 0.0039465 \text{ с} \approx 3.9465 \text{ ms}\)</span>$</p>
+</li>
+<li>
+<p><strong>Біноміальний Reduce (<span class="arithmatex">\(p = 64\)</span>):</strong>
+   $<span class="arithmatex">\(T_{\text{Reduce\_Comp}} = 100 \times 10^6 \cdot 0.2 \times 10^{-9} = 0.02 \text{ с}\)</span>$
+   $<span class="arithmatex">\(T_{\text{Reduce}}(m, p) = 6 \cdot \left(1.5 \times 10^{-6} + 0.004 + 0.02\right) = 6 \cdot 0.0240015 = 0.144009 \text{ с} \approx 144.009 \text{ ms}\)</span>$</p>
+</li>
+<li>
+<p><strong>Кільцевий Allreduce (Ring-Allreduce, <span class="arithmatex">\(p = 64\)</span>):</strong>
+   $<span class="arithmatex">\(T_{\text{Ring-Allreduce}}(m, p) = 2(63) \cdot (1.5 \times 10^{-6}) + 2 \left(\frac{63}{64}\right) \cdot 0.004 + \left(\frac{63}{64}\right) \cdot 0.02\)</span>$
+   $<span class="arithmatex">\(T_{\text{Ring-Allreduce}}(m, p) = 0.000189 + 0.007875 + 0.0196875 = 0.0277515 \text{ с} \approx 27.7515 \text{ ms}\)</span>$</p>
+</li>
+</ol>
+<p>Нижче наведено повний, готовий до запуску Python-скрипт <code>main.py</code>, який виконує всі розрахунки, моделює затримки для різних масштабах AI-кластера та будує графіки.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">hockney_p2p</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="sd">    Розрахунок часу точкової передачі за моделлю Хокні.</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="sd">    m_bytes: розмір повідомлення в байтах</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="sd">    alpha: латентність (с)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="sd">    B_bytes_per_sec: пропускна здатність (байт/с)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="sd">    """</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="k">return</span> <span class="n">alpha</span> <span class="o">+</span> <span class="p">(</span><span class="n">m_bytes</span> <span class="o">/</span> <span class="n">B_bytes_per_sec</span><span class="p">)</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">loggp_p2p</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">G</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="sd">    Розрахунок часу точкової передачі за моделлю LogGP.</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="sd">    m_bytes: розмір повідомлення в байтах</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="sd">    L: мережева затримка (с)</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="sd">    o: накладні витрати CPU (с)</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="sd">    G: питомий час передачі байта (с/байт)</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="sd">    """</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">o</span> <span class="o">+</span> <span class="n">L</span> <span class="o">+</span> <span class="p">(</span><span class="n">m_bytes</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">G</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">bcast_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="sd">    Розрахунок затримки Broadcast за біноміальним деревом.</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="sd">    """</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="k">return</span> <span class="n">steps</span> <span class="o">*</span> <span class="n">hockney_p2p</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">)</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">scatter_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="sd">    Розрахунок затримки Scatter за біноміальною схемою.</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="sd">    """</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">B_bytes_per_sec</span>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>    <span class="k">return</span> <span class="n">steps</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="p">((</span><span class="n">p</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">m_bytes</span> <span class="o">*</span> <span class="n">beta</span>
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="k">def</span><span class="w"> </span><span class="nf">reduce_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="sd">    Розрахунок затримки Reduce за біноміальним деревом з урахуванням обчислень.</span>
+</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="sd">    """</span>
+</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    <span class="n">steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)))</span>
+</span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>    <span class="n">time_per_step</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="p">(</span><span class="n">m_bytes</span> <span class="o">/</span> <span class="n">B_bytes_per_sec</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">m_bytes</span> <span class="o">*</span> <span class="n">gamma_comp</span><span class="p">)</span>
+</span><span id="__span-5-45"><a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>    <span class="k">return</span> <span class="n">steps</span> <span class="o">*</span> <span class="n">time_per_step</span>
+</span><span id="__span-5-46"><a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>
+</span><span id="__span-5-47"><a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="k">def</span><span class="w"> </span><span class="nf">allreduce_ring</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B_bytes_per_sec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-5-48"><a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="w">    </span><span class="sd">"""</span>
+</span><span id="__span-5-49"><a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="sd">    Розрахунок затримки Ring-Allreduce.</span>
+</span><span id="__span-5-50"><a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a><span class="sd">    """</span>
+</span><span id="__span-5-51"><a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a>    <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">B_bytes_per_sec</span>
+</span><span id="__span-5-52"><a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>    <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span>
+</span><span id="__span-5-53"><a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a>    <span class="n">comm_time</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">m_bytes</span> <span class="o">*</span> <span class="n">beta</span>
+</span><span id="__span-5-54"><a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a>    <span class="n">comp_time</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">m_bytes</span> <span class="o">*</span> <span class="n">gamma_comp</span>
+</span><span id="__span-5-55"><a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>    <span class="k">return</span> <span class="n">comm_time</span> <span class="o">+</span> <span class="n">comp_time</span>
+</span><span id="__span-5-56"><a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a>
+</span><span id="__span-5-57"><a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-5-58"><a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>    <span class="c1"># Вхідні дані Варіанта №1</span>
+</span><span id="__span-5-59"><a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>    <span class="n">variant_id</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-5-60"><a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>    <span class="n">tech_name</span> <span class="o">=</span> <span class="s2">"InfiniBand HDR"</span>
+</span><span id="__span-5-61"><a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.5e-6</span>            <span class="c1"># 1.5 microsec</span>
+</span><span id="__span-5-62"><a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>    <span class="n">B</span> <span class="o">=</span> <span class="mf">25.0e9</span>                <span class="c1"># 25 GB/s</span>
+</span><span id="__span-5-63"><a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>    <span class="n">o</span> <span class="o">=</span> <span class="mf">0.8e-6</span>                <span class="c1"># 0.8 microsec</span>
+</span><span id="__span-5-64"><a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>    <span class="n">g</span> <span class="o">=</span> <span class="mf">1.0e-6</span>                <span class="c1"># 1.0 microsec</span>
+</span><span id="__span-5-65"><a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a>    <span class="n">G</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">B</span>               <span class="c1"># 4.0e-11 sec/byte</span>
+</span><span id="__span-5-66"><a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a>    <span class="n">p_target</span> <span class="o">=</span> <span class="mi">64</span>             <span class="c1"># 64 вузли</span>
+</span><span id="__span-5-67"><a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a>    <span class="n">m_bytes</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="mf">1e6</span>     <span class="c1"># 100 MB</span>
+</span><span id="__span-5-68"><a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a>    <span class="n">gamma_comp</span> <span class="o">=</span> <span class="mf">0.2e-9</span>       <span class="c1"># 0.2 ns/byte</span>
+</span><span id="__span-5-69"><a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a>
+</span><span id="__span-5-70"><a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a>    <span class="c1"># 1. Виконання розрахунків для Варіанта №1</span>
+</span><span id="__span-5-71"><a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a>    <span class="n">t_p2p_hockney</span> <span class="o">=</span> <span class="n">hockney_p2p</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</span><span id="__span-5-72"><a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a>    <span class="n">t_p2p_loggp</span> <span class="o">=</span> <span class="n">loggp_p2p</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">G</span><span class="p">)</span>
+</span><span id="__span-5-73"><a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a>    <span class="n">t_bcast</span> <span class="o">=</span> <span class="n">bcast_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p_target</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</span><span id="__span-5-74"><a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a>    <span class="n">t_scatter</span> <span class="o">=</span> <span class="n">scatter_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p_target</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</span><span id="__span-5-75"><a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a>    <span class="n">t_reduce</span> <span class="o">=</span> <span class="n">reduce_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p_target</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">)</span>
+</span><span id="__span-5-76"><a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a>    <span class="n">t_ring_allreduce</span> <span class="o">=</span> <span class="n">allreduce_ring</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p_target</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">)</span>
+</span><span id="__span-5-77"><a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a>
+</span><span id="__span-5-78"><a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a>    <span class="c1"># Виведення аналітичних результатів</span>
+</span><span id="__span-5-79"><a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-5-80"><a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ПРАКТИЧНЕ ЗАНЯТТЯ №3. АНАЛІЗ КОМУНІКАЦІЙНИХ СХЕМ MPI (ВАРІАНТ №</span><span class="si">{</span><span class="n">variant_id</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</span><span id="__span-5-81"><a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Технологія: </span><span class="si">{</span><span class="n">tech_name</span><span class="si">}</span><span class="s2"> | Вузлів p=</span><span class="si">{</span><span class="n">p_target</span><span class="si">}</span><span class="s2"> | Тензор градієнтів m=</span><span class="si">{</span><span class="n">m_bytes</span><span class="o">/</span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MB"</span><span class="p">)</span>
+</span><span id="__span-5-82"><a id="__codelineno-5-82" name="__codelineno-5-82" href="#__codelineno-5-82"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-5-83"><a id="__codelineno-5-83" name="__codelineno-5-83" href="#__codelineno-5-83"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Точкова передача (Point-to-Point):"</span><span class="p">)</span>
+</span><span id="__span-5-84"><a id="__codelineno-5-84" name="__codelineno-5-84" href="#__codelineno-5-84"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Модель Хокні (Hockney P2P):   </span><span class="si">{</span><span class="n">t_p2p_hockney</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-85"><a id="__codelineno-5-85" name="__codelineno-5-85" href="#__codelineno-5-85"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Модель LogGP (LogGP P2P):     </span><span class="si">{</span><span class="n">t_p2p_loggp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-86"><a id="__codelineno-5-86" name="__codelineno-5-86" href="#__codelineno-5-86"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-5-87"><a id="__codelineno-5-87" name="__codelineno-5-87" href="#__codelineno-5-87"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Колективні операції MPI (для p = 64):"</span><span class="p">)</span>
+</span><span id="__span-5-88"><a id="__codelineno-5-88" name="__codelineno-5-88" href="#__codelineno-5-88"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Broadcast (Binomial Tree):   </span><span class="si">{</span><span class="n">t_bcast</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-89"><a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Scatter (Binomial Scheme):   </span><span class="si">{</span><span class="n">t_scatter</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-90"><a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Reduce (Binomial Tree + OP): </span><span class="si">{</span><span class="n">t_reduce</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-91"><a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   - Ring-Allreduce (DDP AI):     </span><span class="si">{</span><span class="n">t_ring_allreduce</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</span><span id="__span-5-92"><a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">75</span><span class="p">)</span>
+</span><span id="__span-5-93"><a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a>
+</span><span id="__span-5-94"><a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a>    <span class="c1"># 2. Моделювання залежності часу Allreduce від кількості вузлів p (2..256)</span>
+</span><span id="__span-5-95"><a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a>    <span class="n">nodes_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+</span><span id="__span-5-96"><a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a>    <span class="n">t_ring_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">allreduce_ring</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nodes_range</span><span class="p">]</span>
+</span><span id="__span-5-97"><a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a>    <span class="n">t_tree_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">reduce_binomial</span><span class="p">(</span><span class="n">m_bytes</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma_comp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nodes_range</span><span class="p">]</span> <span class="c1"># Tree Allreduce ~ 2 * Reduce</span>
+</span><span id="__span-5-98"><a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a>
+</span><span id="__span-5-99"><a id="__codelineno-5-99" name="__codelineno-5-99" href="#__codelineno-5-99"></a>    <span class="c1"># 3. Графічна візуалізація</span>
+</span><span id="__span-5-100"><a id="__codelineno-5-100" name="__codelineno-5-100" href="#__codelineno-5-100"></a>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-101"><a id="__codelineno-5-101" name="__codelineno-5-101" href="#__codelineno-5-101"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="__span-5-102"><a id="__codelineno-5-102" name="__codelineno-5-102" href="#__codelineno-5-102"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nodes_range</span><span class="p">,</span> <span class="n">t_ring_list</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Ring-Allreduce (Оптимізований для AI)'</span><span class="p">)</span>
+</span><span id="__span-5-103"><a id="__codelineno-5-103" name="__codelineno-5-103" href="#__codelineno-5-103"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nodes_range</span><span class="p">,</span> <span class="n">t_tree_list</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'navy'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Binomial Tree Allreduce'</span><span class="p">)</span>
+</span><span id="__span-5-104"><a id="__codelineno-5-104" name="__codelineno-5-104" href="#__codelineno-5-104"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-5-105"><a id="__codelineno-5-105" name="__codelineno-5-105" href="#__codelineno-5-105"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">nodes_range</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nodes_range</span><span class="p">])</span>
+</span><span id="__span-5-106"><a id="__codelineno-5-106" name="__codelineno-5-106" href="#__codelineno-5-106"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Кількість обчислювальних вузлів ($p$)'</span><span class="p">)</span>
+</span><span id="__span-5-107"><a id="__codelineno-5-107" name="__codelineno-5-107" href="#__codelineno-5-107"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Час виконання синхронізації (мс)'</span><span class="p">)</span>
+</span><span id="__span-5-108"><a id="__codelineno-5-108" name="__codelineno-5-108" href="#__codelineno-5-108"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Порівняння затримок Allreduce для градієнтного тензора </span><span class="si">{</span><span class="n">m_bytes</span><span class="o">/</span><span class="mf">1e6</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> MB'</span><span class="p">)</span>
+</span><span id="__span-5-109"><a id="__codelineno-5-109" name="__codelineno-5-109" href="#__codelineno-5-109"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</span><span id="__span-5-110"><a id="__codelineno-5-110" name="__codelineno-5-110" href="#__codelineno-5-110"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span><span id="__span-5-111"><a id="__codelineno-5-111" name="__codelineno-5-111" href="#__codelineno-5-111"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span><span id="__span-5-112"><a id="__codelineno-5-112" name="__codelineno-5-112" href="#__codelineno-5-112"></a>
+</span><span id="__span-5-113"><a id="__codelineno-5-113" name="__codelineno-5-113" href="#__codelineno-5-113"></a>    <span class="n">plot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="s2">"mpi_analysis_plots.png"</span><span class="p">)</span>
+</span><span id="__span-5-114"><a id="__codelineno-5-114" name="__codelineno-5-114" href="#__codelineno-5-114"></a>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">plot_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</span><span id="__span-5-115"><a id="__codelineno-5-115" name="__codelineno-5-115" href="#__codelineno-5-115"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">[INFO] Графік результатів моделювання збережено у: </span><span class="si">{</span><span class="n">plot_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-5-116"><a id="__codelineno-5-116" name="__codelineno-5-116" href="#__codelineno-5-116"></a>
+</span><span id="__span-5-117"><a id="__codelineno-5-117" name="__codelineno-5-117" href="#__codelineno-5-117"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="__span-5-118"><a id="__codelineno-5-118" name="__codelineno-5-118" href="#__codelineno-5-118"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="33">3.3. Графічна візуалізація обчислювального процесу</h3>
+<p>Наведено графічну діаграму обчислювального процесу синхронізації градієнтів у розподіленому середовищі.</p>
+<p><pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant N0 as AI-Вузол 0 (Master)
+    participant N1 as AI-Вузол 1
+    participant N2 as AI-Вузол 2
+    participant N3 as AI-Вузол 3
+
+    Note over N0,N3: Етап 1: Локальний прямохід/зворотнохід (Forward/Backward)
+    Note over N0,N3: Кожен вузол обчислив градієнт dW розміром m байтів
+
+    Note over N0,N3: Етап 2: Ring-Allreduce (Scatter-Reduce Phase)
+    N0-&gt;&gt;N1: Передача блоку dW[0] (m/p bytes)
+    N1-&gt;&gt;N2: Передача блоку dW[1] (m/p bytes)
+    N2-&gt;&gt;N3: Передача блоку dW[2] (m/p bytes)
+    N3-&gt;&gt;N0: Передача блоку dW[3] (m/p bytes)
+    Note over N0,N3: Векторне додавання накопичених градієнтів
+
+    Note over N0,N3: Етап 3: Ring-Allreduce (Allgather Phase)
+    N0-&gt;&gt;N1: Розсилання підсумованого блоку dW_sum[3]
+    N1-&gt;&gt;N2: Розсилання підсумованого блоку dW_sum[0]
+    N2-&gt;&gt;N3: Розсилання підсумованого блоку dW_sum[1]
+    N3-&gt;&gt;N0: Розсилання підсумованого блоку dW_sum[2]
+
+    Note over N0,N3: Синхронізація завершена: Усі вузли мають ідентичні градієнти</code></pre>
+<em>Рисунок 3 — Діаграма послідовності обміну даними та векторного підсумування у кільцевому алгоритмі Ring-Allreduce</em></p>
+<h3 id="34">3.4. Запуск, тестування та перевірка результатів</h3>
+<p>Для запуску розробленого аналітичного модуля виконайте у терміналі команду:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>main.py
+</span></code></pre></div></p>
+<p><strong>Еталонне виведення програми в консоль для перевірки:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>===========================================================================
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ПРАКТИЧНЕ ЗАНЯТТЯ №3. АНАЛІЗ КОМУНІКАЦІЙНИХ СХЕМ MPI (ВАРІАНТ №1)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Технологія: InfiniBand HDR | Вузлів p=64 | Тензор градієнтів m=100.0 MB
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>===========================================================================
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>1. Точкова передача (Point-to-Point):
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   - Модель Хокні (Hockney P2P):   4.0015 ms
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>   - Модель LogGP (LogGP P2P):     4.0031 ms
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>---------------------------------------------------------------------------
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>2. Колективні операції MPI (для p = 64):
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>   - Broadcast (Binomial Tree):   24.0090 ms
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>   - Scatter (Binomial Scheme):   3.9465 ms
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>   - Reduce (Binomial Tree + OP): 144.0090 ms
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>   - Ring-Allreduce (DDP AI):     27.7515 ms
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>===========================================================================
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>[INFO] Графік результатів моделювання збережено у: results/mpi_analysis_plots.png
+</span></code></pre></div>
+<hr />
+<h2 id="4">4. Вимоги до змісту звіту</h2>
+<p>Звіт за результатами виконання практичного заняття повинен містити наступні структурні розділи:</p>
+<ol>
+<li>
+<p><strong>Титульна сторінка.</strong> Назва вищого навчального закладу, кафедри, дисципліни, номер практичного заняття, тема, ПІБ здобувача, група та номер варіанта.</p>
+</li>
+<li>
+<p><strong>Мета та постановка задачі.</strong> Формулювання мети дослідження, вихідні параметри мережевого обладнання та обсяг градієнтних даних згідно з Таблицею 3.1.</p>
+</li>
+<li>
+<p><strong>Теоретичні формули та математичні розрахунки.</strong> Розрахунок затримок за моделями Хокні та LogGP, обчислення часових характеристик колективних операцій (<code>Broadcast</code>, <code>Scatter</code>, <code>Reduce</code>, <code>Ring-Allreduce</code>) у форматуванні LaTeX з вичерпними поясненнями.</p>
+</li>
+<li>
+<p><strong>Програмна реалізація.</strong> Повний, прокоментований вихідний код файлу <code>main.py</code>.</p>
+</li>
+<li>
+<p><strong>Графічні результати та візуалізація.</strong> Скріншот виведення результатів у консоль та результуючий графік залежності комунікаційної затримки від кількості вузлів з папки <code>results/</code>.</p>
+</li>
+<li>
+<p><strong>Аналітичний висновок.</strong> Порівняльний аналіз біноміальної та кільцевої схем Allreduce. Обґрунтування переваг кільцевого алгоритму <code>Ring-Allreduce</code> для великих масивів даних у контексті розподіленого навчання глибоких нейронних мереж.</p>
+</li>
+</ol>
+<hr />
+<h2 id="5">5. Контрольні запитання для захисту роботи</h2>
+<ol>
+<li>
+<p>Поясніть фізичний зміст параметрів <span class="arithmatex">\(\alpha\)</span> та <span class="arithmatex">\(\beta\)</span> у моделі Хокні. У яких випадках затримкою <span class="arithmatex">\(\alpha\)</span> можна знехтувати?</p>
+</li>
+<li>
+<p>Які додаткові апаратні чинники враховує модель LogGP порівняно з базовою моделлю Хокні?</p>
+</li>
+<li>
+<p>У чому полягає математична перевага алгоритму <code>Ring-Allreduce</code> над біноміальним деревом при синхронізації великих тензорів градієнтів?</p>
+</li>
+<li>
+<p>Поясніть принципову різницю між точковими (<em>Point-to-Point</em>) та колективними (<em>Collective</em>) комунікаційними операціями в інтерфейсі MPI.</p>
+</li>
+<li>
+<p>Як обчислюється час виконання операції <code>MPI_Reduce</code>, і який внесок у загальну затримку робить швидкість векторного додавання <span class="arithmatex">\(\gamma_{\text{comp}}\)</span>?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

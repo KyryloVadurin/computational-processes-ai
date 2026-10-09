@@ -1,0 +1,3512 @@
+
+<!doctype html>
+<html lang="uk" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Навчальний портал з дисципліни "Обчислювальні процеси та штучний інтелект"">
+      
+      
+      
+      
+        <link rel="prev" href="../lk9/">
+      
+      
+        <link rel="next" href="../lk11/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Тема 10. Рекурентні мережі та архітектура Transformer - Обчислювальні процеси та штучний інтелект</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#10-transformer-lstmgru" class="md-skip">
+          Перейти до змісту
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Хедер">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-header__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Обчислювальні процеси та штучний інтелект
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Тема 10. Рекурентні мережі та архітектура Transformer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Переключити на темну тему"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Переключити на темну тему" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Переключити на світлу тему"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Переключити на світлу тему" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Пошук" placeholder="Пошук" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Шукати">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистити" aria-label="Очистити" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Пошук розпочато
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Робоча навчальна програма
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lk1/" class="md-tabs__link">
+          
+  
+  
+  Лекції
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../lb/lb1/" class="md-tabs__link">
+          
+  
+  
+  Лабораторні роботи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pz/pz1/" class="md-tabs__link">
+          
+  
+  
+  Практичні заняття
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Самостійна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../rg/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Розрахунково-графічна робота
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../sr/quest/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Перелік тестових та практичних завдань для самопідготовки
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навігація" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Обчислювальні процеси та штучний інтелект" class="md-nav__button md-logo" aria-label="Обчислювальні процеси та штучний інтелект" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Обчислювальні процеси та штучний інтелект
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Робоча навчальна програма
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лекції
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лекції
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 1. Архітектури високопродуктивних обчислень та оцінювання ефективності паралелізму
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 2. Багатопотоковість, SIMD-векторизація та апаратне прискорення ШІ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 3. Розподілені обчислювальні процеси та інтерфейс MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 4. Паралельна обробка великих масивів даних у розподілених пайплайнах
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 5. Моделювання обчислювальних процесів у часі та просторі станів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 6. Машинне навчання: концепції, оптимізація та регуляризація
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 7. Ансамблеві методи машинного навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 8. Глибокі нейронні мережі та математика ШІ навчання
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 9. Згорткові нейронні мережі у завданнях перцепції
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 10. Рекурентні мережі та архітектура Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Еволюція парадигм обробки послідовних даних у комп'ютерних системах
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі градієнтної динаміки, вентильних операторів та просторів уваги
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Інженерно-аналітичний синтез моделей часових рядів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-vanilla-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Дослідження автокореляційної динаміки послідовностей та концепція прихованого стану Vanilla RNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-bptt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Аналітичне дослідження числової нестабільності зворотного поширення через час (BPTT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-lstm-gru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Вентильні механізми селективного пропускання інформації: архітектури LSTM та GRU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Парадигмальний перехід від послідовної рекурентності до паралельної уваги (Self-Attention)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-bptt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Спектральний аналіз динамічної стійкості BPTT та строге доведення згасання градієнтів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Аналітична система рівнянь стану та градієнтні магістралі комірки LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-gru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчна оптимізація обчислень та редукція простору станів у блоках GRU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-scaled-dot-product-multi-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичний апарат механізмів Scaled Dot-Product та Multi-Head Attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Спектральні властивості позиційних ембеддінгів та математичні моделі адаптації трансформерів до часових рядів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gru-patchtst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Моделювання та оцінювання обчислювальної ефективності моделей GRU та PatchTST для моніторингу завантаження вузлів кластера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Моделювання та оцінювання обчислювальної ефективності моделей GRU та PatchTST для моніторингу завантаження вузлів кластера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-trainable-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок параметричної ємності моделей (Trainable Parameters)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-flops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення алгоритмічної трудомісткості прямого проходу (FLOPs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-training-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок вимог до динамічної пам'яті активацій (Training Memory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Оцінка теоретичного прискорення за законом Амдала на GPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lk11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Тема 11. Навчання з підкріпленням та автономні агенти
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторні роботи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Лабораторні роботи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 1. Дослідження паралелізму та апаратного прискорення обчислень на PyTorch з використанням GPU/CUDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 2. Розробка розподіленої системи обробки даних на основі інтерфейсу MPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 3. Побудова та оптимізація моделей класичного машинного навчання й ансамблів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 4. Проєктування та тренування глибокої згорткової нейронної мережі для аналізу зображень і сигналів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 5. Реалізація рекурентної мережі LSTM з механізмом уваги для прогнозування часових рядів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lb/lb6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ЛБ 6. Навчання автономного агента методом Deep Q-Network у симуляційному середовищі MuJoCo / Gymnasium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практичні заняття
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практичні заняття
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 1. Оцінювання масштабованості паралельних систем за законами Амдала та Густафсона-Барсіса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 2. Проєктування тензорних операцій та векторизованої алгебри в NumPy/PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 3. Проєктування комунікаційних схем MPI для розподілених AI-вузлів
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 4. Математична постановка задач ML, формалізація Loss-функцій та стохастичного градієнтного спуску
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 5. Обчислення та аналіз ансамблевих моделей на структурованих наборах даних
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 6. Математичний розрахунок згорткових шарів, рецептивних полів та Pooling-операцій
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 7. Аналіз вентильних механізмів LSTM/GRU та розрахунок Self-Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pz/pz8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ПЗ 8. Формалізація MDP, обчислення Bellman Equation та оновлення Q-значень
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Самостійна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Розрахунково-графічна робота
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sr/quest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Перелік тестових та практичних завдань для самопідготовки
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Зміст">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Зміст
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Мета лекції
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Очікувані результати навчання
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Детальний покроковий план лекції
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Детальний покроковий план лекції">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Теоретичний модуль. Еволюція парадигм обробки послідовних даних у комп'ютерних системах
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичний модуль. Математичні моделі градієнтної динаміки, вентильних операторів та просторів уваги
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-розрахунковий кейс. Інженерно-аналітичний синтез моделей часових рядів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Фундаментальний теоретичний базис та концептуальні засади
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Фундаментальний теоретичний базис та концептуальні засади">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-vanilla-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Дослідження автокореляційної динаміки послідовностей та концепція прихованого стану Vanilla RNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-bptt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Аналітичне дослідження числової нестабільності зворотного поширення через час (BPTT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-lstm-gru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Вентильні механізми селективного пропускання інформації: архітектури LSTM та GRU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Парадигмальний перехід від послідовної рекурентності до паралельної уваги (Self-Attention)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Вказівки для самостійного осмислення теоретичного базису
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Аналітичні процеси, математичний апарат та моделювання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Аналітичні процеси, математичний апарат та моделювання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-bptt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1. Спектральний аналіз динамічної стійкості BPTT та строге доведення згасання градієнтів
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-lstm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2. Аналітична система рівнянь стану та градієнтні магістралі комірки LSTM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-gru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3. Алгебраїчна оптимізація обчислень та редукція простору станів у блоках GRU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-scaled-dot-product-multi-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4. Математичний апарат механізмів Scaled Dot-Product та Multi-Head Attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5. Спектральні властивості позиційних ембеддінгів та математичні моделі адаптації трансформерів до часових рядів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Практично-прикладний блок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Практично-прикладний блок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-gru-patchtst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Комплексний інженерний кейс. Моделювання та оцінювання обчислювальної ефективності моделей GRU та PatchTST для моніторингу завантаження вузлів кластера
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Комплексний інженерний кейс. Моделювання та оцінювання обчислювальної ефективності моделей GRU та PatchTST для моніторингу завантаження вузлів кластера">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка інженерної задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Покроковий аналітичний розрахунок
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Покроковий аналітичний розрахунок">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-trainable-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 1. Розрахунок параметричної ємності моделей (Trainable Parameters)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-flops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 2. Обчислення алгоритмічної трудомісткості прямого проходу (FLOPs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-training-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 3. Розрахунок вимог до динамічної пам'яті активацій (Training Memory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Крок 4. Оцінка теоретичного прискорення за законом Амдала на GPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Інтерпретація результатів
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Зведена довідкова система лекції
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Контрольні питання та завдання
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3. Контрольні питання та завдання">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Концептуальні тестові завдання
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для самостійної роботи
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Завдання для самостійної роботи">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Постановка задачі
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Завдання для виконання
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="10-transformer-lstmgru">Тема 10. Рекурентні мережі та архітектура Transformer. Динаміка послідовностей, комірки LSTM/GRU, механізм уваги та трансформери у завданнях часових рядів</h1>
+<h2 id="_1">Мета лекції</h2>
+<p>Метою лекційного заняття є формування у майбутніх інженерів комп'ютерних систем та дослідників штучного інтелекту комплексної системи фундаментальних теоретичних знань і практичних компетентностей щодо архітектурної організації, математичного моделювання та оптимізації нейромережевих структур, орієнтованих на обробку послідовностей та часових рядів. У межах навчальної пари розглядається концептуальний перехід від класичних рекурентних обчислень із послідовною передачею контексту через час до сучасних паралельних безрекурентних архітектур, що базуються на матричних механізмах скальованої самоуваги. Особлива увага приділяється аналізу обчислювальної складності алгоритмів, проблемі згасання градієнтних сигналів у динамічних системах та проєктуванню спеціалізованих моделей трансформерів для завдань багатовимірного часового прогнозування.</p>
+<h2 id="_2">Очікувані результати навчання</h2>
+<p>Після успішного опанування матеріалу лекції студенти демонструватимуть такі результати:</p>
+<ol>
+<li>
+<p><strong>Знання та розуміння.</strong> Здобувач вищої освіти засвоює та здатний відтворити архітектурні принципи функціонування класичних рекурентних нейронних мереж (RNN), спеціалізованих вентильних комірок довго-короткочасної пам'яті (LSTM), спрощених блоків (GRU), а також концепцію скальованої багатоголової самоуваги (Multi-Head Self-Attention) разом із синусоїдальними та навчальними позиційними кодуваннями.</p>
+</li>
+<li>
+<p><strong>Застосування.</strong> Здобувач володіє вмінням аналітично розраховувати параметричну ємність моделей, складати системи різницевих рівнянь стану вентильних блоків та алгоритмічно реалізовувати процедуру зворотного поширення помилки через час (BPTT), а також матричні перетворення просторів запитів, ключів і значень (<span class="arithmatex">\(Q, K, V\)</span>).</p>
+</li>
+<li>
+<p><strong>Аналіз.</strong> Здобувач уміє здійснювати порівняльний структурний аналіз часової та обчислювальної складності моделей (<span class="arithmatex">\(O(T)\)</span> для рекурентних схем проти <span class="arithmatex">\(O(T^2)\)</span> для базового механізму уваги), діагностувати умови виникнення чисельної нестабільності (згасання або вибуху градієнтів через спектральний радіус матриць ваг) та оцінювати ступінь утилізації апаратних ресурсів масивно-паралельних обчислювачів.</p>
+</li>
+<li>
+<p><strong>Оцінювання та синтез.</strong> Здобувач набуває здатності критично зіставляти альтернативні архітектурні рішення для специфічних інженерних завдань обробки сигналів, проєктувати спеціалізовані конфігурації часових трансформерів (зокрема моделей PatchTST та інвертованих архітектур iTransformer) та формувати оптимальні конвеєри попередньої обробки багатовимірних часових рядів.</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">Детальний покроковий план лекції</h2>
+<h3 id="1">1. Теоретичний модуль. Еволюція парадигм обробки послідовних даних у комп'ютерних системах</h3>
+<ul>
+<li>
+<p>1.1. Дослідження автокореляційної динаміки послідовностей розкриває роль прихованого стану як динамічної пам'яті системи, функціонування якої формалізується у вигляді розгорнутого у часі графа класичної рекурентної мережі (Vanilla RNN).</p>
+</li>
+<li>
+<p>1.2. Аналітичне дослідження природи числової нестабільності при зворотному поширенні сигналів у часі пояснює затухання градієнтного потоку, що обумовлює необхідність виділення захищеної магістралі довготривалого стану в комірках LSTM.</p>
+</li>
+<li>
+<p>1.3. Впровадження вентильних структур регуляції потоків інформації у комірках LSTM та спрощених блоках GRU забезпечує динамічне забування нерелевантних шумів та вибіркове накопичення значущих контекстних залежностей.</p>
+</li>
+<li>
+<p>1.4. Перехід до безрекурентної моделі трансформера усуває послідовне вузьке місце обчислень, дозволяючи досягти високого ступеня паралелізму за часовою координатою під час навчання на графічних і тензорних процесорах.</p>
+</li>
+</ul>
+<h3 id="2">2. Аналітичний модуль. Математичні моделі градієнтної динаміки, вентильних операторів та просторів уваги</h3>
+<ul>
+<li>
+<p>2.1. Формалізація рекурентного переходу, обчислення спектрального радіуса матриці ваг та строге математичне доведення теореми про експоненційне затухання градієнтів за алгоритмом BPTT.</p>
+</li>
+<li>
+<p>2.2. Повна аналітична система рівнянь стану комірки LSTM описує взаємодію векторів забування, входу, кандидата в довготривалу пам'ять та вихідного фільтра через оператори Адамара та сигмоїдної активації.</p>
+</li>
+<li>
+<p>2.3. Алгебраїчна оптимізація обчислень у блоці GRU зводиться до взаємодії вентилів скидання й оновлення, що реалізують опуклу лінійну інтерполяцію векторів поточного та попереднього станів.</p>
+</li>
+<li>
+<p>2.4. Математичний апарат механізму Scaled Dot-Product Attention формалізує перетворення матриць запитів, ключів і значень із нормувальним фактором <span class="arithmatex">\(\sqrt{d_k}\)</span>, що гарантує збереження градієнтів у зоні високої чутливості функції Softmax.</p>
+</li>
+<li>
+<p>2.5. Спектральний аналіз синусоїдального позиційного кодування демонструє механізм ін'єкції часової метрики, а концепції патчування (PatchTST) та транспонування просторів (iTransformer) забезпечують подолання квадратичної обчислювальної складності для тривалих послідовностей.</p>
+</li>
+</ul>
+<h3 id="3-">3. Практично-розрахунковий кейс. Інженерно-аналітичний синтез моделей часових рядів</h3>
+<p><strong>Тема наскрізної задачі.</strong> «Аналітичний розрахунок параметричної складності, градієнтних траєкторій та прогнозування багатовимірних часових рядів завантаження обчислювального кластера з використанням моделей GRU та PatchTST».</p>
+<h2 id="1_1">1. Фундаментальний теоретичний базис та концептуальні засади</h2>
+<h3 id="11-vanilla-rnn">1.1. Дослідження автокореляційної динаміки послідовностей та концепція прихованого стану Vanilla RNN</h3>
+<p>Обробка часових послідовностей та системних часових рядів належить до фундаментальних класів інженерних і наукових задач у комп'ютерних системах, кіберфізичних комплексах, телекомунікаціях та цифровому аналізі сигналів. На відміну від статичних просторових даних, де окремі екземпляри вибірки вважаються незалежними та однаково розподіленими (<strong>Independent and Identically Distributed, i.i.d.</strong>), часові ряди мають сувору хронологічну впорядкованість, виражену автокореляційну структуру та динамічні причинно-наслідкові зв'язки. Поточний стан системи <span class="arithmatex">\(x_t\)</span> у фізичний або дискретний момент часу <span class="arithmatex">\(t\)</span> фундаментально залежить від передісторії спостережень <span class="arithmatex">\(\{x_1, x_2, \dots, x_{t-1}\}\)</span>. </p>
+<p>Класичні моделі штучних нейронних мереж, такі як багатошаровий персептрон (<strong>Multilayer Perceptron, MLP</strong>) або згорткові мережі (<strong>Convolutional Neural Networks, CNN</strong>), функціонують в умовах апріорного припущення про фіксовану розмірність вхідного вектора і розглядають кожен елемент вибірки ізольовано. Для моделювання динамічних процесів довільної часової тривалості було запропоновано клас <strong>рекурентних нейронних мереж (Recurrent Neural Networks, RNN)</strong>. </p>
+<p>Концептуальна основа класичної рекурентної мережі (<strong>Vanilla RNN</strong>) полягає у введенні зворотного зв'язку в часовій області. Це перетворює статичну мережу прямого поширення на дискретну нелінійну динамічну систему. Внутрішня пам'ять системи формалізується вектором <strong>прихованого стану (Hidden State)</strong> <span class="arithmatex">\(h_t \in \mathbb{R}^H\)</span>, який акумулює стиснуту інформацію про всі попередні стани та поточний вхідний вектор <span class="arithmatex">\(x_t \in \mathbb{R}^M\)</span>.</p>
+<p>Математична модель переходу стану та формування вихідного вектора <span class="arithmatex">\(y_t \in \mathbb{R}^K\)</span> на довільному часовому такті <span class="arithmatex">\(t \in \{1, \dots, T\}\)</span> визначається системою нелінійних матричних різницевих рівнянь:</p>
+<div class="arithmatex">\[h_t = \tanh\left( W_{hh} h_{t-1} + W_{xh} x_t + b_h \right)\]</div>
+<div class="arithmatex">\[y_t = W_{hy} h_t + b_y\]</div>
+<p>Під кожною формулою наведено повний опис задіяних математичних величин:</p>
+<ol>
+<li>
+<p>Змінна <span class="arithmatex">\(h_t \in \mathbb{R}^{H \times 1}\)</span> представляє вектор прихованого стану системи на поточному часовому кроці <span class="arithmatex">\(t\)</span>, що виступає функціональним еквівалентом динамічної пам'яті розмірності <span class="arithmatex">\(H\)</span>.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(h_{t-1} \in \mathbb{R}^{H \times 1}\)</span> позначає вектор прихованого стану, обчислений на безпосередньо попередньому кроці дискретного часу <span class="arithmatex">\((t-1)\)</span>, причому початковий стан <span class="arithmatex">\(h_0\)</span> зазвичай ініціалізується нульовим вектором або навчальними параметрами.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(x_t \in \mathbb{R}^{M \times 1}\)</span> визначає вхідний вектор спостережень часового ряду на поточному кроці <span class="arithmatex">\(t\)</span>, що містить <span class="arithmatex">\(M\)</span> вимірюваних параметрів фізичного процесу.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W_{hh} \in \mathbb{R}^{H \times H}\)</span> є ваговою матрицею рекурентних переходів, яка визначає силу лінійного взаємозв'язку між послідовними станами внутрішньої пам'яті.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W_{xh} \in \mathbb{R}^{H \times M}\)</span> позначає вагову матрицю вхідних зв'язків, що здійснює лінійне відображення вхідного простору спостережень у внутрішній прихований стан.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(b_h \in \mathbb{R}^{H \times 1}\)</span> представляє вектор зсуву (bias) прихованого шару, призначений для усунення інваріантності відносно початку координат.</p>
+</li>
+<li>
+<p>Функція <span class="arithmatex">\(\tanh(\cdot)\)</span> є поелементною гіперболічною тангенсною функцією активації, що забезпечує нелінійне стискання динамічного діапазону значень інтервалом <span class="arithmatex">\((-1, 1)\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W_{hy} \in \mathbb{R}^{K \times H}\)</span> є ваговою матрицею проектування прихованого стану на простір цільових виходів розмірності <span class="arithmatex">\(K\)</span>.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(b_y \in \mathbb{R}^{K \times 1}\)</span> є вектором зсуву вихідного шару моделі.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(y_t \in \mathbb{R}^{K \times 1}\)</span> визначає вектор прогнозованих значень або оцінок стану системи на часовому такті <span class="arithmatex">\(t\)</span>.</p>
+</li>
+</ol>
+<p>Обчислювальний процес у рекурентній мережі концептуально інтерпретується за допомогою розгортання в часі (<strong>Unfolding in Time</strong>). Це перетворює циклічну структуру на ланцюг ідентичних шарів, де кожен шар відповідає дискретному такту <span class="arithmatex">\(t\)</span>, а ваги <span class="arithmatex">\(W_{hh}\)</span>, <span class="arithmatex">\(W_{xh}\)</span>, <span class="arithmatex">\(W_{hy}\)</span> залишаються спільними (<strong>Shared Weights</strong>) для всіх часових кроків, що гарантує інваріантність алгоритму до зсуву в часі.</p>
+<h3 id="12-bptt">1.2. Аналітичне дослідження числової нестабільності зворотного поширення через час (BPTT)</h3>
+<p>Навчання рекурентних нейронних мереж базується на алгоритмі <strong>зворотного поширення помилки через час (Backpropagation Through Time, BPTT)</strong>. Алгоритм передбачає розгортання обчислювального графа вздовж усієї послідовності довжиною <span class="arithmatex">\(T\)</span> кроків із наступним застосуванням ланцюгового правила диференціювання для розрахунку градієнтів цільової функції втрат <span class="arithmatex">\(\mathcal{L} = \sum_{t=1}^T \mathcal{L}_t\)</span> за вагами моделі.</p>
+<p>Фундаментальним обмеженням класичних рекурентних мереж є <strong>проблема згасання та вибуху градієнтів (Vanishing and Exploding Gradient Problem)</strong>, яка аналітично виникає внаслідок багаторазового ланцюгового множення матриць Якобі під час проходження сигналу помилки з моменту часу <span class="arithmatex">\(t\)</span> до далекого попереднього кроку <span class="arithmatex">\(k\)</span> (де <span class="arithmatex">\(k \ll t\)</span>).</p>
+<p>Градієнт локальної функції втрат <span class="arithmatex">\(\mathcal{L}_t\)</span> відносно рекурентної матриці ваг <span class="arithmatex">\(W_{hh}\)</span> формалізується аналітичним співвідношенням:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}_t}{\partial W_{hh}} = \sum_{k=1}^t \frac{\partial \mathcal{L}_t}{\partial h_t} \cdot \frac{\partial h_t}{\partial h_k} \cdot \frac{\partial h_k}{\partial W_{hh}}\]</div>
+<p>Ланцюговий перехід градієнта крізь проміжні стани <span class="arithmatex">\(\frac{\partial h_t}{\partial h_k}\)</span> описується матричним добутком відповідних якобіанів:</p>
+<div class="arithmatex">\[\frac{\partial h_t}{\partial h_k} = \prod_{j=k+1}^t \frac{\partial h_j}{\partial h_{j-1}} = \prod_{j=k+1}^t \operatorname{diag}\left(1 - \tanh^2(z_j)\right) \cdot W_{hh}^T\]</div>
+<p>Розшифрування аналітичних компонентів градієнтного ланцюга:</p>
+<ol>
+<li>
+<p>Величина <span class="arithmatex">\(\frac{\partial \mathcal{L}_t}{\partial h_t} \in \mathbb{R}^{1 \times H}\)</span> позначає вектор-рядок безпосереднього градієнта цільової функції втрат за прихованим станом останнього кроку <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(\frac{\partial h_t}{\partial h_k} \in \mathbb{R}^{H \times H}\)</span> являє собою сумарний якобіан перенесення градієнтного сигналу від кроку <span class="arithmatex">\(t\)</span> до попереднього кроку <span class="arithmatex">\(k\)</span>.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(z_j = W_{hh} h_{j-1} + W_{xh} x_j + b_h \in \mathbb{R}^{H \times 1}\)</span> визначає лінійну активацію нейронів прихованого шару до застосування нелінійного стиснення на кроці <span class="arithmatex">\(j\)</span>.</p>
+</li>
+<li>
+<p>Діагональна матриця <span class="arithmatex">\(\operatorname{diag}\left(1 - \tanh^2(z_j)\right) \in \mathbb{R}^{H \times H}\)</span> є похідною векторної функції гіперболічного тангенса на кроці <span class="arithmatex">\(j\)</span>, чиї діагональні елементи строго належать числовому інтервалу <span class="arithmatex">\((0, 1]\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W_{hh}^T \in \mathbb{R}^{H \times H}\)</span> позначає транспоновану вагову матрицю рекурентного шару, яка багаторазово перемножується сама на себе <span class="arithmatex">\((t-k)\)</span> разів.</p>
+</li>
+</ol>
+<p>Якщо виконати спектральний розклад матриці <span class="arithmatex">\(W_{hh} = Q \Lambda Q^{-1}\)</span>, де <span class="arithmatex">\(\Lambda = \operatorname{diag}(\lambda_1, \dots, \lambda_H)\)</span> — діагональна матриця власних значень, а спектральний радіус задовольняє умову <span class="arithmatex">\(\rho(W_{hh}) = \max_i |\lambda_i| &lt; 1\)</span>, то норма матричного степеня <span class="arithmatex">\(\|W_{hh}^{t-k}\| \le \|Q\| \cdot \|Q^{-1}\| \cdot \rho(W_{hh})^{t-k}\)</span> спадає експоненційно до нуля при збільшенні часового інтервалу <span class="arithmatex">\((t - k) \to \infty\)</span>. Оскільки діагональні елементи похідної <span class="arithmatex">\(\tanh\)</span> додатково не перевищують одиниці, градієнтні сигнали швидко нівелюються. Мережа втрачає математичну можливість коригувати ваги на основі контекстних подій, віддалених більше ніж на 10–15 кроків у минуле, що робить неможливим вивчення <strong>довготривалих залежностей (Long-Term Dependencies)</strong>.</p>
+<p>Навпаки, за умови <span class="arithmatex">\(\rho(W_{hh}) &gt; 1\)</span> та перебування активацій у ненасиченій зоні, виникає експоненційне зростання норми градієнтів (<span class="arithmatex">\(\|g\| \to \infty\)</span>). Це зумовлює числове переповнення регістрів процесора (виникнення станів <code>NaN</code> або <code>Inf</code> у стандартах IEEE 754) та дестабілізує навчання. Для подолання вибуху градієнтів у комп'ютерній інженерії застосовують операцію евристичного <strong>обрізання градієнтів за нормою (Gradient Norm Clipping)</strong>:</p>
+<div class="arithmatex">\[g \leftarrow \begin{cases} g, &amp; \text{якщо } \|g\|_2 \le \theta \\ \frac{\theta}{\|g\|_2} \cdot g, &amp; \text{якщо } \|g\|_2 &gt; \theta \end{cases}\]</div>
+<ol>
+<li>
+<p>Вектор <span class="arithmatex">\(g = \nabla_W \mathcal{L} \in \mathbb{R}^{D \times 1}\)</span> представляє сумарний вектор градієнтів параметрів моделі розмірності <span class="arithmatex">\(D\)</span>, розрахований на поточному кроці оптимізації.</p>
+</li>
+<li>
+<p>Величина <span class="arithmatex">\(\|g\|_2 = \sqrt{\sum_{i=1}^D g_i^2}\)</span> виражає евклідову норму (L2-норму) вектора градієнтів.</p>
+</li>
+<li>
+<p>Параметр <span class="arithmatex">\(\theta \in \mathbb{R}^+\)</span> позначає гранично допустимий поріг норми градієнта, перевищення якого ініціює операцію пропорційного масштабування.</p>
+</li>
+</ol>
+<p>Проте механізм відсікання градієнтів розв'язує лише проблему вибуху, залишаючи проблему експоненційного згасання градієнтів принципово непереборною в рамках ванільної структури RNN.</p>
+<h3 id="13-lstm-gru">1.3. Вентильні механізми селективного пропускання інформації: архітектури LSTM та GRU</h3>
+<p>Для подолання проблеми затухання градієнтів Зепп Хохрайтер та Юрген Шмідхубер (1997 р.) запропонували концепцію <strong>постійної каруселі помилок (Constant Error Carousel, CEC)</strong>, реалізовану в архітектурі <strong>пам'яті довго-короткочасного типу (Long Short-Term Memory, LSTM)</strong>.</p>
+<p>Фундаментальна відмінність LSTM полягає у розщепленні внутрішнього стану на два окремі компоненти: <strong>стан комірки (Cell State)</strong> <span class="arithmatex">\(C_t \in \mathbb{R}^H\)</span>, який утворює довготривалу пам'ять системи, та <strong>прихований стан (Hidden State)</strong> <span class="arithmatex">\(h_t \in \mathbb{R}^H\)</span>, що виконує роль короткотривалої робочої пам'яті. </p>
+<p>Стан комірки <span class="arithmatex">\(C_t\)</span> функціонує як пряма магістраль зв'язку: зміна його значень у часі базується переважно на адитивних, а не мультиплікативних операціях. Завдяки цьому похідна <span class="arithmatex">\(\frac{\partial C_t}{\partial C_{t-1}}\)</span> містить прямий лінійний доданок, що дозволяє градієнтам поширюватися крізь сотні кроків без експоненційного затухання.</p>
+<p>Керування потоками читання, запису та стирання інформації здійснюється за допомогою функціональних <strong>вентилів (Gates)</strong> — спеціалізованих шарів із сигмоїдною активацією <span class="arithmatex">\(\sigma(x) \in [0, 1]\)</span>, що виконують функцію м'яких перемикачів:</p>
+<ol>
+<li>
+<p><strong>Вентиль забування (Forget Gate, <span class="arithmatex">\(f_t\)</span>):</strong> аналізує конкатенацію попереднього прихованого стану <span class="arithmatex">\(h_{t-1}\)</span> і поточного входу <span class="arithmatex">\(x_t\)</span>, формуючи вагові коефіцієнти від 0 (повне стирання) до 1 (повне збереження) для кожного елемента довготривалої пам'яті <span class="arithmatex">\(C_{t-1}\)</span>.</p>
+</li>
+<li>
+<p><strong>Вентиль входу (Input Gate, <span class="arithmatex">\(i_t\)</span>):</strong> визначає ступінь оновлення відповідних координат стану комірки новими значеннями-кандидатами <span class="arithmatex">\(\tilde{C}_t\)</span>, сформованими за допомогою нелінійного перетворення <span class="arithmatex">\(\tanh\)</span>.</p>
+</li>
+<li>
+<p><strong>Вентиль виходу (Output Gate, <span class="arithmatex">\(o_t\)</span>):</strong> обчислює маску селективної фільтрації над нормалізованим станом комірки <span class="arithmatex">\(\tanh(C_t)\)</span>, генеруючи результуючий вектор <span class="arithmatex">\(h_t\)</span>, доступний наступним шарам обчислювальної системи.</p>
+</li>
+</ol>
+<p>Графічну схему перетворень інформаційних потоків усередині комірки LSTM наведено нижче:</p>
+<pre class="mermaid"><code>flowchart TD
+    subgraph LSTM_Cell ["Функціональна комірка LSTM на кроці t"]
+        C_prev["C_(t-1) (Стан комірки)"] --&gt; Mul_F["Покомпонентне множення (Адамар)"]
+        H_prev["h_(t-1) (Прихований стан)"] --&gt; Gate_Concat["Конкатенація: [h_(t-1), x_t]"]
+        X_curr["x_t (Поточний вхід)"] --&gt; Gate_Concat
+
+        Gate_Concat --&gt; F_Gate["Вентиль забування: sigma(W_f)"]
+        Gate_Concat --&gt; I_Gate["Вентиль входу: sigma(W_i)"]
+        Gate_Concat --&gt; C_Cand["Кандидат у стан: tanh(W_c)"]
+        Gate_Concat --&gt; O_Gate["Вентиль виходу: sigma(W_o)"]
+
+        F_Gate --&gt;|f_t| Mul_F
+        I_Gate --&gt;|i_t| Mul_I["Покомпонентне множення (Адамар)"]
+        C_Cand --&gt;|C~_t| Mul_I
+
+        Mul_F --&gt; Add_C["Адитивне об'єднання: (+)"]
+        Mul_I --&gt; Add_C
+        Add_C --&gt; C_curr["C_t (Оновлений стан комірки)"]
+
+        C_curr --&gt; Tanh_C["Нелінійність: tanh(C_t)"]
+        Tanh_C --&gt; Mul_O["Покомпонентне множення (Адамар)"]
+        O_Gate --&gt;|o_t| Mul_O
+        Mul_O --&gt; H_curr["h_t (Оновлений прихований стан)"]
+    end</code></pre>
+<p>Подальша інженерна оптимізація вентильних рекурентних структур привела до створення Кинхьоном Чо (2014 р.) спрощеного блоку — <strong>вентильного рекурентного вузла (Gated Recurrent Unit, GRU)</strong>. Архітектура GRU оптимізована для скорочення обчислювальних витрат та зменшення обсягу використовуваної динамічної пам'яті:</p>
+<ol>
+<li>
+<p>Довготривала пам'ять <span class="arithmatex">\(C_t\)</span> та короткотривалий стан <span class="arithmatex">\(h_t\)</span> об'єднані в єдиний інформаційний вектор <span class="arithmatex">\(h_t\)</span>, що зменшує загальну розмірність тензорів стану.</p>
+</li>
+<li>
+<p>Замість трьох вентилів використовуються лише два: <strong>вентиль скидання (Reset Gate, <span class="arithmatex">\(r_t\)</span>)</strong> та <strong>вентиль оновлення (Update Gate, <span class="arithmatex">\(z_t\)</span>)</strong>.</p>
+</li>
+<li>
+<p>Вентиль оновлення <span class="arithmatex">\(z_t\)</span> одночасно реалізує функції вентилів забування та введення, виконуючи лінійну опуклу комбінацію між старим станом <span class="arithmatex">\(h_{t-1}\)</span> та новим згенерованим кандидатом <span class="arithmatex">\(\tilde{h}_t\)</span> відповідно до формули <span class="arithmatex">\(h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t\)</span>.</p>
+</li>
+</ol>
+<p>Завдяки скороченню кількості вагових матриць на 25% порівняно з LSTM, блоки GRU забезпечують суттєво вищу швидкість навчання на однакових апаратних потужностях без суттєвої втрати апроксимаційної точності на більшості прикладних часових рядів.</p>
+<h3 id="14-self-attention">1.4. Парадигмальний перехід від послідовної рекурентності до паралельної уваги (Self-Attention)</h3>
+<p>Попри високу стійкість моделей LSTM та GRU до згасання градієнтів, усім рекурентним архітектурам притаманний непереборний структурний недолік: <strong>строго послідовна обчислювальна природа</strong>.</p>
+<p>Для обчислення прихованого стану <span class="arithmatex">\(h_t\)</span> обчислювальна система зобов'язана попередньо отримати вектор <span class="arithmatex">\(h_{t-1}\)</span>. Відповідно, процес обробки послідовності довжиною <span class="arithmatex">\(T\)</span> вимагає виконання <span class="arithmatex">\(O(T)\)</span> послідовних операцій, які не можуть бути розпаралелені вздовж часової осі. На сучасних масивно-паралельних прискорювачах (графічних процесорах GPU та тензорних процесорах TPU), що містять тисячі паралельних обчислювальних ядер, виконання інструкцій рекурентної мережі призводить до низької утилізації апаратного забезпечення через постійні затримки синхронізації та низьку інтенсивність арифметичних операцій відносно операцій звернення до оперативної пам'яті (<strong>Memory Bandwidth Bottleneck</strong>).</p>
+<p>Революційний перехід у моделюванні послідовностей відбувся у 2017 році з опублікуванням фундаментальної праці Ашиша Васвані та співавторів (<em>«Attention Is All You Need»</em>), у якій було презентовано архітектуру <strong>Transformer</strong>. Архітектура повністю відмовилася від рекурентних зв'язків та згорток на користь матричного механізму <strong>скальованої самоуваги (Scaled Dot-Product Self-Attention)</strong>.</p>
+<p>Концептуальна ідея Self-Attention полягає у прямому зіставленні кожного елемента послідовності з усіма іншими елементами за одну матричну операцію. Математично це зменшує довжину шляху проходження інформаційного сигналу між будь-якими двома точками в часі від <span class="arithmatex">\(O(T)\)</span> у RNN до константного значення <span class="arithmatex">\(O(1)\)</span> у Transformer.</p>
+<p>Нижче наведено ієрархічну класифікацію нейромережевих архітектур, що використовуються для моделювання динамічних послідовностей:</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Архітектури обробки часових послідовностей"] --&gt; B["Рекурентні моделі (Послідовні O(T))"]
+    A --&gt; C["Безрекурентні моделі (Паралельні O(1))"]
+
+    B --&gt; B1["Vanilla RNN (Незбалансовані ваги)"]
+    B --&gt; B2["Вентильні моделі (Захищені канали пам'яті)"]
+    B2 --&gt; B21["LSTM (Cell State + 3 вентилі)"]
+    B2 --&gt; B22["GRU (Єдиний стан + 2 вентилі)"]
+
+    C --&gt; C1["Згорткові моделі (TCN, Dilated Conv)"]
+    C --&gt; C2["Трансформери (Механізми уваги)"]
+    C2 --&gt; C21["Стандартний трансформер (Vaswani, O(T^2))"]
+    C2 --&gt; C22["Спеціалізовані часові трансформери"]
+    C22 --&gt; C221["PatchTST (Патчування + Channel Independence)"]
+    C222["iTransformer (Cross-Dimension Attention)"]
+    C22 --&gt; C222</code></pre>
+<p>Для аналізу часових характеристик виконання рекурентних та трансформерних конвеєрів на паралельних апаратних прискорювачах наведено часову діаграму обчислювальних кроків:</p>
+<pre class="mermaid"><code>gantt
+    title Порівняння часового конвеєра обчислень RNN та Transformer
+    dateFormat X
+    axisFormat %s
+
+    section Рекурентна модель (Послідовний BPTT-процес)
+    Обчислення кроку t=1         :a1, 0, 10
+    Обчислення кроку t=2         :a2, 10, 20
+    Обчислення кроку t=3         :a3, 20, 30
+    Обчислення кроку t=4         :a4, 30, 40
+
+    section Модель Transformer (Повна апаратна паралелізація)
+    Матричне множення Q, K, V для всіх t :b1, 0, 15
+    Обчислення карти уваги (Softmax)     :b2, 15, 25
+    Агрегація виходу (MatMul з V)         :b3, 25, 35</code></pre>
+<p>Перехід до трансформерних структур зумовив фундаментальну зміну властивостей обчислювального графа. Механізм Self-Attention володіє властивістю <strong>інваріантності до перестановок (Permutation Invariance)</strong>: якщо змінити порядок розташування вхідних векторів у часі без додавання спеціальних міток, множина вихідних векторів зміниться відповідно на ту саму перестановку, повністю ігноруючи хронологічну структуру. </p>
+<p>Для розв'язання цієї проблеми в архітектурі Transformer введено обов'язковий механізм <strong>позиційного кодування (Positional Encoding, PE)</strong>, який шляхом адитивного додавання або конкатенації спеціальних синусоїдальних чи навчальних векторів безпосередньо вбудовує часові координати у векторні представлення спостережень.</p>
+<p>Нижче наведено аналітичну таблицю порівняльного аналізу основних архітектур обробки послідовностей.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Архітектурний тип</th>
+<th style="text-align: left;">Механізм динамічної пам'яті</th>
+<th style="text-align: left;">Часова складність навчання</th>
+<th style="text-align: left;">Гранична довжина залежностей</th>
+<th style="text-align: left;">Стійкість до згасання градієнта</th>
+<th style="text-align: left;">Ступінь утилізації ядер GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Vanilla RNN</strong></td>
+<td style="text-align: left;">Єдиний рекурентний прихований вектор <span class="arithmatex">\(h_t\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(T \cdot H^2)\)</span></td>
+<td style="text-align: left;">Вкрай низька (<span class="arithmatex">\(T \le 10\)</span>)</td>
+<td style="text-align: left;">Незадовільна (експоненційне згасання)</td>
+<td style="text-align: left;">Низька (строга послідовна залежність)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LSTM</strong></td>
+<td style="text-align: left;">Розділені стани: комірка <span class="arithmatex">\(C_t\)</span> та прихований <span class="arithmatex">\(h_t\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(T \cdot H^2)\)</span></td>
+<td style="text-align: left;">Середня (<span class="arithmatex">\(T \approx 100 - 500\)</span>)</td>
+<td style="text-align: left;">Висока (наявність лінійної магістралі CEC)</td>
+<td style="text-align: left;">Низька (блокування кроком <span class="arithmatex">\(t-1\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GRU</strong></td>
+<td style="text-align: left;">Інтерпольований стан <span class="arithmatex">\(h_t\)</span> з парою вентилів</td>
+<td style="text-align: left;"><span class="arithmatex">\(O(T \cdot H^2)\)</span></td>
+<td style="text-align: left;">Середня (<span class="arithmatex">\(T \approx 100 - 500\)</span>)</td>
+<td style="text-align: left;">Висока (опукла комбінація через <span class="arithmatex">\(z_t\)</span>)</td>
+<td style="text-align: left;">Низька (блокування кроком <span class="arithmatex">\(t-1\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Transformer (Vanilla)</strong></td>
+<td style="text-align: left;">Матриця парних скалярних добутків <span class="arithmatex">\(Q K^T\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(T^2 \cdot d + T \cdot d^2)\)</span></td>
+<td style="text-align: left;">Велика (<span class="arithmatex">\(T \approx 1000 - 4000\)</span>)</td>
+<td style="text-align: left;">Абсолютна (прямий шлях градієнта <span class="arithmatex">\(O(1)\)</span>)</td>
+<td style="text-align: left;">Максимальна (паралельні матричні ядра)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PatchTST</strong></td>
+<td style="text-align: left;">Патчована розріджена увага за часом</td>
+<td style="text-align: left;"><span class="arithmatex">\(O((T/P)^2 \cdot d)\)</span></td>
+<td style="text-align: left;">Ультравелика (<span class="arithmatex">\(T &gt; 10000\)</span>)</td>
+<td style="text-align: left;">Абсолютна (за рахунок патчування та уваги)</td>
+<td style="text-align: left;">Висока (збалансована пам'ять та ядра)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>ТИПОВА ПОМИЛКА:</strong> Поширеним є помилкове твердження, нібито архітектура LSTM повністю нівелює проблему згасання градієнта для послідовностей будь-якої довжини, гарантуючи необмежену пам'ять. Насправді стан комірки <span class="arithmatex">\(C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t\)</span> забезпечує захист градієнта за умови, що вектор вентиля забування <span class="arithmatex">\(f_t\)</span> наближається до одиничного вектора. Проте на практиці ваги вентиля забування <span class="arithmatex">\(W_f\)</span> оновлюються динамічно; якщо на довгому інтервалі часу модель навчається зануляти старі значення (<span class="arithmatex">\(f_t \to 0\)</span>), градієнтний потік через стан комірки переривається з тією ж швидкістю, що й у класичних RNN. Крім того, нелінійні перетворення при формуванні виходу <span class="arithmatex">\(h_t = o_t \odot \tanh(C_t)\)</span> залишаються чутливими до насичення, що обмежує практичну пам'ять класичної LSTM межами кількох сотень тактів.</p>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Чому перемноження матриці запитів <span class="arithmatex">\(Q\)</span> та транспонованої матриці ключів <span class="arithmatex">\(K^T\)</span> у стандартному трансформері зумовлює квадратичну обчислювальну складність за пам'яттю та часом <span class="arithmatex">\(O(T^2)\)</span>, і яким чином архітектурний підхід PatchTST знижує зазначену складність при роботі з довготривалими числовими часовими рядами?</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути відповідь</summary>
+<p><strong>Правильний аналітичний розбір:</strong></p>
+<ol>
+<li>Обчислення скалярного добутку матриць запитів <span class="arithmatex">\(Q \in \mathbb{R}^{T \times d_k}\)</span> та ключів <span class="arithmatex">\(K \in \mathbb{R}^{T \times d_k}\)</span> призводить до генерації матриці уваги <span class="arithmatex">\(A\)</span>:</li>
+</ol>
+<div class="arithmatex">\[A = \operatorname{Softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) \in \mathbb{R}^{T \times T}\]</div>
+<p>Розмірність отриманої матриці <span class="arithmatex">\(A\)</span> строго дорівнює <span class="arithmatex">\(T \times T\)</span>, оскільки кожен з <span class="arithmatex">\(T\)</span> часових токенів зобов'язаний розрахувати коефіцієнт парної уваги до всіх <span class="arithmatex">\(T\)</span> токенів вхідного ряду. Для збереження цієї матриці та відповідних проміжних карт уваги у пам'яті графічного прискорювача під час прямого та зворотного проходів необхідно виділити обсяг відеопам'яті, пропорційний квадрату довжини ряду:</p>
+<div class="arithmatex">\[M_{\text{attn}} = O(B \cdot H_{\text{heads}} \cdot T^2)\]</div>
+<p>де <span class="arithmatex">\(B\)</span> — розмір батчу, а <span class="arithmatex">\(H_{\text{heads}}\)</span> — кількість паралельних голів уваги. При збільшенні довжини ряду від <span class="arithmatex">\(T = 1000\)</span> до <span class="arithmatex">\(T = 10000\)</span> обсяг необхідної пам'яті зростає у 100 разів, що призводить до аварійного вичерпання апаратних ресурсів (<strong>Out of Memory, OOM</strong>).</p>
+<ol>
+<li>Архітектура PatchTST (<strong>Patch Time Series Transformer</strong>) долає це обмеження шляхом агрегації суміжних часових точок у локальні неперервні блоки — <strong>патчі</strong> довжини <span class="arithmatex">\(P\)</span> із кроком зміщення <span class="arithmatex">\(S\)</span>. У результаті вихідний часовий ряд довжиною <span class="arithmatex">\(T\)</span> замінюється послідовністю патчів довжиною:</li>
+</ol>
+<div class="arithmatex">\[N = \left\lfloor \frac{T - P}{S} \right\rfloor + 2\]</div>
+<p>Якщо крок зміщення <span class="arithmatex">\(S\)</span> та довжина патча <span class="arithmatex">\(P\)</span> співмірні (наприклад, <span class="arithmatex">\(P = 16, S = 8\)</span>), кількість токенів для трансформера зменшується практично на порядок (<span class="arithmatex">\(N \approx T / 8\)</span>). Відповідно, обчислювальна складність матричного множення та вимоги до пам'яті механізму Self-Attention зменшуються квадратично:</p>
+<div class="arithmatex">\[\text{Complexity}_{\text{PatchTST}} = O(N^2 \cdot d) = O\left(\left(\frac{T}{S}\right)^2 \cdot d\right)\]</div>
+<p>Це забезпечує зменшення кількості обчислень у <span class="arithmatex">\(\left(\frac{T}{N}\right)^2 \approx 64\)</span> рази, дозволяючи масштабувати аналіз на послідовності довжиною в десятки тисяч вимірів із одночасним покращенням співвідношення сигнал/шум завдяки вилученню локального контексту.</p>
+</details>
+<h3 id="_4">Вказівки для самостійного осмислення теоретичного базису</h3>
+<ol>
+<li>
+<p>Проведіть порівняльний спектральний аналіз динамічних систем, змодельованих за допомогою дискретних різницевих рівнянь, та поясніть фундаментальну схожість між чисельною нестійкістю методу Ейлера при розв'язанні жорстких систем звичайних диференціальних рівнянь і вибухом градієнтів у процесі BPTT.</p>
+</li>
+<li>
+<p>Дослідіть взаємозв'язок між принципом адитивності магістралі пам'яті <span class="arithmatex">\(C_t\)</span> у комірках LSTM та механізмом резидуальних з'єднань (<strong>Residual Connections, Skip-Connections</strong>) у глибоких архітектурах ResNet і Transformer, формалізувавши математичні умови збереження градієнтного потоку при прямій передачі похідних через адитивні вузли.</p>
+</li>
+<li>
+<p>Оцініть вплив порушення умови незалежності та однакового розподілу вибірки (i.i.d.) на процедуру крос-валідації параметрів нейромережевих моделей, сформулювавши інженерні вимоги до побудови ковзних вікон валідації (<strong>Walk-Forward Cross-Validation</strong>) для виключення витоку даних із часового майбутнього в минуле.</p>
+</li>
+</ol>
+<h2 id="2_1">2. Аналітичні процеси, математичний апарат та моделювання</h2>
+<h3 id="21-bptt">2.1. Спектральний аналіз динамічної стійкості BPTT та строге доведення згасання градієнтів</h3>
+<p>Математичне моделювання динаміки градієнтного спуску в просторі станів рекурентних нейронних мереж базується на апараті дискретних динамічних систем та спектральної теорії лінійних операторів. Розглянемо траєкторію поширення похибки за алгоритмом <strong>зворотного поширення через час (Backpropagation Through Time, BPTT)</strong> на дискретному інтервалі <span class="arithmatex">\(t \in [1, T]\)</span>. </p>
+<p>Нехай функція переходу прихованого стану задається векторним нелінійним відображенням:</p>
+<div class="arithmatex">\[h_t = \phi(z_t) = \tanh(W_{hh} h_{t-1} + W_{xh} x_t + b_h)\]</div>
+<p>де <span class="arithmatex">\(z_t = W_{hh} h_{t-1} + W_{xh} x_t + b_h \in \mathbb{R}^{H \times 1}\)</span> — вектор повної лінійної активації прихованого шару на такті <span class="arithmatex">\(t\)</span>.</p>
+<p>Сумарна функція втрат на всій траєкторії послідовності визначається функціоналом:</p>
+<div class="arithmatex">\[\mathcal{L} = \sum_{t=1}^T \mathcal{L}_t(y_t, \hat{y}_t)\]</div>
+<ol>
+<li>
+<p>Змінна <span class="arithmatex">\(\mathcal{L} \in \mathbb{R}^+\)</span> визначає скалярне значення загальної емпіричної похибки моделі на всій послідовності спостережень.</p>
+</li>
+<li>
+<p>Змінна <span class="arithmatex">\(\mathcal{L}_t \in \mathbb{R}^+\)</span> позначає скалярну функцію втрат, обчислену для окремого часового кроку <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(y_t \in \mathbb{R}^{K \times 1}\)</span> представляє вектор істинних значень цільових параметрів часового ряду.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(\hat{y}_t \in \mathbb{R}^{K \times 1}\)</span> є вектором вихідних прогнозних оцінок, сформованих обчислювальною моделлю.</p>
+</li>
+</ol>
+<p>Для дослідження градієнтного потоку вздовж часової координати обчислимо повну похідну функції втрат <span class="arithmatex">\(\mathcal{L}_t\)</span> за вектором прихованого стану <span class="arithmatex">\(h_k\)</span> на віддаленому кроці <span class="arithmatex">\(k &lt; t\)</span>. Відповідно до ланцюгового правила аналізу багатьох змінних, градієнтний взаємозв'язок розгортається у добуток локальних матриць Якобі:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}_t}{\partial h_k} = \frac{\partial \mathcal{L}_t}{\partial h_t} \cdot \prod_{j=k+1}^t J_j\]</div>
+<div class="arithmatex">\[J_j = \frac{\partial h_j}{\partial h_{j-1}} = \operatorname{diag}\left(1 - \tanh^2(z_j)\right) \cdot W_{hh}^T\]</div>
+<ol>
+<li>
+<p>Матриця <span class="arithmatex">\(J_j \in \mathbb{R}^{H \times H}\)</span> позначає локальну матрицю Якобі переходу динамічної системи між станами на кроках <span class="arithmatex">\((j-1)\)</span> та <span class="arithmatex">\(j\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(\operatorname{diag}\left(1 - \tanh^2(z_j)\right) \in \mathbb{R}^{H \times H}\)</span> представляє діагональну матрицю перших похідних функції активації, діагональні елементи якої позначимо через <span class="arithmatex">\(D_j = \operatorname{diag}(d_{j,1}, \dots, d_{j,H})\)</span>, де <span class="arithmatex">\(d_{j,m} \in (0, 1]\)</span> для всіх <span class="arithmatex">\(m \in \{1, \dots, H\}\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W_{hh}^T \in \mathbb{R}^{H \times H}\)</span> є транспонованою ваговою матрицею рекурентних зв'язків.</p>
+</li>
+</ol>
+<p>Покрокове аналітичне виведення теореми про затухання градієнтного сигналу формалізується наступним чином:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Матричний розклад Якобіана):} &amp; \quad J_j = D_j W_{hh}^T, \quad D_j = \operatorname{diag}\left(1 - \tanh^2(z_j)\right) \\
+\text{Етап 2 (Оцінка спектральної норми оператора):} &amp; \quad \|J_j\|_2 \le \|D_j\|_2 \cdot \|W_{hh}^T\|_2 \le \gamma \cdot \sigma_{\max}(W_{hh}) \\
+\text{Етап 3 (Асимптотичний аналіз ланцюгового добутку):} &amp; \quad \left\|\frac{\partial h_t}{\partial h_k}\right\|_2 = \left\|\prod_{j=k+1}^t J_j\right\|_2 \le \prod_{j=k+1}^t \|J_j\|_2 \le \left(\gamma \cdot \sigma_{\max}(W_{hh})\right)^{t-k}
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Параметр <span class="arithmatex">\(\gamma = \sup_{j} \|D_j\|_2 = \max_{j, m} |1 - \tanh^2(z_{j,m})| \le 1\)</span> визначає супремум спектральної норми матриці похідних активації, що для гіперболічного тангенса не перевищує одиниці.</p>
+</li>
+<li>
+<p>Величина <span class="arithmatex">\(\sigma_{\max}(W_{hh}) = \sqrt{\lambda_{\max}(W_{hh} W_{hh}^T)}\)</span> визначає максимальне сингулярне число рекурентної матриці ваг, яке чисельно дорівнює її евклідовій операторній нормі <span class="arithmatex">\(\|W_{hh}\|_2\)</span>.</p>
+</li>
+<li>
+<p>Показник <span class="arithmatex">\((t - k) \in \mathbb{N}\)</span> задає величину часового лагу між моментом виникнення помилки та моментом оновлення внутрішнього стану.</p>
+</li>
+</ol>
+<p>Дослідження асимптотичної поведінки отриманої нерівності при граничних умовах формує два класи динамічної поведінки градієнтів:</p>
+<div class="arithmatex">\[\lim_{t - k \to \infty} \left\|\frac{\partial h_t}{\partial h_k}\right\|_2 = 0 \quad \text{при} \quad \gamma \cdot \sigma_{\max}(W_{hh}) \lt  1\]</div>
+<div class="arithmatex">\[\lim_{t - k \to \infty} \left\|\frac{\partial h_t}{\partial h_k}\right\|_2 = \infty \quad \text{при} \quad \inf_j \|D_j W_{hh}^T\|_2 &gt; 1\]</div>
+<p>Перша границя свідчить про експоненційне затухання градієнтів: інформація про довготривалий контекст асимптотично вироджується, унеможливлюючи налаштування ваг для далеких часових залежностей. Друга границя описує стан числового вибуху градієнтів, що призводить до руйнування параметричного простору моделі.</p>
+<h3 id="22-lstm">2.2. Аналітична система рівнянь стану та градієнтні магістралі комірки LSTM</h3>
+<p>Для забезпечення константного проходження градієнта крізь довільні часові інтервали архітектура LSTM реалізує концепцію адитивного оновлення стану пам'яті. Повна система нелінійних різницевих рівнянь, що описує перехід стану на такті <span class="arithmatex">\(t\)</span>, має вигляд:</p>
+<div class="arithmatex">\[f_t = \sigma(W_f x_t + U_f h_{t-1} + b_f)\]</div>
+<div class="arithmatex">\[i_t = \sigma(W_i x_t + U_i h_{t-1} + b_i)\]</div>
+<div class="arithmatex">\[\tilde{C}_t = \tanh(W_c x_t + U_c h_{t-1} + b_c)\]</div>
+<div class="arithmatex">\[C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t\]</div>
+<div class="arithmatex">\[o_t = \sigma(W_o x_t + U_o h_{t-1} + b_o)\]</div>
+<div class="arithmatex">\[h_t = o_t \odot \tanh(C_t)\]</div>
+<ol>
+<li>
+<p>Вектор <span class="arithmatex">\(f_t \in (0, 1)^H\)</span> є виходом вентиля забування, компоненти якого визначають коефіцієнти експоненційного згасання інформації в комірці пам'яті.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(i_t \in (0, 1)^H\)</span> позначає вихід вхідного вентиля, що масштабує амплітуду надходження нових спостережень.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(\tilde{C}_t \in (-1, 1)^H\)</span> являє собою вектор-кандидат оновлення довготривалого стану.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(C_t \in \mathbb{R}^H\)</span> є інтегрованим станом комірки довготривалої пам'яті на поточному часовому такті.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(o_t \in (0, 1)^H\)</span> визначає вихід вентиля селективного виходу для формування поточного зовнішнього сигналу.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(h_t \in (-1, 1)^H\)</span> є вектором короткотривалого прихованого стану комірки.</p>
+</li>
+<li>
+<p>Матриці <span class="arithmatex">\(W_f, W_i, W_c, W_o \in \mathbb{R}^{H \times M}\)</span> та <span class="arithmatex">\(U_f, U_i, U_c, U_o \in \mathbb{R}^{H \times H}\)</span> визначають вагові коефіцієнти проектування входів і попередніх станів відповідно.</p>
+</li>
+<li>
+<p>Вектори <span class="arithmatex">\(b_f, b_i, b_c, b_o \in \mathbb{R}^{H \times 1}\)</span> задають зміщення відповідних вентильних підсистем.</p>
+</li>
+<li>
+<p>Оператор <span class="arithmatex">\(\odot\)</span> позначає покомпонентне множення векторів за правилом Адамара.</p>
+</li>
+</ol>
+<p>Аналітичне дослідження градієнтної магістралі стану комірки <span class="arithmatex">\(C_t\)</span> розкриває причину подолання проблеми затухання градієнта. Обчислимо локальний якобіан стану комірки <span class="arithmatex">\(\frac{\partial C_t}{\partial C_{t-1}}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Диференціювання адитивного стану):} &amp; \quad \frac{\partial C_t}{\partial C_{t-1}} = \operatorname{diag}(f_t) + C_{t-1} \odot \frac{\partial f_t}{\partial C_{t-1}} + \tilde{C}_t \odot \frac{\partial i_t}{\partial C_{t-1}} + i_t \odot \frac{\partial \tilde{C}_t}{\partial C_{t-1}} \\
+\text{Етап 2 (Декомпозиція непрямих градієнтних шляхів):} &amp; \quad \frac{\partial f_t}{\partial C_{t-1}} = \frac{\partial f_t}{\partial h_{t-1}} \cdot \frac{\partial h_{t-1}}{\partial C_{t-1}} = \left(\operatorname{diag}(f_t \odot (1 - f_t)) \cdot U_f\right) \cdot \operatorname{diag}\left(o_{t-1} \odot (1 - \tanh^2(C_{t-1}))\right) \\
+\text{Етап 3 (Формування градієнтного інваріанта CEC):} &amp; \quad \frac{\partial C_t}{\partial C_{t-1}} = \operatorname{diag}(f_t) + \mathcal{R}_t(x_t, h_{t-1}, C_{t-1})
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Матриця <span class="arithmatex">\(\operatorname{diag}(f_t) \in \mathbb{R}^{H \times H}\)</span> є головним лінійним членом перенесення помилки вздовж часової магістралі комірки.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(\mathcal{R}_t \in \mathbb{R}^{H \times H}\)</span> позначає залишковий член якобіана, що містить добутки через сигмоїдні похідні від <span class="arithmatex">\(h_{t-1}\)</span>.</p>
+</li>
+</ol>
+<p>При розгортанні градієнта вздовж часового проміжку від <span class="arithmatex">\(t\)</span> до <span class="arithmatex">\(k\)</span> отримуємо:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}_t}{\partial C_k} = \frac{\partial \mathcal{L}_t}{\partial C_t} \cdot \prod_{j=k+1}^t \left( \operatorname{diag}(f_j) + \mathcal{R}_j \right)\]</div>
+<p>Якщо оптимізатор встановлює зміщення вентиля забування у позитивну область (<span class="arithmatex">\(b_f &gt; 0\)</span>), вектор <span class="arithmatex">\(f_j \to \mathbf{1}\)</span>, внаслідок чого <span class="arithmatex">\(\operatorname{diag}(f_j) \approx I\)</span>. За цих умов:</p>
+<div class="arithmatex">\[\lim_{f_j \to \mathbf{1}, \, \mathcal{R}_j \to 0} \prod_{j=k+1}^t \frac{\partial C_j}{\partial C_{j-1}} = I\]</div>
+<p>Це доводить, що сигнал похибки може поширюватися назад у часі без експоненційного затухання, утворюючи так звану постійну карусель помилок (<strong>Constant Error Carousel</strong>).</p>
+<h3 id="23-gru">2.3. Алгебраїчна оптимізація обчислень та редукція простору станів у блоках GRU</h3>
+<p>Архітектура GRU оптимізує векторний простір рекурентної комірки через відмову від відокремленого вектора <span class="arithmatex">\(C_t\)</span>. Математична модель GRU формалізується системою рівнянь:</p>
+<div class="arithmatex">\[z_t = \sigma(W_z x_t + U_z h_{t-1} + b_z)\]</div>
+<div class="arithmatex">\[r_t = \sigma(W_r x_t + U_r h_{t-1} + b_r)\]</div>
+<div class="arithmatex">\[\tilde{h}_t = \tanh\left(W_h x_t + U_h (r_t \odot h_{t-1}) + b_h\right)\]</div>
+<div class="arithmatex">\[h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t\]</div>
+<ol>
+<li>
+<p>Вектор <span class="arithmatex">\(z_t \in (0, 1)^H\)</span> позначає вихід вентиля оновлення, що балансує коефіцієнт змішування історичного та поточного станів.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(r_t \in (0, 1)^H\)</span> являє собою вектор вентиля скидання, який визначає ступінь лінійного доступу до попереднього стану <span class="arithmatex">\(h_{t-1}\)</span> при формуванні вектора-кандидата <span class="arithmatex">\(\tilde{h}_t\)</span>.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(\tilde{h}_t \in (-1, 1)^H\)</span> є кандидатом у прихований стан системи.</p>
+</li>
+<li>
+<p>Вектор <span class="arithmatex">\(h_t \in (-1, 1)^H\)</span> визначає підсумковий вектор прихованого стану на такті <span class="arithmatex">\(t\)</span>.</p>
+</li>
+<li>
+<p>Матриці <span class="arithmatex">\(W_z, W_r, W_h \in \mathbb{R}^{H \times M}\)</span> та <span class="arithmatex">\(U_z, U_r, U_h \in \mathbb{R}^{H \times H}\)</span> задають параметри вхідних та рекурентних вагових перетворень відповідно.</p>
+</li>
+<li>
+<p>Вектори <span class="arithmatex">\(b_z, b_r, b_h \in \mathbb{R}^{H \times 1}\)</span> задають вектори зсуву вентильних підсистем.</p>
+</li>
+</ol>
+<p>Аналітичне виведення граничних властивостей рівняння оновлення стану демонструє функціональну гнучкість блоку:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Диференціювання опуклої комбінації станів):} &amp; \quad \frac{\partial h_t}{\partial h_{t-1}} = \operatorname{diag}(1 - z_t) + \operatorname{diag}(z_t) \cdot \frac{\partial \tilde{h}_t}{\partial h_{t-1}} + \left( \tilde{h}_t - h_{t-1} \right) \otimes \frac{\partial z_t}{\partial h_{t-1}} \\
+\text{Етап 2 (Асимптотичний аналіз режиму консервації):} &amp; \quad \lim_{z_t \to \mathbf{0}} h_t = h_{t-1} \implies \lim_{z_t \to \mathbf{0}} \frac{\partial h_t}{\partial h_{t-1}} = I \\
+\text{Етап 3 (Асимптотичний аналіз режиму повного перезапису):} &amp; \quad \lim_{z_t \to \mathbf{1}} h_t = \tilde{h}_t \implies \lim_{z_t \to \mathbf{1}} \frac{\partial h_t}{\partial h_{t-1}} = \operatorname{diag}(1 - \tilde{h}_t^2) \cdot U_h \cdot \operatorname{diag}(r_t)
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Оператор <span class="arithmatex">\(\otimes\)</span> визначає зовнішній добуток векторів для розрахунку матриць чутливості вентилів.</p>
+</li>
+<li>
+<p>Одинична матриця <span class="arithmatex">\(I \in \mathbb{R}^{H \times H}\)</span> підтверджує наявність незатухаючої градієнтної магістралі при <span class="arithmatex">\(z_t \to \mathbf{0}\)</span>.</p>
+</li>
+</ol>
+<p>Нижче наведено граф станів функціонування внутрішніх змінних рекурентних комірок:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; InitState: Ініціалізація векторів h_0 та C_0
+    InitState --&gt; GateEvaluation: Надходження вхідного сигналу x_t
+
+    state GateEvaluation {
+        [*] --&gt; ComputeGates: Паралельний розрахунок f_t, i_t, o_t
+        ComputeGates --&gt; CandidateState: Генерація вектора C~_t
+    }
+
+    GateEvaluation --&gt; MemoryUpdate: Застосування операторів Адамара
+
+    state MemoryUpdate {
+        [*] --&gt; ForgetOld: f_t (*) C_(t-1)
+        ForgetOld --&gt; IntegrateNew: (+) i_t (*) C~_t
+        IntegrateNew --&gt; NewCellState: Фіксація C_t
+    }
+
+    MemoryUpdate --&gt; HiddenOutput: Фільтрація виходу o_t (*) tanh(C_t)
+    HiddenOutput --&gt; NextStep: Передача h_t на крок t+1
+    NextStep --&gt; GateEvaluation: Ітерація наступного часового такту</code></pre>
+<h3 id="24-scaled-dot-product-multi-head-attention">2.4. Математичний апарат механізмів Scaled Dot-Product та Multi-Head Attention</h3>
+<p>Механізм <strong>скальованої самоуваги (Scaled Dot-Product Self-Attention)</strong> трансформує вхідну матрицю послідовності <span class="arithmatex">\(X \in \mathbb{R}^{T \times d_{\text{model}}}\)</span> у вихідний контекстний простір шляхом одночасного зіставлення геометричних проекцій токенів.</p>
+<p>Формалізація просторів запитів (<span class="arithmatex">\(Q\)</span>), ключів (<span class="arithmatex">\(K\)</span>) та значень (<span class="arithmatex">\(V\)</span>) здійснюється лінійними операторами:</p>
+<div class="arithmatex">\[Q = X W^Q, \quad K = X W^K, \quad V = X W^V\]</div>
+<ol>
+<li>
+<p>Матриця <span class="arithmatex">\(X \in \mathbb{R}^{T \times d_{\text{model}}}\)</span> містить множину <span class="arithmatex">\(T\)</span> векторів вхідної послідовності, розміщених по рядках.</p>
+</li>
+<li>
+<p>Матриці <span class="arithmatex">\(W^Q \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span>, <span class="arithmatex">\(W^K \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span>, <span class="arithmatex">\(W^V \in \mathbb{R}^{d_{\text{model}} \times d_v}\)</span> є параметричними матрицями проектування.</p>
+</li>
+<li>
+<p>Тензори <span class="arithmatex">\(Q \in \mathbb{R}^{T \times d_k}\)</span>, <span class="arithmatex">\(K \in \mathbb{R}^{T \times d_k}\)</span>, <span class="arithmatex">\(V \in \mathbb{R}^{T \times d_v}\)</span> визначають матриці запитів, ключів і значень відповідно.</p>
+</li>
+</ol>
+<p>Основний закон скальованого перетворення уваги визначається рівнянням:</p>
+<div class="arithmatex">\[\operatorname{Attention}(Q, K, V) = \operatorname{Softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V\]</div>
+<p>Покрокове аналітичне виведення необхідності регуляризаційного коефіцієнта <span class="arithmatex">\(\sqrt{d_k}\)</span> формулюється на основі ймовірнісного аналізу розподілу елементів матриці ненормованих оцінок:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Статистичний розподіл скалярного добутку):} &amp; \quad S_{ij} = q_i \cdot k_j = \sum_{r=1}^{d_k} Q_{ir} K_{jr}, \quad Q_{ir}, K_{jr} \sim \mathcal{N}(0, \sigma^2) \\
+\text{Етап 2 (Розрахунок математичного сподівання та дисперсії):} &amp; \quad \mathbb{E}[S_{ij}] = 0, \quad \operatorname{Var}(S_{ij}) = \sum_{r=1}^{d_k} \operatorname{Var}(Q_{ir} K_{jr}) = d_k \sigma^4 \\
+\text{Етап 3 (Нормування дисперсії для захисту градієнтів Softmax):} &amp; \quad \tilde{S}_{ij} = \frac{S_{ij}}{\sqrt{d_k}} \implies \operatorname{Var}(\tilde{S}_{ij}) = \sigma^4 = 1 \quad (\text{при } \sigma = 1)
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Величина <span class="arithmatex">\(S_{ij} \in \mathbb{R}\)</span> є скалярним добутком вектора-запиту <span class="arithmatex">\(i\)</span>-го токена на вектор-ключ <span class="arithmatex">\(j\)</span>-го токена.</p>
+</li>
+<li>
+<p>Значення <span class="arithmatex">\(\operatorname{Var}(S_{ij}) = d_k\)</span> показує лінійне зростання дисперсії скалярного добутку пропорційно розмірності підпростору <span class="arithmatex">\(d_k\)</span>.</p>
+</li>
+<li>
+<p>Величина <span class="arithmatex">\(\tilde{S}_{ij}\)</span> є нормованим аргументом функції <span class="arithmatex">\(\operatorname{Softmax}\)</span>.</p>
+</li>
+</ol>
+<p>Якщо скалювання <span class="arithmatex">\(\frac{1}{\sqrt{d_k}}\)</span> відсутнє, то при великих значеннях розмірності <span class="arithmatex">\(d_k \gg 1\)</span> дисперсія <span class="arithmatex">\(\operatorname{Var}(S_{ij})\)</span> стає надмірно великою. Це призводить до того, що найбільший елемент рядка значно перевищує інші, викликаючи насичення функції Softmax:</p>
+<div class="arithmatex">\[\lim_{d_k \to \infty} \operatorname{Softmax}(S_i)_j = \begin{cases} 1, &amp; j = \arg\max_m S_{im} \\ 0, &amp; j \ne \arg\max_m S_{im} \end{cases}\]</div>
+<p>У зоні насичення Softmax локальні градієнти експоненційно наближаються до нуля (<span class="arithmatex">\(\frac{\partial \operatorname{Softmax}_j}{\partial S_m} \to 0\)</span>), що породжує ефект штучного затухання градієнтів безпосередньо всередині механізму уваги. Ділення на <span class="arithmatex">\(\sqrt{d_k}\)</span> стабілізує дисперсію аргументу на рівні одиниці, зберігаючи робочу точку активації в зоні максимальної крутизни градієнтів.</p>
+<p>Для розширення виразної здатності застосовується <strong>багатоголова самоувага (Multi-Head Attention, MHA)</strong>, яка паралельно проектує вектори у <span class="arithmatex">\(h\)</span> незалежних підпросторів:</p>
+<div class="arithmatex">\[\operatorname{MultiHead}(Q, K, V) = \operatorname{Concat}(\operatorname{head}_1, \dots, \operatorname{head}_h) W^O\]</div>
+<div class="arithmatex">\[\operatorname{head}_m = \operatorname{Attention}\left(Q W_m^Q, K W_m^K, V W_m^V\right)\]</div>
+<ol>
+<li>
+<p>Індекс <span class="arithmatex">\(m \in \{1, \dots, h\}\)</span> визначає номер паралельної голови уваги.</p>
+</li>
+<li>
+<p>Матриці <span class="arithmatex">\(W_m^Q \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span>, <span class="arithmatex">\(W_m^K \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span>, <span class="arithmatex">\(W_m^V \in \mathbb{R}^{d_{\text{model}} \times d_v}\)</span> є проекційними матрицями <span class="arithmatex">\(m\)</span>-ї голови, де зазвичай <span class="arithmatex">\(d_k = d_v = d_{\text{model}} / h\)</span>.</p>
+</li>
+<li>
+<p>Матриця <span class="arithmatex">\(W^O \in \mathbb{R}^{h d_v \times d_{\text{model}}}\)</span> здійснює фінальне лінійне змішування виходів усіх голів уваги.</p>
+</li>
+</ol>
+<p>Нижче наведено часову послідовність обчислювальних операцій паралельного конвеєра Multi-Head Attention:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant Input as Тензор послідовності X (T x d)
+    participant Proj as Лінійні проектори W^Q, W^K, W^V
+    participant Heads as Паралельні голови уваги (1..h)
+    participant Softmax as Матричний Softmax (T x T)
+    participant Output as Вихідне перетворення W^O
+
+    Input-&gt;&gt;Proj: 1. Завантаження батчу тензорів
+    Note over Proj: Одночасне перетворення для всіх t in [1..T]
+    par Обчислення підпросторів Q, K, V
+        Proj-&gt;&gt;Heads: 2. Проектування Q = X * W^Q
+        Proj-&gt;&gt;Heads: 3. Проектування K = X * W^K
+        Proj-&gt;&gt;Heads: 4. Проектування V = X * W^V
+    end
+    Heads-&gt;&gt;Softmax: 5. Скалярне множення (Q * K^T) / sqrt(d_k)
+    Note over Softmax: Формування повнозв'язної карти уваги A
+    Softmax-&gt;&gt;Heads: 6. Матриця зважування контексту
+    Heads-&gt;&gt;Output: 7. Множення карт уваги на V та Concat
+    Output-&gt;&gt;Input: 8. Фінальна результуюча проекція W^O</code></pre>
+<h3 id="25">2.5. Спектральні властивості позиційних ембеддінгів та математичні моделі адаптації трансформерів до часових рядів</h3>
+<p>Для усунення інваріантності механізму уваги до перестановок часових координат використовується <strong>синусоїдальне позиційне кодування (Sinusoidal Positional Encoding)</strong>:</p>
+<div class="arithmatex">\[PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right) = \sin(\omega_i \cdot pos)\]</div>
+<div class="arithmatex">\[PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right) = \cos(\omega_i \cdot pos)\]</div>
+<ol>
+<li>
+<p>Змінна <span class="arithmatex">\(pos \in \{0, \dots, T-1\}\)</span> позначає абсолютний дискретний часовий індекс токена в послідовності.</p>
+</li>
+<li>
+<p>Індекс <span class="arithmatex">\(i \in \{0, \dots, \frac{d_{\text{model}}}{2} - 1\}\)</span> визначає просторову частотну координату у векторі ознак.</p>
+</li>
+<li>
+<p>Параметр <span class="arithmatex">\(\omega_i = 10000^{-\frac{2i}{d_{\text{model}}}}\)</span> являє собою кутову частоту гармонічного коливання для <span class="arithmatex">\(i\)</span>-го підпростору.</p>
+</li>
+</ol>
+<p>Покрокове аналітичне виведення підтверджує, що для довільного постійного часового зсуву <span class="arithmatex">\(k\)</span> вектор <span class="arithmatex">\(PE_{pos+k}\)</span> представляється лінійною функцією від <span class="arithmatex">\(PE_{pos}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{Етап 1 (Застосування тригонометричних теорем додавання):} &amp; \quad \begin{cases} \sin(\omega_i (pos + k)) = \sin(\omega_i pos)\cos(\omega_i k) + \cos(\omega_i pos)\sin(\omega_i k) \\ \cos(\omega_i (pos + k)) = \cos(\omega_i pos)\cos(\omega_i k) - \sin(\omega_i pos)\sin(\omega_i k) \end{cases} \\
+\text{Етап 2 (Формування матричного оператора часового зсуву):} &amp; \quad \begin{pmatrix} PE_{(pos+k, 2i)} \\ PE_{(pos+k, 2i+1)} \end{pmatrix} = M^{(k, i)} \begin{pmatrix} PE_{(pos, 2i)} \\ PE_{(pos, 2i+1)} \end{pmatrix} \\
+\text{Етап 3 (Аналіз унітарності матриці переходу):} &amp; \quad M^{(k, i)} = \begin{pmatrix} \cos(\omega_i k) &amp; \sin(\omega_i k) \\ -\sin(\omega_i k) &amp; \cos(\omega_i k) \end{pmatrix}, \quad (M^{(k, i)})^T M^{(k, i)} = I
+\end{aligned}
+\]</div>
+<ol>
+<li>
+<p>Матриця <span class="arithmatex">\(M^{(k, i)} \in \mathbb{R}^{2 \times 2}\)</span> позначає ортогональну матрицю повороту в двовимірному підпросторі на кут <span class="arithmatex">\(\omega_i k\)</span>.</p>
+</li>
+<li>
+<p>Рівність <span class="arithmatex">\((M^{(k, i)})^T M^{(k, i)} = I\)</span> доводить, що скалярний добуток між позиційними векторами <span class="arithmatex">\(\langle PE_{pos}, PE_{pos+k} \rangle\)</span> залежить виключно від величини відносного зміщення <span class="arithmatex">\(k\)</span>, що дозволяє моделі легко екстраполювати відносні часові відстані.</p>
+</li>
+</ol>
+<p>Для адаптації даного апарату до багатовимірних часових рядів <span class="arithmatex">\(X \in \mathbb{R}^{T \times M}\)</span> було розроблено дві математичні парадигми:</p>
+<ol>
+<li><strong>Модель PatchTST (Patch Time Series Transformer):</strong> здійснює операцію декомпозиції ряду на незалежні одновимірні канали (<strong>Channel Independence</strong>), де кожен канал розбивається на <span class="arithmatex">\(N\)</span> перекривних патчів розмірності <span class="arithmatex">\(P\)</span> із кроком <span class="arithmatex">\(S\)</span>:</li>
+</ol>
+<div class="arithmatex">\[N = \left\lfloor \frac{T - P}{S} \right\rfloor + 1\]</div>
+<p>Обчислювальна складність при цьому знижується від <span class="arithmatex">\(O(T^2)\)</span> до <span class="arithmatex">\(O(N^2) = O\left(\frac{T^2}{S^2}\right)\)</span>, що забезпечує зменшення кількості операцій у <span class="arithmatex">\(S^2\)</span> разів.</p>
+<ol>
+<li><strong>Модель iTransformer (Inverted Transformer):</strong> інвертує застосування механізму уваги. Замість зіставлення часових кроків одного каналу, матриці <span class="arithmatex">\(Q, K, V\)</span> формуються вздовж вимірів каналів:</li>
+</ol>
+<div class="arithmatex">\[Q, K, V \in \mathbb{R}^{M \times d_k}\]</div>
+<p>де вся часова динаміка окремого каналу довжиною <span class="arithmatex">\(T\)</span> попередньо стискається шаром MLP у вектор розмірності <span class="arithmatex">\(d_{\text{model}}\)</span>. У результаті обчислювальна складність механізму Self-Attention становить <span class="arithmatex">\(O(M^2)\)</span>, що усуває залежність складності механізму уваги від довжини часового горизонту <span class="arithmatex">\(T\)</span>.</p>
+<blockquote>
+<p><strong>ВАЖЛИВО:</strong> Теорема про збереження дисперсії скалярного добутку: Якщо компоненти векторів <span class="arithmatex">\(q, k \in \mathbb{R}^{d_k}\)</span> є незалежними центрованими випадковими величинами з одиничною дисперсією (<span class="arithmatex">\(\mathbb{E}[q_i] = \mathbb{E}[k_i] = 0\)</span>, <span class="arithmatex">\(\operatorname{Var}(q_i) = \operatorname{Var}(k_i) = 1\)</span>), то скалярний добуток <span class="arithmatex">\(q \cdot k\)</span> має дисперсію <span class="arithmatex">\(\operatorname{Var}(q \cdot k) = d_k\)</span>. Нормована величина <span class="arithmatex">\(\frac{q \cdot k}{\sqrt{d_k}}\)</span> володіє інваріантною дисперсією <span class="arithmatex">\(\operatorname{Var}\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = 1\)</span> для будь-якої розмірності простору <span class="arithmatex">\(d_k\)</span>, що гарантує збереження сингулярних чисел якобіана функції <span class="arithmatex">\(\operatorname{Softmax}\)</span> у діапазоні, віддаленому від градієнтного затухання.</p>
+</blockquote>
+<p>Нижче наведено порівняльну аналітичну матрицю моделей моделювання послідовностей.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Аналітичний критерій</th>
+<th style="text-align: left;">Vanilla RNN</th>
+<th style="text-align: left;">LSTM</th>
+<th style="text-align: left;">GRU</th>
+<th style="text-align: left;">Multi-Head Attention (Vaswani)</th>
+<th style="text-align: left;">PatchTST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Аналітична структура стану</strong></td>
+<td style="text-align: left;">Вектор <span class="arithmatex">\(h_t \in \mathbb{R}^H\)</span></td>
+<td style="text-align: left;">Вектори <span class="arithmatex">\(C_t, h_t \in \mathbb{R}^H\)</span></td>
+<td style="text-align: left;">Вектор <span class="arithmatex">\(h_t \in \mathbb{R}^H\)</span></td>
+<td style="text-align: left;">Тензор уваги <span class="arithmatex">\(A \in \mathbb{R}^{T \times T}\)</span></td>
+<td style="text-align: left;">Тензор уваги <span class="arithmatex">\(A \in \mathbb{R}^{N \times N}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кількість матриць параметрів на шар</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span> (<span class="arithmatex">\(W_{xh}, W_{hh}\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\(8\)</span> (<span class="arithmatex">\(W_{\{f,i,c,o\}}, U_{\{f,i,c,o\}}\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\(6\)</span> (<span class="arithmatex">\(W_{\{z,r,h\}}, U_{\{z,r,h\}}\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\(4\)</span> (<span class="arithmatex">\(W^Q, W^K, W^V, W^O\)</span>)</td>
+<td style="text-align: left;"><span class="arithmatex">\(4 + \text{MLP}\)</span> проектор</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Теоретична межа градієнтного зв'язку</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(\gamma^T) \to 0\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(1)\)</span> за умови <span class="arithmatex">\(f_t \to \mathbf{1}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(1)\)</span> за умови <span class="arithmatex">\(z_t \to \mathbf{0}\)</span></td>
+<td style="text-align: left;">Константа <span class="arithmatex">\(O(1)\)</span> для всіх точок</td>
+<td style="text-align: left;">Константа <span class="arithmatex">\(O(1)\)</span> між патчами</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Асимптотична ємність відеопам'яті</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(B \cdot T \cdot H)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(B \cdot T \cdot H)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(B \cdot T \cdot H)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O(B \cdot h \cdot T^2 + B \cdot T \cdot d)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(O\left(B \cdot h \cdot \left(\frac{T}{S}\right)^2 + B \cdot \frac{T}{S} \cdot d\right)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Здатність до глобальної паралелізації</strong></td>
+<td style="text-align: left;">Відсутня (послідовна залежність)</td>
+<td style="text-align: left;">Відсутня (послідовна залежність)</td>
+<td style="text-align: left;">Відсутня (послідовна залежність)</td>
+<td style="text-align: left;">Повна (матричний паралелізм)</td>
+<td style="text-align: left;">Повна за часом і каналами</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>КОНТРОЛЬНЕ ПИТАННЯ.</strong> Для багатовимірного часового ряду параметрів серверного кластера з кількістю каналів спостереження <span class="arithmatex">\(M = 32\)</span> та глибиною історії <span class="arithmatex">\(T = 2048\)</span> тактів розрахуйте точну кількість скалярних операцій множення-додавання (FLOPs), необхідних для обчислення сирої матриці уваги <span class="arithmatex">\(Q K^T\)</span> у стандартному трансформері (<span class="arithmatex">\(d_{\text{model}} = 256, d_k = 64, h = 4\)</span>). Порівняйте отримане значення із моделлю PatchTST, де довжина патча <span class="arithmatex">\(P = 64\)</span>, а крок <span class="arithmatex">\(S = 32\)</span>.</p>
+</blockquote>
+<details class="note">
+<summary>Розгорнути аналіз відповіді</summary>
+<p><strong>Аналітичний розрахунок:</strong></p>
+<ol>
+<li>Розрахунок для стандартного механізму Multi-Head Attention:</li>
+</ol>
+<p>Матриця запитів для однієї голови має розмірність <span class="arithmatex">\(Q_m \in \mathbb{R}^{T \times d_k}\)</span>, а транспонована матриця ключів — <span class="arithmatex">\(K_m^T \in \mathbb{R}^{d_k \times T}\)</span>.</p>
+<p>Кількість операцій множення-додавання (де одна операція MAC еквівалентна 2 FLOPs) для множення матриць розміром <span class="arithmatex">\((T \times d_k)\)</span> та <span class="arithmatex">\((d_k \times T)\)</span> становить:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{MatMul}} = 2 \cdot T \cdot d_k \cdot T = 2 \cdot T^2 \cdot d_k\]</div>
+<p>Для всіх <span class="arithmatex">\(h\)</span> голів сумарна кількість операцій дорівнює:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{Total\_Standard}} = h \cdot (2 \cdot T^2 \cdot d_k) = 2 \cdot h \cdot d_k \cdot T^2 = 2 \cdot d_{\text{model}} \cdot T^2\]</div>
+<p>Підставимо числові параметри (<span class="arithmatex">\(T = 2048\)</span>, <span class="arithmatex">\(d_{\text{model}} = 256\)</span>):</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{Total\_Standard}} = 2 \cdot 256 \cdot (2048)^2 = 512 \cdot 4\,194\,304 = 2\,147\,483\,648 \text{ FLOPs} \approx 2.15 \text{ GFLOPs}\]</div>
+<ol>
+<li>Розрахунок для архітектури PatchTST:</li>
+</ol>
+<p>Обчислимо кількість патчів <span class="arithmatex">\(N\)</span> за умови довжини ряду <span class="arithmatex">\(T = 2048\)</span>, розміру патча <span class="arithmatex">\(P = 64\)</span> та кроку зсуву <span class="arithmatex">\(S = 32\)</span>:</p>
+<div class="arithmatex">\[N = \frac{T - P}{S} + 1 = \frac{2048 - 64}{32} + 1 = \frac{1984}{32} + 1 = 62 + 1 = 63\]</div>
+<p>Для отриманої кількості токенів <span class="arithmatex">\(N = 63\)</span> розрахуємо кількість операцій множення <span class="arithmatex">\(Q K^T\)</span> для однієї часової послідовності:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{Patch}} = 2 \cdot d_{\text{model}} \cdot N^2 = 2 \cdot 256 \cdot (63)^2 = 512 \cdot 3969 = 2\,032\,128 \text{ FLOPs} \approx 2.03 \text{ MFLOPs}\]</div>
+<ol>
+<li>Оцінка коефіцієнта обчислювального прискорення <span class="arithmatex">\(\eta\)</span>:</li>
+</ol>
+<div class="arithmatex">\[\eta = \frac{\text{FLOPs}_{\text{Total\_Standard}}}{\text{FLOPs}_{\text{Patch}}} = \frac{2\,147\,483\,648}{2\,032\,128} \approx 1056.76\]</div>
+<p>Таким чином, застосування механізму патчування PatchTST скорочує обчислювальні витрати на формування матриць парної уваги більш ніж у <span class="arithmatex">\(1050\)</span> разів, одночасно зменшуючи вимоги до виділення динамічної пам'яті графічного процесора.</p>
+</details>
+<h2 id="3-_1">3. Практично-прикладний блок</h2>
+<h3 id="31-gru-patchtst">3.1. Комплексний інженерний кейс. Моделювання та оцінювання обчислювальної ефективності моделей GRU та PatchTST для моніторингу завантаження вузлів кластера</h3>
+<h4 id="_5">Постановка інженерної задачі</h4>
+<p>У сучасних дата-центрах та високопродуктивних обчислювальних кластерах завдання предиктивної діагностики апаратного забезпечення базується на неперервному моніторингу багатовимірних часових рядів телеметрії. Розглядається серверна стійка суперкомп'ютера, де вимірювальні агенти щосекунди реєструють показники функціонування обчислювальних вузлів (завантаження процесорних ядер, споживання оперативної пам'яті, пропускну здатність інтерфейсів Infiniband та температурні режими кристалів). Інженерне завдання полягає у виборі та розрахунку характеристик моделі прогнозування поведінки системи на горизонт уперед для запобігання відмовам і динамічного теплового балансування завдань.</p>
+<p>Вхідні параметри інженерного середовища та конфігурацій досліджуваних нейромережевих архітектур зведено у таблицю 3.1.</p>
+<p>Таблиця 3.1. Вихідні дані та інженерні параметри системи телеметрії кластера</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Параметр системи</th>
+<th style="text-align: left;">Умовне позначення</th>
+<th style="text-align: left;">Числове значення</th>
+<th style="text-align: left;">Одиниця вимірювання</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Кількість каналів телеметрії</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(M\)</span></td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">Одиниць (вимірювані канали)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Довжина ретроспективного вікна</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(T\)</span></td>
+<td style="text-align: left;">1024</td>
+<td style="text-align: left;">Дискретні часові такти</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Горизонт прогнозування</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(H_{\text{pred}}\)</span></td>
+<td style="text-align: left;">64</td>
+<td style="text-align: left;">Дискретні часові такти</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмір пакета обробки</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(B\)</span></td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Екземплярів послідовностей</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність прихованого стану GRU</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(H\)</span></td>
+<td style="text-align: left;">256</td>
+<td style="text-align: left;">Векторні координати</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Довжина локального патча PatchTST</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(P\)</span></td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">Дискретні часові такти</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Крок зміщення патча (Stride)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(S\)</span></td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Дискретні часові такти</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність моделі PatchTST</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(d_{\text{model}}\)</span></td>
+<td style="text-align: left;">128</td>
+<td style="text-align: left;">Векторні координати</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Кількість голів уваги</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(h\)</span></td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Одиниць (паралельні підпростори)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність проекції голови уваги</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(d_k\)</span></td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">Векторні координати</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Розмірність проміжного шару FFN</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(d_{ffn}\)</span></td>
+<td style="text-align: left;">512</td>
+<td style="text-align: left;">Векторні координати</td>
+</tr>
+</tbody>
+</table>
+<p>Графічну послідовність етапів аналітичного розрахунку наведено на рисунку 3.1:</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Формування метричного простору телеметрії (T, M, H_pred)"] --&gt; B["Крок 1. Розрахунок параметричної ємності моделей GRU та PatchTST"]
+    B --&gt; C["Крок 2. Обчислення алгоритмічної трудомісткості (FLOPs прямого проходу)"]
+    C --&gt; D["Крок 3. Розрахунок вимог до пам'яті активацій під час навчання"]
+    D --&gt; E["Крок 4. Оцінка паралельного прискорення на графічному прискорювачі"]
+    E --&gt; F["Прийняття інженерного рішення щодо розгортання моделі"]</code></pre>
+<p><em>Рисунок 3.1 — Схема етапів розрахунку параметричної складності та продуктивності</em></p>
+<h4 id="_6">Покроковий аналітичний розрахунок</h4>
+<h5 id="1-trainable-parameters">Крок 1. Розрахунок параметричної ємності моделей (Trainable Parameters)</h5>
+<p>Для одношарової рекурентної мережі <strong>GRU</strong> кількість параметрів вентилів (<span class="arithmatex">\(z_t, r_t, \tilde{h}_t\)</span>) разом із лінійним проекційним шаром прогнозування розраховується за аналітичною формулою:</p>
+<div class="arithmatex">\[N_{\text{params}}^{\text{GRU}} = 3 \cdot \left( M \cdot H + H^2 + 2 \cdot H \right) + \left( H \cdot (M \cdot H_{\text{pred}}) + M \cdot H_{\text{pred}} \right)\]</div>
+<ol>
+<li>
+<p>Доданок <span class="arithmatex">\(3 \cdot (M \cdot H + H^2 + 2H)\)</span> представляє ваги <span class="arithmatex">\(W_z, W_r, W_h \in \mathbb{R}^{H \times M}\)</span>, рекурентні ваги <span class="arithmatex">\(U_z, U_r, U_h \in \mathbb{R}^{H \times H}\)</span> та вектори зсуву для двох груп зв'язків.</p>
+</li>
+<li>
+<p>Доданок <span class="arithmatex">\(H \cdot (M \cdot H_{\text{pred}}) + M \cdot H_{\text{pred}}\)</span> визначає параметри вихідного повнозв'язного шару розгортання прихованого стану у вектор прогнозу розмірності <span class="arithmatex">\(M \cdot H_{\text{pred}}\)</span>.</p>
+</li>
+</ol>
+<p>Підставимо значення числових параметрів:</p>
+<div class="arithmatex">\[N_{\text{gate}}^{\text{GRU}} = 3 \cdot \left( 32 \cdot 256 + 256^2 + 2 \cdot 256 \right) = 3 \cdot (8192 + 65536 + 512) = 3 \cdot 74240 = 222\,720\]</div>
+<div class="arithmatex">\[N_{\text{head}}^{\text{GRU}} = 256 \cdot (32 \cdot 64) + (32 \cdot 64) = 256 \cdot 2048 + 2048 = 524\,288 + 2048 = 526\,336\]</div>
+<div class="arithmatex">\[N_{\text{params}}^{\text{GRU}} = 222\,720 + 526\,336 = 749\,056 \text{ параметрів}\]</div>
+<p>Для моделі <strong>PatchTST</strong> із незалежними каналами (<strong>Channel Independence</strong>) кількість токенів <span class="arithmatex">\(N\)</span> визначається співвідношенням:</p>
+<div class="arithmatex">\[N = \left\lfloor \frac{T - P}{S} \right\rfloor + 1 = \left\lfloor \frac{1024 - 32}{16} \right\rfloor + 1 = \frac{992}{16} + 1 = 62 + 1 = 63 \text{ токени}\]</div>
+<p>Параметрична ємність PatchTST складається з проектора патчів, шару Multi-Head Attention, блоку Feed-Forward Network (FFN), двох шарів LayerNorm та лінійної проекційної голови (спільної для всіх каналів):</p>
+<div class="arithmatex">\[N_{\text{proj}} = P \cdot d_{\text{model}} + d_{\text{model}} = 32 \cdot 128 + 128 = 4096 + 128 = 4224\]</div>
+<div class="arithmatex">\[N_{\text{MHA}} = 4 \cdot d_{\text{model}}^2 + 4 \cdot d_{\text{model}} = 4 \cdot 128^2 + 4 \cdot 128 = 65536 + 512 = 66\,048\]</div>
+<div class="arithmatex">\[N_{\text{FFN}} = 2 \cdot d_{\text{model}} \cdot d_{ffn} + d_{ffn} + d_{\text{model}} = 2 \cdot 128 \cdot 512 + 512 + 128 = 131\,072 + 640 = 131\,712\]</div>
+<div class="arithmatex">\[N_{\text{LN}} = 2 \cdot (2 \cdot d_{\text{model}}) = 4 \cdot 128 = 512\]</div>
+<div class="arithmatex">\[N_{\text{head}}^{\text{PatchTST}} = (N \cdot d_{\text{model}}) \cdot H_{\text{pred}} + H_{\text{pred}} = (63 \cdot 128) \cdot 64 + 64 = 8064 \cdot 64 + 64 = 516\,096 + 64 = 516\,160\]</div>
+<div class="arithmatex">\[N_{\text{params}}^{\text{PatchTST}} = 4224 + 66048 + 131712 + 512 + 516160 = 718\,656 \text{ параметрів}\]</div>
+<h5 id="2-flops">Крок 2. Обчислення алгоритмічної трудомісткості прямого проходу (FLOPs)</h5>
+<p>Для моделі GRU на кожному з <span class="arithmatex">\(T\)</span> часових кроків виконується фіксована кількість операцій множення та додавання. Враховуючи, що одне множення з накопиченням (MAC) дорівнює 2 операціям із рухомою комою (FLOPs):</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{step}}^{\text{GRU}} \approx 2 \cdot N_{\text{gate}}^{\text{GRU}} = 2 \cdot 222\,720 = 445\,440 \text{ FLOPs/крок}\]</div>
+<p>Для всієї вхідної послідовності довжиною <span class="arithmatex">\(T = 1024\)</span> з урахуванням вихідної голови:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{seq}}^{\text{GRU}} = T \cdot \text{FLOPs}_{\text{step}}^{\text{GRU}} + 2 \cdot N_{\text{head}}^{\text{GRU}} = 1024 \cdot 445\,440 + 2 \cdot 526\,336 = 456\,130\,560 + 1\,052\,672 = 457\,183\,232 \text{ FLOPs}\]</div>
+<p>Для одного батчу розміром <span class="arithmatex">\(B = 16\)</span>:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{batch}}^{\text{GRU}} = 16 \cdot 457\,183\,232 = 7\,314\,931\,712 \text{ FLOPs} \approx 7.31 \text{ GFLOPs}\]</div>
+<p>Для моделі PatchTST обчислення виконуються для <span class="arithmatex">\(M\)</span> незалежних каналів. Розрахуємо операції для одного каналу:</p>
+<ol>
+<li>
+<p>Проектування патчів: <span class="arithmatex">\(2 \cdot N \cdot P \cdot d_{\text{model}} = 2 \cdot 63 \cdot 32 \cdot 128 = 516\,096 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Механізм Multi-Head Attention:</p>
+</li>
+<li>
+<p>Проекції <span class="arithmatex">\(Q, K, V\)</span>: <span class="arithmatex">\(3 \cdot (2 \cdot N \cdot d_{\text{model}}^2) = 6 \cdot 63 \cdot 128^2 = 6\,193\,152 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Матричний добуток <span class="arithmatex">\(Q K^T\)</span>: <span class="arithmatex">\(2 \cdot h \cdot N^2 \cdot d_k = 2 \cdot 4 \cdot 63^2 \cdot 32 = 1\,016\,064 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Матричний добуток з <span class="arithmatex">\(V\)</span>: <span class="arithmatex">\(2 \cdot h \cdot N^2 \cdot d_k = 1\,016\,064 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Фінальна проекція <span class="arithmatex">\(W^O\)</span>: <span class="arithmatex">\(2 \cdot N \cdot d_{\text{model}}^2 = 2 \cdot 63 \cdot 128^2 = 2\,064\,384 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Блок FFN: <span class="arithmatex">\(2 \cdot (2 \cdot N \cdot d_{\text{model}} \cdot d_{ffn}) = 4 \cdot 63 \cdot 128 \cdot 512 = 16\,515\,072 \text{ FLOPs}\)</span>.</p>
+</li>
+<li>
+<p>Лінійна вихідна голова: <span class="arithmatex">\(2 \cdot (N \cdot d_{\text{model}}) \cdot H_{\text{pred}} = 2 \cdot 8064 \cdot 64 = 1\,032\,192 \text{ FLOPs}\)</span>.</p>
+</li>
+</ol>
+<p>Сумарні витрати PatchTST на один канал:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{channel}}^{\text{PatchTST}} = 516\,096 + (6\,193\,152 + 1\,016\,064 + 1\,016\,064 + 2\,064\,384) + 16\,515\,072 + 1\,032\,192 = 28\,353\,024 \text{ FLOPs}\]</div>
+<p>Для <span class="arithmatex">\(M = 32\)</span> каналів та батчу <span class="arithmatex">\(B = 16\)</span>:</p>
+<div class="arithmatex">\[\text{FLOPs}_{\text{batch}}^{\text{PatchTST}} = B \cdot M \cdot \text{FLOPs}_{\text{channel}}^{\text{PatchTST}} = 16 \cdot 32 \cdot 28\,353\,024 = 512 \cdot 28\,353\,024 = 14\,516\,748\,288 \text{ FLOPs} \approx 14.52 \text{ GFLOPs}\]</div>
+<h5 id="3-training-memory">Крок 3. Розрахунок вимог до динамічної пам'яті активацій (Training Memory)</h5>
+<p>Під час зворотного проходу алгоритм BPTT для моделі GRU зобов'язаний зберігати тензори проміжних прихованих станів для кожного кроку <span class="arithmatex">\(t \in [1, T]\)</span>:</p>
+<div class="arithmatex">\[\text{Mem}_{\text{act}}^{\text{GRU}} = B \cdot T \cdot H \cdot 4 \text{ байти (формат float32)} = 16 \cdot 1024 \cdot 256 \cdot 4 = 16\,777\,216 \text{ байт} = 16.0 \text{ МБ}\]</div>
+<p>Для моделі PatchTST обсяг пам'яті активацій визначається збереженням прихованих представлень усіх патчів та матриць уваги розміром <span class="arithmatex">\(N \times N\)</span>:</p>
+<div class="arithmatex">\[\text{Mem}_{\text{tokens}} = B \cdot M \cdot N \cdot d_{\text{model}} \cdot 4 = 16 \cdot 32 \cdot 63 \cdot 128 \cdot 4 = 15\,482\,880 \text{ байт} \approx 14.77 \text{ МБ}\]</div>
+<div class="arithmatex">\[\text{Mem}_{\text{attn}} = B \cdot M \cdot h \cdot N^2 \cdot 4 = 16 \cdot 32 \cdot 4 \cdot 63^2 \cdot 4 = 2048 \cdot 3969 \cdot 4 = 32\,510\,208 \text{ байт} \approx 31.0 \text{ МБ}\]</div>
+<div class="arithmatex">\[\text{Mem}_{\text{act}}^{\text{PatchTST}} = 14.77 + 31.0 = 45.77 \text{ МБ}\]</div>
+<h5 id="4-gpu">Крок 4. Оцінка теоретичного прискорення за законом Амдала на GPU</h5>
+<p>Нехай графічний прискорювач має паралельну продуктивність <span class="arithmatex">\(R_{\text{gpu}} = 10 \text{ TFLOPs}\)</span> (<span class="arithmatex">\(10^{13} \text{ FLOPs/с}\)</span>) та пропускну здатність пам'яті <span class="arithmatex">\(\text{BW} = 500 \text{ ГБ/с}\)</span>. </p>
+<p>Для моделі GRU час виконання прямого проходу лімітується строгою послідовністю <span class="arithmatex">\(T = 1024\)</span> викликів рекурентного ядра. Час затримки запуску одного ядра (Kernel Launch Latency) на GPU становить у середньому <span class="arithmatex">\(t_{\text{lat}} \approx 5 \text{ мкс}\)</span>. Мінімальний сумарний час затримок на синхронізацію:</p>
+<div class="arithmatex">\[t_{\text{latency}}^{\text{GRU}} = T \cdot t_{\text{lat}} = 1024 \cdot 5 \cdot 10^{-6} \text{ с} = 5.12 \text{ мс}\]</div>
+<p>Чистий час арифметичних обчислень батчу:</p>
+<div class="arithmatex">\[t_{\text{compute}}^{\text{GRU}} = \frac{\text{FLOPs}_{\text{batch}}^{\text{GRU}}}{R_{\text{gpu}}} = \frac{7.31 \cdot 10^9}{10^{13}} = 0.731 \text{ мс}\]</div>
+<p>Сумарний час проходу GRU: <span class="arithmatex">\(t_{\text{total}}^{\text{GRU}} \approx 5.12 + 0.731 = 5.851 \text{ мс}\)</span>.</p>
+<p>Для моделі PatchTST весь тензор розмірності <span class="arithmatex">\((B \cdot M, N, d_{\text{model}}) = (512, 63, 128)\)</span> обробляється за кілька паралельних викликів високоефективних бібліотек лінійної алгебри cuBLAS. Затримка синхронізації становить менше 5 викликів ядер: <span class="arithmatex">\(t_{\text{latency}}^{\text{PatchTST}} \approx 5 \cdot 5 \text{ мкс} = 0.025 \text{ мс}\)</span>.</p>
+<p>Час арифметичних розрахунків:</p>
+<div class="arithmatex">\[t_{\text{compute}}^{\text{PatchTST}} = \frac{\text{FLOPs}_{\text{batch}}^{\text{PatchTST}}}{R_{\text{gpu}}} = \frac{14.52 \cdot 10^9}{10^{13}} = 1.452 \text{ мс}\]</div>
+<p>Сумарний час проходу PatchTST: <span class="arithmatex">\(t_{\text{total}}^{\text{PatchTST}} \approx 0.025 + 1.452 = 1.477 \text{ мс}\)</span>.</p>
+<p>Розрахунок коефіцієнта реального інженерного прискорення <span class="arithmatex">\(\mathcal{S}\)</span>:</p>
+<div class="arithmatex">\[\mathcal{S} = \frac{t_{\text{total}}^{\text{GRU}}}{t_{\text{total}}^{\text{PatchTST}}} = \frac{5.851 \text{ мс}}{1.477 \text{ мс}} \approx 3.96\]</div>
+<h4 id="_7">Інтерпретація результатів</h4>
+<ol>
+<li>
+<p>Попри те, що модель PatchTST потребує вдвічі більшої сумарної кількості операцій із рухомою комою (<span class="arithmatex">\(14.52 \text{ GFLOPs}\)</span> проти <span class="arithmatex">\(7.31 \text{ GFLOPs}\)</span> у GRU), її час виконання на цільовому графічному процесорі майже в 4 рази менший завдяки усуненню послідовного рекурентного вузького місця і відсутності накладних витрат на тисячі послідовних синхронізацій процесорних ядер.</p>
+</li>
+<li>
+<p>Модель PatchTST вимагає більшого обсягу динамічної пам'яті для збереження проміжних карт уваги (<span class="arithmatex">\(45.77 \text{ МБ}\)</span> проти <span class="arithmatex">\(16.0 \text{ МБ}\)</span> у GRU), проте такий розмір є абсолютно прийнятним для сучасних прискорювачів із обсягом пам'яті від 16 до 80 ГБ.</p>
+</li>
+<li>
+<p>Параметрична ємність обох архітектур виявилася співмірною (<span class="arithmatex">\(749 \text{ тис.}\)</span> у GRU проти <span class="arithmatex">\(718 \text{ тис.}\)</span> у PatchTST), що гарантує високу екстраполяційну здатність трансформера без ризику надлишкового перенавчання.</p>
+</li>
+</ol>
+<hr />
+<h3 id="32">3.2. Зведена довідкова система лекції</h3>
+<p>Нижче наведено підсумкову довідкову таблицю фундаментальних понять і конструкцій, розглянутих у лекції.</p>
+<p>Таблиця 3.2. Систематизація базових понять, моделей та архітектурних обмежень</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Термін / Поняття</th>
+<th style="text-align: left;">Формалізація / Формула</th>
+<th style="text-align: left;">Сфера інженерного застосування</th>
+<th style="text-align: left;">Граничні обмеження</th>
+<th style="text-align: left;">Типові помилки інтерпретації</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Vanilla RNN</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(h_t = \tanh(W_{hh}h_{t-1} + W_{xh}x_t + b)\)</span></td>
+<td style="text-align: left;">Прості задачі моделювання коротких сигналів (<span class="arithmatex">\(T &lt; 15\)</span>).</td>
+<td style="text-align: left;">Експоненційне затухання градієнта при <span class="arithmatex">\(\rho(W_{hh}) &lt; 1\)</span>.</td>
+<td style="text-align: left;">Ототожнення прихованого стану зі статичною базою даних без урахування експоненційної втрати контексту.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Комірка LSTM</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t\)</span></td>
+<td style="text-align: left;">Завдання обробки сигналів із середньою глибиною пам'яті (<span class="arithmatex">\(T \le 500\)</span>).</td>
+<td style="text-align: left;">Строго послідовне виконання кроків, висока вартість обчислень 4 вентилів.</td>
+<td style="text-align: left;">Твердження, що LSTM повністю усуває згасання градієнта на нескінченних інтервалах (<span class="arithmatex">\(T \to \infty\)</span>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Блок GRU</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t\)</span></td>
+<td style="text-align: left;">Вбудовані системи та мікроконтролери з обмеженою оперативною пам'яттю.</td>
+<td style="text-align: left;">Відсутність ізольованого каналу пам'яті для довготривалих структур.</td>
+<td style="text-align: left;">Вважання GRU менш точною моделлю порівняно з LSTM на всіх класах задач.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Scaled Dot-Product Attention</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\operatorname{Softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V\)</span></td>
+<td style="text-align: left;">Паралельне зіставлення токенів у трансформерах довільного призначення.</td>
+<td style="text-align: left;">Квадратична складність за пам'яттю та часом <span class="arithmatex">\(O(T^2)\)</span>.</td>
+<td style="text-align: left;">Ігнорування масштабуючого множника <span class="arithmatex">\(\sqrt{d_k}\)</span>, що спричиняє насичення функції Softmax.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Multi-Head Attention</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\operatorname{Concat}(\text{head}_1, \dots, \text{head}_h)W^O\)</span></td>
+<td style="text-align: left;">Захоплення різнорідних семантичних і часових залежностей у різних підпросторах.</td>
+<td style="text-align: left;">Зростання розмірності проміжних тензорів активацій.</td>
+<td style="text-align: left;">Припущення, що кожна голова уваги навчається суворо ізольованим частотним діапазонам без регуляризації.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Позиційне кодування (PE)</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\sin(\omega_i \cdot pos), \cos(\omega_i \cdot pos)\)</span></td>
+<td style="text-align: left;">Вбудовування інформації про часовий порядок у безрекурентні моделі.</td>
+<td style="text-align: left;">Обмежена здатність до екстраполяції за межі навченої максимальної довжини <span class="arithmatex">\(T_{\max}\)</span>.</td>
+<td style="text-align: left;">Вважання, що додавання PE змінює амплітуду корисного сигналу більше, ніж його контекстне положення.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Модель PatchTST</strong></td>
+<td style="text-align: left;">Агрегація <span class="arithmatex">\(P\)</span> кроків у <span class="arithmatex">\(N\)</span> патчів + Channel Independence</td>
+<td style="text-align: left;">Прогнозування наддовгих багатовимірних часових рядів (<span class="arithmatex">\(T &gt; 10000\)</span>).</td>
+<td style="text-align: left;">Втрата надвисокочастотних деталей усередині окремого патча <span class="arithmatex">\(P\)</span>.</td>
+<td style="text-align: left;">Твердження, що незалежність каналів не здатна враховувати кореляції між різними датчиками.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="33">3.3. Контрольні питання та завдання</h3>
+<h4 id="_8">Концептуальні тестові завдання</h4>
+<ol>
+<li>
+<p>Яка математична умова безпосередньо спричиняє експоненційне затухання градієнтного сигналу <span class="arithmatex">\(\frac{\partial \mathcal{L}_t}{\partial h_k} \to 0\)</span> при віддаленні кроків <span class="arithmatex">\((t - k) \to \infty\)</span> у класичній рекурентній мережі Vanilla RNN?</p>
+</li>
+<li>
+<p>A. Значення евклідової норми вхідного вектора спостережень задовольняє умову <span class="arithmatex">\(\|x_t\|_2 &gt; 1\)</span>.</p>
+</li>
+<li>
+<p>B. Спектральний радіус матриці ваг рекурентних переходів менший за одиницю: <span class="arithmatex">\(\rho(W_{hh}) &lt; 1\)</span> за умови нелінійності <span class="arithmatex">\(\tanh\)</span>.</p>
+</li>
+<li>
+<p>C. Вектор зсуву прихованого шару <span class="arithmatex">\(b_h\)</span> набуває строго від'ємних числових значень.</p>
+</li>
+<li>
+<p>D. Ранг матриці лінійного проектування виходів дорівнює нулю: <span class="arithmatex">\(\operatorname{rank}(W_{hy}) = 0\)</span>.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Згідно з аналітичним розкладом Якобіана ланцюгового правила, норма оператора переходу станів оцінюється як:</li>
+</ol>
+<div class="arithmatex">\[\left\|\frac{\partial h_t}{\partial h_k}\right\|_2 \le \prod_{j=k+1}^t \|D_j\|_2 \cdot \|W_{hh}^T\|_2 \le (\gamma \cdot \sigma_{\max}(W_{hh}))^{t-k}\]</div>
+<p>Оскільки похідна гіперболічного тангенса <span class="arithmatex">\(D_j = \operatorname{diag}(1 - \tanh^2(z_j))\)</span> обмежена одиницею (<span class="arithmatex">\(\gamma \le 1\)</span>), умова <span class="arithmatex">\(\rho(W_{hh}) \le \sigma_{\max}(W_{hh}) &lt; 1\)</span> гарантує, що основа геометричної прогресії строго менша за одиницю. При <span class="arithmatex">\((t - k) \to \infty\)</span> норма добутку прямує до нуля експоненційно.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки норма вхідного вектора <span class="arithmatex">\(\|x_t\|_2\)</span> не визначає асимптотичну стійкість ланцюгового перемноження Якобіанів у часі.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що знак зсуву <span class="arithmatex">\(b_h\)</span> лише зміщує центр активації гіперболічного тангенса, але не усуває мультиплікативний колапс матричних степенів.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки нульовий ранг матриці виходів призводить до тривіального нульового виходу, але не пояснює динаміку затухання рекурентного ланцюга внутрішнього стану.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У комірці LSTM стан довготривалої пам'яті оновлюється за законом <span class="arithmatex">\(C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t\)</span>. Яке значення повинен мати вектор вентиля забування <span class="arithmatex">\(f_t\)</span>, щоб забезпечити абсолютне проходження градієнта крізь комірку без затухання?</p>
+</li>
+<li>
+<p>A. <span class="arithmatex">\(f_t = \mathbf{0}\)</span> (всі елементи дорівнюють нулю).</p>
+</li>
+<li>
+<p>B. <span class="arithmatex">\(f_t = 0.5 \cdot \mathbf{1}\)</span> (стан піврозпаду пам'яті).</p>
+</li>
+<li>
+<p>C. <span class="arithmatex">\(f_t = \mathbf{1}\)</span> (всі компоненти дорівнюють одиниці).</p>
+</li>
+<li>
+<p>D. <span class="arithmatex">\(f_t = -\mathbf{1}\)</span> (інверсія фази стану).</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: C.</strong></p>
+<ol>
+<li>Головний лінійний доданок Якобіана переходу комірки має вигляд:</li>
+</ol>
+<div class="arithmatex">\[\frac{\partial C_t}{\partial C_{t-1}} = \operatorname{diag}(f_t) + \mathcal{R}_t\]</div>
+<p>Коли компоненти вектора вентиля забування наближаються до одиниці (<span class="arithmatex">\(f_t \to \mathbf{1}\)</span>), матриця <span class="arithmatex">\(\operatorname{diag}(f_t)\)</span> перетворюється на одиничну матрицю <span class="arithmatex">\(I\)</span>. Добуток одиничних матриць крізь довільну кількість кроків зберігає норму одиничною (<span class="arithmatex">\(\prod I = I\)</span>), що створює захищений канал безперешкодного руху градієнтного сигналу.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки при <span class="arithmatex">\(f_t = \mathbf{0}\)</span> довготривалий стан <span class="arithmatex">\(C_{t-1}\)</span> повністю стирається, що моментально зануляє градієнт попередньої історії.</p>
+</li>
+<li>
+<p><strong>Варіант B</strong> є некоректним, тому що при <span class="arithmatex">\(f_t = 0.5\)</span> градієнт буде згасати зі швидкістю <span class="arithmatex">\((0.5)^{t-k}\)</span>, перетворюючись на нуль за кілька десятків кроків.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є неможливим, оскільки вихід сигмоїдної функції активації <span class="arithmatex">\(\sigma(x)\)</span> строго обмежений інтервалом <span class="arithmatex">\((0, 1)\)</span> і не може набувати від'ємних значень.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>Чому в алгоритмі Scaled Dot-Product Attention аргумент скалярного добутку ділиться на <span class="arithmatex">\(\sqrt{d_k}\)</span> перед застосуванням функції Softmax?</p>
+</li>
+<li>
+<p>A. Для зменшення геометричного розміру результуючої матриці уваги.</p>
+</li>
+<li>
+<p>B. Для компенсації зростання дисперсії скалярного добутку, що запобігає виходу функції Softmax у зону насичення з нульовими градієнтами.</p>
+</li>
+<li>
+<p>C. Для забезпечення можливості інвертування матриці значень <span class="arithmatex">\(V\)</span>.</p>
+</li>
+<li>
+<p>D. Для гарантування того, що всі елементи матриці уваги стануть строго цілими числами.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>Скалярний добуток двох незалежних векторів розмірності <span class="arithmatex">\(d_k\)</span> із нульовим середнім та одиничною дисперсією має дисперсію, що дорівнює <span class="arithmatex">\(d_k\)</span>. При великих значеннях <span class="arithmatex">\(d_k\)</span> (наприклад, <span class="arithmatex">\(d_k = 64\)</span>) амплітуда елементів матриці <span class="arithmatex">\(Q K^T\)</span> досягає значних абсолютних значень. Функція Softmax у таких умовах генерує ймовірності, близькі до 0 або 1, де її похідна прямує до нуля:</li>
+</ol>
+<div class="arithmatex">\[\frac{\partial \operatorname{Softmax}(z)_i}{\partial z_j} = \operatorname{Softmax}(z)_i (\delta_{ij} - \operatorname{Softmax}(z)_j) \to 0\]</div>
+<p>Ділення на <span class="arithmatex">\(\sqrt{d_k}\)</span> нормалізує дисперсію аргументу до одиниці, стабілізуючи процес навчання.</p>
+<ol>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки скалярне ділення на константу не змінює розмірності матриці <span class="arithmatex">\(T \times T\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що механізм уваги не вимагає знаходження оберненої матриці до <span class="arithmatex">\(V\)</span>.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є абсурдним, оскільки виходи Softmax є неперервними ймовірнісними величинами на інтервалі <span class="arithmatex">\((0, 1)\)</span>.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<ol>
+<li>
+<p>У чому полягає принципова відмінність обробки багатовимірних часових рядів архітектурою iTransformer порівняно зі стандартним Transformer?</p>
+</li>
+<li>
+<p>A. iTransformer відмовляється від функції активації у повнозв'язних шарах.</p>
+</li>
+<li>
+<p>B. iTransformer застосовує механізм Self-Attention вздовж вимірів каналів (змінних), а часову динаміку кожного каналу моделює за допомогою MLP.</p>
+</li>
+<li>
+<p>C. iTransformer замінює матричне множення <span class="arithmatex">\(Q K^T\)</span> на операцію згортки у часовій області.</p>
+</li>
+<li>
+<p>D. iTransformer повністю виключає використання зворотного поширення помилки під час навчання.</p>
+</li>
+</ol>
+<details class="note">
+<summary>Пояснення правильної відповіді</summary>
+<p><strong>Правильний варіант: B.</strong></p>
+<ol>
+<li>
+<p>Стандартний Transformer розглядає окремі часові точки як токени, обчислюючи взаємодію в часі розмірністю <span class="arithmatex">\(T \times T\)</span>. Архітектура iTransformer інвертує цю розмірність: токенами стають цілісні ряди окремих каналів (сенсорів), довжина яких <span class="arithmatex">\(T\)</span> проектується в ембеддінг через MLP. Механізм Self-Attention обчислює взаємозв'язки між різними фізичними змінними розмірністю <span class="arithmatex">\(M \times M\)</span>, що кардинально підвищує стійкість до шумів та усуває квадратичну залежність від довжини історії <span class="arithmatex">\(T\)</span>.</p>
+</li>
+<li>
+<p>Аналіз дистракторів:</p>
+<ul>
+<li>
+<p><strong>Варіант A</strong> є хибним, оскільки нелінійні активації зберігаються для підтримки апроксимаційної ємності.</p>
+</li>
+<li>
+<p><strong>Варіант C</strong> є некоректним, тому що операція Self-Attention залишається стандартною, змінюється лише орієнтація тензора.</p>
+</li>
+<li>
+<p><strong>Варіант D</strong> є хибним, оскільки оптимізація моделі відбувається стандартними градієнтними методами.</p>
+</li>
+</ul>
+</li>
+</ol>
+</details>
+<h4 id="_9">Завдання для самостійної роботи</h4>
+<h5 id="_10">Постановка задачі</h5>
+<p>Для забезпечення автономного енергозабезпечення базової станції стільникового зв'язку проєктується вбудована мікропроцесорна система моніторингу напруги та струму літій-залізо-фосфатного (LiFePO4) акумуляторного масиву. Вимірювальний модуль фіксує <span class="arithmatex">\(M = 8\)</span> каналів телеметрії (напруги комірок, сумарний струм заряду/розряду, температури трьох зон). Система реєструє дані з інтервалом дискретизації <span class="arithmatex">\(\Delta t = 1 \text{ с}\)</span> і повинна здійснювати екстраполяцію параметрів на горизонт <span class="arithmatex">\(H_{\text{pred}} = 16 \text{ с}\)</span> уперед на основі ретроспективного вікна довжиною <span class="arithmatex">\(T = 256 \text{ с}\)</span>.</p>
+<p>Розглядаються два апаратні варіанти нейромережевого контролера:</p>
+<ol>
+<li>
+<p>Одношаровий блок <strong>LSTM</strong> із розмірністю прихованого стану <span class="arithmatex">\(H = 128\)</span>.</p>
+</li>
+<li>
+<p>Модель <strong>PatchTST</strong> із довжиною патча <span class="arithmatex">\(P = 16\)</span>, кроком зміщення <span class="arithmatex">\(S = 8\)</span>, розмірністю <span class="arithmatex">\(d_{\text{model}} = 64\)</span>, кількістю голів <span class="arithmatex">\(h = 2\)</span> та розмірністю <span class="arithmatex">\(d_{ffn} = 128\)</span>.</p>
+</li>
+</ol>
+<h5 id="_11">Завдання для виконання</h5>
+<ol>
+<li>
+<p>Розрахуйте точну кількість навчальних параметрів (ваг та зсувів) для архітектури LSTM та моделі PatchTST за умови використання спільної лінійної голови прямого прогнозування для всіх каналів.</p>
+</li>
+<li>
+<p>Визначте кількість токенів-патчів <span class="arithmatex">\(N\)</span> для моделі PatchTST та розрахуйте теоретичну кількість операцій із рухомою комою (FLOPs), необхідних для виконання одного прямого проходу моделі для одного екземпляра вхідних даних (<span class="arithmatex">\(B = 1\)</span>).</p>
+</li>
+<li>
+<p>Обчисліть обсяг статичної оперативної пам'яті (SRAM), необхідний для збереження карт уваги <span class="arithmatex">\(A \in \mathbb{R}^{h \times N \times N}\)</span> у моделі PatchTST у 16-бітному форматі з рухомою комою (FP16, 2 байти на число), та порівняйте його з розміром вектора стану комірки LSTM (<span class="arithmatex">\(C_t, h_t\)</span>).</p>
+</li>
+<li>
+<p>На основі отриманих параметричних оцінок сформулюйте інженерний висновок щодо доцільності розгортання кожної з моделей на мікроконтролері STM32H7 (тактова частота 480 МГц, 1 МБ внутрішньої пам'яті SRAM) із точки зору обмежень реального часу та енергоефективності.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Повернутись нагору
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Kyrylo Vadurin &bull; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.tracking", "header.autohide", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0456\u0439\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u0421\u043a\u043e\u043f\u0456\u044e\u0432\u0430\u0442\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0429\u0435 1 \u0437\u0431\u0456\u0433 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.more.other": "\u0429\u0435 # \u0437\u0431\u0456\u0433\u0456\u0432 \u043d\u0430 \u0446\u0456\u0439 \u0441\u0442\u043e\u0440\u0456\u043d\u0446\u0456", "search.result.none": "\u0417\u0431\u0456\u0433\u0456\u0432 \u043d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0437\u0431\u0456\u0433", "search.result.other": "\u0417\u043d\u0430\u0439\u0434\u0435\u043d\u043e # \u0437\u0431\u0456\u0433\u0456\u0432", "search.result.placeholder": "\u0420\u043e\u0437\u043f\u043e\u0447\u043d\u0456\u0442\u044c \u043f\u0438\u0441\u0430\u0442\u0438 \u0434\u043b\u044f \u043f\u043e\u0448\u0443\u043a\u0443", "search.result.term.missing": "\u041d\u0435 \u0437\u043d\u0430\u0439\u0434\u0435\u043d\u043e \u0437\u0430\u043f\u0438\u0442\u0443", "select.version": "\u041e\u0431\u0440\u0430\u0442\u0438 \u0432\u0435\u0440\u0441\u0456\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
